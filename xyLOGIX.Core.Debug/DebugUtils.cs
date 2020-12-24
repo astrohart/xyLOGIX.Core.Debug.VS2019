@@ -44,9 +44,15 @@ namespace xyLOGIX.Core.Debug
         public static int ExceptionStackDepth { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value indicating which type of logging infrastructure is in use.
+        ///     Gets or sets a
+        ///     <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
+        ///     indicating which type of logging infrastructure is in use.
         /// </summary>
-        public static LoggingInfrastructureType InfrastructureType { get; internal set; }
+        public static LoggingInfrastructureType InfrastructureType
+        {
+            get;
+            internal set;
+        }
 
         /// <summary>
         ///     Gets or sets a value that turns logging as a whole on or off.
@@ -303,7 +309,7 @@ namespace xyLOGIX.Core.Debug
                 return;
 #endif
 
-            if (format.Contains("\n"))
+            if (format.Contains(Environment.NewLine))
             {
                 // the format string is composed of several lines. log each line separately.
 
@@ -314,7 +320,10 @@ namespace xyLOGIX.Core.Debug
                     // stop if the format output is blank or null
                     return;
 
-                var lines = formattedLogEntry.Split('\n');
+                var lines = formattedLogEntry.Split(
+                    new[] { Environment.NewLine },
+                    StringSplitOptions.None
+                    );
                 if (!lines.Any()) return;
 
                 // for each line, write it out at the level indicated, one by one
@@ -348,7 +357,8 @@ namespace xyLOGIX.Core.Debug
         ///     <paramref name="debugLevel" /> parameter is not one of the
         ///     <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
         /// </exception>
-        private static void _WriteLineImpl(DebugLevel debugLevel, string content)
+        private static void _WriteLineImpl(DebugLevel debugLevel,
+            string content)
         {
             // Do nothing if the content is blank or the empty string.
             if (string.IsNullOrWhiteSpace(content)) return;
