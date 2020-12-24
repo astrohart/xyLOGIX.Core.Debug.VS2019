@@ -13,6 +13,11 @@
         string LogFilePath { get; }
 
         /// <summary>
+        /// Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value that corresponds to the type of infrastructure that is being utilized.
+        /// </summary>
+        LoggingInfrastructureType Type { get; }
+
+        /// <summary>
         ///     Deletes the log file, if it exists.
         /// </summary>
         void DeleteLogIfExists();

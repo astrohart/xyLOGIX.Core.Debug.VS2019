@@ -22,6 +22,11 @@
         /// <summary>
         ///     Gets the full path and filename to the log file for this application.
         /// </summary>
+        /// <remarks>
+        ///     This property should only be called after the
+        ///     <see cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging" /> method
+        ///     has been called.
+        /// </remarks>
         public static string LogFilePath =>
             _infrastructure?.GetRootFileAppenderFileName();
 
@@ -46,7 +51,7 @@
         ///     (Optional.) One of the
         ///     <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> values that
         ///     indicates what type of logging infrastructure is to be utilized (default or
-        ///     PostSharp).
+        ///     PostSharp, for example).
         /// </param>
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
@@ -54,6 +59,10 @@
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default)
         {
+            /* We now 'outsource' the functionality of this method (and all the
+              other methods of this class) to an 'infrastructure' object that follows (loosely)
+             the Abstract Factory pattern.  Either we use the Default way of initializing logging
+             or we do things the way PostSharp needs us to.*/
             _infrastructure = _infrastructure ??
                               GetLoggingInfrastructure.For(infrastructureType);
 

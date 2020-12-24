@@ -18,6 +18,14 @@ namespace xyLOGIX.Core.Debug
         public virtual string LogFilePath => GetRootFileAppenderFileName();
 
         /// <summary>
+        ///     Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        ///     value that corresponds to the type of infrastructure that is being
+        ///     utilized.
+        /// </summary>
+        public virtual LoggingInfrastructureType Type =>
+            LoggingInfrastructureType.Default;
+
+        /// <summary>
         ///     Deletes the log file, if it exists.
         /// </summary>
         public virtual void DeleteLogIfExists()
