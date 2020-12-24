@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using log4net.Config;
+using log4net.Repository;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -144,9 +145,16 @@ namespace xyLOGIX.Core.Debug
         ///     file to be utilized for initializing log4net.  If blank, the system
         ///     attempts to utilize the default App.config file.
         /// </param>
+        /// <param name="repository">
+        ///     (Optional.) Reference to an instance of an object that
+        ///     implements the <see cref="T:log4net.Repository.ILoggerRepository" />
+        ///     interface.  Supply a value for this parameter if your infrastructure is not
+        ///     utilizing the default HierarchicalRepository.
+        /// </param>
         public virtual void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
-            string configurationFilePathname = "")
+            string configurationFilePathname = "",
+            ILoggerRepository repository = null)
         {
             var entryAssemblyFileName = Assembly.GetEntryAssembly()?.Location;
             if (string.IsNullOrWhiteSpace(entryAssemblyFileName) ||
@@ -189,13 +197,21 @@ namespace xyLOGIX.Core.Debug
                         $"The file '{configurationFilePathname}' was not found.\n\nThe application needs this file in order to continue."
                     );
 
-                XmlConfigurator.Configure();
+                if (repository == null)
+                    XmlConfigurator.Configure();
+                else
+                    XmlConfigurator.Configure(repository);
             }
             else
             {
-                XmlConfigurator.Configure(
-                    new FileInfo(configurationFilePathname)
-                );
+                if (repository == null)
+                    XmlConfigurator.Configure(
+                        new FileInfo(configurationFilePathname)
+                    );
+                else
+                    XmlConfigurator.Configure(
+                        repository, new FileInfo(configurationFilePathname)
+                    );
             }
 
             var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);

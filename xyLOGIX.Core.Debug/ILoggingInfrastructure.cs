@@ -1,4 +1,6 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using log4net.Repository;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     ///     Defines the methods and properties of a custom object to which the
@@ -13,7 +15,9 @@
         string LogFilePath { get; }
 
         /// <summary>
-        /// Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value that corresponds to the type of infrastructure that is being utilized.
+        ///     Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        ///     value that corresponds to the type of infrastructure that is being
+        ///     utilized.
         /// </summary>
         LoggingInfrastructureType Type { get; }
 
@@ -55,8 +59,15 @@
         ///     file to be utilized for initializing log4net.  If blank, the system
         ///     attempts to utilize the default App.config file.
         /// </param>
+        /// <param name="repository">
+        ///     (Optional.) Reference to an instance of an object that
+        ///     implements the <see cref="T:log4net.Repository.ILoggerRepository" />
+        ///     interface.  Supply a value for this parameter if your infrastructure is not
+        ///     utilizing the default HierarchicalRepository.
+        /// </param>
         void InitializeLogging(bool muteDebugLevelIfReleaseMode = true,
-            bool overwrite = true, string configurationFilePathname = "");
+            bool overwrite = true, string configurationFilePathname = "",
+            ILoggerRepository repository = null);
 
         /// <summary>
         ///     Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to initialize
