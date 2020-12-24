@@ -102,7 +102,7 @@ namespace xyLOGIX.Core.Debug
             {
                 if (element == null) continue;
 
-                WriteLine(DebugLevel.Debug, element.ToString());
+                _WriteLineImpl(DebugLevel.Debug, element.ToString());
             }
         }
 
@@ -165,7 +165,7 @@ namespace xyLOGIX.Core.Debug
         ///     dumped.
         /// </param>
         public static void FormatExceptionAndWrite(Exception e) =>
-            WriteLine(DebugLevel.Error, FormatException(e));
+            _WriteLineImpl(DebugLevel.Error, FormatException(e));
 
         /// <summary>
         ///     Logs the complete information about an exception to the log, under the
@@ -182,7 +182,7 @@ namespace xyLOGIX.Core.Debug
                 e.StackTrace
             );
 
-            WriteLine(DebugLevel.Error, message);
+            _WriteLineImpl(DebugLevel.Error, message);
 
             return message;
         }
@@ -318,57 +318,96 @@ namespace xyLOGIX.Core.Debug
                 if (!lines.Any()) return;
 
                 // for each line, write it out at the level indicated, one by one
-                foreach (var line in lines) WriteLine(debugLevel, line);
+                foreach (var line in lines) _WriteLineImpl(debugLevel, line);
             }
             else
             {
                 var content = args.Any() ? string.Format(format, args) : format;
-                WriteLine(debugLevel, content);
+                _WriteLineImpl(debugLevel, content);
             }
         }
 
         /// <summary>
-        ///     Works the same as the overload which takes a
-        ///     <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> as its first argument, but
-        ///     if the formatted content consists of several lines of content, then the
-        ///     lines are split and logged separately, all under the
-        ///     <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> level.
+        ///     Writes non-formatted content to the log using the
+        ///     <paramref name="debugLevel" /> specified.
         /// </summary>
-        /// <param name="format">
-        ///     (Required.) String containing an optional format specifier
-        ///     for parameters passed in <paramref name="args" />.
+        /// <param name="debugLevel">
+        ///     One of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that
+        ///     indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
+        ///     written.
         /// </param>
-        /// <param name="args">
-        ///     (Optional.) Collection of objects whose values should be
-        ///     included in the <paramref name="format" /> and written to the log.
-        /// </param>
-        public static void WriteLine(string format, params object[] args)
+        /// <param name="content">(Required.) string containing the content to be written.</param>
+        /// <remarks>
+        ///     If the <paramref name="content" /> is a blank or empty string, then
+        ///     this method does nothing.  This method's behavior is identical to that of
+        ///     <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />, except that a newline
+        ///     character is appended to the end of the content.
+        /// </remarks>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///     Thrown if the
+        ///     <paramref name="debugLevel" /> parameter is not one of the
+        ///     <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
+        /// </exception>
+        private static void _WriteLineImpl(DebugLevel debugLevel, string content)
         {
-            if (string.IsNullOrWhiteSpace(format))
-                // cannot do anything with a blank entry.
-                return;
-            if (format.Contains(Environment.NewLine))
-            {
-                // the format string is composed of several lines. log each line separately.
+            // Do nothing if the content is blank or the empty string.
+            if (string.IsNullOrWhiteSpace(content)) return;
 
-                // first, format the text with string.Format
-                var formattedLogEntry =
-                    args.Any() ? string.Format(format, args) : format;
-                if (string.IsNullOrWhiteSpace(formattedLogEntry))
-                    // stop if the format output is blank or null
+            try
+            {
+                if (Verbosity == 0) return;
+
+                // If we are being called from LINQPad, then use Debug._WriteLineImpl
+                if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
+                {
+                    System.Diagnostics.Debug.WriteLine(content);
                     return;
+                }
 
-                var lines = formattedLogEntry.Split(
-                    new[] { Environment.NewLine }, StringSplitOptions.None
-                );
-                if (!lines.Any()) return;
+                if (!MuteConsole) Console.WriteLine(content);
 
-                // for each line, write it out at DebugLevel.Debug
-                foreach (var line in lines) WriteLine(DebugLevel.Debug, line);
+                if (debugLevel != DebugLevel.Debug)
+                    OnTextEmitted(content, debugLevel);
+
+                if (ConsoleOnly) return;
+
+                if (!IsLogging) return;
+
+                var currentMethod = MethodBase.GetCurrentMethod();
+                var logger = LogManager.GetLogger(currentMethod.DeclaringType);
+
+                switch (debugLevel)
+                {
+                    case DebugLevel.Error:
+                        logger.Error(content);
+                        EventLogManager.Instance.Error(content);
+                        break;
+
+                    case DebugLevel.Info:
+                        logger.Info(content);
+                        EventLogManager.Instance.Info(content);
+                        break;
+
+                    case DebugLevel.Warning:
+                        logger.Warn(content);
+                        EventLogManager.Instance.Warn(content);
+                        break;
+
+                    case DebugLevel.Debug:
+                        //#if DEBUG   // only print DEBUG logging statements if we're in Debug mode
+                        logger.Debug(content);
+                        //#endif
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(debugLevel), debugLevel, null
+                        );
+                }
             }
-            else
+            catch (Exception)
             {
-                WriteLine(DebugLevel.Debug, format, args);
+                //ignore
             }
         }
 
@@ -416,7 +455,7 @@ namespace xyLOGIX.Core.Debug
 
                 if (!IsLogging) return;
 
-                // If we are being called from LINQPad, then use Debug.WriteLine
+                // If we are being called from LINQPad, then use Debug._WriteLineImpl
                 if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
                 {
                     System.Diagnostics.Debug.Write(content);
@@ -444,90 +483,6 @@ namespace xyLOGIX.Core.Debug
 
                     case DebugLevel.Debug:
                         logger.Debug(content);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(debugLevel), debugLevel, null
-                        );
-                }
-            }
-            catch (Exception)
-            {
-                //ignore
-            }
-        }
-
-        /// <summary>
-        ///     Writes non-formatted content to the log using the
-        ///     <paramref name="debugLevel" /> specified.
-        /// </summary>
-        /// <param name="debugLevel">
-        ///     One of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that
-        ///     indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
-        ///     written.
-        /// </param>
-        /// <param name="content">(Required.) string containing the content to be written.</param>
-        /// <remarks>
-        ///     If the <paramref name="content" /> is a blank or empty string, then
-        ///     this method does nothing.  This method's behavior is identical to that of
-        ///     <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />, except that a newline
-        ///     character is appended to the end of the content.
-        /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        ///     Thrown if the
-        ///     <paramref name="debugLevel" /> parameter is not one of the
-        ///     <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
-        /// </exception>
-        private static void WriteLine(DebugLevel debugLevel, string content)
-        {
-            // Do nothing if the content is blank or the empty string.
-            if (string.IsNullOrWhiteSpace(content)) return;
-
-            try
-            {
-                if (Verbosity == 0) return;
-
-                // If we are being called from LINQPad, then use Debug.WriteLine
-                if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
-                {
-                    System.Diagnostics.Debug.WriteLine(content);
-                    return;
-                }
-
-                if (!MuteConsole) Console.WriteLine(content);
-
-                if (debugLevel != DebugLevel.Debug)
-                    OnTextEmitted(content, debugLevel);
-
-                if (ConsoleOnly) return;
-
-                if (!IsLogging) return;
-
-                var currentMethod = MethodBase.GetCurrentMethod();
-                var logger = LogManager.GetLogger(currentMethod.DeclaringType);
-
-                switch (debugLevel)
-                {
-                    case DebugLevel.Error:
-                        logger.Error(content);
-                        EventLogManager.Instance.Error(content);
-                        break;
-
-                    case DebugLevel.Info:
-                        logger.Info(content);
-                        EventLogManager.Instance.Info(content);
-                        break;
-
-                    case DebugLevel.Warning:
-                        logger.Warn(content);
-                        EventLogManager.Instance.Warn(content);
-                        break;
-
-                    case DebugLevel.Debug:
-                        //#if DEBUG   // only print DEBUG logging statements if we're in Debug mode
-                        logger.Debug(content);
-                        //#endif
                         break;
 
                     default:
