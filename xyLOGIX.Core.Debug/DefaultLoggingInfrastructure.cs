@@ -302,6 +302,7 @@ namespace xyLOGIX.Core.Debug
             DebugUtils.MuteDebugLevelIfReleaseMode =
                 muteDebugLevelIfReleaseMode;
             DebugUtils.MuteConsole = muteConsole;
+            DebugUtils.InfrastructureType = Type;
 
             // do not print anything in this method if verbosity is set to anything less than 2
             if (DebugUtils.Verbosity < 2)
