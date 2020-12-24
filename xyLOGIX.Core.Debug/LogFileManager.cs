@@ -20,6 +20,14 @@
         private static ILoggingInfrastructure _infrastructure;
 
         /// <summary>
+        ///     Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        ///     value that represents the type of infrastructure currently in use by this
+        ///     <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
+        /// </summary>
+        public static LoggingInfrastructureType InfrastructureType =>
+            _infrastructure?.Type ?? LoggingInfrastructureType.Unknown;
+
+        /// <summary>
         ///     Gets the full path and filename to the log file for this application.
         /// </summary>
         /// <remarks>
