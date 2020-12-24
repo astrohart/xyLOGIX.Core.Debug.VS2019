@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     public static class DebugUtils
     {
         /// <summary>
-        ///     Constructs a new instance of <see cref="DebugUtils" />.
+        ///     Initializes a new static instance of <see cref="DebugUtils" />.
         /// </summary>
         static DebugUtils()
         {
