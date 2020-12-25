@@ -372,6 +372,19 @@ namespace xyLOGIX.Core.Debug
 
             if (overwrite)
                 DeleteLogIfExists();
+
+            WriteTimestamp();
+        }
+
+        /// <summary>
+        ///     Writes a date and time stamp to the top of the log file.
+        /// </summary>
+        protected virtual void WriteTimestamp()
+        {
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                $"*** LOG STARTED ON {DateTime.Now.ToLongDateString()} at {DateTime.Now.ToLongTimeString()}"
+            );
         }
     }
 }
