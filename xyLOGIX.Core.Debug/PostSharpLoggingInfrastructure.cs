@@ -11,12 +11,39 @@ namespace xyLOGIX.Core.Debug
     public class PostSharpLoggingInfrastructure : DefaultLoggingInfrastructure
     {
         /// <summary>
+        ///     Reference to the object that relays all logging to PostSharp.
+        /// </summary>
+        /// <remarks>
+        ///     This field can only be set to a reference to an instance of an object
+        ///     that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
+        ///     interface.
+        /// </remarks>
+        private ILoggerRepository _relay;
+
+        /// <summary>
         ///     Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
         ///     value that corresponds to the type of infrastructure that is being
         ///     utilized.
         /// </summary>
         public override LoggingInfrastructureType Type =>
             LoggingInfrastructureType.PostSharp;
+
+        /// <summary>
+        ///     Gets the value of the <see cref="P:log4net.Appender.FileAppender.File" />
+        ///     property from the first appender in the list of appenders that is of type
+        ///     <see cref="T:log4net.Appender.FileAppender" />.
+        /// </summary>
+        /// <returns>
+        ///     String containing the full path and file name of the file the appender
+        ///     is writing to.
+        /// </returns>
+        /// <remarks>
+        ///     This method is solely utilized in order to implement the
+        ///     <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        ///     property.
+        /// </remarks>
+        public override string GetRootFileAppenderFileName() =>
+            FileAppenderManager.GetFirstAppender(_relay)?.File;
 
         /// <summary>
         ///     Initializes the application's logging subsystem.
@@ -60,16 +87,18 @@ namespace xyLOGIX.Core.Debug
             //
             // The relay repository returned by the RedirectLoggingToPostSharp method creates loggers that
             // are *not* redirected to PostSharp Logging and it serves as the repository for your final output loggers.
-            var relay = Log4NetCollectingRepositorySelector
+            _relay = Log4NetCollectingRepositorySelector
                 .RedirectLoggingToPostSharp();
 
             base.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, relay
+                configurationFilePathname, _relay
             );
 
             // Use the relay repository to create a Log4NetLoggingBackend and set it as the default backend:
-            LoggingServices.DefaultBackend = new Log4NetLoggingBackend(relay);
+            LoggingServices.DefaultBackend = new Log4NetLoggingBackend(_relay);
+
+            PrepareLogFile(overwrite, _relay);
         }
     }
 }
