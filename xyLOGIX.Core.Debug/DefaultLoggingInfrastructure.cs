@@ -122,11 +122,8 @@ namespace xyLOGIX.Core.Debug
         ///     <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
         ///     property.
         /// </remarks>
-        public virtual string GetRootFileAppenderFileName()
-        {
-            var rootAppender = FileAppenderManager.GetFirstAppender();
-            return rootAppender != null ? rootAppender.File : string.Empty;
-        }
+        public virtual string GetRootFileAppenderFileName() =>
+            FileAppenderManager.GetFirstAppender()?.File;
 
         /// <summary>
         ///     Initializes the application's logging subsystem.
@@ -178,8 +175,6 @@ namespace xyLOGIX.Core.Debug
                 "In DefaultLoggingInfrastructure.InitializeLogging"
             );
 
-            SetUpDebugUtils(muteDebugLevelIfReleaseMode);
-
             // Check whether the path to the configuration file is blank; or, if it's not blank, whether the specified file actually exists at the path indicated.
             // If the configuration file pathname is blank and/or it does not exist at the path indicated, then call the version of XmlConfigurator.Configure that does
             // not take any arguments.  On the other hand, if the configurationFilePathname parameter is not blank, and it specifies a file that actually does exist
@@ -214,60 +209,10 @@ namespace xyLOGIX.Core.Debug
                     );
             }
 
-            var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
-            if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
-                throw new InvalidOperationException(
-                    "Unable to determine the path to the log file's containing folder."
-                );
-            var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
-                .Parent?.FullName;
+            SetUpDebugUtils(muteDebugLevelIfReleaseMode);
 
-            // Dump the variable logFileDirectoryParent to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.InitializeLogging: logFileDirectoryParent = '{0}'",
-                logFileDirectoryParent
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the user has write-level access to the folder '{0}'...",
-                logFileDirectoryParent
-            );
-
-            // Check if the user has write access to the parent directory of the log file.
-            if (!FileAndFolderHelper.IsFolderWriteable(logFileDirectoryParent))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    @"DefaultLoggingInfrastructure.InitializeLogging: The user '{0}\{1}' does not have write-level access to the folder '{2}'.",
-                    Environment.UserDomainName, Environment.UserName,
-                    logFileDirectoryParent
-                );
-
-                throw new UnauthorizedAccessException(
-                    $"We don't have write permissions to the directory '{logFileDirectoryParent}'."
-                );
-            }
-
-            FileAndFolderHelper.CreateDirectoryIfNotExists(
-                logFileDirectoryPath
-            );
-
-            // We have to insist that the directory that the log file is in is writeable.  If we can't
-            // get write access to the log file directory, then throw an exception.
-            if (!FileAndFolderHelper.IsFolderWriteable(logFileDirectoryPath))
-                throw new UnauthorizedAccessException(
-                    $"We don't have write permissions to the directory '{logFileDirectoryPath}'."
-                );
-
-            // Set options on the file appender of the logging system to minimize locking issues
-            FileAppenderConfigurator.SetMinimalLock(
-                FileAppenderManager.GetFirstAppender()
-            );
-
-            if (overwrite)
-                DeleteLogIfExists();
+            if (Type != LoggingInfrastructureType.PostSharp)
+                PrepareLogFile(overwrite, repository);
         }
 
         /// <summary>
@@ -303,6 +248,7 @@ namespace xyLOGIX.Core.Debug
                 muteDebugLevelIfReleaseMode;
             DebugUtils.MuteConsole = muteConsole;
             DebugUtils.InfrastructureType = Type;
+            DebugUtils.LogFilePath = LogFilePath;
 
             // do not print anything in this method if verbosity is set to anything less than 2
             if (DebugUtils.Verbosity < 2)
@@ -352,6 +298,80 @@ namespace xyLOGIX.Core.Debug
                 DebugLevel.Debug,
                 "DefaultLoggingInfrastructure.SetUpDebugUtils: Done."
             );
+        }
+
+        /// <summary>
+        ///     Prepares the log file by ensuring that the containing folder is writeable
+        ///     by the current user and by then, if specified to overwrite, deleting the
+        ///     current log file.
+        /// </summary>
+        /// <param name="overwrite">
+        ///     Overwrites any existing logs for the application with
+        ///     the latest logging sent out by this instance.
+        /// </param>
+        /// <param name="repository">
+        ///     (Optional.) Reference to an instance of an object that
+        ///     implements the <see cref="T:log4net.Repository.ILoggerRepository" />
+        ///     interface.  Supply a value for this parameter if your infrastructure is not
+        ///     utilizing the default HierarchicalRepository.
+        /// </param>
+        protected virtual void PrepareLogFile(bool overwrite,
+            ILoggerRepository repository)
+        {
+            var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
+            if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
+                throw new InvalidOperationException(
+                    "Unable to determine the path to the log file's containing folder."
+                );
+            var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
+                .Parent?.FullName;
+
+            // Dump the variable logFileDirectoryParent to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "DefaultLoggingInfrastructure.InitializeLogging: logFileDirectoryParent = '{0}'",
+                logFileDirectoryParent
+            );
+
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the user has write-level access to the folder '{0}'...",
+                logFileDirectoryParent
+            );
+
+            // Check if the user has write access to the parent directory of the log file.
+            if (!FileAndFolderHelper.IsFolderWriteable(logFileDirectoryParent))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    @"DefaultLoggingInfrastructure.InitializeLogging: The user '{0}\{1}' does not have write-level access to the folder '{2}'.",
+                    Environment.UserDomainName, Environment.UserName,
+                    logFileDirectoryParent
+                );
+
+                throw new UnauthorizedAccessException(
+                    $"We don't have write permissions to the directory '{logFileDirectoryParent}'."
+                );
+            }
+
+            FileAndFolderHelper.CreateDirectoryIfNotExists(
+                logFileDirectoryPath
+            );
+
+            // We have to insist that the directory that the log file is in is writeable.  If we can't
+            // get write access to the log file directory, then throw an exception.
+            if (!FileAndFolderHelper.IsFolderWriteable(logFileDirectoryPath))
+                throw new UnauthorizedAccessException(
+                    $"We don't have write permissions to the directory '{logFileDirectoryPath}'."
+                );
+
+            // Set options on the file appender of the logging system to minimize locking issues
+            FileAppenderConfigurator.SetMinimalLock(
+                FileAppenderManager.GetFirstAppender(repository)
+            );
+
+            if (overwrite)
+                DeleteLogIfExists();
         }
     }
 }
