@@ -55,6 +55,12 @@
         ///     file to be utilized for initializing log4net.  If blank, the system
         ///     attempts to utilize the default App.config file.
         /// </param>
+        /// <param name="muteConsole">
+        ///     Set to <c>true</c> to suppress the display of logging
+        ///     messages to the console if a log file is being used.  If a log file is not
+        ///     used, then no logging at all will occur if this parameter is set to
+        ///     <c>true</c>.
+        /// </param>
         /// <param name="infrastructureType">
         ///     (Optional.) One of the
         ///     <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> values that
@@ -63,7 +69,7 @@
         /// </param>
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
-            string configurationFilePathname = "",
+            string configurationFilePathname = "", bool muteConsole = false,
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default)
         {
@@ -76,7 +82,7 @@
 
             _infrastructure.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname
+                configurationFilePathname, muteConsole
             );
         }
 

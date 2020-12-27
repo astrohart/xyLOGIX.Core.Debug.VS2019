@@ -101,6 +101,7 @@
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILoggingInfrastructure.cs" />
     <Compile Include="LogFileManager.cs" />
     <Compile Include="LoggerManager.cs" />

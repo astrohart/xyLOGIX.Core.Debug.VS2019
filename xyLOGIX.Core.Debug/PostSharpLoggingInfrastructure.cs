@@ -62,6 +62,12 @@ namespace xyLOGIX.Core.Debug
         ///     file to be utilized for initializing log4net.  If blank, the system
         ///     attempts to utilize the default App.config file.
         /// </param>
+        /// <param name="muteConsole">
+        ///     Set to <c>true</c> to suppress the display of logging
+        ///     messages to the console if a log file is being used.  If a log file is not
+        ///     used, then no logging at all will occur if this parameter is set to
+        ///     <c>true</c>.
+        /// </param>
         /// <param name="repository">
         ///     (Optional.) Reference to an instance of an object that
         ///     implements the <see cref="T:log4net.Repository.ILoggerRepository" />
@@ -76,7 +82,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public override void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
-            string configurationFilePathname = "",
+            string configurationFilePathname = "", bool muteConsole = false,
             ILoggerRepository repository = null)
         {
             // This sets the PostSharp repository selector as the active log4net repository selector.
@@ -92,7 +98,7 @@ namespace xyLOGIX.Core.Debug
 
             base.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, _relay
+                configurationFilePathname, muteConsole, _relay
             );
 
             // Use the relay repository to create a Log4NetLoggingBackend and set it as the default backend:
