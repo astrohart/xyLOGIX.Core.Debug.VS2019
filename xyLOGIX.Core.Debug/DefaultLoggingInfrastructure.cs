@@ -1,9 +1,9 @@
-﻿using System;
+﻿using log4net.Config;
+using log4net.Repository;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using log4net.Config;
-using log4net.Repository;
 
 namespace xyLOGIX.Core.Debug
 {

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using log4net.Appender;
+﻿using log4net.Appender;
 using log4net.Repository;
+using System;
+using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {

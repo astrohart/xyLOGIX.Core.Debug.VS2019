@@ -114,7 +114,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     EventLog.CreateEventSource(eventSource, type.ToString());
                 }
-                
+
                 // Finally, save the event source and type settings in the Source and Type properties.
                 Source = eventSource;
                 Type = type;
