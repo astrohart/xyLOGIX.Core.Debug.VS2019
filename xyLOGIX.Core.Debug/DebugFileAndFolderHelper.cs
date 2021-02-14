@@ -17,6 +17,10 @@ namespace xyLOGIX.Core.Debug
     /// </remarks>
     public static class DebugFileAndFolderHelper
     {
+        /// <summary>
+        /// Attempts to clear the files and folders from the user's temporary
+        /// files directory.
+        /// </summary>
         public static void ClearTempFileDir()
         {
             // write the name of the current class and method we are now
@@ -46,8 +50,27 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
+        /// <summary>
+        /// Creates a folder if the folder does not already exist.
+        /// </summary>
+        /// <param name="directoryPath">
+        /// (Required.) Path to the folder that you want to create.
+        /// </param>
+        /// <remarks>
+        /// If the folder specified by the <paramref name="directoryPath" />
+        /// parameter already exists on the disk, then this method does nothing.
+        /// </remarks>
+        /// <exception cref="T:System.ArgumentException">
+        /// Thrown if the required parameter, <paramref name="directoryPath" />,
+        /// is passed a blank or <c>null</c> value.
+        /// </exception>
         public static void CreateDirectoryIfNotExists(string directoryPath)
         {
+            if (string.IsNullOrWhiteSpace(directoryPath))
+                throw new ArgumentException(
+                    "Value cannot be null or whitespace.", nameof(directoryPath)
+                );
+
             // write the name of the current class and method we are now
             // entering, into the log
             DebugUtils.WriteLine(
