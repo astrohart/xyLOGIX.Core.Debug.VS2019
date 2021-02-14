@@ -8,19 +8,30 @@ using System.Security.Principal;
 
 namespace xyLOGIX.Core.Debug
 {
+    /// <summary>
+    /// Methods to work with files and folders in a robust way.
+    /// </summary>
+    /// <remarks>
+    /// These methods are here in order to assist applications in working with
+    /// log files and prepping for application startup and first-time use.
+    /// </remarks>
     public static class DebugFileAndFolderHelper
     {
         public static void ClearTempFileDir()
         {
-            // write the name of the current class and method we are now entering, into the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "In FileAndFolderHelpers.ClearTempFileDir");
+            // write the name of the current class and method we are now
+            // entering, into the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug, "In FileAndFolderHelpers.ClearTempFileDir"
+            );
 
             try
             {
                 var psi = new ProcessStartInfo
                 {
                     FileName = @"C:\Windows\system32\cmd.exe",
-                    Arguments = "/C rd /S /Q \"" + Path.GetTempPath() + "\"",
+                    Arguments =
+                        "/C rd /S /Q \"" + Path.GetTempPath() + "\"",
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Hidden
@@ -37,136 +48,213 @@ namespace xyLOGIX.Core.Debug
 
         public static void CreateDirectoryIfNotExists(string directoryPath)
         {
-            // write the name of the current class and method we are now entering, into the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "In FileAndFolderHelpers.CreateDirectoryIfNotExists");
+            // write the name of the current class and method we are now
+            // entering, into the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "In FileAndFolderHelpers.CreateDirectoryIfNotExists"
+            );
 
             // Dump the variable directoryPath to the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.CreateDirectoryIfNotExists: directoryPath = '{0}'", directoryPath);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "FileAndFolderHelpers.CreateDirectoryIfNotExists: directoryPath = '{0}'",
+                directoryPath
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info,
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
                 "FileAndFolderHelpers.CreateDirectoryIfNotExists: Checking whether the directory '{0}' exists...",
-                directoryPath);
+                directoryPath
+            );
 
             if (Directory.Exists(directoryPath))
             {
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: The directory '{0}' exists.  Nothing to do.", directoryPath);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: The directory '{0}' exists.  Nothing to do.",
+                    directoryPath
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.CreateDirectoryIfNotExists: Done.");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: Done."
+                );
 
                 return;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Info,
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
                 "FileAndFolderHelpers.CreateDirectoryIfNotExists: Now attempting to create the directory '{0}'...",
-                directoryPath);
+                directoryPath
+            );
 
             try
             {
                 Directory.CreateDirectory(directoryPath);
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: Checking whether we were successful...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: Checking whether we were successful..."
+                );
 
                 if (Directory.Exists(directoryPath))
-                {
-                    DebugUtils.WriteLine(DebugLevel.Info,
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
                         "FileAndFolderHelpers.CreateDirectoryIfNotExists: We successfully created the new directory '{0}'.",
-                        directoryPath);
-                }
+                        directoryPath
+                    );
                 else
-                {
-                    DebugUtils.WriteLine(DebugLevel.Error,
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
                         "FileAndFolderHelpers.CreateDirectoryIfNotExists: Failed to create the directory '{0}'.",
-                        directoryPath);
-                }
+                        directoryPath
+                    );
             }
             catch (Exception e)
             {
                 // dump all the exception info to the log
                 DebugUtils.LogException(e);
 
-                DebugUtils.WriteLine(DebugLevel.Error,
-                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: Failed to create directory '{0}'.", directoryPath);
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "FileAndFolderHelpers.CreateDirectoryIfNotExists: Failed to create directory '{0}'.",
+                    directoryPath
+                );
             }
 
-            DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.CreateDirectoryIfNotExists: Done.");
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "FileAndFolderHelpers.CreateDirectoryIfNotExists: Done."
+            );
         }
 
         public static List<string> GetFilesInFolder(string folder)
         {
-            // write the name of the current class and method we are now entering, into the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "In MainWindowPresenter.GetFilesInFolder");
+            // write the name of the current class and method we are now
+            // entering, into the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug, "In MainWindowPresenter.GetFilesInFolder"
+            );
 
             var result = new List<string>();
 
-            // Check to see if the required parameter, folder, is blank, whitespace, or null. If it
-            // is any of these, send an error to the log file and quit.
+            // Check to see if the required parameter, folder, is blank,
+            // whitespace, or null. If it is any of these, send an error to the
+            // log file and quit.
 
             // Dump the parameter folder to the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "MainWindowPresenter.GetFilesInFolder: folder = '{0}'", folder);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "MainWindowPresenter.GetFilesInFolder: folder = '{0}'", folder
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: Checking whether the required parameter, 'folder', is blank or not...");
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "MainWindowPresenter.GetFilesInFolder: Checking whether the required parameter, 'folder', is blank or not..."
+            );
 
             if (string.IsNullOrWhiteSpace(folder))
             {
-                DebugUtils.WriteLine(DebugLevel.Error,
-                    "MainWindowPresenter.GetFilesInFolder: Blank value passed for the 'folder' parameter. This parameter is required.");
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "MainWindowPresenter.GetFilesInFolder: Blank value passed for the 'folder' parameter. This parameter is required."
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: {0} files found.", result.Count);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "MainWindowPresenter.GetFilesInFolder: {0} files found.",
+                    result.Count
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: Done.");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "MainWindowPresenter.GetFilesInFolder: Done."
+                );
 
                 // stop.
                 return result;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: The parameter, 'folder', is not blank.");
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "MainWindowPresenter.GetFilesInFolder: The parameter, 'folder', is not blank."
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info,
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
                 "MainWindowPresenter.GetFilesInFolder: Attempting to recursively get a list of all the files in the folder '{0}'...",
-                folder);
+                folder
+            );
 
             try
             {
-                result = Directory.GetFiles(folder, "*.*", SearchOption.AllDirectories).Where(File.Exists).ToList();
+                result = Directory
+                    .GetFiles(folder, "*.*", SearchOption.AllDirectories)
+                    .Where(File.Exists).ToList();
             }
             catch (Exception)
             {
                 result = new List<string>();
             }
 
-            DebugUtils.WriteLine(DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: {0} files found.", result.Count);
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "MainWindowPresenter.GetFilesInFolder: {0} files found.",
+                result.Count
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: Done.");
+            DebugUtils.WriteLine(
+                DebugLevel.Info, "MainWindowPresenter.GetFilesInFolder: Done."
+            );
 
             return result;
         }
 
         /// <summary>
-        /// Checks to see if the specified file exists. If not, emits a "stop" error message and
-        /// returns false; otherwise, returns true.
+        /// Checks to see if the specified file exists. If not, emits a "stop"
+        /// error message and returns false; otherwise, returns true.
         /// </summary>
         public static bool InsistPathExists(string fileName)
         {
-            // write the name of the current class and method we are now entering, into the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "In FileAndFolderHelpers.InsistPathExists");
+            // write the name of the current class and method we are now
+            // entering, into the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug, "In FileAndFolderHelpers.InsistPathExists"
+            );
 
             var result = false;
 
-            DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.InsistPathExists: Checking to make sure the file '{0}' actually exists...", fileName);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "FileAndFolderHelpers.InsistPathExists: Checking to make sure the file '{0}' actually exists...",
+                fileName
+            );
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(fileName) && File.Exists(fileName))
+                if (!string.IsNullOrWhiteSpace(fileName) &&
+                    File.Exists(fileName))
                 {
-                    DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.InsistPathExists: The file '{0}' was found.", fileName);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        "FileAndFolderHelpers.InsistPathExists: The file '{0}' was found.",
+                        fileName
+                    );
 
                     result = true;
 
-                    DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.InsistPathExists: Result = {0}", result);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        "FileAndFolderHelpers.InsistPathExists: Result = {0}",
+                        result
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.InsistPathExists: Done.");
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "FileAndFolderHelpers.InsistPathExists: Done."
+                    );
 
                     return result;
                 }
@@ -179,11 +267,20 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.InsistPathExists: The file '{0}' was not found.", fileName);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "FileAndFolderHelpers.InsistPathExists: The file '{0}' was not found.",
+                fileName
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.InsistPathExists: Result = {0}", result);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "FileAndFolderHelpers.InsistPathExists: Result = {0}", result
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.InsistPathExists: Done.");
+            DebugUtils.WriteLine(
+                DebugLevel.Info, "FileAndFolderHelpers.InsistPathExists: Done."
+            );
 
             return result;
         }
@@ -191,12 +288,19 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Checks for write access for the given file.
         /// </summary>
-        /// <param name="path">The filename.</param>
-        /// <returns>true, if write access is allowed, otherwise false</returns>
+        /// <param name="path">
+        /// The filename.
+        /// </param>
+        /// <returns>
+        /// true, if write access is allowed, otherwise false
+        /// </returns>
         public static bool IsFileWriteable(string path)
         {
-            // write the name of the current class and method we are now entering, into the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "In FileAndFolderHelpers.IsFileWriteable");
+            // write the name of the current class and method we are now
+            // entering, into the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug, "In FileAndFolderHelpers.IsFileWriteable"
+            );
 
             var result = false;
 
@@ -204,81 +308,128 @@ namespace xyLOGIX.Core.Debug
             {
                 // Check whether the file has the read-only attribute set.
 
-                DebugUtils.WriteLine(DebugLevel.Info,
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
                     "FileAndFolderHelpers.IsFileWriteable: Checking whether the file '{0}' has the read only attribute set...",
-                    path);
+                    path
+                );
 
                 if ((File.GetAttributes(path) & FileAttributes.ReadOnly) != 0)
                 {
-                    DebugUtils.WriteLine(DebugLevel.Error,
-                        "FileAndFolderHelpers.IsFileWriteable: The file '{0}' is not writeable.", path);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "FileAndFolderHelpers.IsFileWriteable: The file '{0}' is not writeable.",
+                        path
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.IsFileWriteable: Result = {0}", result);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        "FileAndFolderHelpers.IsFileWriteable: Result = {0}",
+                        result
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFileWriteable: Done.");
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "FileAndFolderHelpers.IsFileWriteable: Done."
+                    );
 
                     return result;
                 }
 
-                DebugUtils.WriteLine(DebugLevel.Info,
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
                     "FileAndFolderHelpers.IsFileWriteable: Getting the access rules for the file '{0}' and current user...",
-                    path);
+                    path
+                );
 
-                // Get the access rules of the specified files (user groups and user names that have
-                // access to the file)
-                var rules = File.GetAccessControl(path).GetAccessRules(true, true, typeof(SecurityIdentifier));
+                // Get the access rules of the specified files (user groups and
+                // user names that have access to the file)
+                var rules = File.GetAccessControl(path).GetAccessRules(
+                    true, true, typeof(SecurityIdentifier)
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFileWriteable: Found {0} rules.",
-                    rules.Count);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFileWriteable: Found {0} rules.",
+                    rules.Count
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFileWriteable: Accessing the groups that the current user is a member of...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFileWriteable: Accessing the groups that the current user is a member of..."
+                );
 
-                // Get the identity of the current user and the groups that the user is in.
+                // Get the identity of the current user and the groups that the
+                // user is in.
                 var groups = WindowsIdentity.GetCurrent().Groups;
 
-                DebugUtils.WriteLine(DebugLevel.Info,
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
                     "FileAndFolderHelpers.IsFileWriteable: The current user is a member of {0} groups.",
-                    groups.Count);
+                    groups.Count
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFileWriteable: Getting the Security Identifier (SID) for the current user...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFileWriteable: Getting the Security Identifier (SID) for the current user..."
+                );
 
                 var sidCurrentUser = WindowsIdentity.GetCurrent().User.Value;
 
-                DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFileWriteable: The SID has been obtained.");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFileWriteable: The SID has been obtained."
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFileWriteable: Checking whether the file '{0}' has Deny permissions to Write Data...", path);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFileWriteable: Checking whether the file '{0}' has Deny permissions to Write Data...",
+                    path
+                );
 
-                // Check if writing to the file is explicitly denied for this user or a group the
-                // user is in.
-                if (rules.OfType<FileSystemAccessRule>().Any(r =>
-                    (groups.Contains(r.IdentityReference) ||
-                        r.IdentityReference.Value == sidCurrentUser)
-                    && r.AccessControlType == AccessControlType.Deny
-                    && (r.FileSystemRights & FileSystemRights.WriteData) == FileSystemRights.WriteData))
+                // Check if writing to the file is explicitly denied for this
+                // user or a group the user is in.
+                if (rules.OfType<FileSystemAccessRule>().Any(
+                    r => (groups.Contains(r.IdentityReference) ||
+                          r.IdentityReference.Value == sidCurrentUser) &&
+                         r.AccessControlType == AccessControlType.Deny &&
+                         (r.FileSystemRights & FileSystemRights.WriteData) ==
+                         FileSystemRights.WriteData
+                ))
                 {
-                    DebugUtils.WriteLine(DebugLevel.Error,
-                        "FileAndFolderHelpers.IsFileWriteable: The file '{0}' is not writeable due to security settings.", path);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "FileAndFolderHelpers.IsFileWriteable: The file '{0}' is not writeable due to security settings.",
+                        path
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.IsFileWriteable: Result = {0}", result);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        "FileAndFolderHelpers.IsFileWriteable: Result = {0}",
+                        result
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFileWriteable: Done.");
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "FileAndFolderHelpers.IsFileWriteable: Done."
+                    );
 
                     return result;
                 }
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFileWriteable: Checking if writing is allowed...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFileWriteable: Checking if writing is allowed..."
+                );
 
                 // Check if writing is allowed
-                result = rules.OfType<FileSystemAccessRule>()
-                    .Any(r => (groups.Contains(r.IdentityReference)
-                        || r.IdentityReference.Value == sidCurrentUser)
-                        && r.AccessControlType == AccessControlType.Allow
-                        && (r.FileSystemRights & FileSystemRights.WriteData)
-                        == FileSystemRights.WriteData);
+                result = rules.OfType<FileSystemAccessRule>().Any(
+                    r => (groups.Contains(r.IdentityReference) ||
+                          r.IdentityReference.Value == sidCurrentUser) &&
+                         r.AccessControlType == AccessControlType.Allow &&
+                         (r.FileSystemRights & FileSystemRights.WriteData) ==
+                         FileSystemRights.WriteData
+                );
             }
             catch (Exception e)
             {
@@ -288,9 +439,14 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.IsFileWriteable: Result = {0}", result);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "FileAndFolderHelpers.IsFileWriteable: Result = {0}", result
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFileWriteable: Done.");
+            DebugUtils.WriteLine(
+                DebugLevel.Info, "FileAndFolderHelpers.IsFileWriteable: Done."
+            );
 
             return result;
         }
@@ -298,80 +454,126 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Checks for write access for the given directory.
         /// </summary>
-        /// <param name="path">The path to the directory to check.</param>
-        /// <returns>true, if write access is allowed, otherwise false</returns>
+        /// <param name="path">
+        /// The path to the directory to check.
+        /// </param>
+        /// <returns>
+        /// true, if write access is allowed, otherwise false
+        /// </returns>
         public static bool IsFolderWriteable(string path)
         {
-            // write the name of the current class and method we are now entering, into the log
-            DebugUtils.WriteLine(DebugLevel.Debug, "In FileAndFolderHelpers.IsFolderWriteable");
+            // write the name of the current class and method we are now
+            // entering, into the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug, "In FileAndFolderHelpers.IsFolderWriteable"
+            );
 
             var result = false;
 
             try
             {
-                DebugUtils.WriteLine(DebugLevel.Info,
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
                     "FileAndFolderHelpers.IsFolderWriteable: Getting the access rules for the folder '{0}' and current user...",
-                    path);
+                    path
+                );
 
-                // Get the access rules of the specified files (user groups and user names that have
-                // access to the folder)
-                var rules = Directory.GetAccessControl(path).GetAccessRules(true, true, typeof(SecurityIdentifier));
+                // Get the access rules of the specified files (user groups and
+                // user names that have access to the folder)
+                var rules = Directory.GetAccessControl(path).GetAccessRules(
+                    true, true, typeof(SecurityIdentifier)
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFolderWriteable: Found {0} rules.",
-                    rules.Count);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFolderWriteable: Found {0} rules.",
+                    rules.Count
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFolderWriteable: Accessing the groups that the current user is a member of...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFolderWriteable: Accessing the groups that the current user is a member of..."
+                );
 
-                // Get the identity of the current user and the groups that the user is in.
+                // Get the identity of the current user and the groups that the
+                // user is in.
                 var groups = WindowsIdentity.GetCurrent().Groups;
 
-                DebugUtils.WriteLine(DebugLevel.Info,
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
                     "FileAndFolderHelpers.IsFolderWriteable: The current user is a member of {0} groups.",
-                    groups.Count);
+                    groups.Count
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFolderWriteable: Getting the Security Identifier (SID) for the current user...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFolderWriteable: Getting the Security Identifier (SID) for the current user..."
+                );
 
                 var sidCurrentUser = WindowsIdentity.GetCurrent().User.Value;
 
-                DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFolderWriteable: The SID has been obtained.");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFolderWriteable: The SID has been obtained."
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFolderWriteable: Checking whether the folder '{0}' has Deny permissions to Write Data...", path);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFolderWriteable: Checking whether the folder '{0}' has Deny permissions to Write Data...",
+                    path
+                );
 
-                // Check if writing to the folder is explicitly denied for this user or a group the
-                // user is in.
-                if (rules.OfType<FileSystemAccessRule>().Any(r =>
-                    (groups.Contains(r.IdentityReference) ||
-                        r.IdentityReference.Value == sidCurrentUser)
-                    && r.AccessControlType == AccessControlType.Deny
-                    && (r.FileSystemRights & FileSystemRights.WriteData) == FileSystemRights.WriteData))
+                // Check if writing to the folder is explicitly denied for this
+                // user or a group the user is in.
+                if (rules.OfType<FileSystemAccessRule>().Any(
+                    r => (groups.Contains(r.IdentityReference) ||
+                          r.IdentityReference.Value == sidCurrentUser) &&
+                         r.AccessControlType == AccessControlType.Deny &&
+                         (r.FileSystemRights & FileSystemRights.WriteData) ==
+                         FileSystemRights.WriteData
+                ))
                 {
-                    DebugUtils.WriteLine(DebugLevel.Error,
-                        "FileAndFolderHelpers.IsFolderWriteable: The folder '{0}' is not writeable due to security settings.", path);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "FileAndFolderHelpers.IsFolderWriteable: The folder '{0}' is not writeable due to security settings.",
+                        path
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.IsFolderWriteable: Result = {0}", result);
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        "FileAndFolderHelpers.IsFolderWriteable: Result = {0}",
+                        result
+                    );
 
-                    DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFolderWriteable: Done.");
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "FileAndFolderHelpers.IsFolderWriteable: Done."
+                    );
 
                     return result;
                 }
 
-                DebugUtils.WriteLine(DebugLevel.Info,
-                    "FileAndFolderHelpers.IsFolderWriteable: Checking if writing to this folder is allowed...");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "FileAndFolderHelpers.IsFolderWriteable: Checking if writing to this folder is allowed..."
+                );
 
                 // Check if writing is allowed
-                result = rules.OfType<FileSystemAccessRule>()
-                    .Any(r => (groups.Contains(r.IdentityReference)
-                        || r.IdentityReference.Value == sidCurrentUser)
-                        && r.AccessControlType == AccessControlType.Allow
-                        && (r.FileSystemRights & FileSystemRights.WriteData)
-                        == FileSystemRights.WriteData);
+                result = rules.OfType<FileSystemAccessRule>().Any(
+                    r => (groups.Contains(r.IdentityReference) ||
+                          r.IdentityReference.Value == sidCurrentUser) &&
+                         r.AccessControlType == AccessControlType.Allow &&
+                         (r.FileSystemRights & FileSystemRights.WriteData) ==
+                         FileSystemRights.WriteData
+                );
 
-                DebugUtils.WriteLine(DebugLevel.Info, result
-                    ? "FileAndFolderHelpers.IsFolderWriteable: Writing to the folder '{0}' is allowed."
-                    : "FileAndFolderHelpers.IsFolderWriteable: Writing to the folder '{0}' is not allowed.", path);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    result
+                        ? "FileAndFolderHelpers.IsFolderWriteable: Writing to the folder '{0}' is allowed."
+                        : "FileAndFolderHelpers.IsFolderWriteable: Writing to the folder '{0}' is not allowed.",
+                    path
+                );
             }
             catch (Exception e)
             {
@@ -381,9 +583,14 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Debug, "FileAndFolderHelpers.IsFolderWriteable: Result = {0}", result);
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                "FileAndFolderHelpers.IsFolderWriteable: Result = {0}", result
+            );
 
-            DebugUtils.WriteLine(DebugLevel.Info, "FileAndFolderHelpers.IsFolderWriteable: Done.");
+            DebugUtils.WriteLine(
+                DebugLevel.Info, "FileAndFolderHelpers.IsFolderWriteable: Done."
+            );
 
             return result;
         }
