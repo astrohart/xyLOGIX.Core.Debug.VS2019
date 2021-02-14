@@ -101,7 +101,7 @@
     <Compile Include="DefaultLoggingInfrastructure.cs" />
     <Compile Include="EventLogManager.cs" />
     <Compile Include="EventLogType.cs" />
-    <Compile Include="FileAndFolderHelper.cs" />
+    <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />

@@ -71,7 +71,7 @@ namespace xyLOGIX.Core.Debug
                 Path.GetDirectoryName(LogFilePath)
             );
 
-            if (!FileAndFolderHelper.IsFolderWriteable(
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(
                 Path.GetDirectoryName(LogFilePath)
             ))
             {
@@ -348,7 +348,7 @@ namespace xyLOGIX.Core.Debug
             );
 
             // Check if the user has write access to the parent directory of the log file.
-            if (!FileAndFolderHelper.IsFolderWriteable(logFileDirectoryParent))
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(logFileDirectoryParent))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
@@ -362,13 +362,13 @@ namespace xyLOGIX.Core.Debug
                 );
             }
 
-            FileAndFolderHelper.CreateDirectoryIfNotExists(
+            DebugFileAndFolderHelper.CreateDirectoryIfNotExists(
                 logFileDirectoryPath
             );
 
             // We have to insist that the directory that the log file is in is writeable.  If we can't
             // get write access to the log file directory, then throw an exception.
-            if (!FileAndFolderHelper.IsFolderWriteable(logFileDirectoryPath))
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(logFileDirectoryPath))
                 throw new UnauthorizedAccessException(
                     $"We don't have write permissions to the directory '{logFileDirectoryPath}'."
                 );

@@ -8,7 +8,7 @@ using System.Security.Principal;
 
 namespace xyLOGIX.Core.Debug
 {
-    public static class FileAndFolderHelper
+    public static class DebugFileAndFolderHelper
     {
         public static void ClearTempFileDir()
         {
