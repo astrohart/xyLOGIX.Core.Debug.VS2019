@@ -3,6 +3,13 @@
 
 ## Contents
 
+- [DebugFileAndFolderHelper](#T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper')
+  - [ClearTempFileDir()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.ClearTempFileDir')
+  - [CreateDirectoryIfNotExists(directoryPath)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-CreateDirectoryIfNotExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.CreateDirectoryIfNotExists(System.String)')
+  - [GetFilesInFolder(folder)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-GetFilesInFolder-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.GetFilesInFolder(System.String)')
+  - [InsistPathExists()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-InsistPathExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.InsistPathExists(System.String)')
+  - [IsFileWriteable(path)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsFileWriteable-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.IsFileWriteable(System.String)')
+  - [IsFolderWriteable(path)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsFolderWriteable-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.IsFolderWriteable(System.String)')
 - [DebugUtils](#T-xyLOGIX-Core-Debug-DebugUtils 'xyLOGIX.Core.Debug.DebugUtils')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
@@ -57,10 +64,6 @@
   - [Security](#F-xyLOGIX-Core-Debug-EventLogType-Security 'xyLOGIX.Core.Debug.EventLogType.Security')
   - [System](#F-xyLOGIX-Core-Debug-EventLogType-System 'xyLOGIX.Core.Debug.EventLogType.System')
   - [Unknown](#F-xyLOGIX-Core-Debug-EventLogType-Unknown 'xyLOGIX.Core.Debug.EventLogType.Unknown')
-- [FileAndFolderHelper](#T-xyLOGIX-Core-Debug-FileAndFolderHelper 'xyLOGIX.Core.Debug.FileAndFolderHelper')
-  - [InsistPathExists()](#M-xyLOGIX-Core-Debug-FileAndFolderHelper-InsistPathExists-System-String- 'xyLOGIX.Core.Debug.FileAndFolderHelper.InsistPathExists(System.String)')
-  - [IsFileWriteable(path)](#M-xyLOGIX-Core-Debug-FileAndFolderHelper-IsFileWriteable-System-String- 'xyLOGIX.Core.Debug.FileAndFolderHelper.IsFileWriteable(System.String)')
-  - [IsFolderWriteable(path)](#M-xyLOGIX-Core-Debug-FileAndFolderHelper-IsFolderWriteable-System-String- 'xyLOGIX.Core.Debug.FileAndFolderHelper.IsFolderWriteable(System.String)')
 - [FileAppenderConfigurator](#T-xyLOGIX-Core-Debug-FileAppenderConfigurator 'xyLOGIX.Core.Debug.FileAppenderConfigurator')
   - [SetMinimalLock(appender)](#M-xyLOGIX-Core-Debug-FileAppenderConfigurator-SetMinimalLock-log4net-Appender-FileAppender- 'xyLOGIX.Core.Debug.FileAppenderConfigurator.SetMinimalLock(log4net.Appender.FileAppender)')
 - [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager')
@@ -98,6 +101,123 @@
   - [Culture](#P-xyLOGIX-Core-Debug-Properties-Resources-Culture 'xyLOGIX.Core.Debug.Properties.Resources.Culture')
   - [ExceptionMessageFormat](#P-xyLOGIX-Core-Debug-Properties-Resources-ExceptionMessageFormat 'xyLOGIX.Core.Debug.Properties.Resources.ExceptionMessageFormat')
   - [ResourceManager](#P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager 'xyLOGIX.Core.Debug.Properties.Resources.ResourceManager')
+
+<a name='T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper'></a>
+## DebugFileAndFolderHelper `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Methods to work with files and folders in a robust way.
+
+##### Remarks
+
+These methods are here in order to assist applications in working with
+log files and prepping for application startup and first-time use.
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir'></a>
+### ClearTempFileDir() `method`
+
+##### Summary
+
+Attempts to clear the files and folders from the user's temporary
+files directory.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-CreateDirectoryIfNotExists-System-String-'></a>
+### CreateDirectoryIfNotExists(directoryPath) `method`
+
+##### Summary
+
+Creates a folder if the folder does not already exist.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| directoryPath | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) Path to the folder that you want to create. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentException 'System.ArgumentException') | Thrown if the required parameter, `directoryPath`,
+is passed a blank or `null` value. |
+
+##### Remarks
+
+If the folder specified by the `directoryPath`
+parameter already exists on the disk, then this method does nothing.
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-GetFilesInFolder-System-String-'></a>
+### GetFilesInFolder(folder) `method`
+
+##### Summary
+
+Gets a collection of strings, each of which contains the pathname of
+a file is present in the specified `folder`..
+
+##### Returns
+
+Collection of strings, each element of which contains the pathname of a file located in the specified `folder`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| folder | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String containing the path to the folder to be searched. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-InsistPathExists-System-String-'></a>
+### InsistPathExists() `method`
+
+##### Summary
+
+Checks to see if the specified file exists. If not, emits a "stop"
+error message and returns false; otherwise, returns true.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsFileWriteable-System-String-'></a>
+### IsFileWriteable(path) `method`
+
+##### Summary
+
+Checks for write access for the given file.
+
+##### Returns
+
+true, if write access is allowed, otherwise false
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The filename. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsFolderWriteable-System-String-'></a>
+### IsFolderWriteable(path) `method`
+
+##### Summary
+
+Checks for write access for the given directory.
+
+##### Returns
+
+true, if write access is allowed, otherwise false
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The path to the directory to check. |
 
 <a name='T-xyLOGIX-Core-Debug-DebugUtils'></a>
 ## DebugUtils `type`
@@ -902,59 +1022,6 @@ Events get directed to the System event log.
 ##### Summary
 
 The event log type is unknown.
-
-<a name='T-xyLOGIX-Core-Debug-FileAndFolderHelper'></a>
-## FileAndFolderHelper `type`
-
-##### Namespace
-
-xyLOGIX.Core.Debug
-
-<a name='M-xyLOGIX-Core-Debug-FileAndFolderHelper-InsistPathExists-System-String-'></a>
-### InsistPathExists() `method`
-
-##### Summary
-
-Checks to see if the specified file exists. If not, emits a "stop" error message and
-returns false; otherwise, returns true.
-
-##### Parameters
-
-This method has no parameters.
-
-<a name='M-xyLOGIX-Core-Debug-FileAndFolderHelper-IsFileWriteable-System-String-'></a>
-### IsFileWriteable(path) `method`
-
-##### Summary
-
-Checks for write access for the given file.
-
-##### Returns
-
-true, if write access is allowed, otherwise false
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The filename. |
-
-<a name='M-xyLOGIX-Core-Debug-FileAndFolderHelper-IsFolderWriteable-System-String-'></a>
-### IsFolderWriteable(path) `method`
-
-##### Summary
-
-Checks for write access for the given directory.
-
-##### Returns
-
-true, if write access is allowed, otherwise false
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The path to the directory to check. |
 
 <a name='T-xyLOGIX-Core-Debug-FileAppenderConfigurator'></a>
 ## FileAppenderConfigurator `type`

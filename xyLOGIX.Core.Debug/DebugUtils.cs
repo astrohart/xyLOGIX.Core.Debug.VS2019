@@ -191,9 +191,9 @@ namespace xyLOGIX.Core.Debug
         ///     occurred, as well as the message of the exception and its stack trace.
         /// </summary>
         /// <param name="e">Reference to the <see cref="Exception" /> to be logged.</param>
-        public static string LogException(Exception e)
+        public static void LogException(Exception e)
         {
-            if (e == null) return string.Empty;
+            if (e == null) return;
 
             var message = string.Format(
                 Resources.ExceptionMessageFormat, e.GetType(), e.Message,
@@ -201,8 +201,6 @@ namespace xyLOGIX.Core.Debug
             );
 
             WriteLine(DebugLevel.Error, message);
-
-            return message;
         }
 
         /// <summary>
