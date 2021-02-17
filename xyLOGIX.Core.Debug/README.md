@@ -10,6 +10,7 @@
   - [InsistPathExists()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-InsistPathExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.InsistPathExists(System.String)')
   - [IsFileWriteable(path)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsFileWriteable-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.IsFileWriteable(System.String)')
   - [IsFolderWriteable(path)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsFolderWriteable-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.IsFolderWriteable(System.String)')
+  - [IsValidPath(fullyQualifiedPath)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsValidPath-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.IsValidPath(System.String)')
 - [DebugUtils](#T-xyLOGIX-Core-Debug-DebugUtils 'xyLOGIX.Core.Debug.DebugUtils')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
@@ -165,7 +166,8 @@ a file is present in the specified `folder`..
 
 ##### Returns
 
-Collection of strings, each element of which contains the pathname of a file located in the specified `folder`.
+Collection of strings, each element of which contains the pathname
+of a file located in the specified `folder`.
 
 ##### Parameters
 
@@ -218,6 +220,28 @@ true, if write access is allowed, otherwise false
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | path | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The path to the directory to check. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-IsValidPath-System-String-'></a>
+### IsValidPath(fullyQualifiedPath) `method`
+
+##### Summary
+
+Gets a value indicating whether the
+`fullyQualifiedPath`
+is actually a valid path on the system,
+according to operating-system-specific rules.
+
+##### Returns
+
+If the path provided in `fullyQualifiedPath` is a
+valid path according to operating-system-specified rules, then this
+method returns `true`. Otherwise, the return value is `false`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| fullyQualifiedPath | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String containing the path that is to be validated. |
 
 <a name='T-xyLOGIX-Core-Debug-DebugUtils'></a>
 ## DebugUtils `type`
