@@ -121,4 +121,7 @@
     <value>{0}: {1}
 	{2}</value>
   </data>
+  <data name="Error_DepthMustBeNonNegative" xml:space="preserve">
+    <value>The 'depth' parameter must be zero or greater.</value>
+  </data>
 </root>
