@@ -1390,7 +1390,7 @@ configured in the application configuration file. |
 
 | Name | Description |
 | ---- | ----------- |
-| [ArgumentException](#T-ArgumentException 'ArgumentException') | Thrown if the required parameter, `name`, is passed
+| [System.ArgumentException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentException 'System.ArgumentException') | Thrown if the required parameter, `name`, is passed
 a blank or `null` string for a value. |
 
 <a name='M-xyLOGIX-Core-Debug-FileAppenderManager-GetFirstAppender-log4net-Repository-ILoggerRepository-'></a>
