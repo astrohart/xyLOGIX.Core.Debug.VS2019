@@ -106,6 +106,23 @@
   - [Default](#F-xyLOGIX-Core-Debug-LoggingInfrastructureType-Default 'xyLOGIX.Core.Debug.LoggingInfrastructureType.Default')
   - [PostSharp](#F-xyLOGIX-Core-Debug-LoggingInfrastructureType-PostSharp 'xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp')
   - [Unknown](#F-xyLOGIX-Core-Debug-LoggingInfrastructureType-Unknown 'xyLOGIX.Core.Debug.LoggingInfrastructureType.Unknown')
+- [ObjectDumper](#T-xyLOGIX-Core-Debug-ObjectDumper 'xyLOGIX.Core.Debug.ObjectDumper')
+  - [#ctor(depth)](#M-xyLOGIX-Core-Debug-ObjectDumper-#ctor-System-Int32- 'xyLOGIX.Core.Debug.ObjectDumper.#ctor(System.Int32)')
+  - [_currentStreamPosition](#F-xyLOGIX-Core-Debug-ObjectDumper-_currentStreamPosition 'xyLOGIX.Core.Debug.ObjectDumper._currentStreamPosition')
+  - [_depth](#F-xyLOGIX-Core-Debug-ObjectDumper-_depth 'xyLOGIX.Core.Debug.ObjectDumper._depth')
+  - [_indentLevel](#F-xyLOGIX-Core-Debug-ObjectDumper-_indentLevel 'xyLOGIX.Core.Debug.ObjectDumper._indentLevel')
+  - [_writer](#F-xyLOGIX-Core-Debug-ObjectDumper-_writer 'xyLOGIX.Core.Debug.ObjectDumper._writer')
+  - [Write(element,depth)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.Object,System.Int32)')
+  - [Write(element,depth,log)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.Object,System.Int32,System.IO.TextWriter)')
+  - [Write(s)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-String- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.String)')
+  - [WriteIndent()](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteIndent 'xyLOGIX.Core.Debug.ObjectDumper.WriteIndent')
+  - [WriteLine(element,depth)](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteLine-System-Object,System-Int32- 'xyLOGIX.Core.Debug.ObjectDumper.WriteLine(System.Object,System.Int32)')
+  - [WriteLine(element,depth,log)](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteLine-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.ObjectDumper.WriteLine(System.Object,System.Int32,System.IO.TextWriter)')
+  - [WriteLine()](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteLine 'xyLOGIX.Core.Debug.ObjectDumper.WriteLine')
+  - [WriteObject(prefix,element)](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteObject-System-String,System-Object- 'xyLOGIX.Core.Debug.ObjectDumper.WriteObject(System.String,System.Object)')
+  - [WriteObjectToLines(prefix,element)](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteObjectToLines-System-String,System-Object- 'xyLOGIX.Core.Debug.ObjectDumper.WriteObjectToLines(System.String,System.Object)')
+  - [WriteTab()](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteTab 'xyLOGIX.Core.Debug.ObjectDumper.WriteTab')
+  - [WriteValue(o)](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteValue-System-Object- 'xyLOGIX.Core.Debug.ObjectDumper.WriteValue(System.Object)')
 - [PostSharpLoggingInfrastructure](#T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure')
   - [_relay](#F-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-_relay 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure._relay')
   - [Type](#P-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.Type')
@@ -1768,6 +1785,335 @@ PostSharp-compatible logging infrastructure initialization.
 ##### Summary
 
 Unknown strategy type.
+
+<a name='T-xyLOGIX-Core-Debug-ObjectDumper'></a>
+## ObjectDumper `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Object that is responsible for writing out the string representation of
+objects to the log file. Works in a way very similar to LINQPad's Dump()
+method.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-#ctor-System-Int32-'></a>
+### #ctor(depth) `constructor`
+
+##### Summary
+
+Constructs a new instance of
+[ObjectDumper](#T-xyLOGIX-Core-Debug-ObjectDumper 'xyLOGIX.Core.Debug.ObjectDumper')
+and returns a reference
+to it.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer value specifying the depth (in terms of
+inheritance levels) to which to dump object data. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is not zero or greater. |
+
+<a name='F-xyLOGIX-Core-Debug-ObjectDumper-_currentStreamPosition'></a>
+### _currentStreamPosition `constants`
+
+##### Summary
+
+Integer specifying the current position in the output stream.
+
+<a name='F-xyLOGIX-Core-Debug-ObjectDumper-_depth'></a>
+### _depth `constants`
+
+##### Summary
+
+Integer specifying the depth (inheritance levels) to which to dump
+object data.
+
+##### Remarks
+
+Must be zero or greater.
+
+<a name='F-xyLOGIX-Core-Debug-ObjectDumper-_indentLevel'></a>
+### _indentLevel `constants`
+
+##### Summary
+
+Integer specifying the indentation level of the logged data.
+
+##### Remarks
+
+Must be 1 or greater.
+
+<a name='F-xyLOGIX-Core-Debug-ObjectDumper-_writer'></a>
+### _writer `constants`
+
+##### Summary
+
+Reference to a [TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') to which to send
+the logged data.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32-'></a>
+### Write(element,depth) `method`
+
+##### Summary
+
+Writes an object, a reference to which is specified by the
+`element`
+parameter, to the log, to the number of inheritance
+levels specified by `depth`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to an instance of an object that should be dumped. |
+| depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer specifying how far up the inheritance chain to
+dump. Default is zero. Must be zero or greater. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the required parameter, `element`, is
+passed a `null` value. |
+| [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is not zero or greater. |
+
+##### Remarks
+
+By default, this overload of the method sends the dump output to the
+[Out](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Console.Out 'System.Console.Out') stream.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32,System-IO-TextWriter-'></a>
+### Write(element,depth,log) `method`
+
+##### Summary
+
+Writes an object, a reference to which is specified by the
+`element`
+parameter, to the log, to the number of inheritance
+levels specified by `depth`, and outputs it to the
+[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') instance referred to by the
+`log` parameter.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to an instance of an object that should be dumped. |
+| depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer specifying how far up the inheritance chain to
+dump. Default is zero. Must be zero or greater. |
+| log | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | (Required.) Reference to an instance of
+[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
+to which output should be sent. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if either of the required parameters,
+`element`
+or `log`, are passed a `null` value. |
+| [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is not zero or greater. |
+
+##### Remarks
+
+By default, this overload of the method sends the dump output to the
+[Out](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Console.Out 'System.Console.Out') stream.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-String-'></a>
+### Write(s) `method`
+
+##### Summary
+
+Writes the content in the string, `s`, to the
+[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
+wrapped by this object.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| s | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String containing the content to be written. |
+
+##### Remarks
+
+This method does nothing if `s` is a blank string.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteIndent'></a>
+### WriteIndent() `method`
+
+##### Summary
+
+Writes an indent -- a 4 space tab -- to the
+[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
+that is wrapped by this object in
+the [_writer](#F-xyLOGIX-Core-Debug-ObjectDumper-_writer 'xyLOGIX.Core.Debug.ObjectDumper._writer') field at
+the indent level given by the value of the
+[_indentLevel](#F-xyLOGIX-Core-Debug-ObjectDumper-_indentLevel 'xyLOGIX.Core.Debug.ObjectDumper._indentLevel')
+field.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteLine-System-Object,System-Int32-'></a>
+### WriteLine(element,depth) `method`
+
+##### Summary
+
+Writes an object, a reference to which is specified by the
+`element`
+parameter, to the log, to the number of inheritance
+levels specified by `depth`, followed by a newline character.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to an instance of an object that should be dumped. |
+| depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer specifying how far up the inheritance chain to
+dump. Default is zero. Must be zero or greater. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the required parameter, `element`, is
+passed a `null` value. |
+| [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is not zero or greater. |
+
+##### Remarks
+
+By default, this overload of the method sends the dump output to the
+[Out](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Console.Out 'System.Console.Out') stream.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteLine-System-Object,System-Int32,System-IO-TextWriter-'></a>
+### WriteLine(element,depth,log) `method`
+
+##### Summary
+
+Writes an object, a reference to which is specified by the
+`element`
+parameter, to the log, to the number of inheritance
+levels specified by `depth`, and outputs it to the
+[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') instance referred to by the
+`log` parameter, followed by a newline character.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to an instance of an object that should be dumped. |
+| depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer specifying how far up the inheritance chain to
+dump. Default is zero. Must be zero or greater. |
+| log | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | (Required.) Reference to an instance of
+[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
+to which output should be sent. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if either of the required parameters,
+`element`
+or `log`, are passed a `null` value. |
+| [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is not zero or greater. |
+
+##### Remarks
+
+By default, this overload of the method sends the dump output to the
+[Out](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Console.Out 'System.Console.Out') stream.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteLine'></a>
+### WriteLine() `method`
+
+##### Summary
+
+Outputs a blank line to the [TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
+that is wrapped by this object.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This method does nothing if the
+[_writer](#F-xyLOGIX-Core-Debug-ObjectDumper-_writer 'xyLOGIX.Core.Debug.ObjectDumper._writer')
+field is a
+`null` reference.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteObject-System-String,System-Object-'></a>
+### WriteObject(prefix,element) `method`
+
+##### Summary
+
+Workhorse method that actually does the job of writing the specified
+`element` object to the output stream, with the
+specified `prefix`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| prefix | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Optional.) String containing the prefix to be used. May be blank or
+`null`. |
+| element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to the instance of the object to be dumped to
+the output stream. |
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteObjectToLines-System-String,System-Object-'></a>
+### WriteObjectToLines(prefix,element) `method`
+
+##### Summary
+
+Workhorse method that actually does the job of writing the specified
+`element` object to the output stream, with the
+specified `prefix`, with a newline character
+inserted after each line of text.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| prefix | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Optional.) String containing the prefix to be used. May be blank or
+`null`. |
+| element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to the instance of the object to be dumped to
+the output stream. |
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteTab'></a>
+### WriteTab() `method`
+
+##### Summary
+
+Writes a 4-space tab at teh proper level of indent, depending on the
+current position within the stream.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-WriteValue-System-Object-'></a>
+### WriteValue(o) `method`
+
+##### Summary
+
+Formats a value, specified by the reference to the instance of the
+object, `o`, in a nice way for output.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| o | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to an instance of the object to be formatted
+and written to the output stream. |
 
 <a name='T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure'></a>
 ## PostSharpLoggingInfrastructure `type`
