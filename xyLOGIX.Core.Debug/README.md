@@ -69,7 +69,7 @@
   - [Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type')
   - [Error(content)](#M-xyLOGIX-Core-Debug-EventLogManager-Error-System-String- 'xyLOGIX.Core.Debug.EventLogManager.Error(System.String)')
   - [Info(content)](#M-xyLOGIX-Core-Debug-EventLogManager-Info-System-String- 'xyLOGIX.Core.Debug.EventLogManager.Info(System.String)')
-  - [Initialize(eventSource,type)](#M-xyLOGIX-Core-Debug-EventLogManager-Initialize-System-String,xyLOGIX-Core-Debug-EventLogType- 'xyLOGIX.Core.Debug.EventLogManager.Initialize(System.String,xyLOGIX.Core.Debug.EventLogType)')
+  - [Initialize(eventSourceName,logType)](#M-xyLOGIX-Core-Debug-EventLogManager-Initialize-System-String,xyLOGIX-Core-Debug-EventLogType- 'xyLOGIX.Core.Debug.EventLogManager.Initialize(System.String,xyLOGIX.Core.Debug.EventLogType)')
   - [Warn(content)](#M-xyLOGIX-Core-Debug-EventLogManager-Warn-System-String- 'xyLOGIX.Core.Debug.EventLogManager.Warn(System.String)')
 - [EventLogType](#T-xyLOGIX-Core-Debug-EventLogType 'xyLOGIX.Core.Debug.EventLogType')
   - [Application](#F-xyLOGIX-Core-Debug-EventLogType-Application 'xyLOGIX.Core.Debug.EventLogType.Application')
@@ -80,6 +80,7 @@
 - [FileAppenderConfigurator](#T-xyLOGIX-Core-Debug-FileAppenderConfigurator 'xyLOGIX.Core.Debug.FileAppenderConfigurator')
   - [SetMinimalLock(appender)](#M-xyLOGIX-Core-Debug-FileAppenderConfigurator-SetMinimalLock-log4net-Appender-FileAppender- 'xyLOGIX.Core.Debug.FileAppenderConfigurator.SetMinimalLock(log4net.Appender.FileAppender)')
 - [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager')
+  - [GetAppenderByName(name)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetAppenderByName-System-String- 'xyLOGIX.Core.Debug.FileAppenderManager.GetAppenderByName(System.String)')
   - [GetFirstAppender(loggerRepository)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetFirstAppender-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.FileAppenderManager.GetFirstAppender(log4net.Repository.ILoggerRepository)')
 - [GetLoggingInfrastructure](#T-xyLOGIX-Core-Debug-GetLoggingInfrastructure 'xyLOGIX.Core.Debug.GetLoggingInfrastructure')
   - [For(type)](#M-xyLOGIX-Core-Debug-GetLoggingInfrastructure-For-xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.GetLoggingInfrastructure.For(xyLOGIX.Core.Debug.LoggingInfrastructureType)')
@@ -840,9 +841,7 @@ Methods to send objects to the log by calling an extension method called
 
 ##### Summary
 
-Dumps the specified object, a reference to which is in the
-`element`
-parameter, to the log.
+Dumps the specified object, a reference to which is in the `element` parameter, to the log.
 
 ##### Parameters
 
@@ -862,9 +861,7 @@ passed a `null` value. |
 
 ##### Summary
 
-Dumps the specified object, a reference to which is in the
-`element`
-parameter, to the log.
+Dumps the specified object, a reference to which is in the `element` parameter, to the log.
 
 ##### Parameters
 
@@ -887,9 +884,7 @@ passed a `null` value. |
 
 ##### Summary
 
-Dumps the specified object, a reference to which is in the
-`element`
-parameter, to the log.
+Dumps the specified object, a reference to which is in the `element` parameter, to the log.
 
 ##### Parameters
 
@@ -898,17 +893,13 @@ parameter, to the log.
 | element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to the object whose contents are to be dumped. |
 | depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer value specifying the depth to which the object
 should be dumped. |
-| log | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | (Required.) Reference to an instance of
-[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
-that is open on the target log file. |
+| log | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | (Required.) Reference to an instance of [TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') that is open on the target log file. |
 
 ##### Exceptions
 
 | Name | Description |
 | ---- | ----------- |
-| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the either of the required parameters,
-`element`
-or `log`, are passed a `null` value. |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the either of the required parameters, `element` or `log`, are passed a `null` value. |
 | [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is less than zero. |
 
 <a name='M-xyLOGIX-Core-Debug-DebuggerDump-DumpLines-System-Object-'></a>
@@ -916,9 +907,7 @@ or `log`, are passed a `null` value. |
 
 ##### Summary
 
-Dumps the specified object, a reference to which is in the
-`element`
-parameter, to the log, followed by a newline character.
+Dumps the specified object, a reference to which is in the `element` parameter, to the log, followed by a newline character.
 
 ##### Parameters
 
@@ -938,9 +927,7 @@ passed a `null` value. |
 
 ##### Summary
 
-Dumps the specified object, a reference to which is in the
-`element`
-parameter, to the log, followed by a newline character.
+Dumps the specified object, a reference to which is in the `element` parameter, to the log, followed by a newline character.
 
 ##### Parameters
 
@@ -954,9 +941,8 @@ should be dumped. |
 
 | Name | Description |
 | ---- | ----------- |
-| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the either of the required parameters,
-`element`
-or `log`, are passed a `null` value. |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the required parameter, `element`, is
+passed a `null` value. |
 | [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is less than zero. |
 
 <a name='M-xyLOGIX-Core-Debug-DebuggerDump-DumpLines-System-Object,System-Int32,System-IO-TextWriter-'></a>
@@ -964,9 +950,7 @@ or `log`, are passed a `null` value. |
 
 ##### Summary
 
-Dumps the specified object, a reference to which is in the
-`element`
-parameter, to the log.
+Dumps the specified object, a reference to which is in the `element` parameter, to the log.
 
 ##### Parameters
 
@@ -975,17 +959,13 @@ parameter, to the log.
 | element | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | (Required.) Reference to the object whose contents are to be dumped. |
 | depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) Integer value specifying the depth to which the object
 should be dumped. |
-| log | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | (Required.) Reference to an instance of
-[TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter')
-that is open on the target log file. |
+| log | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | (Required.) Reference to an instance of [TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') that is open on the target log file. |
 
 ##### Exceptions
 
 | Name | Description |
 | ---- | ----------- |
-| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the either of the required parameters,
-`element`
-or `log`, are passed a `null` value. |
+| [ArgumentNullException](#T-ArgumentNullException 'ArgumentNullException') | Thrown if the either of the required parameters, `element` or `log`, are passed a `null` value. |
 | [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is less than zero. |
 
 <a name='T-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure'></a>
@@ -1011,8 +991,8 @@ Gets the full path and filename to the log file for this application.
 
 ##### Summary
 
-Gets the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
-value that corresponds to the type of infrastructure that is being utilized.
+Gets the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') value that
+corresponds to the type of infrastructure that is being utilized.
 
 <a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists'></a>
 ### DeleteLogIfExists() `method`
@@ -1030,13 +1010,13 @@ This method has no parameters.
 
 ##### Summary
 
-Gets the value of the [File](#P-log4net-Appender-FileAppender-File 'log4net.Appender.FileAppender.File') property from the first
-appender in the list of appenders that is of type [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
+Gets the value of the [File](#P-log4net-Appender-FileAppender-File 'log4net.Appender.FileAppender.File') property from the
+first appender in the list of appenders that is of type [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
 
 ##### Returns
 
-String containing the full path and file name of the file the appender
-is writing to.
+String containing the full path and file name of the file the
+appender is writing to.
 
 ##### Parameters
 
@@ -1065,13 +1045,13 @@ logging sent out by this instance. |
 | configurationFilePathname | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Specifies the path to the configuration file to be utilized for
 initializing log4net. If blank, the system attempts to utilize the
 default App.config file. |
-| muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Set to `true` to suppress the display of logging messages to the
-console if a log file is being used. If a log file is not used, then
-no logging at all will occur if this parameter is set to `true`. |
-| repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object that implements the
-[ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface. Supply
-a value for this parameter if your infrastructure is not utilizing the
-default HierarchicalRepository. |
+| muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Set to `true` to suppress the display of logging messages to
+the console if a log file is being used. If a log file is not used,
+then no logging at all will occur if this parameter is set to `true`. |
+| repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object that implements
+the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface.
+Supply a value for this parameter if your infrastructure is not
+utilizing the default HierarchicalRepository. |
 
 <a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-System-Boolean,log4net-Repository-ILoggerRepository-'></a>
 ### PrepareLogFile(overwrite,repository) `method`
@@ -1079,8 +1059,8 @@ default HierarchicalRepository. |
 ##### Summary
 
 Prepares the log file by ensuring that the containing folder is
-writeable by the current user and by then, if specified to overwrite,
-deleting the current log file.
+writeable by the current user and by then, if specified to
+overwrite, deleting the current log file.
 
 ##### Parameters
 
@@ -1088,10 +1068,10 @@ deleting the current log file.
 | ---- | ---- | ----------- |
 | overwrite | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Overwrites any existing logs for the application with the latest
 logging sent out by this instance. |
-| repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object that implements the
-[ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface. Supply
-a value for this parameter if your infrastructure is not utilizing the
-default HierarchicalRepository. |
+| repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object that implements
+the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface.
+Supply a value for this parameter if your infrastructure is not
+utilizing the default HierarchicalRepository. |
 
 <a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean-'></a>
 ### SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole) `method`
@@ -1105,11 +1085,11 @@ initialize its functionality.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| muteDebugLevelIfReleaseMode | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | If set to true, does not echo any logging statements that are set to
-[Debug](#F-xyLOGIX-Core-Debug-DebugLevel-Debug 'xyLOGIX.Core.Debug.DebugLevel.Debug'). |
-| isLogging | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to activate the functionality of writing to a log file; false to
-suppress. Usually used with the [](#!-consoleOnly 'consoleOnly') parameter
-set to true. |
+| muteDebugLevelIfReleaseMode | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | If set to true, does not echo any logging statements that are set to the
+[Debug](#T-xyLOGIX-Core-Debug-DebugLevel-Debug 'xyLOGIX.Core.Debug.DebugLevel.Debug') level. |
+| isLogging | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to activate the functionality of writing to a log file; false
+to suppress. Usually used with the `consoleOnly`
+parameter set to true. |
 | consoleOnly | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to only write messages to the console; false to write them both
 to the console and to the log. |
 | verbosity | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | Zero to suppress every message; greater than zero to echo every message. |
@@ -1142,7 +1122,8 @@ Class to manage access to the event log.
 
 ##### Summary
 
-Constructs an instance of [EventLogManager](#T-EventLogManager 'EventLogManager') and returns a reference to the new instance.
+Constructs an instance of [EventLogManager](#T-EventLogManager 'EventLogManager') and returns a
+reference to the new instance.
 
 ##### Parameters
 
@@ -1153,14 +1134,16 @@ This constructor has no parameters.
 
 ##### Summary
 
-Holds an reference to the one and only instance of [EventLogManager](#T-xyLOGIX-Core-Debug-EventLogManager 'xyLOGIX.Core.Debug.EventLogManager').
+Holds an reference to the one and only instance of
+[EventLogManager](#T-xyLOGIX-Core-Debug-EventLogManager 'xyLOGIX.Core.Debug.EventLogManager').
 
 <a name='P-xyLOGIX-Core-Debug-EventLogManager-Instance'></a>
 ### Instance `property`
 
 ##### Summary
 
-Gets a reference to the one and only instance of [EventLogManager](#T-xyLOGIX-Core-Debug-EventLogManager 'xyLOGIX.Core.Debug.EventLogManager').
+Gets a reference to the one and only instance of [EventLogManager](#T-xyLOGIX-Core-Debug-EventLogManager 'xyLOGIX.Core.Debug.EventLogManager')
+.
 
 <a name='P-xyLOGIX-Core-Debug-EventLogManager-IsInitialized'></a>
 ### IsInitialized `property`
@@ -1200,8 +1183,14 @@ will occur.
 
 ##### Summary
 
-Sends an Error event to the system event log pointed to by the [Source](#P-xyLOGIX-Core-Debug-EventLogManager-Source 'xyLOGIX.Core.Debug.EventLogManager.Source') and [Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type') properties. The content of the
-logging message is specified by the [](#!-content 'content') parameter.
+Sends an Error event to the system event log pointed to by the
+[Source](#P-xyLOGIX-Core-Debug-EventLogManager-Source 'xyLOGIX.Core.Debug.EventLogManager.Source')
+and
+[Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type')
+properties. The
+content of the logging message is specified by the
+`content`
+parameter.
 
 ##### Parameters
 
@@ -1214,17 +1203,23 @@ logging message is specified by the [](#!-content 'content') parameter.
 
 ##### Summary
 
-Sends an Info event to the system event log pointed to by the [Source](#P-xyLOGIX-Core-Debug-EventLogManager-Source 'xyLOGIX.Core.Debug.EventLogManager.Source') and [Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type') properties. The content of the
-logging message is specified by the [](#!-content 'content') parameter.
+Sends an Info event to the system event log pointed to by the
+[Source](#P-xyLOGIX-Core-Debug-EventLogManager-Source 'xyLOGIX.Core.Debug.EventLogManager.Source')
+and
+[Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type')
+properties. The
+content of the logging message is specified by the
+`content`
+parameter.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| content | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | String specifying the content of the event log message. |
+| content | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String specifying the content of the event log message. |
 
 <a name='M-xyLOGIX-Core-Debug-EventLogManager-Initialize-System-String,xyLOGIX-Core-Debug-EventLogType-'></a>
-### Initialize(eventSource,type) `method`
+### Initialize(eventSourceName,logType) `method`
 
 ##### Summary
 
@@ -1234,17 +1229,24 @@ Initializes event logging for your application.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| eventSource | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Name of the application that will be sending events. |
-| type | [xyLOGIX.Core.Debug.EventLogType](#T-xyLOGIX-Core-Debug-EventLogType 'xyLOGIX.Core.Debug.EventLogType') | One of the [EventLogType](#T-xyLOGIX-Core-Debug-EventLogType 'xyLOGIX.Core.Debug.EventLogType') values that
-specifies the type of log to send events to. |
+| eventSourceName | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String containing the name of the application that will be
+sending events. |
+| logType | [xyLOGIX.Core.Debug.EventLogType](#T-xyLOGIX-Core-Debug-EventLogType 'xyLOGIX.Core.Debug.EventLogType') | (Required.) One of the [EventLogType](#T-xyLOGIX-Core-Debug-EventLogType 'xyLOGIX.Core.Debug.EventLogType')
+values that specifies the type of log to send events to. |
 
 <a name='M-xyLOGIX-Core-Debug-EventLogManager-Warn-System-String-'></a>
 ### Warn(content) `method`
 
 ##### Summary
 
-Sends a Warning event to the system event log pointed to by the [Source](#P-xyLOGIX-Core-Debug-EventLogManager-Source 'xyLOGIX.Core.Debug.EventLogManager.Source') and [Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type') properties. The content of the
-logging message is specified by the [](#!-content 'content') parameter.
+Sends a Warning event to the system event log pointed to by the
+[Source](#P-xyLOGIX-Core-Debug-EventLogManager-Source 'xyLOGIX.Core.Debug.EventLogManager.Source')
+and
+[Type](#P-xyLOGIX-Core-Debug-EventLogManager-Type 'xyLOGIX.Core.Debug.EventLogManager.Type')
+properties. The
+content of the logging message is specified by the
+`content`
+parameter.
 
 ##### Parameters
 
@@ -1314,20 +1316,23 @@ Provides methods for configurating log4net's FileAppender
 
 ##### Summary
 
-Sets the option to get the minimal locking option set on the specified
-[](#!-appender 'appender').
+Sets the option to get the minimal locking option set on the
+specified `appender`.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| appender | [log4net.Appender.FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender') | Reference to an instance of an object of type [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender'). |
+| appender | [log4net.Appender.FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender') | Reference to an instance of an object of type
+[FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender'). |
 
 ##### Exceptions
 
 | Name | Description |
 | ---- | ----------- |
-| [System.ArgumentNullException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentNullException 'System.ArgumentNullException') | Thrown if the instance of the object referenced by [](#!-appender 'appender') is null. |
+| [System.ArgumentNullException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentNullException 'System.ArgumentNullException') | Thrown if the instance of the object referenced by
+`appender`
+is `null`. |
 
 <a name='T-xyLOGIX-Core-Debug-FileAppenderManager'></a>
 ## FileAppenderManager `type`
@@ -1338,7 +1343,38 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Provides methods to access instances of objects of type [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
+Provides methods to access instances of objects of type
+[FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
+
+<a name='M-xyLOGIX-Core-Debug-FileAppenderManager-GetAppenderByName-System-String-'></a>
+### GetAppenderByName(name) `method`
+
+##### Summary
+
+Attempts to obtain a reference to an instance of
+[FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender')
+that is configured under a
+certain name in the application configuration file.
+
+##### Returns
+
+If a suitable configuration file entry is found, this method returns
+a [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender') instance that
+corresponds to the entry; otherwise, `null` is returned.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| name | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String containing the name under which the appender is
+configured in the application configuration file. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [ArgumentException](#T-ArgumentException 'ArgumentException') | Thrown if the required parameter, `name`, is passed
+a blank or `null` string for a value. |
 
 <a name='M-xyLOGIX-Core-Debug-FileAppenderManager-GetFirstAppender-log4net-Repository-ILoggerRepository-'></a>
 ### GetFirstAppender(loggerRepository) `method`
@@ -1350,13 +1386,25 @@ reference to the first one in the list.
 
 ##### Returns
 
-Reference to an instance of [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender'), or null if not found.
+Reference to an instance of
+[FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender')
+, or `null` if not found.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | loggerRepository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') |  |
+
+##### Remarks
+
+If the `loggerRepository` parameter is passed a
+`null` value, then this method attempts to obtain the root
+logger object and then obtain the first
+[FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender')
+configured on the root
+logger repository. If a suitable appender can still not be located,
+then the return value of this method is `null`.
 
 <a name='T-xyLOGIX-Core-Debug-GetLoggingInfrastructure'></a>
 ## GetLoggingInfrastructure `type`
@@ -1412,8 +1460,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Defines the methods and properties of a custom object to which the [LogFileManager](#T-xyLOGIX-Core-Debug-LogFileManager 'xyLOGIX.Core.Debug.LogFileManager') delegates the implementation
-of its properties and methods.
+Defines the methods and properties of a custom object to which the [LogFileManager](#T-xyLOGIX-Core-Debug-LogFileManager 'xyLOGIX.Core.Debug.LogFileManager') delegates the
+implementation of its properties and methods.
 
 <a name='P-xyLOGIX-Core-Debug-ILoggingInfrastructure-LogFilePath'></a>
 ### LogFilePath `property`
@@ -1427,8 +1475,8 @@ Gets the full path and filename to the log file for this application.
 
 ##### Summary
 
-Gets the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
-value that corresponds to the type of infrastructure that is being utilized.
+Gets the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') value that
+corresponds to the type of infrastructure that is being utilized.
 
 <a name='M-xyLOGIX-Core-Debug-ILoggingInfrastructure-DeleteLogIfExists'></a>
 ### DeleteLogIfExists() `method`
@@ -1446,13 +1494,13 @@ This method has no parameters.
 
 ##### Summary
 
-Gets the value of the [File](#P-log4net-Appender-FileAppender-File 'log4net.Appender.FileAppender.File') property from the first
-appender in the list of appenders that is of type [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
+Gets the value of the [File](#P-log4net-Appender-FileAppender-File 'log4net.Appender.FileAppender.File') property from the
+first appender in the list of appenders that is of type [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
 
 ##### Returns
 
-String containing the full path and file name of the file the appender
-is writing to.
+String containing the full path and file name of the file the
+appender is writing to.
 
 ##### Parameters
 
@@ -1481,13 +1529,13 @@ logging sent out by this instance. |
 | configurationFilePathname | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Specifies the path to the configuration file to be utilized for
 initializing log4net. If blank, the system attempts to utilize the
 default App.config file. |
-| muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Set to `true` to suppress the display of logging messages to the
-console if a log file is being used. If a log file is not used, then
-no logging at all will occur if this parameter is set to `true`. |
-| repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object that implements the
-[ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface. Supply
-a value for this parameter if your infrastructure is not utilizing the
-default HierarchicalRepository. |
+| muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Set to `true` to suppress the display of logging messages to
+the console if a log file is being used. If a log file is not used,
+then no logging at all will occur if this parameter is set to `true`. |
+| repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object that implements
+the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface.
+Supply a value for this parameter if your infrastructure is not
+utilizing the default HierarchicalRepository. |
 
 <a name='M-xyLOGIX-Core-Debug-ILoggingInfrastructure-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean-'></a>
 ### SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole) `method`
@@ -1503,9 +1551,9 @@ initialize its functionality.
 | ---- | ---- | ----------- |
 | muteDebugLevelIfReleaseMode | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | If set to true, does not echo any logging statements that are set to
 [Debug](#F-xyLOGIX-Core-Debug-DebugLevel-Debug 'xyLOGIX.Core.Debug.DebugLevel.Debug'). |
-| isLogging | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to activate the functionality of writing to a log file; false to
-suppress. Usually used with the [](#!-consoleOnly 'consoleOnly') parameter
-set to true. |
+| isLogging | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to activate the functionality of writing to a log file; false
+to suppress. Usually used with the `consoleOnly`
+parameter set to `true`. |
 | consoleOnly | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to only write messages to the console; false to write them both
 to the console and to the log. |
 | verbosity | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | Zero to suppress every message; greater than zero to echo every message. |
@@ -1527,8 +1575,10 @@ Methods to be used to manage the application log.
 
 ##### Summary
 
-Reference to an instance of the object that implements the [ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure') interface for the
-logging infrastructure type chosen.
+Reference to an instance of the object that implements the
+[ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure')
+interface for
+the logging infrastructure type chosen.
 
 ##### Remarks
 
@@ -1540,9 +1590,11 @@ implementation for this object from now on.
 
 ##### Summary
 
-Gets the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
-value that represents the type of infrastructure currently in use by
-this [LogFileManager](#T-xyLOGIX-Core-Debug-LogFileManager 'xyLOGIX.Core.Debug.LogFileManager').
+Gets the
+[LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
+value that
+represents the type of infrastructure currently in use by this
+[LogFileManager](#T-xyLOGIX-Core-Debug-LogFileManager 'xyLOGIX.Core.Debug.LogFileManager').
 
 <a name='P-xyLOGIX-Core-Debug-LogFileManager-LogFilePath'></a>
 ### LogFilePath `property`
@@ -1553,8 +1605,9 @@ Gets the full path and filename to the log file for this application.
 
 ##### Remarks
 
-This property should only be called after the [InitializeLogging](#M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging 'xyLOGIX.Core.Debug.LogFileManager.InitializeLogging') method
-has been called.
+This property should only be called after the
+[InitializeLogging](#M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging 'xyLOGIX.Core.Debug.LogFileManager.InitializeLogging')
+method has been called.
 
 <a name='M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,xyLOGIX-Core-Debug-LoggingInfrastructureType-'></a>
 ### InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,infrastructureType) `method`
@@ -1575,10 +1628,12 @@ logging sent out by this instance. |
 | configurationFilePathname | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Specifies the path to the configuration file to be utilized for
 initializing log4net. If blank, the system attempts to utilize the
 default App.config file. |
-| muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Set to `true` to suppress the display of logging messages to the
-console if a log file is being used. If a log file is not used, then
-no logging at all will occur if this parameter is set to `true`. |
-| infrastructureType | [xyLOGIX.Core.Debug.LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') | (Optional.) One of the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') values that
+| muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Set to `true` to suppress the display of logging messages to
+the console if a log file is being used. If a log file is not used,
+then no logging at all will occur if this parameter is set to `true`. |
+| infrastructureType | [xyLOGIX.Core.Debug.LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') | (Optional.) One of the
+[LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
+values that
 indicates what type of logging infrastructure is to be utilized
 (default or PostSharp, for example). |
 
@@ -1596,14 +1651,16 @@ initialize its functionality.
 | ---- | ---- | ----------- |
 | muteDebugLevelIfReleaseMode | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | If set to true, does not echo any logging statements that are set to
 [Debug](#F-xyLOGIX-Core-Debug-DebugLevel-Debug 'xyLOGIX.Core.Debug.DebugLevel.Debug'). |
-| isLogging | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to activate the functionality of writing to a log file; false to
-suppress. Usually used with the [](#!-consoleOnly 'consoleOnly') parameter
-set to true. |
+| isLogging | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to activate the functionality of writing to a log file; false
+to suppress. Usually used with the `consoleOnly`
+parameter set to `true`. |
 | consoleOnly | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | True to only write messages to the console; false to write them both
 to the console and to the log. |
 | verbosity | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | Zero to suppress every message; greater than zero to echo every message. |
 | muteConsole | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | If set to `true`, suppresses all console output. |
-| infrastructureType | [xyLOGIX.Core.Debug.LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') | (Optional.) One of the [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') values that
+| infrastructureType | [xyLOGIX.Core.Debug.LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') | (Optional.) One of the
+[LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
+values that
 indicates what type of logging infrastructure is to be utilized
 (default or PostSharp). |
 
