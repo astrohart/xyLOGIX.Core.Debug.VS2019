@@ -27,7 +27,7 @@ namespace xyLOGIX.Core.Debug
         /// a <see cref="T:log4net.Appender.FileAppender" /> instance that
         /// corresponds to the entry; otherwise, <c>null</c> is returned.
         /// </returns>
-        /// <exception cref="T:ArgumentException">
+        /// <exception cref="T:System.ArgumentException">
         /// Thrown if the required parameter, <paramref name="name" />, is passed
         /// a blank or <c>null</c> string for a value.
         /// </exception>
