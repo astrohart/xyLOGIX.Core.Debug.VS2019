@@ -7,28 +7,27 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public class EventLogManager
     {
-       /// <summary>
-       /// Holds an reference to the one and only instance of
-       /// <see cref="EventLogManager" />.
-       /// </summary>
-       private static EventLogManager _theEventLogManager;
+        /// <summary>
+        /// Holds an reference to the one and only instance of <see cref="EventLogManager"/>.
+        /// </summary>
+        private static EventLogManager _theEventLogManager;
 
-       /// <summary>
-       /// Constructs an instance of <see cref="T:EventLogManager" /> and returns a
-       /// reference to the new instance.
-       /// </summary>
-       protected EventLogManager()
+        /// <summary>
+        /// Constructs an instance of <see cref="T:EventLogManager"/> and
+        /// returns a reference to the new instance.
+        /// </summary>
+        protected EventLogManager()
         {
             // set defaults
             Source = string.Empty;
             Type = EventLogType.Unknown;
         }
 
-       /// <summary>
-       /// Gets a reference to the one and only instance of <see cref="EventLogManager" />
-       /// .
-       /// </summary>
-       public static EventLogManager Instance
+        /// <summary>
+        /// Gets a reference to the one and only instance of <see
+        /// cref="EventLogManager"/> .
+        /// </summary>
+        public static EventLogManager Instance
         {
             get
             {
@@ -71,17 +70,11 @@ namespace xyLOGIX.Core.Debug
         public EventLogType Type { get; private set; }
 
         /// <summary>
-        /// Sends an Error event to the system event log pointed to by the
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" />
-        /// and
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" />
-        /// properties. The
-        /// content of the logging message is specified by the
-        /// <paramref
-        ///     name="content" />
-        /// parameter.
+        /// Sends an Error event to the system event log pointed to by the <see
+        /// cref="P:xyLOGIX.Core.Debug.EventLogManager.Source"/> and <see
+        /// cref="P:xyLOGIX.Core.Debug.EventLogManager.Type"/> properties. The
+        /// content of the logging message is specified by the <paramref
+        /// name="content"/> parameter.
         /// </summary>
         /// <param name="content">
         /// String specifying the content of the event log message.
@@ -99,17 +92,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Sends an Info event to the system event log pointed to by the
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" />
-        /// and
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" />
-        /// properties. The
-        /// content of the logging message is specified by the
-        /// <paramref
-        ///     name="content" />
-        /// parameter.
+        /// Sends an Info event to the system event log pointed to by the <see
+        /// cref="P:xyLOGIX.Core.Debug.EventLogManager.Source"/> and <see
+        /// cref="P:xyLOGIX.Core.Debug.EventLogManager.Type"/> properties. The
+        /// content of the logging message is specified by the <paramref
+        /// name="content"/> parameter.
         /// </summary>
         /// <param name="content">
         /// (Required.) String specifying the content of the event log message.
@@ -130,18 +117,19 @@ namespace xyLOGIX.Core.Debug
         /// Initializes event logging for your application.
         /// </summary>
         /// <param name="eventSourceName">
-        /// (Required.) String containing the name of the application that will be
-        /// sending events.
+        /// (Required.) String containing the name of the application that will
+        /// be sending events.
         /// </param>
         /// <param name="logType">
-        /// (Required.) One of the <see cref="T:xyLOGIX.Core.Debug.EventLogType" />
-        /// values that specifies the type of log to send events to.
+        /// (Required.) One of the <see
+        /// cref="T:xyLOGIX.Core.Debug.EventLogType"/> values that specifies the
+        /// type of log to send events to.
         /// </param>
         public void Initialize(string eventSourceName, EventLogType logType)
         {
             // Check to see if the required parameter, eventSource, is blank,
-            // whitespace, or null. If it is any of these, send an error to the log
-            // file and quit.
+            // whitespace, or null. If it is any of these, send an error to the
+            // log file and quit.
 
             // The 'eventSource' parameter must not be blank.
             if (string.IsNullOrWhiteSpace(eventSourceName))
@@ -155,23 +143,23 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                // If an event source does not exist with the specified name, then
-                // create one.
+                // If an event source does not exist with the specified name,
+                // then create one.
                 if (!EventLog.SourceExists(eventSourceName))
                     EventLog.CreateEventSource(
                         eventSourceName, logType.ToString()
                     );
 
-                // Finally, save the event source and type settings in the Source
-                // and Type properties.
+                // Finally, save the event source and type settings in the
+                // Source and Type properties.
                 Source = eventSourceName;
                 Type = logType;
             }
             catch
             {
-                // If an exception was caught, de-initialize the member properties
-                // of this EventLogManager instance. This is to prevent this class
-                // from working in future calls.
+                // If an exception was caught, de-initialize the member
+                // properties of this EventLogManager instance. This is to
+                // prevent this class from working in future calls.
 
                 Source = string.Empty;
                 Type = EventLogType.Unknown;
@@ -179,17 +167,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Sends a Warning event to the system event log pointed to by the
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" />
-        /// and
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" />
-        /// properties. The
-        /// content of the logging message is specified by the
-        /// <paramref
-        ///     name="content" />
-        /// parameter.
+        /// Sends a Warning event to the system event log pointed to by the <see
+        /// cref="P:xyLOGIX.Core.Debug.EventLogManager.Source"/> and <see
+        /// cref="P:xyLOGIX.Core.Debug.EventLogManager.Type"/> properties. The
+        /// content of the logging message is specified by the <paramref
+        /// name="content"/> parameter.
         /// </summary>
         /// <param name="content">
         /// String specifying the content of the event log message.

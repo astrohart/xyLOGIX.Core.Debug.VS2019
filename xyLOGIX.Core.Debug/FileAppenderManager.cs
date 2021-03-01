@@ -6,16 +6,13 @@ using System.Linq;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides methods to access instances of objects of type
-    /// <see cref="T:log4net.Appender.FileAppender" />.
+    /// Provides methods to access instances of objects of type <see cref="T:log4net.Appender.FileAppender"/>.
     /// </summary>
     public static class FileAppenderManager
     {
         /// <summary>
-        /// Attempts to obtain a reference to an instance of
-        /// <see
-        ///     cref="T:log4net.Appender.FileAppender" />
-        /// that is configured under a
+        /// Attempts to obtain a reference to an instance of <see
+        /// cref="T:log4net.Appender.FileAppender"/> that is configured under a
         /// certain name in the application configuration file.
         /// </summary>
         /// <param name="name">
@@ -24,11 +21,11 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// If a suitable configuration file entry is found, this method returns
-        /// a <see cref="T:log4net.Appender.FileAppender" /> instance that
+        /// a <see cref="T:log4net.Appender.FileAppender"/> instance that
         /// corresponds to the entry; otherwise, <c>null</c> is returned.
         /// </returns>
         /// <exception cref="T:System.ArgumentException">
-        /// Thrown if the required parameter, <paramref name="name" />, is passed
+        /// Thrown if the required parameter, <paramref name="name"/>, is passed
         /// a blank or <c>null</c> string for a value.
         /// </exception>
         public static FileAppender GetAppenderByName(string name)
@@ -56,18 +53,14 @@ namespace xyLOGIX.Core.Debug
         /// <param name="loggerRepository">
         /// </param>
         /// <returns>
-        /// Reference to an instance of
-        /// <see
-        ///     cref="T:log4net.Appender.FileAppender" />
-        /// , or <c>null</c> if not found.
+        /// Reference to an instance of <see
+        /// cref="T:log4net.Appender.FileAppender"/> , or <c>null</c> if not found.
         /// </returns>
         /// <remarks>
-        /// If the <paramref name="loggerRepository" /> parameter is passed a
+        /// If the <paramref name="loggerRepository"/> parameter is passed a
         /// <c>null</c> value, then this method attempts to obtain the root
-        /// logger object and then obtain the first
-        /// <see
-        ///     cref="T:log4net.Appender.FileAppender" />
-        /// configured on the root
+        /// logger object and then obtain the first <see
+        /// cref="T:log4net.Appender.FileAppender"/> configured on the root
         /// logger repository. If a suitable appender can still not be located,
         /// then the return value of this method is <c>null</c>.
         /// </remarks>

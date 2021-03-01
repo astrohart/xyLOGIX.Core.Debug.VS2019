@@ -238,8 +238,8 @@ namespace xyLOGIX.Core.Debug
         /// initialize its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
-        /// If set to true, does not echo any logging statements that are set to the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug"/> level.
+        /// If set to true, does not echo any logging statements that are set to
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug"/> level.
         /// </param>
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log file; false

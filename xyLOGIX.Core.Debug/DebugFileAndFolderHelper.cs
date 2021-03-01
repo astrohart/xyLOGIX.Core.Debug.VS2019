@@ -57,11 +57,11 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Path to the folder that you want to create.
         /// </param>
         /// <remarks>
-        /// If the folder specified by the <paramref name="directoryPath" />
+        /// If the folder specified by the <paramref name="directoryPath"/>
         /// parameter already exists on the disk, then this method does nothing.
         /// </remarks>
         /// <exception cref="T:System.ArgumentException">
-        /// Thrown if the required parameter, <paramref name="directoryPath" />,
+        /// Thrown if the required parameter, <paramref name="directoryPath"/>,
         /// is passed a blank or <c>null</c> value.
         /// </exception>
         public static void CreateDirectoryIfNotExists(string directoryPath)
@@ -155,14 +155,15 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a collection of strings, each of which contains the pathname of
-        /// a file is present in the specified <paramref name="folder" />..
+        /// a file is present in the specified <paramref name="folder"/>..
         /// </summary>
         /// <param name="folder">
-        /// (Required.) String containing the full pathname of the folder whose files are to be listed.
+        /// (Required.) String containing the full pathname of the folder whose
+        /// files are to be listed.
         /// </param>
         /// <returns>
         /// Collection of strings, each element of which contains the pathname
-        /// of a file located in the specified <paramref name="folder" />.
+        /// of a file located in the specified <paramref name="folder"/>.
         /// </returns>
         public static List<string> GetFilesInFolder(string folder)
         {
@@ -287,7 +288,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <returns>
         /// This method returns <c>true</c> if the file with path specified by
-        /// the <paramref name="fileName" /> parameter exists on the disk in the
+        /// the <paramref name="fileName"/> parameter exists on the disk in the
         /// specified location or <c>false</c> if either the file is not found
         /// or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.
@@ -379,11 +380,11 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// This method returns <c>true</c> if write access is allowed to the
-        /// file with the specified <paramref name="path" />, otherwise <c>false</c>.
-        /// <para />
+        /// file with the specified <paramref name="path"/>, otherwise <c>false</c>.
+        /// <para/>
         /// The value <c>false</c> is also returned in the event that the
-        /// <paramref name="path" /> parameter is a <c>null</c> value or blank.
-        /// <para />
+        /// <paramref name="path"/> parameter is a <c>null</c> value or blank.
+        /// <para/>
         /// The value <c>false</c> is also returned if an operating system error
         /// or exception occurs while trying to look up the file's permissions.
         /// </returns>
@@ -549,15 +550,16 @@ namespace xyLOGIX.Core.Debug
         /// Checks for write access for the given folder.
         /// </summary>
         /// <param name="path">
-        /// (Required.) String containing the full pathname of the folder whose permissions are to be checked.
+        /// (Required.) String containing the full pathname of the folder whose
+        /// permissions are to be checked.
         /// </param>
         /// <returns>
         /// This method returns <c>true</c> if write access is allowed to the
-        /// folder with the specified <paramref name="path" />, otherwise <c>false</c>.
-        /// <para />
+        /// folder with the specified <paramref name="path"/>, otherwise <c>false</c>.
+        /// <para/>
         /// The value <c>false</c> is also returned in the event that the
-        /// <paramref name="path" /> parameter is a <c>null</c> value or blank.
-        /// <para />
+        /// <paramref name="path"/> parameter is a <c>null</c> value or blank.
+        /// <para/>
         /// The value <c>false</c> is also returned if an operating system error
         /// or exception occurs while trying to look up the folder's permissions.
         /// </returns>
@@ -756,17 +758,15 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a value indicating whether the
-        /// <paramref
-        ///     name="fullyQualifiedPath" />
-        /// is actually a valid path on the system,
+        /// Gets a value indicating whether the <paramref
+        /// name="fullyQualifiedPath"/> is actually a valid path on the system,
         /// according to operating-system-specific rules.
         /// </summary>
         /// <param name="fullyQualifiedPath">
         /// (Required.) String containing the path that is to be validated.
         /// </param>
         /// <returns>
-        /// If the path provided in <paramref name="fullyQualifiedPath" /> is a
+        /// If the path provided in <paramref name="fullyQualifiedPath"/> is a
         /// valid path according to operating-system-specified rules, then this
         /// method returns <c>true</c>. Otherwise, the return value is <c>false</c>.
         /// </returns>
@@ -808,9 +808,9 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception)
             {
-                // Do not care what exception got thrown here.  It's enough, for 
-                // now, to know that if that is the case, then the path specified
-                // is not valid.
+                // Do not care what exception got thrown here. It's enough, for
+                // now, to know that if that is the case, then the path
+                // specified is not valid.
 
                 result = false;
             }

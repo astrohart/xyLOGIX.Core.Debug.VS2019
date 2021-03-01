@@ -9,8 +9,7 @@ namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Object that is responsible for writing out the string representation of
-    /// objects to the log file. Works in a way very similar to LINQPad's Dump()
-    /// method.
+    /// objects to the log file. Works in a way very similar to LINQPad's Dump() method.
     /// </summary>
     public class ObjectDumper
     {
@@ -37,16 +36,14 @@ namespace xyLOGIX.Core.Debug
         private int _indentLevel;
 
         /// <summary>
-        /// Reference to a <see cref="T:System.IO.TextWriter" /> to which to send
+        /// Reference to a <see cref="T:System.IO.TextWriter"/> to which to send
         /// the logged data.
         /// </summary>
         private TextWriter _writer;
 
         /// <summary>
-        /// Constructs a new instance of
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.ObjectDumper" />
-        /// and returns a reference
+        /// Constructs a new instance of <see
+        /// cref="T:xyLOGIX.Core.Debug.ObjectDumper"/> and returns a reference
         /// to it.
         /// </summary>
         /// <param name="depth">
@@ -54,7 +51,7 @@ namespace xyLOGIX.Core.Debug
         /// inheritance levels) to which to dump object data.
         /// </param>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is not zero or greater.
+        /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
         /// </exception>
         private ObjectDumper(int depth)
         {
@@ -65,11 +62,9 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Writes an object, a reference to which is specified by the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log, to the number of inheritance
-        /// levels specified by <paramref name="depth" />.
+        /// Writes an object, a reference to which is specified by the <paramref
+        /// name="element"/> parameter, to the log, to the number of inheritance
+        /// levels specified by <paramref name="depth"/>.
         /// </summary>
         /// <param name="element">
         /// (Required.) Reference to an instance of an object that should be dumped.
@@ -80,14 +75,14 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <remarks>
         /// By default, this overload of the method sends the dump output to the
-        /// <see cref="T:System.Console.Out" /> stream.
+        /// <see cref="T:System.Console.Out"/> stream.
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="element" />, is
+        /// Thrown if the required parameter, <paramref name="element"/>, is
         /// passed a <c>null</c> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is not zero or greater.
+        /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
         /// </exception>
         public static void Write(object element, int depth = 0)
         {
@@ -99,13 +94,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Writes an object, a reference to which is specified by the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log, to the number of inheritance
-        /// levels specified by <paramref name="depth" />, and outputs it to the
-        /// <see cref="T:System.IO.TextWriter" /> instance referred to by the
-        /// <paramref name="log" /> parameter.
+        /// Writes an object, a reference to which is specified by the <paramref
+        /// name="element"/> parameter, to the log, to the number of inheritance
+        /// levels specified by <paramref name="depth"/>, and outputs it to the
+        /// <see cref="T:System.IO.TextWriter"/> instance referred to by the
+        /// <paramref name="log"/> parameter.
         /// </summary>
         /// <param name="element">
         /// (Required.) Reference to an instance of an object that should be dumped.
@@ -115,23 +108,19 @@ namespace xyLOGIX.Core.Debug
         /// dump. Default is zero. Must be zero or greater.
         /// </param>
         /// <param name="log">
-        /// (Required.) Reference to an instance of
-        /// <see
-        ///     cref="T:System.IO.TextWriter" />
-        /// to which output should be sent.
+        /// (Required.) Reference to an instance of <see
+        /// cref="T:System.IO.TextWriter"/> to which output should be sent.
         /// </param>
         /// <remarks>
         /// By default, this overload of the method sends the dump output to the
-        /// <see cref="T:System.Console.Out" /> stream.
+        /// <see cref="T:System.Console.Out"/> stream.
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if either of the required parameters,
-        /// <paramref
-        ///     name="element" />
-        /// or <paramref name="log" />, are passed a <c>null</c> value.
+        /// Thrown if either of the required parameters, <paramref
+        /// name="element"/> or <paramref name="log"/>, are passed a <c>null</c> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is not zero or greater.
+        /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
         /// </exception>
         public static void Write(object element, int depth, TextWriter log)
         {
@@ -141,16 +130,14 @@ namespace xyLOGIX.Core.Debug
                 throw new ArgumentOutOfRangeException(nameof(depth));
             if (log == null) throw new ArgumentNullException(nameof(log));
 
-            var dumper = new ObjectDumper(depth) {_writer = log};
+            var dumper = new ObjectDumper(depth) { _writer = log };
             dumper.WriteObject(null, element);
         }
 
         /// <summary>
-        /// Writes an object, a reference to which is specified by the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log, to the number of inheritance
-        /// levels specified by <paramref name="depth" />, followed by a newline character.
+        /// Writes an object, a reference to which is specified by the <paramref
+        /// name="element"/> parameter, to the log, to the number of inheritance
+        /// levels specified by <paramref name="depth"/>, followed by a newline character.
         /// </summary>
         /// <param name="element">
         /// (Required.) Reference to an instance of an object that should be dumped.
@@ -161,14 +148,14 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <remarks>
         /// By default, this overload of the method sends the dump output to the
-        /// <see cref="T:System.Console.Out" /> stream.
+        /// <see cref="T:System.Console.Out"/> stream.
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="element" />, is
+        /// Thrown if the required parameter, <paramref name="element"/>, is
         /// passed a <c>null</c> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is not zero or greater.
+        /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
         /// </exception>
         public static void WriteLine(object element, int depth = 0)
         {
@@ -180,13 +167,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Writes an object, a reference to which is specified by the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log, to the number of inheritance
-        /// levels specified by <paramref name="depth" />, and outputs it to the
-        /// <see cref="T:System.IO.TextWriter" /> instance referred to by the
-        /// <paramref name="log" /> parameter, followed by a newline character.
+        /// Writes an object, a reference to which is specified by the <paramref
+        /// name="element"/> parameter, to the log, to the number of inheritance
+        /// levels specified by <paramref name="depth"/>, and outputs it to the
+        /// <see cref="T:System.IO.TextWriter"/> instance referred to by the
+        /// <paramref name="log"/> parameter, followed by a newline character.
         /// </summary>
         /// <param name="element">
         /// (Required.) Reference to an instance of an object that should be dumped.
@@ -196,23 +181,19 @@ namespace xyLOGIX.Core.Debug
         /// dump. Default is zero. Must be zero or greater.
         /// </param>
         /// <param name="log">
-        /// (Required.) Reference to an instance of
-        /// <see
-        ///     cref="T:System.IO.TextWriter" />
-        /// to which output should be sent.
+        /// (Required.) Reference to an instance of <see
+        /// cref="T:System.IO.TextWriter"/> to which output should be sent.
         /// </param>
         /// <remarks>
         /// By default, this overload of the method sends the dump output to the
-        /// <see cref="T:System.Console.Out" /> stream.
+        /// <see cref="T:System.Console.Out"/> stream.
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if either of the required parameters,
-        /// <paramref
-        ///     name="element" />
-        /// or <paramref name="log" />, are passed a <c>null</c> value.
+        /// Thrown if either of the required parameters, <paramref
+        /// name="element"/> or <paramref name="log"/>, are passed a <c>null</c> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is not zero or greater.
+        /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
         /// </exception>
         public static void WriteLine(object element, int depth, TextWriter log)
         {
@@ -221,21 +202,19 @@ namespace xyLOGIX.Core.Debug
             if (depth < 0)
                 throw new ArgumentOutOfRangeException(nameof(depth));
             if (log == null) throw new ArgumentNullException(nameof(log));
-            var dumper = new ObjectDumper(depth) {_writer = log};
+            var dumper = new ObjectDumper(depth) { _writer = log };
             dumper.WriteObjectToLines(null, element);
         }
 
         /// <summary>
-        /// Writes the content in the string, <paramref name="s" />, to the
-        /// <see
-        ///     cref="T:System.IO.TextWriter" />
-        /// wrapped by this object.
+        /// Writes the content in the string, <paramref name="s"/>, to the <see
+        /// cref="T:System.IO.TextWriter"/> wrapped by this object.
         /// </summary>
         /// <param name="s">
         /// (Required.) String containing the content to be written.
         /// </param>
         /// <remarks>
-        /// This method does nothing if <paramref name="s" /> is a blank string.
+        /// This method does nothing if <paramref name="s"/> is a blank string.
         /// </remarks>
         private void Write(string s)
         {
@@ -247,15 +226,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Writes an indent -- a 4 space tab -- to the
-        /// <see
-        ///     cref="T:System.IO.TextWriter" />
-        /// that is wrapped by this object in
-        /// the <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at
-        /// the indent level given by the value of the
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" />
-        /// field.
+        /// Writes an indent -- a 4 space tab -- to the <see
+        /// cref="T:System.IO.TextWriter"/> that is wrapped by this object in
+        /// the <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer"/> field at
+        /// the indent level given by the value of the <see
+        /// cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel"/> field.
         /// </summary>
         private void WriteIndent()
         {
@@ -269,14 +244,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Outputs a blank line to the <see cref="T:System.IO.TextWriter" />
+        /// Outputs a blank line to the <see cref="T:System.IO.TextWriter"/>
         /// that is wrapped by this object.
         /// </summary>
         /// <remarks>
-        /// This method does nothing if the
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" />
-        /// field is a
+        /// This method does nothing if the <see
+        /// cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer"/> field is a
         /// <c>null</c> reference.
         /// </remarks>
         private void WriteLine()
@@ -290,12 +263,11 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Workhorse method that actually does the job of writing the specified
-        /// <paramref name="element" /> object to the output stream, with the
-        /// specified <paramref name="prefix" />.
+        /// <paramref name="element"/> object to the output stream, with the
+        /// specified <paramref name="prefix"/>.
         /// </summary>
         /// <param name="prefix">
-        /// (Optional.) String containing the prefix to be used. May be blank or
-        /// <c>null</c>.
+        /// (Optional.) String containing the prefix to be used. May be blank or <c>null</c>.
         /// </param>
         /// <param name="element">
         /// (Required.) Reference to the instance of the object to be dumped to
@@ -388,13 +360,12 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Workhorse method that actually does the job of writing the specified
-        /// <paramref name="element" /> object to the output stream, with the
-        /// specified <paramref name="prefix" />, with a newline character
+        /// <paramref name="element"/> object to the output stream, with the
+        /// specified <paramref name="prefix"/>, with a newline character
         /// inserted after each line of text.
         /// </summary>
         /// <param name="prefix">
-        /// (Optional.) String containing the prefix to be used. May be blank or
-        /// <c>null</c>.
+        /// (Optional.) String containing the prefix to be used. May be blank or <c>null</c>.
         /// </param>
         /// <param name="element">
         /// (Required.) Reference to the instance of the object to be dumped to
@@ -497,7 +468,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Formats a value, specified by the reference to the instance of the
-        /// object, <paramref name="o" />, in a nice way for output.
+        /// object, <paramref name="o"/>, in a nice way for output.
         /// </summary>
         /// <param name="o">
         /// (Required.) Reference to an instance of the object to be formatted

@@ -6,10 +6,8 @@
     public static class LogFileManager
     {
         /// <summary>
-        /// Reference to an instance of the object that implements the
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />
-        /// interface for
+        /// Reference to an instance of the object that implements the <see
+        /// cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure"/> interface for
         /// the logging infrastructure type chosen.
         /// </summary>
         /// <remarks>
@@ -19,12 +17,9 @@
         private static ILoggingInfrastructure _infrastructure;
 
         /// <summary>
-        /// Gets the
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
-        /// value that
-        /// represents the type of infrastructure currently in use by this
-        /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
+        /// Gets the <see
+        /// cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value that
+        /// represents the type of infrastructure currently in use by this <see cref="T:xyLOGIX.Core.Debug.LogFileManager"/>.
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
             => _infrastructure?.Type ?? LoggingInfrastructureType.Unknown;
@@ -33,9 +28,8 @@
         /// Gets the full path and filename to the log file for this application.
         /// </summary>
         /// <remarks>
-        /// This property should only be called after the
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging" />
+        /// This property should only be called after the <see
+        /// cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging"/>
         /// method has been called.
         /// </remarks>
         public static string LogFilePath
@@ -64,10 +58,8 @@
         /// then no logging at all will occur if this parameter is set to <c>true</c>.
         /// </param>
         /// <param name="infrastructureType">
-        /// (Optional.) One of the
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
-        /// values that
+        /// (Optional.) One of the <see
+        /// cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> values that
         /// indicates what type of logging infrastructure is to be utilized
         /// (default or PostSharp, for example).
         /// </param>
@@ -91,16 +83,16 @@
         }
 
         /// <summary>
-        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils"/> to
         /// initialize its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any logging statements that are set to
-        /// <see cref="DebugLevel.Debug" />.
+        /// <see cref="DebugLevel.Debug"/>.
         /// </param>
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log file; false
-        /// to suppress. Usually used with the <paramref name="consoleOnly" />
+        /// to suppress. Usually used with the <paramref name="consoleOnly"/>
         /// parameter set to <c>true</c>.
         /// </param>
         /// <param name="consoleOnly">
@@ -114,10 +106,8 @@
         /// If set to <c>true</c>, suppresses all console output.
         /// </param>
         /// <param name="infrastructureType">
-        /// (Optional.) One of the
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
-        /// values that
+        /// (Optional.) One of the <see
+        /// cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> values that
         /// indicates what type of logging infrastructure is to be utilized
         /// (default or PostSharp).
         /// </param>
