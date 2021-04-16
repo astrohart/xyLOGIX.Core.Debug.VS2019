@@ -164,4 +164,17 @@ exit /b 0</PreBuildEvent>
   <Import Project="..\packages\PostSharp.6.9.3\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.6.9.3\build\PostSharp.targets')" />
   <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
   <Import Project="..\packages\PostSharp.6.9.4\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.6.9.4\build\PostSharp.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)"=="Release" (
+	erase /F /S /Q "$(TargetDir)*.pdb"
+	erase /F /S /Q "$(TargetDir)*.config"
+	erase /F /S /Q "$(TargetDir)*.vshost.exe"
+	attrib +r "$(TargetDir)$(ProjectName).xml"
+	attrib +r "$(TargetDir)$(ProjectName).md"
+	erase /F /S /Q "$(TargetDir)*.xml"
+	attrib -r "$(TargetDir)$(ProjectName).xml"
+	attrib -r "$(TargetDir)$(ProjectName).md"
+)
+exit /b 0</PostBuildEvent>
+  </PropertyGroup>
 </Project>
