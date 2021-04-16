@@ -1,4 +1,5 @@
 ﻿using System;
+using Alphaleonis.Win32.Filesystem;
 using System.IO;
 using xyLOGIX.Core.Debug.Properties;
 

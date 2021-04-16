@@ -4,6 +4,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
+using File = Alphaleonis.Win32.Filesystem.File;
+using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
+using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -216,12 +220,11 @@ namespace xyLOGIX.Core.Debug
             else
             {
                 if (repository == null)
-                    XmlConfigurator.Configure(
-                        new FileInfo(configurationFilePathname)
+                    XmlConfigurator.Configure(new System.IO.FileInfo(configurationFilePathname)
                     );
                 else
                     XmlConfigurator.Configure(
-                        repository, new FileInfo(configurationFilePathname)
+                        repository, new System.IO.FileInfo(configurationFilePathname)
                     );
             }
 
