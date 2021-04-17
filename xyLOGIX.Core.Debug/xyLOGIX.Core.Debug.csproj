@@ -149,11 +149,13 @@
     <Error Condition="!Exists('..\packages\PostSharp.6.9.4\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.9.4\build\PostSharp.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>if exist "$(TargetDir)$(ProjectName).md" (
+    <PreBuildEvent>exit /b 0
+if exist "$(TargetDir)$(ProjectName).md" (
     if exist "$(ProjectDir)README.md" (
         erase /F /Q "$(ProjectDir)README.md"
     )
     copy /Y "$(TargetDir)$(ProjectName).md" "$(ProjectDir)README.md"
+    git add "$(ProjectDir)README.md"
     git commit -m "Update README.md"
     git push -u origin master
 )
@@ -162,7 +164,8 @@ exit /b 0</PreBuildEvent>
   <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
   <Import Project="..\packages\PostSharp.6.9.4\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.6.9.4\build\PostSharp.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)"=="Release" (
+    <PostBuildEvent>exit /b 0
+if "$(ConfigurationName)"=="Release" (
 	erase /F /S /Q "$(TargetDir)*.pdb"
 	erase /F /S /Q "$(TargetDir)*.config"
 	erase /F /S /Q "$(TargetDir)*.vshost.exe"
