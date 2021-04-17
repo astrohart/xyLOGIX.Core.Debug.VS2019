@@ -2,6 +2,7 @@
 using log4net.Repository;
 using System;
 using System.Diagnostics;
+using Alphaleonis.Win32.Filesystem;
 using System.IO;
 using System.Reflection;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
