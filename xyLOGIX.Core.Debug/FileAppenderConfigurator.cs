@@ -17,7 +17,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// Thrown if the instance of the object referenced by <paramref
-        /// name="appender"/> is <c>null</c>.
+        /// name="appender"/> is <see langword="null" />.
         /// </exception>
         public static void SetMinimalLock(FileAppender appender)
         {

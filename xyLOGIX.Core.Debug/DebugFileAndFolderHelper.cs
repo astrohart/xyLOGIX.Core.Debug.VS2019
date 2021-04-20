@@ -66,7 +66,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         /// <exception cref="T:System.ArgumentException">
         /// Thrown if the required parameter, <paramref name="directoryPath"/>,
-        /// is passed a blank or <c>null</c> value.
+        /// is passed a blank or <see langword="null" /> value.
         /// </exception>
         public static void CreateDirectoryIfNotExists(string directoryPath)
         {
@@ -387,7 +387,7 @@ namespace xyLOGIX.Core.Debug
         /// file with the specified <paramref name="path"/>, otherwise <c>false</c>.
         /// <para/>
         /// The value <c>false</c> is also returned in the event that the
-        /// <paramref name="path"/> parameter is a <c>null</c> value or blank.
+        /// <paramref name="path"/> parameter is a <see langword="null" /> value or blank.
         /// <para/>
         /// The value <c>false</c> is also returned if an operating system error
         /// or exception occurs while trying to look up the file's permissions.
@@ -562,7 +562,7 @@ namespace xyLOGIX.Core.Debug
         /// folder with the specified <paramref name="path"/>, otherwise <c>false</c>.
         /// <para/>
         /// The value <c>false</c> is also returned in the event that the
-        /// <paramref name="path"/> parameter is a <c>null</c> value or blank.
+        /// <paramref name="path"/> parameter is a <see langword="null" /> value or blank.
         /// <para/>
         /// The value <c>false</c> is also returned if an operating system error
         /// or exception occurs while trying to look up the folder's permissions.

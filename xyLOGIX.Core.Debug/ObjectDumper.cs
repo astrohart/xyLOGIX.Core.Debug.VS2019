@@ -80,7 +80,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the required parameter, <paramref name="element"/>, is
-        /// passed a <c>null</c> value.
+        /// passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
@@ -118,7 +118,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if either of the required parameters, <paramref
-        /// name="element"/> or <paramref name="log"/>, are passed a <c>null</c> value.
+        /// name="element"/> or <paramref name="log"/>, are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
@@ -153,7 +153,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the required parameter, <paramref name="element"/>, is
-        /// passed a <c>null</c> value.
+        /// passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
@@ -191,7 +191,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if either of the required parameters, <paramref
-        /// name="element"/> or <paramref name="log"/>, are passed a <c>null</c> value.
+        /// name="element"/> or <paramref name="log"/>, are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is not zero or greater.
@@ -251,7 +251,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// This method does nothing if the <see
         /// cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer"/> field is a
-        /// <c>null</c> reference.
+        /// <see langword="null" /> reference.
         /// </remarks>
         private void WriteLine()
         {
@@ -268,7 +268,7 @@ namespace xyLOGIX.Core.Debug
         /// specified <paramref name="prefix"/>.
         /// </summary>
         /// <param name="prefix">
-        /// (Optional.) String containing the prefix to be used. May be blank or <c>null</c>.
+        /// (Optional.) String containing the prefix to be used. May be blank or <see langword="null" />.
         /// </param>
         /// <param name="element">
         /// (Required.) Reference to the instance of the object to be dumped to
@@ -366,7 +366,7 @@ namespace xyLOGIX.Core.Debug
         /// inserted after each line of text.
         /// </summary>
         /// <param name="prefix">
-        /// (Optional.) String containing the prefix to be used. May be blank or <c>null</c>.
+        /// (Optional.) String containing the prefix to be used. May be blank or <see langword="null" />.
         /// </param>
         /// <param name="element">
         /// (Required.) Reference to the instance of the object to be dumped to

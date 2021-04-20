@@ -19,7 +19,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the required parameter, <paramref name="element"/>, is
-        /// passed a <c>null</c> value.
+        /// passed a <see langword="null" /> value.
         /// </exception>
         public static void Dump(this object element)
         {
@@ -42,7 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the required parameter, <paramref name="element"/>, is
-        /// passed a <c>null</c> value.
+        /// passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is less than zero.
@@ -75,7 +75,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the either of the required parameters, <paramref
-        /// name="element"/> or <paramref name="log"/>, are passed a <c>null</c> value.
+        /// name="element"/> or <paramref name="log"/>, are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is less than zero.
@@ -101,7 +101,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the required parameter, <paramref name="element"/>, is
-        /// passed a <c>null</c> value.
+        /// passed a <see langword="null" /> value.
         /// </exception>
         public static void DumpLines(this object element)
         {
@@ -123,7 +123,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the required parameter, <paramref name="element"/>, is
-        /// passed a <c>null</c> value.
+        /// passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is less than zero.
@@ -156,7 +156,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <exception cref="T:ArgumentNullException">
         /// Thrown if the either of the required parameters, <paramref
-        /// name="element"/> or <paramref name="log"/>, are passed a <c>null</c> value.
+        /// name="element"/> or <paramref name="log"/>, are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the <paramref name="depth"/> parameter is less than zero.

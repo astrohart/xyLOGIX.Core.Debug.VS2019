@@ -111,7 +111,7 @@ namespace xyLOGIX.Core.Debug
         /// cref="T:System.Collections.ICollection"/> interface.
         /// </param>
         /// <remarks>
-        /// If this method is passed a <c>null</c> for <paramref
+        /// If this method is passed a <see langword="null" /> for <paramref
         /// name="collection"/> , then it does nothing. Otherwise, the method
         /// iterates over the <paramref name="collection"/> and writes all of
         /// its elements to the log, one on each line.
@@ -165,7 +165,7 @@ namespace xyLOGIX.Core.Debug
         /// String to be written to the log.
         /// </returns>
         /// <remarks>
-        /// If a <c>null</c> reference is passed for <paramref name="e"/>, then
+        /// If a <see langword="null" /> reference is passed for <paramref name="e"/>, then
         /// this method returns the empty string.
         /// </remarks>
         public static string FormatException(Exception e)

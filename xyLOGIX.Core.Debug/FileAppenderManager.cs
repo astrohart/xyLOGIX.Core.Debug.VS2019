@@ -22,11 +22,11 @@ namespace xyLOGIX.Core.Debug
         /// <returns>
         /// If a suitable configuration file entry is found, this method returns
         /// a <see cref="T:log4net.Appender.FileAppender"/> instance that
-        /// corresponds to the entry; otherwise, <c>null</c> is returned.
+        /// corresponds to the entry; otherwise, <see langword="null" /> is returned.
         /// </returns>
         /// <exception cref="T:System.ArgumentException">
         /// Thrown if the required parameter, <paramref name="name"/>, is passed
-        /// a blank or <c>null</c> string for a value.
+        /// a blank or <see langword="null" /> string for a value.
         /// </exception>
         public static FileAppender GetAppenderByName(string name)
         {
@@ -54,15 +54,15 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// Reference to an instance of <see
-        /// cref="T:log4net.Appender.FileAppender"/> , or <c>null</c> if not found.
+        /// cref="T:log4net.Appender.FileAppender"/> , or <see langword="null" /> if not found.
         /// </returns>
         /// <remarks>
         /// If the <paramref name="loggerRepository"/> parameter is passed a
-        /// <c>null</c> value, then this method attempts to obtain the root
+        /// <see langword="null" /> value, then this method attempts to obtain the root
         /// logger object and then obtain the first <see
         /// cref="T:log4net.Appender.FileAppender"/> configured on the root
         /// logger repository. If a suitable appender can still not be located,
-        /// then the return value of this method is <c>null</c>.
+        /// then the return value of this method is <see langword="null" />.
         /// </remarks>
         public static FileAppender GetFirstAppender(
             ILoggerRepository loggerRepository = null)
