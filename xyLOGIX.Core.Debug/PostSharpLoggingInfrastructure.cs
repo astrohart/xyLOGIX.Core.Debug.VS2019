@@ -62,9 +62,9 @@ namespace xyLOGIX.Core.Debug
         /// default App.config file.
         /// </param>
         /// <param name="muteConsole">
-        /// Set to <c>true</c> to suppress the display of logging messages to
+        /// Set to <see langword="true" /> to suppress the display of logging messages to
         /// the console if a log file is being used. If a log file is not used,
-        /// then no logging at all will occur if this parameter is set to <c>true</c>.
+        /// then no logging at all will occur if this parameter is set to <see langword="true" />.
         /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements

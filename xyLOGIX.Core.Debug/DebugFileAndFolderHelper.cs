@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Alphaleonis.Win32.Filesystem;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
@@ -291,9 +290,9 @@ namespace xyLOGIX.Core.Debug
         /// error message and returns false; otherwise, returns true.
         /// </summary>
         /// <returns>
-        /// This method returns <c>true</c> if the file with path specified by
+        /// This method returns <see langword="true" /> if the file with path specified by
         /// the <paramref name="fileName"/> parameter exists on the disk in the
-        /// specified location or <c>false</c> if either the file is not found
+        /// specified location or <see langword="false" /> if either the file is not found
         /// or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.
         /// </returns>
@@ -383,13 +382,13 @@ namespace xyLOGIX.Core.Debug
         /// permissions should be checked.
         /// </param>
         /// <returns>
-        /// This method returns <c>true</c> if write access is allowed to the
-        /// file with the specified <paramref name="path"/>, otherwise <c>false</c>.
+        /// This method returns <see langword="true" /> if write access is allowed to the
+        /// file with the specified <paramref name="path"/>, otherwise <see langword="false" />.
         /// <para/>
-        /// The value <c>false</c> is also returned in the event that the
+        /// The value <see langword="false" /> is also returned in the event that the
         /// <paramref name="path"/> parameter is a <see langword="null" /> value or blank.
         /// <para/>
-        /// The value <c>false</c> is also returned if an operating system error
+        /// The value <see langword="false" /> is also returned if an operating system error
         /// or exception occurs while trying to look up the file's permissions.
         /// </returns>
         public static bool IsFileWriteable(string path)
@@ -558,13 +557,13 @@ namespace xyLOGIX.Core.Debug
         /// permissions are to be checked.
         /// </param>
         /// <returns>
-        /// This method returns <c>true</c> if write access is allowed to the
-        /// folder with the specified <paramref name="path"/>, otherwise <c>false</c>.
+        /// This method returns <see langword="true" /> if write access is allowed to the
+        /// folder with the specified <paramref name="path"/>, otherwise <see langword="false" />.
         /// <para/>
-        /// The value <c>false</c> is also returned in the event that the
+        /// The value <see langword="false" /> is also returned in the event that the
         /// <paramref name="path"/> parameter is a <see langword="null" /> value or blank.
         /// <para/>
-        /// The value <c>false</c> is also returned if an operating system error
+        /// The value <see langword="false" /> is also returned if an operating system error
         /// or exception occurs while trying to look up the folder's permissions.
         /// </returns>
         public static bool IsFolderWriteable(string path)
@@ -772,7 +771,7 @@ namespace xyLOGIX.Core.Debug
         /// <returns>
         /// If the path provided in <paramref name="fullyQualifiedPath"/> is a
         /// valid path according to operating-system-specified rules, then this
-        /// method returns <c>true</c>. Otherwise, the return value is <c>false</c>.
+        /// method returns <see langword="true" />. Otherwise, the return value is <see langword="false" />.
         /// </returns>
         public static bool IsValidPath(string fullyQualifiedPath)
         {

@@ -53,9 +53,9 @@
         /// default App.config file.
         /// </param>
         /// <param name="muteConsole">
-        /// Set to <c>true</c> to suppress the display of logging messages to
+        /// Set to <see langword="true" /> to suppress the display of logging messages to
         /// the console if a log file is being used. If a log file is not used,
-        /// then no logging at all will occur if this parameter is set to <c>true</c>.
+        /// then no logging at all will occur if this parameter is set to <see langword="true" />.
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the <see
@@ -93,7 +93,7 @@
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log file; false
         /// to suppress. Usually used with the <paramref name="consoleOnly"/>
-        /// parameter set to <c>true</c>.
+        /// parameter set to <see langword="true" />.
         /// </param>
         /// <param name="consoleOnly">
         /// True to only write messages to the console; false to write them both
@@ -103,7 +103,7 @@
         /// Zero to suppress every message; greater than zero to echo every message.
         /// </param>
         /// <param name="muteConsole">
-        /// If set to <c>true</c>, suppresses all console output.
+        /// If set to <see langword="true" />, suppresses all console output.
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the <see
