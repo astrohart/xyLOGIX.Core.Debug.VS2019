@@ -1,4 +1,4 @@
-﻿using log4net.Repository;
+using log4net.Repository;
 using log4net.Repository.Hierarchy;
 
 namespace xyLOGIX.Core.Debug
