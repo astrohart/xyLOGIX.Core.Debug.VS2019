@@ -1,4 +1,5 @@
 using log4net;
+using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Collections;
 using System.IO;
@@ -11,6 +12,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Helpers to manage the writing of content to the debugging log.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public static class DebugUtils
     {
         /// <summary>
