@@ -1,3 +1,4 @@
+using PostSharp.Patterns.Diagnostics;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -5,6 +6,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Class to manage access to the event log.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public class EventLogManager
     {
         /// <summary>
