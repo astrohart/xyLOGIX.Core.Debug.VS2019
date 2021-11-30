@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.props" Condition="Exists('..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.props')" />
   <Import Project="..\packages\PostSharp.6.9.12\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.6.9.12\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -77,32 +76,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlphaFS, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4d31a58f7d7ad5c9, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\AlphaFS.2.2.6\lib\net452\AlphaFS.dll</HintPath>
+      <HintPath>..\packages\AlphaFS.2.2.6\lib\net452\AlphaFS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=2.0.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\log4net.2.0.13\lib\net45\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.13\lib\net45\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp, Version=6.9.12.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\PostSharp.Redist.6.9.12\lib\net45\PostSharp.dll</HintPath>
+      <HintPath>..\packages\PostSharp.Redist.6.9.12\lib\net45\PostSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp.Patterns.Common, Version=6.9.12.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\PostSharp.Patterns.Common.Redist.6.9.12\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
+      <HintPath>..\packages\PostSharp.Patterns.Common.Redist.6.9.12\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.9.12.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\PostSharp.Patterns.Diagnostics.Redist.6.9.12\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
+      <HintPath>..\packages\PostSharp.Patterns.Diagnostics.Redist.6.9.12\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp.Patterns.Diagnostics.Backends.Log4Net, Version=6.9.12.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\..\xyLOGIX.VisualStudio\packages\PostSharp.Patterns.Diagnostics.Log4Net.6.9.12\lib\net45\PostSharp.Patterns.Diagnostics.Backends.Log4Net.dll</HintPath>
+      <HintPath>..\packages\PostSharp.Patterns.Diagnostics.Log4Net.6.9.12\lib\net45\PostSharp.Patterns.Diagnostics.Backends.Log4Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -170,14 +169,14 @@ exit /b 0</PreBuildEvent>
   <PropertyGroup>
     <PostBuildEvent>exit /b 0
 if "$(ConfigurationName)"=="Release" (
-	erase /F /S /Q "$(TargetDir)*.pdb"
-	erase /F /S /Q "$(TargetDir)*.config"
-	erase /F /S /Q "$(TargetDir)*.vshost.exe"
-	attrib +r "$(TargetDir)$(ProjectName).xml"
-	attrib +r "$(TargetDir)$(ProjectName).md"
-	erase /F /S /Q "$(TargetDir)*.xml"
-	attrib -r "$(TargetDir)$(ProjectName).xml"
-	attrib -r "$(TargetDir)$(ProjectName).md"
+  erase /F /S /Q "$(TargetDir)*.pdb"
+  erase /F /S /Q "$(TargetDir)*.config"
+  erase /F /S /Q "$(TargetDir)*.vshost.exe"
+  attrib +r "$(TargetDir)$(ProjectName).xml"
+  attrib +r "$(TargetDir)$(ProjectName).md"
+  erase /F /S /Q "$(TargetDir)*.xml"
+  attrib -r "$(TargetDir)$(ProjectName).xml"
+  attrib -r "$(TargetDir)$(ProjectName).md"
 )
 exit /b 0</PostBuildEvent>
   </PropertyGroup>
@@ -185,15 +184,10 @@ exit /b 0</PostBuildEvent>
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Vsxmd.1.4.5\build\Vsxmd.targets'))" />
     <Error Condition="!Exists('..\packages\PostSharp.6.9.12\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.9.12\build\PostSharp.props'))" />
     <Error Condition="!Exists('..\packages\PostSharp.6.9.12\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.9.12\build\PostSharp.targets'))" />
-    <Error Condition="!Exists('..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.props'))" />
-    <Error Condition="!Exists('..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.targets'))" />
-    <Error Condition="!Exists('..\..\xyLOGIX.VisualStudio\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\xyLOGIX.VisualStudio\packages\Vsxmd.1.4.5\build\Vsxmd.targets'))" />
+    <Error Condition="!Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Vsxmd.1.4.5\build\Vsxmd.targets'))" />
   </Target>
-  <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
   <Import Project="..\packages\PostSharp.6.9.12\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.6.9.12\build\PostSharp.targets')" />
-  <Import Project="..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.targets" Condition="Exists('..\..\xyLOGIX.VisualStudio\packages\PostSharp.6.9.12\build\PostSharp.targets')" />
-  <Import Project="..\..\xyLOGIX.VisualStudio\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\..\xyLOGIX.VisualStudio\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
+  <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
 </Project>
