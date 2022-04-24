@@ -91,8 +91,9 @@
     <Reference Include="PostSharp, Version=6.10.10.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.6.10.10\lib\net45\PostSharp.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp.Patterns.Common, Version=6.10.10.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.Patterns.Common.Redist.6.10.10\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
+    <Reference Include="PostSharp.Patterns.Common, Version=6.10.6.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Patterns.Common.Redist.6.10.6\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PostSharp.Patterns.Diagnostics, Version=6.10.10.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Patterns.Diagnostics.Redist.6.10.10\lib\net47\PostSharp.Patterns.Diagnostics.dll</HintPath>
