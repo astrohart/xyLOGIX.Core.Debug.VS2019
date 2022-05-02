@@ -1,0 +1,33 @@
+{
+  "projects": [
+    {
+      "name": "xyLOGIX.Core.Debug",
+      "approved_packages": [
+        {
+          "name": "AlphaFS",
+          "version": "latest"
+        },
+        {
+          "name": "Vsxmd",
+          "version": "latest"
+        },
+        {
+          "name": "log4net",
+          "version": "latest"
+        },
+        {
+          "name": "PostSharp",
+          "version": "latest"
+        },
+        {
+          "name": "PostSharp.Patterns.Diagnostics",
+          "version": "latest"
+        },
+        {
+          "name": "PostSharp.Patterns.Diagnostics.Log4Net",
+          "version": "latest"
+        }
+      ]
+    }
+  ]
+}
