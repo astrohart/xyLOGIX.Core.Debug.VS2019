@@ -124,4 +124,7 @@
   <data name="Error_DepthMustBeNonNegative" xml:space="preserve">
     <value>The 'depth' parameter must be zero or greater.</value>
   </data>
+  <data name="Error_UnableFindAppConfigEntries" xml:space="preserve">
+    <value>Unable to determine the path to the log file's containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file.</value>
+  </data>
 </root>

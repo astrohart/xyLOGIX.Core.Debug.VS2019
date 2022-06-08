@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using xyLOGIX.Core.Debug.Properties;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -358,7 +359,7 @@ namespace xyLOGIX.Core.Debug
             var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
             if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
                 throw new InvalidOperationException(
-                    "Unable to determine the path to the log file's containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file."
+                    Resources.Error_UnableFindAppConfigEntries
                 );
             var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
                                          .Parent?.FullName;
