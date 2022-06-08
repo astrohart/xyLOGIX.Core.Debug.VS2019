@@ -2,33 +2,35 @@ using log4net.Config;
 using log4net.Repository;
 using System;
 using System.Diagnostics;
-using Alphaleonis.Win32.Filesystem;
 using System.IO;
 using System.Reflection;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
-using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Default implementation details for the <see cref="T:xyLOGIX.Core.Debug.LogFileManager"/>.
+    /// Default implementation details for the
+    /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
     /// </summary>
     public class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary>
         /// Gets the full path and filename to the log file for this application.
         /// </summary>
-        public virtual string LogFilePath => GetRootFileAppenderFileName();
+        public virtual string LogFilePath
+            => GetRootFileAppenderFileName();
 
         /// <summary>
-        /// Gets the <see
-        /// cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value that
+        /// Gets the
+        /// <see
+        ///     cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        /// value that
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public virtual LoggingInfrastructureType Type =>
-            LoggingInfrastructureType.Default;
+        public virtual LoggingInfrastructureType Type
+            => LoggingInfrastructureType.Default;
 
         /// <summary>
         /// Deletes the log file, if it exists.
@@ -77,8 +79,8 @@ namespace xyLOGIX.Core.Debug
             );
 
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
-                Path.GetDirectoryName(LogFilePath)
-            ))
+                    Path.GetDirectoryName(LogFilePath)
+                ))
             {
                 // If we cannot write to the folder where the log file to be
                 // deleted sits in, then Heaven help us! However the software
@@ -117,20 +119,26 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets the value of the <see
-        /// cref="P:log4net.Appender.FileAppender.File"/> property from the
-        /// first appender in the list of appenders that is of type <see cref="T:log4net.Appender.FileAppender"/>.
+        /// Gets the value of the
+        /// <see
+        ///     cref="P:log4net.Appender.FileAppender.File" />
+        /// property from the
+        /// first appender in the list of appenders that is of type
+        /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </summary>
         /// <returns>
         /// String containing the full path and file name of the file the
         /// appender is writing to.
         /// </returns>
         /// <remarks>
-        /// This method is solely utilized in order to implement the <see
-        /// cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath"/> property.
+        /// This method is solely utilized in order to implement the
+        /// <see
+        ///     cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        /// property.
         /// </remarks>
-        public virtual string GetRootFileAppenderFileName() =>
-            FileAppenderManager.GetFirstAppender()?.File;
+        public virtual string GetRootFileAppenderFileName()
+            => FileAppenderManager.GetFirstAppender()
+                                  ?.File;
 
         /// <summary>
         /// Initializes the application's logging subsystem.
@@ -152,11 +160,12 @@ namespace xyLOGIX.Core.Debug
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the display of logging messages to
         /// the console if a log file is being used. If a log file is not used,
-        /// then no logging at all will occur if this parameter is set to <see langword="true" />.
+        /// then no logging at all will occur if this parameter is set to
+        /// <see langword="true" />.
         /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
-        /// the <see cref="T:log4net.Repository.ILoggerRepository"/> interface.
+        /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
@@ -165,13 +174,15 @@ namespace xyLOGIX.Core.Debug
             string configurationFilePathname = "", bool muteConsole = false,
             ILoggerRepository repository = null)
         {
-            var entryAssemblyFileName = Assembly.GetEntryAssembly()?.Location;
+            var entryAssemblyFileName = Assembly.GetEntryAssembly()
+                                                ?.Location;
             if (string.IsNullOrWhiteSpace(entryAssemblyFileName) ||
                 !File.Exists(entryAssemblyFileName))
                 return;
 
             DebugUtils.ApplicationName = FileVersionInfo
-                .GetVersionInfo(entryAssemblyFileName).ProductName;
+                                         .GetVersionInfo(entryAssemblyFileName)
+                                         .ProductName;
 
             // If we found a value for the ApplicationName, then initialize the
             // EventLogManager. The EventLogManager is a companion component to
@@ -221,11 +232,12 @@ namespace xyLOGIX.Core.Debug
             else
             {
                 if (repository == null)
-                    XmlConfigurator.Configure(new System.IO.FileInfo(configurationFilePathname)
+                    XmlConfigurator.Configure(
+                        new FileInfo(configurationFilePathname)
                     );
                 else
                     XmlConfigurator.Configure(
-                        repository, new System.IO.FileInfo(configurationFilePathname)
+                        repository, new FileInfo(configurationFilePathname)
                     );
             }
 
@@ -238,16 +250,16 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils"/> to
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
         /// initialize its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any logging statements that are set to
-        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug"/> level.
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> level.
         /// </param>
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log file; false
-        /// to suppress. Usually used with the <paramref name="consoleOnly"/>
+        /// to suppress. Usually used with the <paramref name="consoleOnly" />
         /// parameter set to true.
         /// </param>
         /// <param name="consoleOnly">
@@ -336,7 +348,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
-        /// the <see cref="T:log4net.Repository.ILoggerRepository"/> interface.
+        /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
@@ -349,7 +361,7 @@ namespace xyLOGIX.Core.Debug
                     "Unable to determine the path to the log file's containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file."
                 );
             var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
-                .Parent?.FullName;
+                                         .Parent?.FullName;
 
             // Dump the variable logFileDirectoryParent to the log
             DebugUtils.WriteLine(
@@ -366,7 +378,9 @@ namespace xyLOGIX.Core.Debug
 
             // Check if the user has write access to the parent directory of the
             // log file.
-            if (!DebugFileAndFolderHelper.IsFolderWriteable(logFileDirectoryParent))
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(
+                    logFileDirectoryParent
+                ))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
@@ -387,7 +401,9 @@ namespace xyLOGIX.Core.Debug
             // We have to insist that the directory that the log file is in is
             // writeable. If we can't get write access to the log file
             // directory, then throw an exception.
-            if (!DebugFileAndFolderHelper.IsFolderWriteable(logFileDirectoryPath))
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(
+                    logFileDirectoryPath
+                ))
                 throw new UnauthorizedAccessException(
                     $"We don't have write permissions to the directory '{logFileDirectoryPath}'."
                 );
@@ -408,11 +424,9 @@ namespace xyLOGIX.Core.Debug
         /// Writes a date and time stamp to the top of the log file.
         /// </summary>
         protected virtual void WriteTimestamp()
-        {
-            DebugUtils.WriteLine(
+            => DebugUtils.WriteLine(
                 DebugLevel.Info,
                 $"*** LOG STARTED ON {DateTime.Now.ToLongDateString()} at {DateTime.Now.ToLongTimeString()}"
             );
-        }
     }
 }
