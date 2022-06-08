@@ -346,7 +346,7 @@ namespace xyLOGIX.Core.Debug
             var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
             if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
                 throw new InvalidOperationException(
-                    "Unable to determine the path to the log file's containing folder."
+                    "Unable to determine the path to the log file's containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file."
                 );
             var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
                 .Parent?.FullName;
