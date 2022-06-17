@@ -24,7 +24,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// Must be zero or greater.
         /// </remarks>
-        private readonly int _depth;
+        private int Depth { get; }
 
         /// <summary>
         /// Integer specifying the current position in the output stream.
@@ -62,7 +62,7 @@ namespace xyLOGIX.Core.Debug
             if (depth < 0)
                 throw new ArgumentOutOfRangeException(nameof(depth));
 
-            _depth = depth;
+            Depth = depth;
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace xyLOGIX.Core.Debug
                             Write(prefix);
                             Write("...");
                             WriteLine();
-                            if (_indentLevel >= _depth) continue;
+                            if (_indentLevel >= Depth) continue;
                             _indentLevel++;
                             WriteObject(prefix, item);
                             _indentLevel--;
@@ -342,7 +342,7 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     if (propWritten) WriteLine();
-                    if (_indentLevel < _depth)
+                    if (_indentLevel < Depth)
                         foreach (var m in members)
                         {
                             var f = m as FieldInfo;
@@ -395,7 +395,7 @@ namespace xyLOGIX.Core.Debug
                             Write(prefix);
                             Write("...");
                             WriteLine();
-                            if (_indentLevel >= _depth) continue;
+                            if (_indentLevel >= Depth) continue;
                             _indentLevel++;
                             WriteObjectToLines(prefix, item);
                             _indentLevel--;
@@ -440,7 +440,7 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     if (propWritten) WriteLine();
-                    if (_indentLevel < _depth)
+                    if (_indentLevel < Depth)
                         foreach (var m in members)
                         {
                             var f = m as FieldInfo;
