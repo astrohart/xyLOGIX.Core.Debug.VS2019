@@ -63,10 +63,10 @@ namespace xyLOGIX.Core.Debug
         public int IndentLevel { get; private set; }
 
         /// <summary>
-        /// Gets a reference to a <see cref="T:System.IO.TextWriter" /> to which to send
-        /// the logged data.
+        /// Gets or sets a reference to a <see cref="T:System.IO.TextWriter" /> to which to
+        /// send the logged data.
         /// </summary>
-        public TextWriter Writer { get; private set; }
+        private TextWriter Writer { get; set; }
 
         /// <summary>
         /// Writes an object, a reference to which is specified by the
