@@ -24,7 +24,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// Must be zero or greater.
         /// </remarks>
-        private int Depth { get; }
+        public int Depth { get; }
 
         /// <summary>
         /// Integer specifying the current position in the output stream.
