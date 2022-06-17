@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.IO;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
