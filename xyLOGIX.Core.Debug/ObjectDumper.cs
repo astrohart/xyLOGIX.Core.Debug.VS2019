@@ -19,14 +19,6 @@ namespace xyLOGIX.Core.Debug
     public class ObjectDumper
     {
         /// <summary>
-        /// Integer specifying the indentation level of the logged data.
-        /// </summary>
-        /// <remarks>
-        /// Must be 1 or greater.
-        /// </remarks>
-        private int _indentLevel;
-
-        /// <summary>
         /// Reference to a <see cref="T:System.IO.TextWriter" /> to which to send
         /// the logged data.
         /// </summary>
@@ -67,6 +59,14 @@ namespace xyLOGIX.Core.Debug
         /// Must be zero or greater.
         /// </remarks>
         public int Depth { get; }
+
+        /// <summary>
+        /// Integer specifying the indentation level of the logged data.
+        /// </summary>
+        /// <remarks>
+        /// Must be 1 or greater.
+        /// </remarks>
+        public int IndentLevel { get; private set; }
 
         /// <summary>
         /// Writes an object, a reference to which is specified by the
@@ -263,13 +263,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private void WriteIndent()
         {
-            if (_indentLevel < 0)
+            if (IndentLevel < 0)
                 throw new ArgumentOutOfRangeException(
-                    nameof(_indentLevel),
+                    nameof(IndentLevel),
                     "Value of the indent level must be zero or greater."
                 );
 
-            for (var i = 0; i < _indentLevel; i++) _writer.Write("   ");
+            for (var i = 0; i < IndentLevel; i++) _writer.Write("   ");
         }
 
         /// <summary>
@@ -325,10 +325,10 @@ namespace xyLOGIX.Core.Debug
                             Write(prefix);
                             Write("...");
                             WriteLine();
-                            if (_indentLevel >= Depth) continue;
-                            _indentLevel++;
+                            if (IndentLevel >= Depth) continue;
+                            IndentLevel++;
                             WriteObject(prefix, item);
-                            _indentLevel--;
+                            IndentLevel--;
                         }
                         else
                         {
@@ -372,7 +372,7 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     if (propWritten) WriteLine();
-                    if (_indentLevel < Depth)
+                    if (IndentLevel < Depth)
                         foreach (var m in members)
                         {
                             var f = m as FieldInfo;
@@ -384,9 +384,9 @@ namespace xyLOGIX.Core.Debug
                                 ? f.GetValue(element)
                                 : p.GetValue(element, null);
                             if (value == null) continue;
-                            _indentLevel++;
+                            IndentLevel++;
                             WriteObject(m.Name + ": ", value);
-                            _indentLevel--;
+                            IndentLevel--;
                         }
                 }
             }
@@ -426,10 +426,10 @@ namespace xyLOGIX.Core.Debug
                             Write(prefix);
                             Write("...");
                             WriteLine();
-                            if (_indentLevel >= Depth) continue;
-                            _indentLevel++;
+                            if (IndentLevel >= Depth) continue;
+                            IndentLevel++;
                             WriteObjectToLines(prefix, item);
-                            _indentLevel--;
+                            IndentLevel--;
                         }
                         else
                         {
@@ -473,7 +473,7 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     if (propWritten) WriteLine();
-                    if (_indentLevel < Depth)
+                    if (IndentLevel < Depth)
                         foreach (var m in members)
                         {
                             var f = m as FieldInfo;
@@ -485,9 +485,9 @@ namespace xyLOGIX.Core.Debug
                                 ? f.GetValue(element)
                                 : p.GetValue(element, null);
                             if (value == null) continue;
-                            _indentLevel++;
+                            IndentLevel++;
                             WriteObjectToLines(m.Name + ": ", value);
-                            _indentLevel--;
+                            IndentLevel--;
                         }
                 }
             }
