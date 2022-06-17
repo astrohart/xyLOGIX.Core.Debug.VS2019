@@ -19,12 +19,6 @@ namespace xyLOGIX.Core.Debug
     public class ObjectDumper
     {
         /// <summary>
-        /// Reference to a <see cref="T:System.IO.TextWriter" /> to which to send
-        /// the logged data.
-        /// </summary>
-        private TextWriter _writer;
-
-        /// <summary>
         /// Constructs a new instance of
         /// <see
         ///     cref="T:xyLOGIX.Core.Debug.ObjectDumper" />
@@ -67,6 +61,12 @@ namespace xyLOGIX.Core.Debug
         /// Must be 1 or greater.
         /// </remarks>
         public int IndentLevel { get; private set; }
+
+        /// <summary>
+        /// Gets a reference to a <see cref="T:System.IO.TextWriter" /> to which to send
+        /// the logged data.
+        /// </summary>
+        public TextWriter Writer { get; private set; }
 
         /// <summary>
         /// Writes an object, a reference to which is specified by the
@@ -145,7 +145,7 @@ namespace xyLOGIX.Core.Debug
                 throw new ArgumentOutOfRangeException(nameof(depth));
             if (log == null) throw new ArgumentNullException(nameof(log));
 
-            var dumper = new ObjectDumper(depth) { _writer = log };
+            var dumper = new ObjectDumper(depth) { Writer = log };
             dumper.WriteObject(null, element);
         }
 
@@ -225,7 +225,7 @@ namespace xyLOGIX.Core.Debug
             if (depth < 0)
                 throw new ArgumentOutOfRangeException(nameof(depth));
             if (log == null) throw new ArgumentNullException(nameof(log));
-            var dumper = new ObjectDumper(depth) { _writer = log };
+            var dumper = new ObjectDumper(depth) { Writer = log };
             dumper.WriteObjectToLines(null, element);
         }
 
@@ -246,7 +246,7 @@ namespace xyLOGIX.Core.Debug
             if (string.IsNullOrWhiteSpace(s))
                 return;
 
-            _writer.Write(s);
+            Writer.Write(s);
             CurrentStreamPosition += s.Length;
         }
 
@@ -269,7 +269,7 @@ namespace xyLOGIX.Core.Debug
                     "Value of the indent level must be zero or greater."
                 );
 
-            for (var i = 0; i < IndentLevel; i++) _writer.Write("   ");
+            for (var i = 0; i < IndentLevel; i++) Writer.Write("   ");
         }
 
         /// <summary>
@@ -285,10 +285,10 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         private void WriteLine()
         {
-            if (_writer == null)
+            if (Writer == null)
                 return;
 
-            _writer.WriteLine();
+            Writer.WriteLine();
             CurrentStreamPosition = 0;
         }
 
