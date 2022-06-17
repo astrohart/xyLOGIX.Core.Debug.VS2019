@@ -1,6 +1,13 @@
 using System;
 using System.Collections;
+using System.IO;
 using System.Reflection;
+
+/*
+ * Note that there is no need for Alphaleonis.Win32.Filesystem in this module.
+ * Using solely System.IO is just fine for right now.  We only require access
+ * to the System.IO.TextWriter class in this file.
+ */
 
 namespace xyLOGIX.Core.Debug
 {
