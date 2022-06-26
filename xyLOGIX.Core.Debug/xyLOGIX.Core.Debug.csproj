@@ -21,8 +21,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\x64\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>CS1591;CS1587</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <SkipPostSharp>False</SkipPostSharp>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
