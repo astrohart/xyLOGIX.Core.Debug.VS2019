@@ -1,3 +1,4 @@
+using PostSharp.Community.Packer;
 using PostSharp.Extensibility;
 using PostSharp.Patterns.Diagnostics;
 
@@ -5,3 +6,4 @@ using PostSharp.Patterns.Diagnostics;
 [assembly: Log(AttributeTargetTypeAttributes = MulticastAttributes.Private | MulticastAttributes.Protected | MulticastAttributes.Internal | MulticastAttributes.Public, AttributeTargetMemberAttributes = MulticastAttributes.Private | MulticastAttributes.Protected | MulticastAttributes.Internal | MulticastAttributes.Public | MulticastAttributes.UserGenerated)]
 [assembly: Log(AttributePriority = 1)]
 [assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:^get_|^set_", AttributePriority = 2)]
+[assembly: Packer]
