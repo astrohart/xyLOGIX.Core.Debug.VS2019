@@ -91,9 +91,6 @@
     <Reference Include="PostSharp, Version=6.10.13.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.6.10.13\lib\net45\PostSharp.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp.Community.Packer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PostSharp.Community.Packer.1.2.0\lib\netstandard2.0\PostSharp.Community.Packer.dll</HintPath>
-    </Reference>
     <Reference Include="PostSharp.Patterns.Common, Version=6.10.13.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Patterns.Common.Redist.6.10.13\lib\net47\PostSharp.Patterns.Common.dll</HintPath>
     </Reference>
