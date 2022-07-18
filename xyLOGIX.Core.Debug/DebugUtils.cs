@@ -446,8 +446,6 @@ namespace xyLOGIX.Core.Debug
 
                 // stop if the format output is blank or null
                 return;
-
-            // stop if the logMethod parameter is null
             if (logMethod == null)
                 return;
 
@@ -456,8 +454,6 @@ namespace xyLOGIX.Core.Debug
                 logMethod(level, content);
                 return;
             }
-
-            // The format string is composed of several lines. Log each line separately.
             var lines = content.Split(
                 new[] { Environment.NewLine }, StringSplitOptions.None
             );
@@ -465,7 +461,6 @@ namespace xyLOGIX.Core.Debug
 
             // For each line, write it out at the debugLevel indicated, one by
             // one. We do this by calling the delegate supplied to this method
-            // in the logMethod parameter.
             foreach (var line in lines) logMethod(level, line);
         }
 
@@ -631,7 +626,6 @@ namespace xyLOGIX.Core.Debug
                         break;
 
                     case DebugLevel.Debug:
-                        //#if DEBUG   // only print DEBUG logging statements if we're in Debug mode
                         logger.Debug(content);
 
                         //#endif

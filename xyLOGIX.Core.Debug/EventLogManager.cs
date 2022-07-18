@@ -131,15 +131,12 @@ namespace xyLOGIX.Core.Debug
         {
             // Check to see if the required parameter, eventSource, is blank,
             // whitespace, or null. If it is any of these, send an error to the
-            // log file and quit.
 
             // The 'eventSource' parameter must not be blank.
             if (string.IsNullOrWhiteSpace(eventSourceName))
 
                 // stop.
                 return;
-
-            // A log type other than 'None' or 'Unknown' must be specified.
             if (logType == EventLogType.Unknown || logType == EventLogType.None)
                 return;
 
@@ -160,7 +157,6 @@ namespace xyLOGIX.Core.Debug
             catch
             {
                 // If an exception was caught, de-initialize the member
-                // properties of this EventLogManager instance. This is to
                 // prevent this class from working in future calls.
 
                 Source = string.Empty;

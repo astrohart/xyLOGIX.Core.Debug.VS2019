@@ -27,11 +27,6 @@ namespace xyLOGIX.Core.Debug
         public static void ClearTempFileDir()
         {
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "In DebugFileAndFolderHelper.ClearTempFileDir"
-            );
-
             try
             {
                 var psi = new ProcessStartInfo
@@ -75,25 +70,6 @@ namespace xyLOGIX.Core.Debug
                 );
 
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "In DebugFileAndFolderHelper.CreateDirectoryIfNotExists"
-            );
-
-            // Dump the variable directoryPath to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: directoryPath = '{0}'",
-                directoryPath
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Checking whether the folder '{0}' exists...",
-                directoryPath
-            );
-
             if (Directory.Exists(directoryPath))
             {
                 DebugUtils.WriteLine(
@@ -101,30 +77,11 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: The folder '{0}' exists.  Nothing to do.",
                     directoryPath
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Done."
-                );
-
                 return;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Now attempting to create the folder '{0}'...",
-                directoryPath
-            );
-
             try
             {
                 Directory.CreateDirectory(directoryPath);
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Checking whether we were successful..."
-                );
-
                 if (Directory.Exists(directoryPath))
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
@@ -142,18 +99,7 @@ namespace xyLOGIX.Core.Debug
             {
                 // dump all the exception info to the log
                 DebugUtils.LogException(e);
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Failed to create folder '{0}'.",
-                    directoryPath
-                );
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Done."
-            );
         }
 
         /// <summary>
@@ -171,92 +117,27 @@ namespace xyLOGIX.Core.Debug
         public static List<string> GetFilesInFolder(string folder)
         {
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "In DebugFileAndFolderHelper.GetFilesInFolder"
-            );
-
             var result = new List<string>();
 
             // Check to see if the required parameter, folder, is blank,
             // whitespace, or null. If it is any of these, send an error to the
-            // log file and quit.
-
-            // Dump the parameter folder to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.GetFilesInFolder: folder = '{0}'",
-                folder
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.GetFilesInFolder: Checking whether the required parameter, 'folder', is blank or not..."
-            );
-
             if (string.IsNullOrWhiteSpace(folder))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
                     "DebugFileAndFolderHelper.GetFilesInFolder: Blank value passed for the 'folder' parameter. This parameter is required."
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.GetFilesInFolder: {0} files found.",
-                    result.Count
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.GetFilesInFolder: Done."
-                );
-
                 // stop.
                 return result;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.GetFilesInFolder: The parameter, 'folder', is not blank."
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                $"*** INFO: Checking whether the folder with path '{folder}' exists on the disk..."
-            );
-
             if (!Directory.Exists(folder))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
                     $"*** ERROR *** The system could not locate the folder having the path '{folder}' on the disk.  This folder is required to exist in order for us to proceed."
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug,
-                    $"DebugFileAndFolderHelper.GetFilesInFolder: Result = {result}"
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug,
-                    "DebugFileAndFolderHelper.GetFilesInFolder: Done."
-                );
-
                 return result;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                $"*** SUCCESS *** The folder with path '{folder}' was found on the disk.  Proceeding..."
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.GetFilesInFolder: Attempting to recursively get a list of all the files in the folder '{0}'...",
-                folder
-            );
-
             try
             {
                 result = Directory
@@ -270,18 +151,6 @@ namespace xyLOGIX.Core.Debug
 
                 result = new List<string>();
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.GetFilesInFolder: {0} files found.",
-                result.Count
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.GetFilesInFolder: Done."
-            );
-
             return result;
         }
 
@@ -299,19 +168,7 @@ namespace xyLOGIX.Core.Debug
         public static bool InsistPathExists(string fileName)
         {
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "In DebugFileAndFolderHelper.InsistPathExists"
-            );
-
             var result = false;
-
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.InsistPathExists: Checking to make sure the file '{0}' actually exists...",
-                fileName
-            );
-
             try
             {
                 if (!string.IsNullOrWhiteSpace(fileName) &&
@@ -324,26 +181,8 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     result = true;
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
-                        "DebugFileAndFolderHelper.InsistPathExists: Result = {0}",
-                        result
-                    );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
-                        "DebugFileAndFolderHelper.InsistPathExists: Done."
-                    );
-
                     return result;
                 }
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    $"*** ERROR *** The file with path '{fileName}' was not found."
-                );
-
                 result = false;
             }
             catch (Exception e)
@@ -353,24 +192,6 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.InsistPathExists: The file '{0}' was not found.",
-                fileName
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.InsistPathExists: Result = {0}",
-                result
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.InsistPathExists: Done."
-            );
-
             return result;
         }
 
@@ -394,23 +215,11 @@ namespace xyLOGIX.Core.Debug
         public static bool IsFileWriteable(string path)
         {
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "In DebugFileAndFolderHelper.IsFileWriteable"
-            );
-
             var result = false;
 
             try
             {
                 // Check whether the file has the read-only attribute set.
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the file '{0}' has the read only attribute set...",
-                    path
-                );
-
                 if ((File.GetAttributes(path) & FileAttributes.ReadOnly) != 0)
                 {
                     DebugUtils.WriteLine(
@@ -418,72 +227,17 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFileWriteable: The file '{0}' is not writeable.",
                         path
                     );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
-                        "DebugFileAndFolderHelper.IsFileWriteable: Result = {0}",
-                        result
-                    );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
-                        "DebugFileAndFolderHelper.IsFileWriteable: Done."
-                    );
-
                     return result;
                 }
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Getting the access rules for the file '{0}' and current user...",
-                    path
-                );
-
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the file)
                 var rules = File.GetAccessControl(path).GetAccessRules(
                     true, true, typeof(SecurityIdentifier)
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Found {0} rules.",
-                    rules.Count
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Accessing the groups that the current user is a member of..."
-                );
-
                 // Get the identity of the current user and the groups that the
                 // user is in.
                 var groups = WindowsIdentity.GetCurrent().Groups;
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: The current user is a member of {0} groups.",
-                    groups.Count
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Getting the Security Identifier (SID) for the current user..."
-                );
-
                 var sidCurrentUser = WindowsIdentity.GetCurrent().User.Value;
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: The SID has been obtained."
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the file '{0}' has Deny permissions to Write Data...",
-                    path
-                );
-
                 // Check if writing to the file is explicitly denied for this
                 // user or a group the user is in.
                 if (rules.OfType<FileSystemAccessRule>().Any(
@@ -499,26 +253,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFileWriteable: The file '{0}' is not writeable due to security settings.",
                         path
                     );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
-                        "DebugFileAndFolderHelper.IsFileWriteable: Result = {0}",
-                        result
-                    );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
-                        "DebugFileAndFolderHelper.IsFileWriteable: Done."
-                    );
-
                     return result;
                 }
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFileWriteable: Checking if writing is allowed..."
-                );
-
                 // Check if writing is allowed
                 result = rules.OfType<FileSystemAccessRule>().Any(
                     r => (groups.Contains(r.IdentityReference) ||
@@ -535,17 +271,6 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.IsFileWriteable: Result = {0}", result
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.IsFileWriteable: Done."
-            );
-
             return result;
         }
 
@@ -569,123 +294,34 @@ namespace xyLOGIX.Core.Debug
         public static bool IsFolderWriteable(string path)
         {
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "In DebugFileAndFolderHelper.IsFolderWriteable"
-            );
-
             var result = false;
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "*** INFO: Checking whether the 'path' parameter is not blank..."
-            );
-
             if (string.IsNullOrWhiteSpace(path))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
                     "DebugFileAndFolderHelper.IsFolderWriteable: Blank value passed for path parameter. This parameter is required."
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Result = {0}",
-                    result
-                );
-
                 return result;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "*** SUCCESS *** The 'path' parameter is not blank.  We can proceed."
-            );
-
             try
             {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    $"*** INFO: Checking whether the folder with path '{path}' exists on the disk..."
-                );
-
                 if (!Directory.Exists(path))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         $"*** ERROR *** The system could not locate the folder having the path '{path}' on the disk.  This folder is required to exist in order for us to proceed."
                     );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
-                        $"DebugFileAndFolderHelper.IsFolderWriteable: Result = {result}"
-                    );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
-                        "DebugFileAndFolderHelper.IsFolderWriteable: Done."
-                    );
-
                     return result;
                 }
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    $"*** SUCCESS *** The folder with path '{path}' was found on the disk.  Proceeding..."
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Getting the access rules for the folder '{0}' and current user...",
-                    path
-                );
-
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the folder)
                 var rules = Directory.GetAccessControl(path).GetAccessRules(
                     true, true, typeof(SecurityIdentifier)
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Found {0} rules.",
-                    rules.Count
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Accessing the groups that the current user is a member of..."
-                );
-
                 // Get the identity of the current user and the groups that the
                 // user is in.
                 var groups = WindowsIdentity.GetCurrent().Groups;
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: The current user is a member of {0} groups.",
-                    groups.Count
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Getting the Security Identifier (SID) for the current user..."
-                );
-
                 var sidCurrentUser = WindowsIdentity.GetCurrent().User.Value;
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: The SID has been obtained."
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the folder '{0}' has Deny permissions to Write Data...",
-                    path
-                );
-
                 // Check if writing to the folder is explicitly denied for this
                 // user or a group the user is in.
                 if (rules.OfType<FileSystemAccessRule>().Any(
@@ -701,26 +337,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFolderWriteable: The folder '{0}' is not writeable due to security settings.",
                         path
                     );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
-                        "DebugFileAndFolderHelper.IsFolderWriteable: Result = {0}",
-                        result
-                    );
-
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
-                        "DebugFileAndFolderHelper.IsFolderWriteable: Done."
-                    );
-
                     return result;
                 }
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DebugFileAndFolderHelper.IsFolderWriteable: Checking if writing to this folder is allowed..."
-                );
-
                 // Check if writing is allowed
                 result = rules.OfType<FileSystemAccessRule>().Any(
                     r => (groups.Contains(r.IdentityReference) ||
@@ -728,14 +346,6 @@ namespace xyLOGIX.Core.Debug
                          r.AccessControlType == AccessControlType.Allow &&
                          (r.FileSystemRights & FileSystemRights.WriteData) ==
                          FileSystemRights.WriteData
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    result
-                        ? "DebugFileAndFolderHelper.IsFolderWriteable: Writing to the folder '{0}' is allowed."
-                        : "DebugFileAndFolderHelper.IsFolderWriteable: Writing to the folder '{0}' is not allowed.",
-                    path
                 );
             }
             catch (Exception e)
@@ -745,18 +355,6 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DebugFileAndFolderHelper.IsFolderWriteable: Result = {0}",
-                result
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DebugFileAndFolderHelper.IsFolderWriteable: Done."
-            );
-
             return result;
         }
 
@@ -776,33 +374,14 @@ namespace xyLOGIX.Core.Debug
         public static bool IsValidPath(string fullyQualifiedPath)
         {
             var result = false;
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "*** INFO: Checking whether the value of the 'fullyQualifiedPath' parameter is blank..."
-            );
-
             if (string.IsNullOrWhiteSpace(fullyQualifiedPath))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
                     "DebugFileAndFolderHelper.IsValidPath: Blank value passed for the 'fullyQualifiedPath' parameter. This parameter is required."
                 );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug, $"DebugFileAndFolderHelper.IsValidPath: Result = {result}"
-                );
-
-                DebugUtils.WriteLine(DebugLevel.Debug, "DebugFileAndFolderHelper.IsValidPath: Done.");
-
                 return result;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "*** SUCCESS *** The parameter 'fullyQualifiedPath' is not blank.  Continuing..."
-            );
-
             try
             {
                 _ = Path.GetFullPath(fullyQualifiedPath);

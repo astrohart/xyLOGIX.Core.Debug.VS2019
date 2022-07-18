@@ -39,24 +39,6 @@ namespace xyLOGIX.Core.Debug
         public virtual void DeleteLogIfExists()
         {
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "In DefaultLoggingInfrastructure.DeleteLogIfExists"
-            );
-
-            // Dump the variable LogFilePath to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.DeleteLogIfExists: LogFilePath = '{0}'",
-                LogFilePath
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the file with path contained in 'LogFilePath' exists..."
-            );
-
             if (!File.Exists(LogFilePath))
             {
                 DebugUtils.WriteLine(
@@ -67,56 +49,16 @@ namespace xyLOGIX.Core.Debug
 
                 return;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.DeleteLogIfExists: The file with path contained in 'LogFilePath' was found."
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the folder '{0}' is writeable...",
-                Path.GetDirectoryName(LogFilePath)
-            );
-
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
                     Path.GetDirectoryName(LogFilePath)
                 ))
             {
-                // If we cannot write to the folder where the log file to be
                 // deleted sits in, then Heaven help us! However the software
                 // should try to work at all costs, so this method should just
                 // silently fail in this case.
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: The folder '{0}' is not writeable, so we can't delete the log file '{1}' as requested.  Nothing to do.",
-                    Path.GetDirectoryName(LogFilePath), LogFilePath
-                );
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: Done."
-                );
-
                 return;
             }
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.DeleteLogIfExists: The folder '{0}' is writeable, so therefore we can delete the log file '{1}'.",
-                Path.GetDirectoryName(LogFilePath), LogFilePath
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.DeleteLogIfExists: Deleting the log file '{0}'...",
-                LogFilePath
-            );
-
             File.Delete(LogFilePath);
-
-            // NOTE: We do no logging here since we are dealing with a
-            // freshly-emptied log file.
         }
 
         /// <summary>
@@ -186,8 +128,6 @@ namespace xyLOGIX.Core.Debug
                                          .ProductName;
 
             // If we found a value for the ApplicationName, then initialize the
-            // EventLogManager. The EventLogManager is a companion component to
-            // DebugUtils which also spits out logging to the System Event Log.
             // This is handy in the case where the user does not have write
             // access to the C:\ProgramData directory, for example.
             if (!string.IsNullOrWhiteSpace(DebugUtils.ApplicationName))
@@ -196,12 +136,6 @@ namespace xyLOGIX.Core.Debug
                 );
 
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "In DefaultLoggingInfrastructure.InitializeLogging"
-            );
-
             // Check whether the path to the configuration file is blank; or, if
             // it's not blank, whether the specified file actually exists at the
             // path indicated. If the configuration file pathname is blank
@@ -292,50 +226,6 @@ namespace xyLOGIX.Core.Debug
                 return;
 
             // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "In DefaultLoggingInfrastructure.SetUpDebugUtils"
-            );
-
-            // Dump the variable DebugUtils.IsLogging to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.IsLogging = {0}",
-                DebugUtils.IsLogging
-            );
-
-            // Dump the variable DebugUtils.ConsoleOnly to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.ConsoleOnly = {0}",
-                DebugUtils.ConsoleOnly
-            );
-
-            // Dump the variable DebugUtils.Verbosity to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Verbosity = {0}",
-                DebugUtils.Verbosity
-            );
-
-            // Dump the variable DebugUtils.MuteDebugLevelIfReleaseMode to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.MuteDebugLevelIfReleaseMode = {0}",
-                DebugUtils.MuteDebugLevelIfReleaseMode
-            );
-
-            // Dump the variable DebugUtils.MuteConsole to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.MuteConsole = {DebugUtils.MuteConsole}"
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                "DefaultLoggingInfrastructure.SetUpDebugUtils: Done."
-            );
         }
 
         /// <summary>
@@ -363,22 +253,7 @@ namespace xyLOGIX.Core.Debug
                 );
             var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
                                          .Parent?.FullName;
-
-            // Dump the variable logFileDirectoryParent to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.InitializeLogging: logFileDirectoryParent = '{0}'",
-                logFileDirectoryParent
-            );
-
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the user has write-level access to the folder '{0}'...",
-                logFileDirectoryParent
-            );
-
             // Check if the user has write access to the parent directory of the
-            // log file.
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
                     logFileDirectoryParent
                 ))
@@ -398,9 +273,6 @@ namespace xyLOGIX.Core.Debug
             DebugFileAndFolderHelper.CreateDirectoryIfNotExists(
                 logFileDirectoryPath
             );
-
-            // We have to insist that the directory that the log file is in is
-            // writeable. If we can't get write access to the log file
             // directory, then throw an exception.
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
                     logFileDirectoryPath
@@ -408,8 +280,6 @@ namespace xyLOGIX.Core.Debug
                 throw new UnauthorizedAccessException(
                     $"We don't have write permissions to the directory '{logFileDirectoryPath}'."
                 );
-
-            // Set options on the file appender of the logging system to
             // minimize locking issues
             FileAppenderConfigurator.SetMinimalLock(
                 FileAppenderManager.GetFirstAppender(repository)

@@ -83,17 +83,9 @@ namespace xyLOGIX.Core.Debug
             string configurationFilePathname = "", bool muteConsole = false,
             ILoggerRepository repository = null)
         {
-            // This sets the PostSharp repository selector as the active log4net
-            // repository selector. All loggers created from log4net static
-            // methods, and all logger repositories created from now on will
             // come from this repository selector.
             //
-            // This repository selector creates loggers that send all logging
-            // events to PostSharp Logging.
             //
-            // The relay repository returned by the RedirectLoggingToPostSharp
-            // method creates loggers that are *not* redirected to PostSharp
-            // Logging and it serves as the repository for your final output loggers.
             _relay = Log4NetCollectingRepositorySelector
                 .RedirectLoggingToPostSharp();
 
@@ -101,8 +93,6 @@ namespace xyLOGIX.Core.Debug
                 muteDebugLevelIfReleaseMode, overwrite,
                 configurationFilePathname, muteConsole, _relay
             );
-
-            // Use the relay repository to create a Log4NetLoggingBackend and
             // set it as the default backend:
             LoggingServices.DefaultBackend = new Log4NetLoggingBackend(_relay);
 
