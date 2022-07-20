@@ -179,37 +179,6 @@ ECHO Did not find the file "%25PROJECT_README_FILE_PATH%25".  It's supposed to e
 GOTO AFTER_README
 :PROJECT_README_FILE_FOUND
 ECHO *** SUCCESS *** The file "%25PROJECT_README_FILE_PATH%25" was found.
-ECHO Updating it in source control...
-ECHO Checking whether the solution's folder exists...
-IF NOT EXIST "%25_SOLUTION_DIR%25" GOTO SOLUTION_DIR_NOT_FOUND
-IF EXIST "%25_SOLUTION_DIR%25" GOTO SOLUTION_DIR_FOUND
-:SOLUTION_DIR_NOT_FOUND
-ECHO The folder that is supposed to contain the solution that contains this project does not exist.
-GOTO AFTER_README
-:SOLUTION_DIR_FOUND
-ECHO *** SUCCESS *** Found the folder that contains this project.
-ECHO Changing the current working directory to the project folder...
-REM Save the previous working folder, so we can switch back when done.
-SET "OLD_CURRENT_WORKING_DIR=%25CD%25"
-CD /D "%25_SOLUTION_DIR%25"
-ECHO Current working directory is "%25CD%25".
-IF "%25CD%25"=="%25_SOLUTION_DIR%25" GOTO UPDATE_GITHUB
-IF /I NOT "%25CD%25"=="%25_SOLUTION_DIR%25" GOTO DO_NOT_UPDATE_GITHUB
-:DO_NOT_UPDATE_GITHUB
-ECHO Failed to change the current working directory to "%25_SOLUTION_DIR%25".
-GOTO AFTER_README
-:UPDATE_GITHUB
-ECHO Attempting to stage the file "%25PROJECT_README_FILE_PATH%25"...
-git add -v "%25PROJECT_README_FILE_PATH%25"
-ECHO Attempting to commit any existing changes to the local Git repo...
-git commit -m "Update README.md"
-ECHO Attempting to pull the latest changes from the remote...
-git pull -v --no-rebase --all
-ECHO Now pushing changes to the remote...
-git push -u origin master
-ECHO Restoring the previous working directory...
-IF EXIST "%25OLD_CURRENT_WORKING_DIR%25" CD /D "%25OLD_CURRENT_WORKING_DIR%25"
-ECHO Current working directory is "%25CD%25".
 :AFTER_README
 ECHO *** DONE *** with pre-build event for project $(ProjectName).
 SET ERRORLEVEL=0
@@ -245,12 +214,10 @@ SET ERRORLEVEL=0
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets'))" />
     <Error Condition="!Exists('..\packages\PostSharp.6.10.13\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.10.13\build\PostSharp.props'))" />
     <Error Condition="!Exists('..\packages\PostSharp.6.10.13\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.6.10.13\build\PostSharp.targets'))" />
     <Error Condition="!Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Vsxmd.1.4.5\build\Vsxmd.targets'))" />
   </Target>
-  <Import Project="..\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets" Condition="Exists('..\packages\PostSharp.Community.Packer.1.2.0\build\PostSharp.Community.Packer.targets')" />
   <Import Project="..\packages\PostSharp.6.10.13\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.6.10.13\build\PostSharp.targets')" />
   <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
 </Project>
