@@ -1,4 +1,11 @@
+
 using System;
+#if DEBUG
+using Console = System.Diagnostics.Debug;
+
+#else
+using Console = System.Console;
+#endif
 
 namespace xyLOGIX.Core.Debug
 {
@@ -66,6 +73,12 @@ namespace xyLOGIX.Core.Debug
         /// then no logging at all will occur if this parameter is set to
         /// <see langword="true" />.
         /// </param>
+        /// <param name="logFileName">
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
+        /// <para />
+        /// Else, specify here the path to the log file to be created.
+        /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
         /// <see
@@ -77,9 +90,12 @@ namespace xyLOGIX.Core.Debug
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
+            string logFileName = "",
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default)
         {
+            Console.WriteLine("In LogFileManager.InitializeLogging");
+
             try
             {
                 /* We now 'outsource' the functionality of this method (and all the
@@ -90,16 +106,22 @@ namespace xyLOGIX.Core.Debug
                                   GetLoggingInfrastructure.For(
                                       infrastructureType
                                   );
+                if (_infrastructure == null)
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        $"ERROR Unable to initializing the logging subsystem for the '{infrastructureType}' logging infrastructure."
+                    );
+                    return;
+                }
 
                 _infrastructure.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFilePathname, muteConsole
+                    configurationFilePathname, muteConsole, logFileName
                 );
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
-
                 // dump all the exception info to the log
                 DebugUtils.LogException(ex);
             }
@@ -111,7 +133,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any logging statements that are set to
-        /// <see cref="DebugLevel.Debug" />.
+        /// <see cref="F:DebugLevel.Debug" />.
         /// </param>
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log file; false

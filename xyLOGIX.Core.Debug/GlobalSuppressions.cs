@@ -5,4 +5,10 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>", Scope = "member", Target = "~M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,xyLOGIX.Core.Debug.LoggingInfrastructureType)")]
+[assembly:
+    SuppressMessage(
+        "Style", "IDE0060:Remove unused parameter", Justification = "<Pending>",
+        Scope = "member",
+        Target =
+            "~M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,xyLOGIX.Core.Debug.LoggingInfrastructureType)"
+    )]

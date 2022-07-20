@@ -1,10 +1,12 @@
 using log4net.Config;
 using log4net.Repository;
+using log4net.Repository.Hierarchy;
+using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Diagnostics.Backends.Console;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using xyLOGIX.Core.Debug.Properties;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -15,6 +17,7 @@ namespace xyLOGIX.Core.Debug
     /// Default implementation details for the
     /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary>
@@ -49,15 +52,15 @@ namespace xyLOGIX.Core.Debug
 
                 return;
             }
+
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
                     Path.GetDirectoryName(LogFilePath)
                 ))
-            {
+
                 // deleted sits in, then Heaven help us! However the software
                 // should try to work at all costs, so this method should just
                 // silently fail in this case.
                 return;
-            }
             File.Delete(LogFilePath);
         }
 
@@ -106,6 +109,12 @@ namespace xyLOGIX.Core.Debug
         /// then no logging at all will occur if this parameter is set to
         /// <see langword="true" />.
         /// </param>
+        /// <param name="logFileName">
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
+        /// <para />
+        /// Else, specify here the path to the log file to be created.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
         /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
@@ -115,65 +124,132 @@ namespace xyLOGIX.Core.Debug
         public virtual void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            ILoggerRepository repository = null)
+            string logFileName = "", ILoggerRepository repository = null)
         {
-            var entryAssemblyFileName = Assembly.GetEntryAssembly()
-                                                ?.Location;
-            if (string.IsNullOrWhiteSpace(entryAssemblyFileName) ||
-                !File.Exists(entryAssemblyFileName))
+            var callingAssemblyFileName = Assembly.GetCallingAssembly()
+                                                  .Location;
+            if (string.IsNullOrWhiteSpace(callingAssemblyFileName) ||
+                !File.Exists(callingAssemblyFileName))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "DefaultLoggingInfrastructure.InitializeLogging: The fully-qualified pathname of the calling assembly could not be determined, or a ile having that path could not be located on the disk."
+                );
                 return;
+            }
 
             DebugUtils.ApplicationName = FileVersionInfo
-                                         .GetVersionInfo(entryAssemblyFileName)
+                                         .GetVersionInfo(
+                                             callingAssemblyFileName
+                                         )
                                          .ProductName;
 
             // If we found a value for the ApplicationName, then initialize the
             // This is handy in the case where the user does not have write
             // access to the C:\ProgramData directory, for example.
             if (!string.IsNullOrWhiteSpace(DebugUtils.ApplicationName))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "DefaultLoggingInfrastructure.InitializeLogging: The 'DebugUtils.ApplicationName' property has a value.  Using it as the name of the Event Log of this application."
+                );
+
                 EventLogManager.Instance.Initialize(
                     DebugUtils.ApplicationName, EventLogType.Application
                 );
+            }
 
-            // write the name of the current class and method we are now
-            // Check whether the path to the configuration file is blank; or, if
-            // it's not blank, whether the specified file actually exists at the
-            // path indicated. If the configuration file pathname is blank
-            // and/or it does not exist at the path indicated, then call the
-            // version of XmlConfigurator.Configure that does not take any
-            // arguments. On the other hand, if the configurationFilePathname
-            // parameter is not blank, and it specifies a file that actually
-            // does exist at the specified path, then pass that path to the
-            // XmlConfigurator.Configure method.
-            if (string.IsNullOrWhiteSpace(configurationFilePathname) ||
-                !File.Exists(configurationFilePathname))
+            if (string.IsNullOrWhiteSpace(logFileName))
             {
-                // If the file specified by the configurationFilePathname does
-                // not actually exist, the author of this software needs to know
-                // about it, so throw a FileNotFoundException
-                if (!string.IsNullOrWhiteSpace(
-                        configurationFilePathname
-                    ) // only do this check for a non-blank file name.
-                    && !File.Exists(configurationFilePathname))
-                    throw new FileNotFoundException(
-                        $"The file '{configurationFilePathname}' was not found.\n\nThe application needs this file in order to continue."
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** INFO: The 'logFileName' parameter's argument is the blank string.  Configuring the logging using app.config..."
+                );
+
+                // Check whether the path to the configuration file is blank; or, if
+                // it's not blank, whether the specified file actually exists at the
+                // path indicated. If the configuration file pathname is blank
+                // and/or it does not exist at the path indicated, then call the
+                // version of XmlConfigurator.Configure that does not take any
+                // arguments. On the other hand, if the configurationFilePathname
+                // parameter is not blank, and it specifies a file that actually
+                // does exist at the specified path, then pass that path to the
+                // XmlConfigurator.Configure method.
+                if (string.IsNullOrWhiteSpace(configurationFilePathname) ||
+                    !File.Exists(configurationFilePathname))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        $"DefaultLoggingInfrastructure.InitializeLogging: Could not locate the file having the path '{configurationFilePathname}'.  Setting up log4net with the default settings..."
                     );
 
-                if (repository == null)
-                    XmlConfigurator.Configure();
-                else
-                    XmlConfigurator.Configure(repository);
+                    // If the file specified by the configurationFilePathname does
+                    // not actually exist, the author of this software needs to know
+                    // about it, so throw a FileNotFoundException
+                    if (!string.IsNullOrWhiteSpace(
+                            configurationFilePathname
+                        ) // only do this check for a non-blank file name.
+                        && !File.Exists(configurationFilePathname))
+                        throw new FileNotFoundException(
+                            $"The file '{configurationFilePathname}' was not found.\n\nThe application needs this file in order to continue."
+                        );
+
+                    /*
+                     * If we have no configuration file to work with, try to
+                     * setup logging with the passed ILoggerRepository.
+                     */
+
+                    if (repository == null)
+                        XmlConfigurator.Configure();
+                    else
+                        XmlConfigurator.Configure(repository);
+                }
+                else if (!string.IsNullOrWhiteSpace(
+                             configurationFilePathname
+                         ) && File.Exists(configurationFilePathname))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "*** INFO: Not only is the 'configurationFilePathname' parameter's argument not the blank string, but the file that it references has been found on the disk."
+                    );
+
+                    /*
+                     * Initialize log4net and use both the configuration
+                     * file pathname passed, and, if it's not null, the ILoggerRepository
+                     * reference that was passed to this method, too.
+                     */
+
+                    if (repository == null)
+                        XmlConfigurator.Configure(
+                            new FileInfo(configurationFilePathname)
+                        );
+                    else
+                        XmlConfigurator.Configure(
+                            repository, new FileInfo(configurationFilePathname)
+                        );
+                }
             }
             else
             {
-                if (repository == null)
-                    XmlConfigurator.Configure(
-                        new FileInfo(configurationFilePathname)
+                /*
+                 * If we are here, then the caller of this method told us what pathname
+                 * to utilize for the logfile.
+                 */
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** INFO: The 'logFileName' parameter was initialized."
+                );
+                if (!Activate.LoggingForLogFileName(
+                        logFileName, repository ?? new Hierarchy()
+                    ))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        $"*** ERROR *** Failed to set up logging for the log file name '{logFileName}'."
                     );
-                else
-                    XmlConfigurator.Configure(
-                        repository, new FileInfo(configurationFilePathname)
-                    );
+                    return;
+                }
             }
 
             SetUpDebugUtils(
@@ -185,7 +261,7 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class to
         /// initialize its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
@@ -246,13 +322,17 @@ namespace xyLOGIX.Core.Debug
         protected virtual void PrepareLogFile(bool overwrite,
             ILoggerRepository repository)
         {
+            if (LoggingServices.DefaultBackend is ConsoleLoggingBackend)
+                return;
+
             var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
             if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
                 throw new InvalidOperationException(
-                    Resources.Error_UnableFindAppConfigEntries
+                    "Unable to determine the path to the log file's containing folder."
                 );
             var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
                                          .Parent?.FullName;
+
             // Check if the user has write access to the parent directory of the
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
                     logFileDirectoryParent
@@ -273,6 +353,7 @@ namespace xyLOGIX.Core.Debug
             DebugFileAndFolderHelper.CreateDirectoryIfNotExists(
                 logFileDirectoryPath
             );
+
             // directory, then throw an exception.
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
                     logFileDirectoryPath
@@ -280,6 +361,7 @@ namespace xyLOGIX.Core.Debug
                 throw new UnauthorizedAccessException(
                     $"We don't have write permissions to the directory '{logFileDirectoryPath}'."
                 );
+
             // minimize locking issues
             FileAppenderConfigurator.SetMinimalLock(
                 FileAppenderManager.GetFirstAppender(repository)

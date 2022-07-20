@@ -1,0 +1,51 @@
+using log4net.Layout;
+using System;
+
+namespace xyLOGIX.Core.Debug
+{
+    /// <summary>
+    /// Creates instances of <see cref="T:log4net.Layout.PatternLayout" /> that are
+    /// initialized properly.
+    /// </summary>
+    public static class GetPatternLayout
+    {
+        /// <summary>
+        /// Creates a new instance of <see cref="T:log4net.Layout.PatternLayout" /> and
+        /// initializes the <see cref="P:log4net.Layout.PatternLayout.ConversionPattern" />
+        /// property with the specified <paramref name="conversionPattern" /> string.
+        /// </summary>
+        /// <param name="conversionPattern">
+        /// (Required.) String containing the conversion
+        /// pattern to utilize.
+        /// </param>
+        /// <returns>
+        /// An activated <see cref="T:log4net.Layout.PatternLayout" /> instance
+        /// that is initialized with the specified <paramref name="conversionPattern" />,
+        /// or <see langword="null" /> if an error occurred or if blank input was supplied
+        /// for the <paramref name="conversionPattern" /> parameter.
+        /// </returns>
+        public static PatternLayout ForConversionPattern(
+            string conversionPattern)
+        {
+            PatternLayout layout;
+
+            try
+            {
+                layout = new PatternLayout
+                {
+                    ConversionPattern = conversionPattern
+                };
+                layout.ActivateOptions();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                layout = default;
+            }
+
+            return layout;
+        }
+    }
+}

@@ -1,10 +1,13 @@
+
 using log4net.Repository;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Defines the methods and properties of a custom object to which the <see
-    /// cref="T:xyLOGIX.Core.Debug.LogFileManager"/> delegates the
+    /// Defines the methods and properties of a custom object to which the
+    /// <see
+    ///     cref="T:xyLOGIX.Core.Debug.LogFileManager" />
+    /// delegates the
     /// implementation of its properties and methods.
     /// </summary>
     public interface ILoggingInfrastructure
@@ -15,8 +18,10 @@ namespace xyLOGIX.Core.Debug
         string LogFilePath { get; }
 
         /// <summary>
-        /// Gets the <see
-        /// cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value that
+        /// Gets the
+        /// <see
+        ///     cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        /// value that
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         LoggingInfrastructureType Type { get; }
@@ -27,17 +32,22 @@ namespace xyLOGIX.Core.Debug
         void DeleteLogIfExists();
 
         /// <summary>
-        /// Gets the value of the <see
-        /// cref="P:log4net.Appender.FileAppender.File"/> property from the
-        /// first appender in the list of appenders that is of type <see cref="T:log4net.Appender.FileAppender"/>.
+        /// Gets the value of the
+        /// <see
+        ///     cref="P:log4net.Appender.FileAppender.File" />
+        /// property from the
+        /// first appender in the list of appenders that is of type
+        /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </summary>
         /// <returns>
         /// String containing the full path and file name of the file the
         /// appender is writing to.
         /// </returns>
         /// <remarks>
-        /// This method is solely utilized in order to implement the <see
-        /// cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath"/> property.
+        /// This method is solely utilized in order to implement the
+        /// <see
+        ///     cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        /// property.
         /// </remarks>
         string GetRootFileAppenderFileName();
 
@@ -61,29 +71,37 @@ namespace xyLOGIX.Core.Debug
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the display of logging messages to
         /// the console if a log file is being used. If a log file is not used,
-        /// then no logging at all will occur if this parameter is set to <see langword="true" />.
+        /// then no logging at all will occur if this parameter is set to
+        /// <see langword="true" />.
+        /// </param>
+        /// <param name="logFileName">
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
+        /// <para />
+        /// Else, specify here the path to the log file to be created.
         /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
-        /// the <see cref="T:log4net.Repository.ILoggerRepository"/> interface.
+        /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
         void InitializeLogging(bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true, string configurationFilePathname = "",
-            bool muteConsole = false, ILoggerRepository repository = null);
+            bool muteConsole = false, string logFileName = "",
+            ILoggerRepository repository = null);
 
         /// <summary>
-        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils"/> to
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
         /// initialize its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any logging statements that are set to
-        /// <see cref="DebugLevel.Debug"/>.
+        /// <see cref="F:DebugLevel.Debug" />.
         /// </param>
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log file; false
-        /// to suppress. Usually used with the <paramref name="consoleOnly"/>
+        /// to suppress. Usually used with the <paramref name="consoleOnly" />
         /// parameter set to <see langword="true" />.
         /// </param>
         /// <param name="consoleOnly">

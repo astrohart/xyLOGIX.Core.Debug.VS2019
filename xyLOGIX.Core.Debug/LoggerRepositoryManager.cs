@@ -14,21 +14,23 @@ namespace xyLOGIX.Core.Debug
         /// reference to an object of type Hierachy.
         /// </summary>
         /// <returns>
-        /// Reference to an instance of a <see cref="I:ILoggerRepository"/> that
-        /// derives from <see cref="T:log4net.Repository.Hierarchy"/>, or null
+        /// Reference to an instance of a <see cref="I:ILoggerRepository" /> that
+        /// derives from <see cref="T:log4net.Repository.Hierarchy" />, or null
         /// if no such object has been found.
         /// </returns>
-        public static Hierarchy GetHierarchyRepository() =>
-            LogManager.GetRepository() as Hierarchy;
+        public static Hierarchy GetHierarchyRepository()
+            => LogManager.GetRepository() as Hierarchy;
 
         /// <summary>
-        /// Wraps the <see cref="M:log4net.LogManager.GetRepository"/> method.
+        /// Wraps the <see cref="M:log4net.LogManager.GetRepository" /> method.
         /// </summary>
         /// <returns>
-        /// Reference to an instance of an object that implements <see
-        /// cref="ILoggerRepository"/>, or null if such an object cannot be found.
+        /// Reference to an instance of an object that implements
+        /// <see
+        ///     cref="ILoggerRepository" />
+        /// , or null if such an object cannot be found.
         /// </returns>
-        public static ILoggerRepository GetLoggerRepository() =>
-            LogManager.GetRepository();
+        public static ILoggerRepository GetLoggerRepository()
+            => LogManager.GetRepository();
     }
 }

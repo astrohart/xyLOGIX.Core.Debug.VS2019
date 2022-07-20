@@ -6,13 +6,16 @@ using System.Linq;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides methods to access instances of objects of type <see cref="T:log4net.Appender.FileAppender"/>.
+    /// Provides methods to access instances of objects of type
+    /// <see cref="T:log4net.Appender.FileAppender" />.
     /// </summary>
     public static class FileAppenderManager
     {
         /// <summary>
-        /// Attempts to obtain a reference to an instance of <see
-        /// cref="T:log4net.Appender.FileAppender"/> that is configured under a
+        /// Attempts to obtain a reference to an instance of
+        /// <see
+        ///     cref="T:log4net.Appender.FileAppender" />
+        /// that is configured under a
         /// certain name in the application configuration file.
         /// </summary>
         /// <param name="name">
@@ -21,11 +24,11 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// If a suitable configuration file entry is found, this method returns
-        /// a <see cref="T:log4net.Appender.FileAppender"/> instance that
+        /// a <see cref="T:log4net.Appender.FileAppender" /> instance that
         /// corresponds to the entry; otherwise, <see langword="null" /> is returned.
         /// </returns>
         /// <exception cref="T:System.ArgumentException">
-        /// Thrown if the required parameter, <paramref name="name"/>, is passed
+        /// Thrown if the required parameter, <paramref name="name" />, is passed
         /// a blank or <see langword="null" /> string for a value.
         /// </exception>
         public static FileAppender GetAppenderByName(string name)
@@ -43,7 +46,7 @@ namespace xyLOGIX.Core.Debug
             return root.Appenders.Count == 0
                 ? null
                 : root.Appenders.OfType<FileAppender>()
-                    .First(fa => fa.Name == name);
+                      .First(fa => fa.Name == name);
         }
 
         /// <summary>
@@ -53,27 +56,45 @@ namespace xyLOGIX.Core.Debug
         /// <param name="loggerRepository">
         /// </param>
         /// <returns>
-        /// Reference to an instance of <see
-        /// cref="T:log4net.Appender.FileAppender"/> , or <see langword="null" /> if not found.
+        /// Reference to an instance of
+        /// <see
+        ///     cref="T:log4net.Appender.FileAppender" />
+        /// , or <see langword="null" /> if not found.
         /// </returns>
         /// <remarks>
-        /// If the <paramref name="loggerRepository"/> parameter is passed a
+        /// If the <paramref name="loggerRepository" /> parameter is passed a
         /// <see langword="null" /> value, then this method attempts to obtain the root
-        /// logger object and then obtain the first <see
-        /// cref="T:log4net.Appender.FileAppender"/> configured on the root
+        /// logger object and then obtain the first
+        /// <see
+        ///     cref="T:log4net.Appender.FileAppender" />
+        /// configured on the root
         /// logger repository. If a suitable appender can still not be located,
         /// then the return value of this method is <see langword="null" />.
         /// </remarks>
         public static FileAppender GetFirstAppender(
             ILoggerRepository loggerRepository = null)
         {
-            var root = LoggerManager.GetRootLogger(loggerRepository);
-            if (root == null)
-                return null;
+            FileAppender result = default;
 
-            return root.Appenders.Count == 0
-                ? null
-                : root.Appenders.OfType<FileAppender>().First();
+            try
+            {
+                var root = LoggerManager.GetRootLogger(loggerRepository);
+                if (root == null) return result;
+
+                result = root.Appenders.Count == 0
+                    ? default
+                    : root.Appenders.OfType<FileAppender>()
+                          .First();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
+
+            return result;
         }
     }
 }

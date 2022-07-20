@@ -1,6 +1,13 @@
+
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
+
+#if DEBUG
+
+#else
+using System;
+#endif
 
 namespace xyLOGIX.Core.Debug
 {
@@ -15,34 +22,44 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <remarks>
         /// This field can only be set to a reference to an instance of an
-        /// object that implements the <see
-        /// cref="T:log4net.Repository.ILoggerRepository"/> interface.
+        /// object that implements the
+        /// <see
+        ///     cref="T:log4net.Repository.ILoggerRepository" />
+        /// interface.
         /// </remarks>
         private ILoggerRepository _relay;
 
         /// <summary>
-        /// Gets the <see
-        /// cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType"/> value that
+        /// Gets the
+        /// <see
+        ///     cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        /// value that
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public override LoggingInfrastructureType Type =>
-            LoggingInfrastructureType.PostSharp;
+        public override LoggingInfrastructureType Type
+            => LoggingInfrastructureType.PostSharp;
 
         /// <summary>
-        /// Gets the value of the <see
-        /// cref="P:log4net.Appender.FileAppender.File"/> property from the
-        /// first appender in the list of appenders that is of type <see cref="T:log4net.Appender.FileAppender"/>.
+        /// Gets the value of the
+        /// <see
+        ///     cref="P:log4net.Appender.FileAppender.File" />
+        /// property from the
+        /// first appender in the list of appenders that is of type
+        /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </summary>
         /// <returns>
         /// String containing the full path and file name of the file the
         /// appender is writing to.
         /// </returns>
         /// <remarks>
-        /// This method is solely utilized in order to implement the <see
-        /// cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath"/> property.
+        /// This method is solely utilized in order to implement the
+        /// <see
+        ///     cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        /// property.
         /// </remarks>
-        public override string GetRootFileAppenderFileName() =>
-            FileAppenderManager.GetFirstAppender(_relay)?.File;
+        public override string GetRootFileAppenderFileName()
+            => FileAppenderManager.GetFirstAppender(_relay)
+                                  ?.File;
 
         /// <summary>
         /// Initializes the application's logging subsystem.
@@ -64,37 +81,50 @@ namespace xyLOGIX.Core.Debug
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the display of logging messages to
         /// the console if a log file is being used. If a log file is not used,
-        /// then no logging at all will occur if this parameter is set to <see langword="true" />.
+        /// then no logging at all will occur if this parameter is set to
+        /// <see langword="true" />.
+        /// </param>
+        /// <param name="logFileName">
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
+        /// <para />
+        /// Else, specify here the path to the log file to be created.
         /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
-        /// the <see cref="T:log4net.Repository.ILoggerRepository"/> interface.
+        /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
-        /// <remarks>
-        /// This override bolts the PostSharp aspect-oriented-programming
-        /// infrastructure up into our already well-crafted logging
-        /// infrastructure by switching out the <see cref="T:log4net.Repository.ILoggerRepository"/>
-        /// -implementing object that will tie our logging framework to PostSharp.
-        /// </remarks>
         public override void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            ILoggerRepository repository = null)
+            string logFileName = "", ILoggerRepository repository = null)
         {
-            // come from this repository selector.
-            //
-            //
-            _relay = Log4NetCollectingRepositorySelector
+            if (_relay != null)
+            {
+                // logging is already configured
+                return;
+            }
+
+            // TODO: Check the _relay field if it is null before initializing it.
+            // Presently, we are trying to get rid of an error where we are 
+            // initializing logging when there is no need to do so.
+            _relay = _relay ?? Log4NetCollectingRepositorySelector
                 .RedirectLoggingToPostSharp();
 
             base.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, muteConsole, _relay
+                configurationFilePathname, muteConsole, logFileName, _relay
             );
+
             // set it as the default backend:
-            LoggingServices.DefaultBackend = new Log4NetLoggingBackend(_relay);
+            var backend = GetLoggingBackend.For(
+                LoggingBackendType.Log4Net, _relay
+            );
+            LoggingServices.DefaultBackend = backend;
+            LoggingServices.Roles[LoggingRoles.Meta]
+                           .Backend = backend;
 
             PrepareLogFile(overwrite, _relay);
         }

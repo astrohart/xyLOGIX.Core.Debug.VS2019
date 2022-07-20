@@ -5,9 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
+#if DEBUG
+using Console = System.Diagnostics.Debug;
+
+#endif
 
 namespace xyLOGIX.Core.Debug
 {
@@ -26,25 +27,37 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static void ClearTempFileDir()
         {
-            // write the name of the current class and method we are now
+            Console.WriteLine("Clearing the temp folder...");
+
+            var psi = new ProcessStartInfo
+            {
+                FileName =
+                    Path.Combine(
+                        Environment.GetFolderPath(
+                            Environment.SpecialFolder.Windows
+                        ), @"System32\cmd.exe"
+                    ),
+                Arguments =
+                    "/C rd /S /Q \"" +
+                    Environment.ExpandEnvironmentVariables("%TEMP%") + "\"",
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true
+            };
+
             try
             {
-                var psi = new ProcessStartInfo
+                using (var processTemp = new Process())
                 {
-                    FileName = @"C:\Windows\system32\cmd.exe",
-                    Arguments =
-                        "/C rd /S /Q \"" + Path.GetTempPath() + "\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden
-                };
-
-                var proc = Process.Start(psi);
-                proc.WaitForExit();
+                    processTemp.StartInfo = psi;
+                    processTemp.Start();
+                    processTemp.WaitForExit();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                // nothing
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
             }
         }
 
@@ -55,11 +68,11 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Path to the folder that you want to create.
         /// </param>
         /// <remarks>
-        /// If the folder specified by the <paramref name="directoryPath"/>
+        /// If the folder specified by the <paramref name="directoryPath" />
         /// parameter already exists on the disk, then this method does nothing.
         /// </remarks>
         /// <exception cref="T:System.ArgumentException">
-        /// Thrown if the required parameter, <paramref name="directoryPath"/>,
+        /// Thrown if the required parameter, <paramref name="directoryPath" />,
         /// is passed a blank or <see langword="null" /> value.
         /// </exception>
         public static void CreateDirectoryIfNotExists(string directoryPath)
@@ -79,6 +92,7 @@ namespace xyLOGIX.Core.Debug
                 );
                 return;
             }
+
             try
             {
                 Directory.CreateDirectory(directoryPath);
@@ -104,7 +118,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a collection of strings, each of which contains the pathname of
-        /// a file is present in the specified <paramref name="folder"/>..
+        /// a file is present in the specified <paramref name="folder" />..
         /// </summary>
         /// <param name="folder">
         /// (Required.) String containing the full pathname of the folder whose
@@ -112,7 +126,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// Collection of strings, each element of which contains the pathname
-        /// of a file located in the specified <paramref name="folder"/>.
+        /// of a file located in the specified <paramref name="folder" />.
         /// </returns>
         public static List<string> GetFilesInFolder(string folder)
         {
@@ -127,9 +141,11 @@ namespace xyLOGIX.Core.Debug
                     DebugLevel.Error,
                     "DebugFileAndFolderHelper.GetFilesInFolder: Blank value passed for the 'folder' parameter. This parameter is required."
                 );
+
                 // stop.
                 return result;
             }
+
             if (!Directory.Exists(folder))
             {
                 DebugUtils.WriteLine(
@@ -138,11 +154,14 @@ namespace xyLOGIX.Core.Debug
                 );
                 return result;
             }
+
             try
             {
-                result = Directory
-                    .GetFiles(folder, "*.*", SearchOption.AllDirectories)
-                    .Where(File.Exists).ToList();
+                result = Directory.GetFiles(
+                                      folder, "*.*", SearchOption.AllDirectories
+                                  )
+                                  .Where(File.Exists)
+                                  .ToList();
             }
             catch (Exception ex)
             {
@@ -151,6 +170,7 @@ namespace xyLOGIX.Core.Debug
 
                 result = new List<string>();
             }
+
             return result;
         }
 
@@ -160,7 +180,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <returns>
         /// This method returns <see langword="true" /> if the file with path specified by
-        /// the <paramref name="fileName"/> parameter exists on the disk in the
+        /// the <paramref name="fileName" /> parameter exists on the disk in the
         /// specified location or <see langword="false" /> if either the file is not found
         /// or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.
@@ -183,6 +203,7 @@ namespace xyLOGIX.Core.Debug
                     result = true;
                     return result;
                 }
+
                 result = false;
             }
             catch (Exception e)
@@ -192,6 +213,7 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
+
             return result;
         }
 
@@ -204,12 +226,14 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// This method returns <see langword="true" /> if write access is allowed to the
-        /// file with the specified <paramref name="path"/>, otherwise <see langword="false" />.
-        /// <para/>
+        /// file with the specified <paramref name="path" />, otherwise
+        /// <see langword="false" />.
+        /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
-        /// <paramref name="path"/> parameter is a <see langword="null" /> value or blank.
-        /// <para/>
-        /// The value <see langword="false" /> is also returned if an operating system error
+        /// <paramref name="path" /> parameter is a <see langword="null" /> value or blank.
+        /// <para />
+        /// The value <see langword="false" /> is also returned if an operating system
+        /// error
         /// or exception occurs while trying to look up the file's permissions.
         /// </returns>
         public static bool IsFileWriteable(string path)
@@ -229,24 +253,34 @@ namespace xyLOGIX.Core.Debug
                     );
                     return result;
                 }
+
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the file)
-                var rules = File.GetAccessControl(path).GetAccessRules(
-                    true, true, typeof(SecurityIdentifier)
-                );
+                var rules = File.GetAccessControl(path)
+                                .GetAccessRules(
+                                    true, true, typeof(SecurityIdentifier)
+                                );
+
                 // Get the identity of the current user and the groups that the
                 // user is in.
-                var groups = WindowsIdentity.GetCurrent().Groups;
-                var sidCurrentUser = WindowsIdentity.GetCurrent().User.Value;
+                var groups = WindowsIdentity.GetCurrent()
+                                            .Groups;
+                var sidCurrentUser = WindowsIdentity.GetCurrent()
+                                                    .User.Value;
+
                 // Check if writing to the file is explicitly denied for this
                 // user or a group the user is in.
-                if (rules.OfType<FileSystemAccessRule>().Any(
-                    r => (groups.Contains(r.IdentityReference) ||
-                          r.IdentityReference.Value == sidCurrentUser) &&
-                         r.AccessControlType == AccessControlType.Deny &&
-                         (r.FileSystemRights & FileSystemRights.WriteData) ==
-                         FileSystemRights.WriteData
-                ))
+                if (rules.OfType<FileSystemAccessRule>()
+                         .Any(
+                             r => (groups.Contains(r.IdentityReference) ||
+                                   r.IdentityReference.Value ==
+                                   sidCurrentUser) &&
+                                  r.AccessControlType ==
+                                  AccessControlType.Deny &&
+                                  (r.FileSystemRights &
+                                   FileSystemRights.WriteData) ==
+                                  FileSystemRights.WriteData
+                         ))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
@@ -255,14 +289,19 @@ namespace xyLOGIX.Core.Debug
                     );
                     return result;
                 }
+
                 // Check if writing is allowed
-                result = rules.OfType<FileSystemAccessRule>().Any(
-                    r => (groups.Contains(r.IdentityReference) ||
-                          r.IdentityReference.Value == sidCurrentUser) &&
-                         r.AccessControlType == AccessControlType.Allow &&
-                         (r.FileSystemRights & FileSystemRights.WriteData) ==
-                         FileSystemRights.WriteData
-                );
+                result = rules.OfType<FileSystemAccessRule>()
+                              .Any(
+                                  r => (groups.Contains(r.IdentityReference) ||
+                                        r.IdentityReference.Value ==
+                                        sidCurrentUser) &&
+                                       r.AccessControlType ==
+                                       AccessControlType.Allow &&
+                                       (r.FileSystemRights &
+                                        FileSystemRights.WriteData) ==
+                                       FileSystemRights.WriteData
+                              );
             }
             catch (Exception e)
             {
@@ -271,6 +310,7 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
+
             return result;
         }
 
@@ -283,12 +323,14 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <returns>
         /// This method returns <see langword="true" /> if write access is allowed to the
-        /// folder with the specified <paramref name="path"/>, otherwise <see langword="false" />.
-        /// <para/>
+        /// folder with the specified <paramref name="path" />, otherwise
+        /// <see langword="false" />.
+        /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
-        /// <paramref name="path"/> parameter is a <see langword="null" /> value or blank.
-        /// <para/>
-        /// The value <see langword="false" /> is also returned if an operating system error
+        /// <paramref name="path" /> parameter is a <see langword="null" /> value or blank.
+        /// <para />
+        /// The value <see langword="false" /> is also returned if an operating system
+        /// error
         /// or exception occurs while trying to look up the folder's permissions.
         /// </returns>
         public static bool IsFolderWriteable(string path)
@@ -303,6 +345,7 @@ namespace xyLOGIX.Core.Debug
                 );
                 return result;
             }
+
             try
             {
                 if (!Directory.Exists(path))
@@ -313,24 +356,34 @@ namespace xyLOGIX.Core.Debug
                     );
                     return result;
                 }
+
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the folder)
-                var rules = Directory.GetAccessControl(path).GetAccessRules(
-                    true, true, typeof(SecurityIdentifier)
-                );
+                var rules = Directory.GetAccessControl(path)
+                                     .GetAccessRules(
+                                         true, true, typeof(SecurityIdentifier)
+                                     );
+
                 // Get the identity of the current user and the groups that the
                 // user is in.
-                var groups = WindowsIdentity.GetCurrent().Groups;
-                var sidCurrentUser = WindowsIdentity.GetCurrent().User.Value;
+                var groups = WindowsIdentity.GetCurrent()
+                                            .Groups;
+                var sidCurrentUser = WindowsIdentity.GetCurrent()
+                                                    .User.Value;
+
                 // Check if writing to the folder is explicitly denied for this
                 // user or a group the user is in.
-                if (rules.OfType<FileSystemAccessRule>().Any(
-                    r => (groups.Contains(r.IdentityReference) ||
-                          r.IdentityReference.Value == sidCurrentUser) &&
-                         r.AccessControlType == AccessControlType.Deny &&
-                         (r.FileSystemRights & FileSystemRights.WriteData) ==
-                         FileSystemRights.WriteData
-                ))
+                if (rules.OfType<FileSystemAccessRule>()
+                         .Any(
+                             r => (groups.Contains(r.IdentityReference) ||
+                                   r.IdentityReference.Value ==
+                                   sidCurrentUser) &&
+                                  r.AccessControlType ==
+                                  AccessControlType.Deny &&
+                                  (r.FileSystemRights &
+                                   FileSystemRights.WriteData) ==
+                                  FileSystemRights.WriteData
+                         ))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
@@ -339,14 +392,19 @@ namespace xyLOGIX.Core.Debug
                     );
                     return result;
                 }
+
                 // Check if writing is allowed
-                result = rules.OfType<FileSystemAccessRule>().Any(
-                    r => (groups.Contains(r.IdentityReference) ||
-                          r.IdentityReference.Value == sidCurrentUser) &&
-                         r.AccessControlType == AccessControlType.Allow &&
-                         (r.FileSystemRights & FileSystemRights.WriteData) ==
-                         FileSystemRights.WriteData
-                );
+                result = rules.OfType<FileSystemAccessRule>()
+                              .Any(
+                                  r => (groups.Contains(r.IdentityReference) ||
+                                        r.IdentityReference.Value ==
+                                        sidCurrentUser) &&
+                                       r.AccessControlType ==
+                                       AccessControlType.Allow &&
+                                       (r.FileSystemRights &
+                                        FileSystemRights.WriteData) ==
+                                       FileSystemRights.WriteData
+                              );
             }
             catch (Exception e)
             {
@@ -355,21 +413,25 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Gets a value indicating whether the <paramref
-        /// name="fullyQualifiedPath"/> is actually a valid path on the system,
+        /// Gets a value indicating whether the
+        /// <paramref
+        ///     name="fullyQualifiedPath" />
+        /// is actually a valid path on the system,
         /// according to operating-system-specific rules.
         /// </summary>
         /// <param name="fullyQualifiedPath">
         /// (Required.) String containing the path that is to be validated.
         /// </param>
         /// <returns>
-        /// If the path provided in <paramref name="fullyQualifiedPath"/> is a
+        /// If the path provided in <paramref name="fullyQualifiedPath" /> is a
         /// valid path according to operating-system-specified rules, then this
-        /// method returns <see langword="true" />. Otherwise, the return value is <see langword="false" />.
+        /// method returns <see langword="true" />. Otherwise, the return value is
+        /// <see langword="false" />.
         /// </returns>
         public static bool IsValidPath(string fullyQualifiedPath)
         {
@@ -382,6 +444,7 @@ namespace xyLOGIX.Core.Debug
                 );
                 return result;
             }
+
             try
             {
                 _ = Path.GetFullPath(fullyQualifiedPath);

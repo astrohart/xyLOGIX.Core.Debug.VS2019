@@ -114,23 +114,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalAspects.cs" />
+    <Compile Include="Activate.cs" />
+    <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="DebuggerDump.cs" />
-    <Compile Include="DebugLevel.cs" />
     <Compile Include="DebugUtils.cs" />
     <Compile Include="DefaultLoggingInfrastructure.cs" />
+    <Compile Include="Delete.cs" />
     <Compile Include="EventLogManager.cs" />
-    <Compile Include="EventLogType.cs" />
-    <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
+    <Compile Include="GetLog.cs" />
+    <Compile Include="GetLoggingBackend.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
+    <Compile Include="GetPatternLayout.cs" />
+    <Compile Include="GlobalAspects.cs" />
+    <Compile Include="DebugLevel.cs" />
+    <Compile Include="EventLogType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILoggingInfrastructure.cs" />
+    <Compile Include="Initialize.cs" />
+    <Compile Include="IsLog.cs" />
     <Compile Include="LogFileManager.cs" />
     <Compile Include="LoggerManager.cs" />
     <Compile Include="LoggerRepositoryManager.cs" />
+    <Compile Include="LoggingBackendType.cs" />
     <Compile Include="LoggingInfrastructureType.cs" />
+    <Compile Include="MakeNewRollingFileAppender.cs" />
     <Compile Include="ObjectDumper.cs" />
     <Compile Include="PostSharpLoggingInfrastructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,6 +148,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SetLog.cs" />
+    <Compile Include="TextWrittenEventArgs.cs" />
+    <Compile Include="TextWrittenEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
