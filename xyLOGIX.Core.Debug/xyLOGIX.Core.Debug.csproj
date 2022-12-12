@@ -7,8 +7,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <ProjectGuid>{2E4EDA4F-0D3A-442F-87B5-F0224F596A80}</ProjectGuid>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -21,8 +20,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\x64\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn></NoWarn>
     <SkipPostSharp>False</SkipPostSharp>
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
@@ -159,8 +157,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>git config core.longpaths true
-SET "_PROJECT_DIR=$(ProjectDir.TrimEnd('\'))"
+    <PreBuildEvent>SET "_PROJECT_DIR=$(ProjectDir.TrimEnd('\'))"
 SET "_SOLUTION_DIR=$(SolutionDir.TrimEnd('\'))"
 SET "GENERATED_README_FILE_PATH=$(TargetDir)$(TargetName).md"
 SET "PROJECT_README_FILE_PATH=$(ProjectDir)README.md"
@@ -184,8 +181,7 @@ GOTO AFTER_README
 ECHO *** SUCCESS *** The file "%25PROJECT_README_FILE_PATH%25" was found.
 :AFTER_README
 ECHO *** DONE *** with pre-build event for project $(ProjectName).
-SET ERRORLEVEL=0
-</PreBuildEvent>
+SET ERRORLEVEL=0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>SET "_TARGET_DIR=$(TargetDir)"
@@ -210,8 +206,7 @@ IF EXIST "%25PROJECT_README_FILE_PATH%25" ATTRIB -R "%25PROJECT_README_FILE_PATH
 GOTO FINALIZATION
 :FINALIZATION
 ECHO *** DONE *** with post-build script.
-SET ERRORLEVEL=0
-</PostBuildEvent>
+SET ERRORLEVEL=0</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
