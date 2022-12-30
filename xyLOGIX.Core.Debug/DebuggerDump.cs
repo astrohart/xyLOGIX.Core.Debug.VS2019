@@ -1,6 +1,6 @@
-using xyLOGIX.Core.Debug.Properties;
 using System;
 using System.IO;
+using xyLOGIX.Core.Debug.Properties;
 
 namespace xyLOGIX.Core.Debug
 {

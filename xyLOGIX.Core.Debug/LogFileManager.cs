@@ -1,6 +1,7 @@
-
 using System;
+
 #if DEBUG
+
 using Console = System.Diagnostics.Debug;
 
 #else

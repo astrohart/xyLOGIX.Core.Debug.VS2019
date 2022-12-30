@@ -1,4 +1,3 @@
-
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
@@ -108,7 +107,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             // TODO: Check the _relay field if it is null before initializing it.
-            // Presently, we are trying to get rid of an error where we are 
+            // Presently, we are trying to get rid of an error where we are
             // initializing logging when there is no need to do so.
             _relay = _relay ?? Log4NetCollectingRepositorySelector
                 .RedirectLoggingToPostSharp();
