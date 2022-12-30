@@ -154,6 +154,8 @@
   - [Type](#P-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.Type')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,repository)](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,log4net.Repository.ILoggerRepository)')
+- [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper')
+  - [StartDebugger()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger')
 - [Resources](#T-xyLOGIX-Core-Debug-Properties-Resources 'xyLOGIX.Core.Debug.Properties.Resources')
   - [Culture](#P-xyLOGIX-Core-Debug-Properties-Resources-Culture 'xyLOGIX.Core.Debug.Properties.Resources.Culture')
   - [Error_DepthMustBeNonNegative](#P-xyLOGIX-Core-Debug-Properties-Resources-Error_DepthMustBeNonNegative 'xyLOGIX.Core.Debug.Properties.Resources.Error_DepthMustBeNonNegative')
@@ -2889,6 +2891,38 @@ Else, specify here the path to the log file to be created. |
 the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') interface.
 Supply a value for this parameter if your infrastructure is not
 utilizing the default HierarchicalRepository. |
+
+<a name='T-xyLOGIX-Core-Debug-ProgramFlowHelper'></a>
+## ProgramFlowHelper `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Defines methods and properties to aid in controlling the flow of the program.
+
+<a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-StartDebugger'></a>
+### StartDebugger() `method`
+
+##### Summary
+
+Launches the Visual Studio Debugger.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This method should be called only as necessary to automatically
+launch the Visual Studio Debugger, attached to the currently-running
+process instance.
+
+
+
+Such calls should be commented out or deleted when no longer needed.
 
 <a name='T-xyLOGIX-Core-Debug-Properties-Resources'></a>
 ## Resources `type`
