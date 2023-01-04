@@ -19,6 +19,7 @@
   - [Info](#F-xyLOGIX-Core-Debug-DebugLevel-Info 'xyLOGIX.Core.Debug.DebugLevel.Info')
   - [Warning](#F-xyLOGIX-Core-Debug-DebugLevel-Warning 'xyLOGIX.Core.Debug.DebugLevel.Warning')
 - [DebugUtils](#T-xyLOGIX-Core-Debug-DebugUtils 'xyLOGIX.Core.Debug.DebugUtils')
+  - [Depth](#F-xyLOGIX-Core-Debug-DebugUtils-Depth 'xyLOGIX.Core.Debug.DebugUtils.Depth')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
   - [ExceptionStackDepth](#P-xyLOGIX-Core-Debug-DebugUtils-ExceptionStackDepth 'xyLOGIX.Core.Debug.DebugUtils.ExceptionStackDepth')
@@ -37,7 +38,7 @@
   - [FormatExceptionAndWrite(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatExceptionAndWrite-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatExceptionAndWrite(System.Exception)')
   - [GenerateContentFromFormat(format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-GenerateContentFromFormat-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.GenerateContentFromFormat(System.String,System.Object[])')
   - [LogEachLineIfMultiline(content,logMethod,level)](#M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.LogEachLineIfMultiline(System.String,System.Action{xyLOGIX.Core.Debug.DebugLevel,System.String},xyLOGIX.Core.Debug.DebugLevel)')
-  - [LogException(e)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception)')
+  - [LogException(e,depth)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Int32- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Int32)')
   - [OnTextEmitted(text,debugLevel)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-System-String,xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(System.String,xyLOGIX.Core.Debug.DebugLevel)')
   - [Write(debugLevel,format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String,System.Object[])')
   - [Write(debugLevel,content)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String)')
@@ -433,6 +434,13 @@ xyLOGIX.Core.Debug
 
 Helpers to manage the writing of content to the debugging log.
 
+<a name='F-xyLOGIX-Core-Debug-DebugUtils-Depth'></a>
+### Depth `constants`
+
+##### Summary
+
+Count of how deep logging has gone
+
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName'></a>
 ### ApplicationName `property`
 
@@ -669,8 +677,8 @@ executed for each line of content. |
 | level | [xyLOGIX.Core.Debug.DebugLevel](#T-xyLOGIX-Core-Debug-DebugLevel 'xyLOGIX.Core.Debug.DebugLevel') | A [DebugLevel](#T-xyLOGIX-Core-Debug-DebugLevel 'xyLOGIX.Core.Debug.DebugLevel') specifying the
 debugLevel of logging to utilize. |
 
-<a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception-'></a>
-### LogException(e) `method`
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Int32-'></a>
+### LogException(e,depth) `method`
 
 ##### Summary
 
@@ -684,6 +692,8 @@ stack trace.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | e | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be logged. |
+| depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) An [Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') that specifies the number of
+levels of inner-exception logging to do. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-System-String,xyLOGIX-Core-Debug-DebugLevel-'></a>
 ### OnTextEmitted(text,debugLevel) `method`

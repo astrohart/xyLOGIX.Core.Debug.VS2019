@@ -6,9 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using xyLOGIX.Core.Debug.Properties;
-
 #if DEBUG
-
 using Console = System.Diagnostics.Debug;
 
 #else
@@ -24,6 +22,11 @@ namespace xyLOGIX.Core.Debug
     public static class DebugUtils
     {
         /// <summary>
+        /// Count of how deep logging has gone
+        /// </summary>
+        private static int Depth;
+
+        /// <summary>
         /// Initializes a new static instance of <see cref="DebugUtils" />.
         /// </summary>
         static DebugUtils()
@@ -31,17 +34,6 @@ namespace xyLOGIX.Core.Debug
             // default ExceptionStackDepth is 1 for a Windows Forms app. Set to
             // 2 for a Console App.
             => ExceptionStackDepth = 1;
-
-        /// <summary>
-        /// Occurs whenever text has been emitted by the
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />
-        /// or
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
-        /// methods.
-        /// </summary>
-        public static event Action<string, DebugLevel> TextEmitted;
 
         /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
@@ -82,6 +74,13 @@ namespace xyLOGIX.Core.Debug
         public static bool IsLogging { get; set; }
 
         /// <summary>
+        /// Gets a value that indicates whether PostSharp is in use as the
+        /// logging infrastructure.
+        /// </summary>
+        private static bool IsPostSharp
+            => InfrastructureType == LoggingInfrastructureType.PostSharp;
+
+        /// <summary>
         /// Users should set this property to the path to the log file, if logging.
         /// </summary>
         public static string LogFilePath { get; set; }
@@ -112,11 +111,15 @@ namespace xyLOGIX.Core.Debug
         public static int Verbosity { get; set; }
 
         /// <summary>
-        /// Gets a value that indicates whether PostSharp is in use as the
-        /// logging infrastructure.
+        /// Occurs whenever text has been emitted by the
+        /// <see
+        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />
+        /// or
+        /// <see
+        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
+        /// methods.
         /// </summary>
-        private static bool IsPostSharp
-            => InfrastructureType == LoggingInfrastructureType.PostSharp;
+        public static event Action<string, DebugLevel> TextEmitted;
 
         /// <summary>
         /// Dumps a collection to the debug log.
@@ -224,16 +227,35 @@ namespace xyLOGIX.Core.Debug
         /// <param name="e">
         /// Reference to the <see cref="Exception" /> to be logged.
         /// </param>
-        public static void LogException(Exception e)
+        /// <param name="depth">
+        /// (Required.) An <see cref="T:System.Int32" /> that specifies the number of
+        /// levels of inner-exception logging to do.
+        /// </param>
+        public static void LogException(Exception e, int depth = 1)
         {
-            if (e == null) return;
+            Depth = 0; /* reset logging depth */
 
-            var message = string.Format(
-                Resources.ExceptionMessageFormat, e.GetType(), e.Message,
-                e.StackTrace
-            );
+            while (Depth <= 1)
+            {
+                if (e == null) return;
 
-            WriteLine(DebugLevel.Error, message);
+                Depth++;
+
+                var message = string.Format(
+                    Resources.ExceptionMessageFormat, e.GetType(), e.Message,
+                    e.StackTrace
+                );
+
+                WriteLine(DebugLevel.Error, message);
+
+                if (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    continue;
+                }
+
+                break;
+            }
         }
 
         /// <summary>
