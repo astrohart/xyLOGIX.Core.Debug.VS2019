@@ -140,6 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ServiceFlowHelper.cs" />
     <Compile Include="SetLog.cs" />
     <Compile Include="TextWrittenEventArgs.cs" />
     <Compile Include="TextWrittenEventHandler.cs" />
