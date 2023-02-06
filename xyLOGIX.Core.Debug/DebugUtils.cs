@@ -224,33 +224,61 @@ namespace xyLOGIX.Core.Debug
         /// exception occurred, as well as the message of the exception and its
         /// stack trace.
         /// </summary>
-        /// <param name="e">
-        /// Reference to the <see cref="Exception" /> to be logged.
+        /// <param name="ex">
+        /// (Required.) Reference to the <see cref="T:System.Exception" /> to be logged.
+        /// </param>
+        public static void LogException(Exception ex)
+            => LogException(ex, 1);
+
+        /// <summary>
+        /// Logs the complete information about an exception to the log, under
+        /// the Error Level. Outputs the source file and line number where the
+        /// exception occurred, as well as the message of the exception and its
+        /// stack trace.
+        /// </summary>
+        /// <param name="ex">
+        /// Reference to the <see cref="T:System.Exception" /> to be logged.
         /// </param>
         /// <param name="depth">
         /// (Required.) An <see cref="T:System.Int32" /> that specifies the number of
         /// levels of inner-exception logging to do.
+        /// <para />
+        /// Must be <c>1</c> or greater.
         /// </param>
-        public static void LogException(Exception e, int depth = 1)
+        /// <remarks>
+        /// If supplied, the value of the <paramref name="depth" /> parameter can only be
+        /// <c>1</c> or greater.
+        /// </remarks>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// Thrown if the <paramref name="depth" /> parameter is passed <c>0</c> or less as
+        /// its
+        /// argument.
+        /// </exception>
+        public static void LogException(Exception ex, int depth)
         {
             Depth = 0; /* reset logging depth */
 
-            while (Depth <= 1)
+            if (depth <= 0)
+                throw new ArgumentOutOfRangeException(
+                    nameof(depth), "The depth parameter must be 1 or greater."
+                );
+
+            while (Depth <= depth)
             {
-                if (e == null) return;
+                if (ex == null) return;
 
                 Depth++;
 
                 var message = string.Format(
-                    Resources.ExceptionMessageFormat, e.GetType(), e.Message,
-                    e.StackTrace
+                    Resources.ExceptionMessageFormat, ex.GetType(), ex.Message,
+                    ex.StackTrace
                 );
 
                 WriteLine(DebugLevel.Error, message);
 
-                if (e.InnerException != null)
+                if (ex.InnerException != null)
                 {
-                    e = e.InnerException;
+                    ex = ex.InnerException;
                     continue;
                 }
 
