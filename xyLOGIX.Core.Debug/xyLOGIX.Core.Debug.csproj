@@ -112,6 +112,7 @@
     <Compile Include="DefaultLoggingInfrastructure.cs" />
     <Compile Include="Delete.cs" />
     <Compile Include="EventLogManager.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="GetLog.cs" />
