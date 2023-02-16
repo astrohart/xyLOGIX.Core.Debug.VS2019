@@ -38,7 +38,8 @@
   - [FormatExceptionAndWrite(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatExceptionAndWrite-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatExceptionAndWrite(System.Exception)')
   - [GenerateContentFromFormat(format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-GenerateContentFromFormat-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.GenerateContentFromFormat(System.String,System.Object[])')
   - [LogEachLineIfMultiline(content,logMethod,level)](#M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.LogEachLineIfMultiline(System.String,System.Action{xyLOGIX.Core.Debug.DebugLevel,System.String},xyLOGIX.Core.Debug.DebugLevel)')
-  - [LogException(e,depth)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Int32- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Int32)')
+  - [LogException(ex)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception)')
+  - [LogException(ex,depth)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Int32- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Int32)')
   - [OnTextEmitted(text,debugLevel)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-System-String,xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(System.String,xyLOGIX.Core.Debug.DebugLevel)')
   - [Write(debugLevel,format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String,System.Object[])')
   - [Write(debugLevel,content)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String)')
@@ -82,6 +83,8 @@
   - [Security](#F-xyLOGIX-Core-Debug-EventLogType-Security 'xyLOGIX.Core.Debug.EventLogType.Security')
   - [System](#F-xyLOGIX-Core-Debug-EventLogType-System 'xyLOGIX.Core.Debug.EventLogType.System')
   - [Unknown](#F-xyLOGIX-Core-Debug-EventLogType-Unknown 'xyLOGIX.Core.Debug.EventLogType.Unknown')
+- [ExceptionExtensions](#T-xyLOGIX-Core-Debug-ExceptionExtensions 'xyLOGIX.Core.Debug.ExceptionExtensions')
+  - [LogAllExceptions(exceptions)](#M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}- 'xyLOGIX.Core.Debug.ExceptionExtensions.LogAllExceptions(System.Collections.Generic.IEnumerable{System.Exception})')
 - [FileAppenderConfigurator](#T-xyLOGIX-Core-Debug-FileAppenderConfigurator 'xyLOGIX.Core.Debug.FileAppenderConfigurator')
   - [SetMinimalLock(appender)](#M-xyLOGIX-Core-Debug-FileAppenderConfigurator-SetMinimalLock-log4net-Appender-FileAppender- 'xyLOGIX.Core.Debug.FileAppenderConfigurator.SetMinimalLock(log4net.Appender.FileAppender)')
 - [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager')
@@ -163,6 +166,10 @@
   - [Error_UnableFindAppConfigEntries](#P-xyLOGIX-Core-Debug-Properties-Resources-Error_UnableFindAppConfigEntries 'xyLOGIX.Core.Debug.Properties.Resources.Error_UnableFindAppConfigEntries')
   - [ExceptionMessageFormat](#P-xyLOGIX-Core-Debug-Properties-Resources-ExceptionMessageFormat 'xyLOGIX.Core.Debug.Properties.Resources.ExceptionMessageFormat')
   - [ResourceManager](#P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager 'xyLOGIX.Core.Debug.Properties.Resources.ResourceManager')
+- [ServiceFlowHelper](#T-xyLOGIX-Core-Debug-ServiceFlowHelper 'xyLOGIX.Core.Debug.ServiceFlowHelper')
+  - [EmergencyStop(notificationAction)](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action- 'xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop(System.Action)')
+  - [OnDebuggerStartPending()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnDebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.OnDebuggerStartPending')
+  - [StartDebugger()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ServiceFlowHelper.StartDebugger')
 - [SetLog](#T-xyLOGIX-Core-Debug-SetLog 'xyLOGIX.Core.Debug.SetLog')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-SetLog-ApplicationName 'xyLOGIX.Core.Debug.SetLog.ApplicationName')
 - [TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs')
@@ -677,8 +684,8 @@ executed for each line of content. |
 | level | [xyLOGIX.Core.Debug.DebugLevel](#T-xyLOGIX-Core-Debug-DebugLevel 'xyLOGIX.Core.Debug.DebugLevel') | A [DebugLevel](#T-xyLOGIX-Core-Debug-DebugLevel 'xyLOGIX.Core.Debug.DebugLevel') specifying the
 debugLevel of logging to utilize. |
 
-<a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Int32-'></a>
-### LogException(e,depth) `method`
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception-'></a>
+### LogException(ex) `method`
 
 ##### Summary
 
@@ -691,9 +698,42 @@ stack trace.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| e | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be logged. |
+| ex | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | (Required.) Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be logged. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Int32-'></a>
+### LogException(ex,depth) `method`
+
+##### Summary
+
+Logs the complete information about an exception to the log, under
+the Error Level. Outputs the source file and line number where the
+exception occurred, as well as the message of the exception and its
+stack trace.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| ex | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be logged. |
 | depth | [System.Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') | (Required.) An [Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') that specifies the number of
-levels of inner-exception logging to do. |
+levels of inner-exception logging to do.
+
+
+
+Must be `1` or greater. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentOutOfRangeException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentOutOfRangeException 'System.ArgumentOutOfRangeException') | Thrown if the `depth` parameter is passed `0` or less as
+its
+argument. |
+
+##### Remarks
+
+If supplied, the value of the `depth` parameter can only be
+`1` or greater.
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-System-String,xyLOGIX-Core-Debug-DebugLevel-'></a>
 ### OnTextEmitted(text,debugLevel) `method`
@@ -1480,6 +1520,45 @@ Events get directed to the System event log.
 ##### Summary
 
 The event log type is unknown.
+
+<a name='T-xyLOGIX-Core-Debug-ExceptionExtensions'></a>
+## ExceptionExtensions `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Exposes static extension methods in order to facilitate handling exceptions.
+
+<a name='M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}-'></a>
+### LogAllExceptions(exceptions) `method`
+
+##### Summary
+
+Iterates through the specified collection of `exceptions` and
+logs each one, including its inner exception, if any, by calling the
+[LogException](#M-xyLOGIX-Core-Debug-DebugUtils-LogException 'xyLOGIX.Core.Debug.DebugUtils.LogException') method.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| exceptions | [System.Collections.Generic.IEnumerable{System.Exception}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Collections.Generic.IEnumerable 'System.Collections.Generic.IEnumerable{System.Exception}') | (Required.) A collection of references to instances of
+[Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') that represents the exception(s) to be
+logged. |
+
+##### Remarks
+
+If the `exceptions` parameter is passed a
+`null` reference, or is the empty set, then the method does
+nothing.
+
+
+
+If any element of the `exceptions` collection is
+`null`, then it is skipped.
 
 <a name='T-xyLOGIX-Core-Debug-FileAppenderConfigurator'></a>
 ## FileAppenderConfigurator `type`
@@ -2981,6 +3060,72 @@ Looks up a localized string similar to {0}: {1}
 ##### Summary
 
 Returns the cached ResourceManager instance used by this class.
+
+<a name='T-xyLOGIX-Core-Debug-ServiceFlowHelper'></a>
+## ServiceFlowHelper `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Exposes static methods and properties to assist with the operational flow of a
+Windows service.
+
+<a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action-'></a>
+### EmergencyStop(notificationAction) `method`
+
+##### Summary
+
+Brings the Windows Service screeching suddenly to a halt.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| notificationAction | [System.Action](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Action 'System.Action') | (Optional.) Code to be called immediately prior to the emergency stop.
+
+
+
+If this parameter is passed a `null` reference as its
+argument, then nothing will be called. |
+
+##### Remarks
+
+Before calling this method, services should de-configure themselves to
+be automatically re-started by the operating system.
+
+<a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnDebuggerStartPending'></a>
+### OnDebuggerStartPending() `method`
+
+##### Summary
+
+Raises the
+[](#E-xyLOGIX-Core-Debug-ServiceFlowHelper-DebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending')
+event.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-StartDebugger'></a>
+### StartDebugger() `method`
+
+##### Summary
+
+Call this method to invoke the just-in-time debugger.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+Raises the
+[](#E-xyLOGIX-Core-Debug-ServiceFlowHelper-DebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending')
+event prior to actually breaking into the debugger. This is helpful
+to run, e.g., service configuration code, prior to the operation.
 
 <a name='T-xyLOGIX-Core-Debug-SetLog'></a>
 ## SetLog `type`
