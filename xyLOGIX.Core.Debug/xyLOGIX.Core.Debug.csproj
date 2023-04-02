@@ -7,8 +7,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <ProjectGuid>{2E4EDA4F-0D3A-442F-87B5-F0224F596A80}</ProjectGuid>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp></NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -21,8 +20,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\x64\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn></NoWarn>
     <SkipPostSharp>False</SkipPostSharp>
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
