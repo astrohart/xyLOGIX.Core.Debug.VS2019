@@ -159,6 +159,7 @@
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,repository)](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,log4net.Repository.ILoggerRepository)')
 - [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper')
+  - [EmergencyStop()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStop 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStop')
   - [StartDebugger()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger')
 - [Resources](#T-xyLOGIX-Core-Debug-Properties-Resources 'xyLOGIX.Core.Debug.Properties.Resources')
   - [Culture](#P-xyLOGIX-Core-Debug-Properties-Resources-Culture 'xyLOGIX.Core.Debug.Properties.Resources.Culture')
@@ -2991,6 +2992,17 @@ xyLOGIX.Core.Debug
 ##### Summary
 
 Defines methods and properties to aid in controlling the flow of the program.
+
+<a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStop'></a>
+### EmergencyStop() `method`
+
+##### Summary
+
+Brings the application to an immediate halt.
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-StartDebugger'></a>
 ### StartDebugger() `method`

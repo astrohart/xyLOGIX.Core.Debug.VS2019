@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -7,6 +8,14 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public static class ProgramFlowHelper
     {
+        /// <summary>
+        /// Brings the application to an immediate halt.
+        /// </summary>
+        public static void EmergencyStop()
+        {
+            Environment.Exit(-1);
+        }
+
         /// <summary>
         /// Launches the Visual Studio Debugger.
         /// </summary>
