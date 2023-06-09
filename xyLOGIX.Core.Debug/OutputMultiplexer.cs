@@ -79,5 +79,14 @@
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         public static void WriteLine()
             => OutputLocationProvider.WriteLine();
+
+        /// <summary>
+        /// Writes the text representation of the specified object, followed by
+        /// the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        public static void WriteLine(object value)
+            => OutputLocationProvider.WriteLine(value);
     }
 }

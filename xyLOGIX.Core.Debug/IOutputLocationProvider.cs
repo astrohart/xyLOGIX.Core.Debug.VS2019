@@ -7,6 +7,13 @@
     public interface IOutputLocationProvider
     {
         /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is updated.
+        /// </summary>
+        event MuteConsoleChangedEventHandler MuteConsoleChanged;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is turned on or
         /// off.
         /// </summary>
@@ -16,13 +23,6 @@
         /// event when its value is updated.
         /// </remarks>
         bool MuteConsole { get; set; }
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is updated.
-        /// </summary>
-        event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the internal list
@@ -44,6 +44,14 @@
         void Clear();
 
         /// <summary>
+        /// Writes the text representation of the specified object to the standard
+        /// output stream.
+        /// </summary>
+        /// <param name="value">The value to write, or <see langword="null" />.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        void Write(object value);
+
+        /// <summary>
         /// Writes the text representation of the specified array of objects to
         /// the standard output stream using the specified format information.
         /// </summary>
@@ -62,6 +70,14 @@
         /// <paramref name="format" /> is invalid.
         /// </exception>
         void Write(string format, params object[] arg);
+
+        /// <summary>
+        /// Writes the text representation of the specified object, followed by
+        /// the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        void WriteLine(object value);
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,

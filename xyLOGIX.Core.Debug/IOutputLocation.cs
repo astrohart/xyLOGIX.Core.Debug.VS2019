@@ -20,6 +20,14 @@
         OutputLocationType Type { get; }
 
         /// <summary>
+        /// Writes the text representation of the specified object to the standard
+        /// output stream.
+        /// </summary>
+        /// <param name="value">The value to write, or <see langword="null" />.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        void Write(object value);
+
+        /// <summary>
         /// Writes the text representation of the specified array of objects to
         /// the standard output stream using the specified format information.
         /// </summary>
@@ -38,6 +46,14 @@
         /// <paramref name="format" /> is invalid.
         /// </exception>
         void Write(string format, params object[] arg);
+
+        /// <summary>
+        /// Writes the text representation of the specified object, followed by
+        /// the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        void WriteLine(object value);
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,

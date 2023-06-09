@@ -34,6 +34,24 @@ namespace xyLOGIX.Core.Debug
             => ExceptionStackDepth = 1;
 
         /// <summary>
+        /// Occurs whenever text has been emitted by the
+        /// <see
+        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />
+        /// or
+        /// <see
+        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
+        /// methods.
+        /// </summary>
+        public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" />
+        /// property is updated.
+        /// </summary>
+        public static event VerbosityChangedEventHandler VerbosityChanged;
+
+        /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
         /// logging. Leave blank to not send events to the Application event log.
         /// </summary>
@@ -70,13 +88,6 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets a value that turns logging as a whole on or off.
         /// </summary>
         public static bool IsLogging { get; set; }
-
-        /// <summary>
-        /// Gets a value that indicates whether PostSharp is in use as the
-        /// logging infrastructure.
-        /// </summary>
-        private static bool IsPostSharp
-            => InfrastructureType == LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Users should set this property to the path to the log file, if logging.
@@ -122,22 +133,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Occurs whenever text has been emitted by the
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />
-        /// or
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
-        /// methods.
+        /// Gets a value that indicates whether PostSharp is in use as the
+        /// logging infrastructure.
         /// </summary>
-        public static event TextEmittedEventHandler TextEmitted;
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" />
-        /// property is updated.
-        /// </summary>
-        public static event VerbosityChangedEventHandler VerbosityChanged;
+        private static bool IsPostSharp
+            => InfrastructureType == LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Dumps a collection to the debug log.

@@ -17,7 +17,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        protected TraceOutputLocation() { }
+        protected TraceOutputLocation()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -36,6 +37,20 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public override OutputLocationType Type { get; } =
             OutputLocationType.Trace;
+
+        /// <summary>
+        /// Writes the text representation of the specified object to the standard
+        /// output stream.
+        /// </summary>
+        /// <param name="value">The value to write, or <see langword="null" />.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        public override void Write(object value)
+        {
+            if (value == null) return;
+            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+
+            Trace.Write(value);
+        }
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to
@@ -64,6 +79,20 @@ namespace xyLOGIX.Core.Debug
                 return;
 
             Trace.Write(string.Format(format, arg));
+        }
+
+        /// <summary>
+        /// Writes the text representation of the specified object, followed by
+        /// the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        public override void WriteLine(object value)
+        {
+            if (value == null) return;
+            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+
+            Trace.WriteLine(value);
         }
 
         /// <summary>

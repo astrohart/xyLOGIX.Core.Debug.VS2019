@@ -27,17 +27,18 @@ namespace xyLOGIX.Core.Debug
             => InitializeInternalOutputLocationList();
 
         /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is updated.
+        /// </summary>
+        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
+
+        /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
         /// </summary>
         public static IOutputLocationProvider Instance { get; } =
             new OutputLocationProvider();
-
-        /// <summary>
-        /// Gets a reference to a collection, each element of which implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
-        /// </summary>
-        private IList<IOutputLocation> InternalOutputLocationList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is turned on or
@@ -63,11 +64,10 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is updated.
+        /// Gets a reference to a collection, each element of which implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </summary>
-        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
+        private IList<IOutputLocation> InternalOutputLocationList { get; set; }
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the internal list
@@ -118,6 +118,31 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Writes the text representation of the specified object to the standard
+        /// output stream.
+        /// </summary>
+        /// <param name="value">The value to write, or <see langword="null" />.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        public void Write(object value)
+        {
+            try
+            {
+                if (InternalOutputLocationList == null) return;
+                if (!InternalOutputLocationList.Any()) return;
+
+                foreach (var location in InternalOutputLocationList.Where(
+                             l => l != null
+                         ))
+                    location.Write(value);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
+        }
+
+        /// <summary>
         /// Writes the text representation of the specified array of objects to
         /// the standard output stream using the specified format information.
         /// </summary>
@@ -150,6 +175,31 @@ namespace xyLOGIX.Core.Debug
                              l => l != null
                          ))
                     location.Write(format, arg);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes the text representation of the specified object, followed by
+        /// the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        public void WriteLine(object value)
+        {
+            try
+            {
+                if (InternalOutputLocationList == null) return;
+                if (!InternalOutputLocationList.Any()) return;
+
+                foreach (var location in InternalOutputLocationList.Where(
+                             l => l != null
+                         ))
+                    location.WriteLine(value);
             }
             catch (Exception ex)
             {
