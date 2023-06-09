@@ -1,9 +1,12 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Provides access to the one and only instance of the object that implements the
     /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public static class GetOutputLocationProvider
     {
         /// <summary>

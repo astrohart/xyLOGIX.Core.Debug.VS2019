@@ -1,9 +1,12 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Exposes static methods to multiplex debugging output; i.e., write it to
     /// multiple locations at the same time.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public static class OutputMultiplexer
     {
         /// <summary>

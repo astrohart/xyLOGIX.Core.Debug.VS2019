@@ -1,9 +1,12 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Defines the events, methods, properties, and behaviors for all output location
     /// objects.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public abstract class OutputLocationBase : IOutputLocation
     {
         /// <summary>

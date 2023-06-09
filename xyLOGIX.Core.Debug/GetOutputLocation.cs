@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -7,6 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that change
     /// depending on the strategy desired.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public static class GetOutputLocation
     {
         /// <summary>
@@ -49,6 +51,10 @@ namespace xyLOGIX.Core.Debug
 
                 case OutputLocationType.Debug:
                     result = GetDebugOutputLocation.SoleInstance();
+                    break;
+
+                case OutputLocationType.Trace:
+                    result = GetTraceOutputLocation.SoleInstance();
                     break;
 
                 default:

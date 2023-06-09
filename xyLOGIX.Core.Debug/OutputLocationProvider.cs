@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Provides access to a list of output locations for debugging.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public class OutputLocationProvider : IOutputLocationProvider
     {
         /// <summary>

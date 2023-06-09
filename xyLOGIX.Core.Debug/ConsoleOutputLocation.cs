@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -6,6 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// Writes debugging output to the standard output of the application and/or a
     /// console window, if present.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>
