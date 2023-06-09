@@ -1,10 +1,12 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Provides information for <c>VerbosityChanged</c> event handlers.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public class VerbosityChangedEventArgs : EventArgs
     {
         /// <summary>
