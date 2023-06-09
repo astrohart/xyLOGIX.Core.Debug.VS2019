@@ -64,12 +64,18 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Failing that, then the assembly that called this method is used.
         /// </remarks>
-        public static Assembly ToUseForEventLogging()
+        public static Assembly ToUseForEventLogging(Assembly assembly)
         {
             Assembly result = default;
 
             try
             {
+                if (assembly != null)
+                {
+                    result = assembly;
+                    return result;
+                }
+
                 result = Assembly.GetEntryAssembly();
                 if (result != null) return result;
 

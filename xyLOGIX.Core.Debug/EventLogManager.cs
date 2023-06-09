@@ -7,17 +7,15 @@ namespace xyLOGIX.Core.Debug
     /// Class to manage access to the event log.
     /// </summary>
     [Log(AttributeExclude = true)]
-    public class EventLogManager
+    public class EventLogManager : IEventLogManager
     {
         /// <summary>
-        /// Holds an reference to the one and only instance of
-        /// <see cref="EventLogManager" />.
+        /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        private static EventLogManager _theEventLogManager;
+        static EventLogManager() { }
 
         /// <summary>
-        /// Constructs an instance of <see cref="T:EventLogManager" /> and
-        /// returns a reference to the new instance.
+        /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         protected EventLogManager()
         {
@@ -27,14 +25,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of
-        /// <see
-        ///     cref="EventLogManager" />
-        /// .
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface that manages our
+        /// access to the Windows System Event Logs.
         /// </summary>
-        public static EventLogManager Instance
-            => _theEventLogManager ??
-               (_theEventLogManager = new EventLogManager());
+        public static IEventLogManager Instance { get; } =
+            new EventLogManager();
 
         /// <summary>
         /// Gets a value indicating whether this object has been properly initialized.

@@ -4,9 +4,7 @@ using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
@@ -128,6 +126,12 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// The default value of this parameter is <c>1</c>.
         /// </param>
+        /// <param name="applicationName">
+        /// (Required.) A <see cref="T:System.String" /> containing a user-friendly display
+        /// name of the application that is using this logging library.
+        /// <para />
+        /// Leave blank to use the default value.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
         /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
@@ -138,53 +142,9 @@ namespace xyLOGIX.Core.Debug
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
             string logFileName = "", int verbosity = 1,
-            ILoggerRepository repository = null)
+            string applicationName = "", ILoggerRepository repository = null)
         {
-            var eventLoggingAssembly = GetAssembly.ToUseForEventLogging();
-            if (eventLoggingAssembly == null)
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    "*** ERROR *** Could not obtain a reference to the .NET assembly that contains the application entry-point.  Falling back to the calling assembly..."
-                );
-                return;
-            }
-
-            var entryAssemblyName = eventLoggingAssembly.Location;
-            if (string.IsNullOrWhiteSpace(entryAssemblyName) ||
-                !File.Exists(entryAssemblyName))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    "DefaultLoggingInfrastructure.InitializeLogging: The fully-qualified pathname of the entry-point assembly could not be determined, or a ile having that path could not be located on the disk."
-                );
-                return;
-            }
-
-            DebugUtils.ApplicationName = FileVersionInfo
-                                         .GetVersionInfo(entryAssemblyName)
-                                         .ProductName;
-
-            // Dump the variable DebugUtils.ApplicationName to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                $"DefaultLoggingInfrastructure.InitializeLogging: DebugUtils.ApplicationName = '{DebugUtils.ApplicationName}'"
-            );
-
-            // If we found a value for the ApplicationName, then initialize the
-            // This is handy in the case where the user does not have write
-            // access to the C:\ProgramData directory, for example.
-            if (!string.IsNullOrWhiteSpace(DebugUtils.ApplicationName))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DefaultLoggingInfrastructure.InitializeLogging: The 'DebugUtils.ApplicationName' property has a value.  Using it as the name of the Event Log of this application."
-                );
-
-                EventLogManager.Instance.Initialize(
-                    DebugUtils.ApplicationName, EventLogType.Application
-                );
-            }
+            Setup.EventLogging(applicationName);
 
             if (string.IsNullOrWhiteSpace(logFileName))
             {
@@ -280,8 +240,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             SetUpDebugUtils(
-                muteDebugLevelIfReleaseMode, isLogging: true,
-                consoleOnly: false, verbosity, muteConsole
+                muteDebugLevelIfReleaseMode, true, false, verbosity, muteConsole
             );
 
             if (Type != LoggingInfrastructureType.PostSharp)

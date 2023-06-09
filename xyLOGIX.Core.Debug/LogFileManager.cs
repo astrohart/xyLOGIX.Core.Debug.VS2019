@@ -92,6 +92,12 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// The default value of this parameter is <c>1</c>.
         /// </param>
+        /// <param name="applicationName">
+        /// (Required.) A <see cref="T:System.String" /> containing a user-friendly display
+        /// name of the application that is using this logging library.
+        /// <para />
+        /// Leave blank to use the default value.
+        /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
         /// <see
@@ -103,7 +109,7 @@ namespace xyLOGIX.Core.Debug
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            string logFileName = "", int verbosity = 1,
+            string logFileName = "", int verbosity = 1, string applicationName = "",
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default)
         {
@@ -131,7 +137,7 @@ namespace xyLOGIX.Core.Debug
                 _infrastructure.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
                     configurationFilePathname, muteConsole, logFileName,
-                    verbosity
+                    verbosity, applicationName
                 );
             }
             catch (Exception ex)

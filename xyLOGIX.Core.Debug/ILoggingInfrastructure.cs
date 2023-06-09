@@ -91,6 +91,12 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// The default value of this parameter is <c>1</c>.
         /// </param>
+        /// <param name="applicationName">
+        /// (Required.) A <see cref="T:System.String" /> containing a user-friendly display
+        /// name of the application that is using this logging library.
+        /// <para />
+        /// Leave blank to use the default value.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
         /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
@@ -100,7 +106,8 @@ namespace xyLOGIX.Core.Debug
         void InitializeLogging(bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true, string configurationFilePathname = "",
             bool muteConsole = false, string logFileName = "",
-            int verbosity = 1, ILoggerRepository repository = null);
+            int verbosity = 1, string applicationName = "",
+            ILoggerRepository repository = null);
 
         /// <summary>
         /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to

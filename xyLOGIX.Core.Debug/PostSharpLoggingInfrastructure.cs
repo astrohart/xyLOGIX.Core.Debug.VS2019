@@ -101,6 +101,12 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// The default value of this parameter is <c>1</c>.
         /// </param>
+        /// <param name="applicationName">
+        /// (Required.) A <see cref="T:System.String" /> containing a user-friendly display
+        /// name of the application that is using this logging library.
+        /// <para />
+        /// Leave blank to use the default value.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
         /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
@@ -111,24 +117,20 @@ namespace xyLOGIX.Core.Debug
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
             string logFileName = "", int verbosity = 1,
-            ILoggerRepository repository = null)
+            string applicationName = "", ILoggerRepository repository = null)
         {
             if (_relay != null)
-            {
+
                 // logging is already configured
                 return;
-            }
 
-            // TODO: Check the _relay field if it is null before initializing it.
-            // Presently, we are trying to get rid of an error where we are
-            // initializing logging when there is no need to do so.
             _relay = _relay ?? Log4NetCollectingRepositorySelector
                 .RedirectLoggingToPostSharp();
 
             base.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, muteConsole, logFileName,
-                verbosity, _relay
+                configurationFilePathname, muteConsole, logFileName, verbosity,
+                applicationName, _relay
             );
 
             // set it as the default backend:
