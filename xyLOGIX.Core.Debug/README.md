@@ -14,7 +14,9 @@
   - [Instance](#P-xyLOGIX-Core-Debug-ConsoleOutputLocation-Instance 'xyLOGIX.Core.Debug.ConsoleOutputLocation.Instance')
   - [Type](#P-xyLOGIX-Core-Debug-ConsoleOutputLocation-Type 'xyLOGIX.Core.Debug.ConsoleOutputLocation.Type')
   - [#cctor()](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-#cctor 'xyLOGIX.Core.Debug.ConsoleOutputLocation.#cctor')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-Write-System-Object- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-Object- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine')
 - [DebugFileAndFolderHelper](#T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper')
@@ -35,7 +37,9 @@
   - [Instance](#P-xyLOGIX-Core-Debug-DebugOutputLocation-Instance 'xyLOGIX.Core.Debug.DebugOutputLocation.Instance')
   - [Type](#P-xyLOGIX-Core-Debug-DebugOutputLocation-Type 'xyLOGIX.Core.Debug.DebugOutputLocation.Type')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DebugOutputLocation-#cctor 'xyLOGIX.Core.Debug.DebugOutputLocation.#cctor')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-DebugOutputLocation-Write-System-Object- 'xyLOGIX.Core.Debug.DebugOutputLocation.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-DebugOutputLocation-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugOutputLocation.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine-System-Object- 'xyLOGIX.Core.Debug.DebugOutputLocation.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine 'xyLOGIX.Core.Debug.DebugOutputLocation.WriteLine')
 - [DebugUtils](#T-xyLOGIX-Core-Debug-DebugUtils 'xyLOGIX.Core.Debug.DebugUtils')
@@ -135,6 +139,8 @@
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetOutputLocationProvider-SoleInstance 'xyLOGIX.Core.Debug.GetOutputLocationProvider.SoleInstance')
 - [GetPatternLayout](#T-xyLOGIX-Core-Debug-GetPatternLayout 'xyLOGIX.Core.Debug.GetPatternLayout')
   - [ForConversionPattern(conversionPattern)](#M-xyLOGIX-Core-Debug-GetPatternLayout-ForConversionPattern-System-String- 'xyLOGIX.Core.Debug.GetPatternLayout.ForConversionPattern(System.String)')
+- [GetTraceOutputLocation](#T-xyLOGIX-Core-Debug-GetTraceOutputLocation 'xyLOGIX.Core.Debug.GetTraceOutputLocation')
+  - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetTraceOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetTraceOutputLocation.SoleInstance')
 - [Has](#T-xyLOGIX-Core-Debug-Has 'xyLOGIX.Core.Debug.Has')
   - [_isWindowsGuiApp](#F-xyLOGIX-Core-Debug-Has-_isWindowsGuiApp 'xyLOGIX.Core.Debug.Has._isWindowsGuiApp')
   - [ConsoleWindow()](#M-xyLOGIX-Core-Debug-Has-ConsoleWindow 'xyLOGIX.Core.Debug.Has.ConsoleWindow')
@@ -157,14 +163,18 @@
 - [IOutputLocation](#T-xyLOGIX-Core-Debug-IOutputLocation 'xyLOGIX.Core.Debug.IOutputLocation')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-IOutputLocation-MuteConsole 'xyLOGIX.Core.Debug.IOutputLocation.MuteConsole')
   - [Type](#P-xyLOGIX-Core-Debug-IOutputLocation-Type 'xyLOGIX.Core.Debug.IOutputLocation.Type')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-IOutputLocation-Write-System-Object- 'xyLOGIX.Core.Debug.IOutputLocation.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-IOutputLocation-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.IOutputLocation.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-IOutputLocation-WriteLine-System-Object- 'xyLOGIX.Core.Debug.IOutputLocation.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-IOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.IOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-IOutputLocation-WriteLine 'xyLOGIX.Core.Debug.IOutputLocation.WriteLine')
 - [IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-IOutputLocationProvider-MuteConsole 'xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole')
   - [AddLocation(location)](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-AddLocation-xyLOGIX-Core-Debug-IOutputLocation- 'xyLOGIX.Core.Debug.IOutputLocationProvider.AddLocation(xyLOGIX.Core.Debug.IOutputLocation)')
   - [Clear()](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-Clear 'xyLOGIX.Core.Debug.IOutputLocationProvider.Clear')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-Write-System-Object- 'xyLOGIX.Core.Debug.IOutputLocationProvider.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.IOutputLocationProvider.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine-System-Object- 'xyLOGIX.Core.Debug.IOutputLocationProvider.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.IOutputLocationProvider.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine 'xyLOGIX.Core.Debug.IOutputLocationProvider.WriteLine')
 - [Initialize](#T-xyLOGIX-Core-Debug-Initialize 'xyLOGIX.Core.Debug.Initialize')
@@ -220,7 +230,9 @@
 - [OutputLocationBase](#T-xyLOGIX-Core-Debug-OutputLocationBase 'xyLOGIX.Core.Debug.OutputLocationBase')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-OutputLocationBase-MuteConsole 'xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole')
   - [Type](#P-xyLOGIX-Core-Debug-OutputLocationBase-Type 'xyLOGIX.Core.Debug.OutputLocationBase.Type')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-Object- 'xyLOGIX.Core.Debug.OutputLocationBase.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationBase.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine-System-Object- 'xyLOGIX.Core.Debug.OutputLocationBase.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationBase.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine 'xyLOGIX.Core.Debug.OutputLocationBase.WriteLine')
 - [OutputLocationProvider](#T-xyLOGIX-Core-Debug-OutputLocationProvider 'xyLOGIX.Core.Debug.OutputLocationProvider')
@@ -234,7 +246,9 @@
   - [Clear()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Clear 'xyLOGIX.Core.Debug.OutputLocationProvider.Clear')
   - [InitializeInternalOutputLocationList()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-InitializeInternalOutputLocationList 'xyLOGIX.Core.Debug.OutputLocationProvider.InitializeInternalOutputLocationList')
   - [OnMuteConsoleChanged(e)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-OnMuteConsoleChanged-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs- 'xyLOGIX.Core.Debug.OutputLocationProvider.OnMuteConsoleChanged(xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs)')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Write-System-Object- 'xyLOGIX.Core.Debug.OutputLocationProvider.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationProvider.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-WriteLine-System-Object- 'xyLOGIX.Core.Debug.OutputLocationProvider.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationProvider.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-WriteLine 'xyLOGIX.Core.Debug.OutputLocationProvider.WriteLine')
 - [OutputLocationType](#T-xyLOGIX-Core-Debug-OutputLocationType 'xyLOGIX.Core.Debug.OutputLocationType')
@@ -248,6 +262,7 @@
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-OutputMultiplexer-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputMultiplexer.Write(System.String,System.Object[])')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine-System-Object- 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine(System.Object)')
 - [PostSharpLoggingInfrastructure](#T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure')
   - [_relay](#F-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-_relay 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure._relay')
   - [Type](#P-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.Type')
@@ -285,7 +300,9 @@
   - [Instance](#P-xyLOGIX-Core-Debug-TraceOutputLocation-Instance 'xyLOGIX.Core.Debug.TraceOutputLocation.Instance')
   - [Type](#P-xyLOGIX-Core-Debug-TraceOutputLocation-Type 'xyLOGIX.Core.Debug.TraceOutputLocation.Type')
   - [#cctor()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-#cctor 'xyLOGIX.Core.Debug.TraceOutputLocation.#cctor')
+  - [Write(value)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-Write-System-Object- 'xyLOGIX.Core.Debug.TraceOutputLocation.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.TraceOutputLocation.Write(System.String,System.Object[])')
+  - [WriteLine(value)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-Object- 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine')
 - [VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs')
@@ -439,6 +456,26 @@ Empty, static constructor to prohibit direct allocation of this class.
 
 This method has no parameters.
 
+<a name='M-xyLOGIX-Core-Debug-ConsoleOutputLocation-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-ConsoleOutputLocation-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -464,6 +501,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
@@ -784,6 +841,26 @@ Empty, static constructor to prohibit direct allocation of this class.
 
 This method has no parameters.
 
+<a name='M-xyLOGIX-Core-Debug-DebugOutputLocation-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-DebugOutputLocation-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -809,6 +886,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
@@ -2568,6 +2665,42 @@ for the `conversionPattern` parameter.
 | conversionPattern | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) String containing the conversion
 pattern to utilize. |
 
+<a name='T-xyLOGIX-Core-Debug-GetTraceOutputLocation'></a>
+## GetTraceOutputLocation `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Provides access to the one and only instance of the object that implements the
+[IOutputLocation](#T-xyLOGIX-Core-Debug-IOutputLocation 'xyLOGIX.Core.Debug.IOutputLocation') interface that directs
+debugging output to the window in Visual Studio or whichever other
+debugger can listen to the output of the [Trace](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Diagnostics.Trace 'System.Diagnostics.Trace')
+class' methods.
+
+<a name='M-xyLOGIX-Core-Debug-GetTraceOutputLocation-SoleInstance'></a>
+### SoleInstance() `method`
+
+##### Summary
+
+Obtains access to the sole instance of the object that implements the
+[IOutputLocation](#T-xyLOGIX-Core-Debug-IOutputLocation 'xyLOGIX.Core.Debug.IOutputLocation') interface, and returns a
+reference to it.
+
+##### Returns
+
+Reference to the one, and only, instance of the object that implements the
+[IOutputLocation](#T-xyLOGIX-Core-Debug-IOutputLocation 'xyLOGIX.Core.Debug.IOutputLocation') interface that directs
+debugging output to the window in Visual Studio or whichever other
+debugger can listen to the output of the [Trace](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Diagnostics.Trace 'System.Diagnostics.Trace')
+class' methods.
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='T-xyLOGIX-Core-Debug-Has'></a>
 ## Has `type`
 
@@ -2957,6 +3090,26 @@ Gets one of the [OutputLocationType](#T-xyLOGIX-Core-Debug-OutputLocationType 'x
 enumeration values that indicates the final destination of text strings that
 are fed to this location.
 
+<a name='M-xyLOGIX-Core-Debug-IOutputLocation-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-IOutputLocation-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -2982,6 +3135,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-IOutputLocation-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-IOutputLocation-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
@@ -3084,6 +3257,26 @@ Clears the internal list of output locations.
 
 This method has no parameters.
 
+<a name='M-xyLOGIX-Core-Debug-IOutputLocationProvider-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-IOutputLocationProvider-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -3109,6 +3302,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
@@ -4213,6 +4426,26 @@ Gets one of the [OutputLocationType](#T-xyLOGIX-Core-Debug-OutputLocationType 'x
 enumeration values that indicates the final destination of text strings that
 are fed to this location.
 
+<a name='M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -4238,6 +4471,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
@@ -4415,6 +4668,26 @@ event.
 [MuteConsoleChangedEventArgs](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs') that contains
 the event data. |
 
+<a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -4440,6 +4713,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
@@ -4625,6 +4918,26 @@ Writes the current line terminator to the standard output stream.
 ##### Parameters
 
 This method has no parameters.
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
+<a name='M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
 
 ##### Exceptions
 
@@ -5149,6 +5462,26 @@ Empty, static constructor to prohibit direct allocation of this class.
 
 This method has no parameters.
 
+<a name='M-xyLOGIX-Core-Debug-TraceOutputLocation-Write-System-Object-'></a>
+### Write(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object to the standard
+output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write, or `null`. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
 <a name='M-xyLOGIX-Core-Debug-TraceOutputLocation-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
 
@@ -5174,6 +5507,26 @@ the standard output stream using the specified format information.
 `null`. |
 | [System.FormatException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.FormatException 'System.FormatException') | The format specification in
 `format` is invalid. |
+
+<a name='M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-Object-'></a>
+### WriteLine(value) `method`
+
+##### Summary
+
+Writes the text representation of the specified object, followed by
+the current line terminator, to the standard output stream.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | The value to write. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
 
 <a name='M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-String,System-Object[]-'></a>
 ### WriteLine(format,arg) `method`
