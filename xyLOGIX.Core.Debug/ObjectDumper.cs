@@ -234,11 +234,11 @@ namespace xyLOGIX.Core.Debug
         /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" /> event.
         /// </summary>
         /// <param name="e">
-        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
+        /// A <see cref="T:xyLOGIX.Core.Debug.TextWrittenEventArgs" />
         /// that contains the event data.
         /// </param>
         protected static void OnTextWritten(TextWrittenEventArgs e)
-            => TextWritten?.Invoke(null, e);
+            => TextWritten?.Invoke(e);
 
         /// <summary>
         /// Writes the content in the string, <paramref name="s" />, to the

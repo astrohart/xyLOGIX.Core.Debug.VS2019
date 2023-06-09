@@ -22,9 +22,12 @@ namespace xyLOGIX.Core.Debug
     public static class DebugUtils
     {
         /// <summary>
-        /// Count of how deep logging has gone
+        /// The verbosity level.
         /// </summary>
-        private static int Depth;
+        /// <remarks>
+        /// Typically, applications set this to 1.
+        /// </remarks>
+        private static int _verbosity = 1;
 
         /// <summary>
         /// Initializes a new static instance of <see cref="DebugUtils" />.
@@ -103,12 +106,25 @@ namespace xyLOGIX.Core.Debug
         public static TextWriter Out { get; set; }
 
         /// <summary>
-        /// Gets or sets the verbosity debugLevel.
+        /// Gets or sets the verbosity level.
         /// </summary>
         /// <remarks>
         /// Typically, applications set this to 1.
         /// </remarks>
-        public static int Verbosity { get; set; }
+        public static int Verbosity
+        {
+            get => _verbosity;
+            set
+            {
+                var changed = _verbosity != value;
+                var oldValue = _verbosity;
+                _verbosity = value;
+                if (changed)
+                    OnVerbosityChanged(
+                        new VerbosityChangedEventArgs(oldValue, value)
+                    );
+            }
+        }
 
         /// <summary>
         /// Occurs whenever text has been emitted by the
@@ -119,7 +135,14 @@ namespace xyLOGIX.Core.Debug
         ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
         /// methods.
         /// </summary>
-        public static event Action<string, DebugLevel> TextEmitted;
+        public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" />
+        /// property is updated.
+        /// </summary>
+        public static event VerbosityChangedEventHandler VerbosityChanged;
 
         /// <summary>
         /// Dumps a collection to the debug log.
@@ -224,66 +247,22 @@ namespace xyLOGIX.Core.Debug
         /// exception occurred, as well as the message of the exception and its
         /// stack trace.
         /// </summary>
-        /// <param name="ex">
-        /// (Required.) Reference to the <see cref="T:System.Exception" /> to be logged.
+        /// <param name="e">
+        /// Reference to the <see cref="Exception" /> to be logged.
         /// </param>
-        public static void LogException(Exception ex)
-            => LogException(ex, 1);
-
-        /// <summary>
-        /// Logs the complete information about an exception to the log, under
-        /// the Error Level. Outputs the source file and line number where the
-        /// exception occurred, as well as the message of the exception and its
-        /// stack trace.
-        /// </summary>
-        /// <param name="ex">
-        /// Reference to the <see cref="T:System.Exception" /> to be logged.
-        /// </param>
-        /// <param name="depth">
-        /// (Required.) An <see cref="T:System.Int32" /> that specifies the number of
-        /// levels of inner-exception logging to do.
-        /// <para />
-        /// Must be <c>1</c> or greater.
-        /// </param>
-        /// <remarks>
-        /// If supplied, the value of the <paramref name="depth" /> parameter can only be
-        /// <c>1</c> or greater.
-        /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is passed <c>0</c> or less as
-        /// its
-        /// argument.
-        /// </exception>
-        public static void LogException(Exception ex, int depth)
+        public static void LogException(Exception e)
         {
-            Depth = 0; /* reset logging depth */
+            if (e == null) return;
 
-            if (depth <= 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(depth), "The depth parameter must be 1 or greater."
-                );
+            if (e is TypeInitializationException)
+                e = e.InnerException;
 
-            while (Depth <= depth)
-            {
-                if (ex == null) return;
+            var message = string.Format(
+                Resources.ExceptionMessageFormat, e.GetType(), e.Message,
+                e.StackTrace
+            );
 
-                Depth++;
-
-                var message = string.Format(
-                    Resources.ExceptionMessageFormat, ex.GetType(), ex.Message,
-                    ex.StackTrace
-                );
-
-                WriteLine(DebugLevel.Error, message);
-
-                if (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                    continue;
-                }
-
-                break;
-            }
+            WriteLine(DebugLevel.Error, message);
         }
 
         /// <summary>
@@ -312,7 +291,7 @@ namespace xyLOGIX.Core.Debug
         /// built in Release mode. If this is so, then the method checks the
         /// value of the
         /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" />
+        ///     cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" />
         /// property. If the property is set to true AND the
         /// <paramref
         ///     name="debugLevel" />
@@ -399,7 +378,7 @@ namespace xyLOGIX.Core.Debug
         /// built in Release mode. If this is so, then the method checks the
         /// value of the
         /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" />
+        ///     cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" />
         /// property. If the property is set to true AND the
         /// <paramref
         ///     name="debugLevel" />
@@ -568,14 +547,26 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Raises the <see cref="TextEmitted" /> event.
         /// </summary>
-        /// <param name="text">
-        /// The text that has been written or logged.
+        /// <param name="e">
+        /// (Required.) A <see cref="T:xyLOGIX.Core.Debug.TextEmittedEventArgs" /> that
+        /// contains the event data.
         /// </param>
-        /// <param name="debugLevel">
-        /// The <see cref="DebugLevel" /> of the message.
-        /// </param>
-        private static void OnTextEmitted(string text, DebugLevel debugLevel)
-            => TextEmitted?.Invoke(text, debugLevel);
+        private static void OnTextEmitted(TextEmittedEventArgs e)
+            => TextEmitted?.Invoke(e);
+
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" />
+        /// event.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" /> event is
+        /// raised
+        /// whenever the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" />
+        /// property is updated.
+        /// </remarks>
+        private static void OnVerbosityChanged(VerbosityChangedEventArgs e)
+            => VerbosityChanged?.Invoke(e);
 
         /// <summary>
         /// Provides the implementation details of writing messages to the log.
@@ -606,8 +597,6 @@ namespace xyLOGIX.Core.Debug
                 if (Verbosity == 0) return;
 
                 if (!MuteConsole) Console.Write(content);
-
-                OnTextEmitted(content, debugLevel);
 
                 if (ConsoleOnly) return;
 
@@ -648,6 +637,8 @@ namespace xyLOGIX.Core.Debug
                             nameof(debugLevel), debugLevel, null
                         );
                 }
+
+                OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
             }
             catch (Exception)
             {
@@ -691,16 +682,14 @@ namespace xyLOGIX.Core.Debug
                 if (Verbosity == 0) return;
 
                 // If we are being called from LINQPad, then use Debug.WriteLine
-                if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
+                if (AppDomain.CurrentDomain.FriendlyName.Contains("LINQPad"))
                 {
                     Console.WriteLine(content);
                     return;
                 }
 
-                if (!MuteConsole) Console.WriteLine(content);
-
-                if (debugLevel != DebugLevel.Debug)
-                    OnTextEmitted(content, debugLevel);
+                if (!MuteConsole)
+                    Console.WriteLine(content);
 
                 if (ConsoleOnly) return;
 
@@ -737,6 +726,8 @@ namespace xyLOGIX.Core.Debug
                             nameof(debugLevel), debugLevel, null
                         );
                 }
+
+                OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
             }
             catch (Exception)
             {

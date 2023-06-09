@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -79,7 +80,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// This method is solely utilized in order to implement the
         /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        ///     cref="P:Core.Debug.ILoggingInfrastructure.LogFilePath" />
         /// property.
         /// </remarks>
         public virtual string GetRootFileAppenderFileName()
@@ -115,6 +116,18 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Else, specify here the path to the log file to be created.
         /// </param>
+        /// <param name="verbosity">
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
         /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
@@ -124,25 +137,39 @@ namespace xyLOGIX.Core.Debug
         public virtual void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            string logFileName = "", ILoggerRepository repository = null)
+            string logFileName = "", int verbosity = 1,
+            ILoggerRepository repository = null)
         {
-            var callingAssemblyFileName = Assembly.GetCallingAssembly()
-                                                  .Location;
-            if (string.IsNullOrWhiteSpace(callingAssemblyFileName) ||
-                !File.Exists(callingAssemblyFileName))
+            var entryAssembly = Assembly.GetEntryAssembly();
+            if (entryAssembly == null)
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
-                    "DefaultLoggingInfrastructure.InitializeLogging: The fully-qualified pathname of the calling assembly could not be determined, or a ile having that path could not be located on the disk."
+                    "DefaultLoggingInfrastructure.InitializeLogging: Could not obtain a reference to the .NET assembly that contains the application entry-point."
+                );
+                return;
+            }
+
+            var entryAssemblyName = entryAssembly.Location;
+            if (string.IsNullOrWhiteSpace(entryAssemblyName) ||
+                !File.Exists(entryAssemblyName))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "DefaultLoggingInfrastructure.InitializeLogging: The fully-qualified pathname of the entry-point assembly could not be determined, or a ile having that path could not be located on the disk."
                 );
                 return;
             }
 
             DebugUtils.ApplicationName = FileVersionInfo
-                                         .GetVersionInfo(
-                                             callingAssemblyFileName
-                                         )
+                                         .GetVersionInfo(entryAssemblyName)
                                          .ProductName;
+
+            // Dump the variable DebugUtils.ApplicationName to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.InitializeLogging: DebugUtils.ApplicationName = '{DebugUtils.ApplicationName}'"
+            );
 
             // If we found a value for the ApplicationName, then initialize the
             // This is handy in the case where the user does not have write
@@ -253,7 +280,8 @@ namespace xyLOGIX.Core.Debug
             }
 
             SetUpDebugUtils(
-                muteDebugLevelIfReleaseMode, muteConsole: muteConsole
+                muteDebugLevelIfReleaseMode, isLogging: true,
+                consoleOnly: false, verbosity, muteConsole
             );
 
             if (Type != LoggingInfrastructureType.PostSharp)
@@ -278,7 +306,16 @@ namespace xyLOGIX.Core.Debug
         /// to the console and to the log.
         /// </param>
         /// <param name="verbosity">
-        /// Zero to suppress every message; greater than zero to echo every message.
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
         /// </param>
         /// <param name="muteConsole">
         /// If set to <see langword="true" />, suppresses all console output.
@@ -289,7 +326,7 @@ namespace xyLOGIX.Core.Debug
         {
             DebugUtils.IsLogging = isLogging;
             DebugUtils.ConsoleOnly = consoleOnly;
-            DebugUtils.Verbosity = verbosity;
+            DebugUtils.Verbosity = Compute.ZeroFloor(verbosity);
             DebugUtils.MuteDebugLevelIfReleaseMode =
                 muteDebugLevelIfReleaseMode;
             DebugUtils.MuteConsole = muteConsole;
@@ -301,7 +338,49 @@ namespace xyLOGIX.Core.Debug
             if (DebugUtils.Verbosity < 2)
                 return;
 
-            // write the name of the current class and method we are now
+            // dump the properties of DebugUtils to the logfile
+
+            // Dump the variable DebugUtils.IsLogging to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.IsLogging = {DebugUtils.IsLogging}"
+            );
+
+            // Dump the variable DebugUtils.ConsoleOnly to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.ConsoleOnly = {DebugUtils.ConsoleOnly}"
+            );
+
+            // Dump the variable DebugUtils.MuteDebugLevelIfReleaseMode to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.MuteDebugLevelIfReleaseMode = {DebugUtils.MuteDebugLevelIfReleaseMode}"
+            );
+
+            // Dump the variable DebugUtils.MuteConsole to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.MuteConsole = {DebugUtils.MuteConsole}"
+            );
+
+            // Dump the variable DebugUtils.InfrastructureType to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.InfrastructureType = '{DebugUtils.InfrastructureType}'"
+            );
+
+            // Dump the variable DebugUtils.LogFilePath to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.LogFilePath = '{DebugUtils.LogFilePath}'"
+            );
+
+            // Dump the variable DebugUtils.Verbosity to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Verbosity = {DebugUtils.Verbosity}"
+            );
         }
 
         /// <summary>
@@ -327,11 +406,50 @@ namespace xyLOGIX.Core.Debug
 
             var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
             if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
-                throw new InvalidOperationException(
-                    "Unable to determine the path to the log file's containing folder."
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "DefaultLoggingInfrastructure.PrepareLogFile: Unable to determine the path to the log file's containing folder."
                 );
+                return;
+            }
+
             var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
                                          .Parent?.FullName;
+
+            // Dump the variable logFileDirectoryParent to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.PrepareLogFile: logFileDirectoryParent = '{logFileDirectoryParent}'"
+            );
+
+            if (string.IsNullOrWhiteSpace(logFileDirectoryParent))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "DefaultLoggingInfrastructure.PrepareLogFile: The 'logFileDirectoryParent' variable is blank."
+                );
+                return;
+            }
+
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                $"DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the folder '{logFileDirectoryParent}' exists..."
+            );
+
+            if (!Directory.Exists(logFileDirectoryParent))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: The folder '{logFileDirectoryParent}' does not exist."
+                );
+                return;
+            }
+
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                $"*** SUCCESS *** The folder '{logFileDirectoryParent}' exists."
+            );
 
             // Check if the user has write access to the parent directory of the
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
@@ -349,6 +467,11 @@ namespace xyLOGIX.Core.Debug
                     $"We don't have write permissions to the directory '{logFileDirectoryParent}'."
                 );
             }
+
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                $"DefaultLoggingInfrastructure.PrepareLogFile: Ensuring that the directory '{logFileDirectoryPath}' exists..."
+            );
 
             DebugFileAndFolderHelper.CreateDirectoryIfNotExists(
                 logFileDirectoryPath

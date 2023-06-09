@@ -120,7 +120,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a collection of strings, each of which contains the pathname of
-        /// a file is present in the specified <paramref name="folder" />..
+        /// a file is present in the specified <paramref name="folder" />.
         /// </summary>
         /// <param name="folder">
         /// (Required.) String containing the full pathname of the folder whose
@@ -190,7 +190,7 @@ namespace xyLOGIX.Core.Debug
         public static bool InsistPathExists(string fileName)
         {
             // write the name of the current class and method we are now
-            var result = false;
+            bool result;
             try
             {
                 if (!string.IsNullOrWhiteSpace(fileName) &&
@@ -319,27 +319,28 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Checks for write access for the given folder.
         /// </summary>
-        /// <param name="path">
+        /// <param name="pathname">
         /// (Required.) String containing the full pathname of the folder whose
         /// permissions are to be checked.
         /// </param>
         /// <returns>
         /// This method returns <see langword="true" /> if write access is allowed to the
-        /// folder with the specified <paramref name="path" />, otherwise
+        /// folder with the specified <paramref name="pathname" />, otherwise
         /// <see langword="false" />.
         /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
-        /// <paramref name="path" /> parameter is a <see langword="null" /> value or blank.
+        /// <paramref name="pathname" /> parameter is a <see langword="null" /> value or
+        /// blank.
         /// <para />
         /// The value <see langword="false" /> is also returned if an operating system
         /// error
         /// or exception occurs while trying to look up the folder's permissions.
         /// </returns>
-        public static bool IsFolderWriteable(string path)
+        public static bool IsFolderWriteable(string pathname)
         {
             // write the name of the current class and method we are now
             var result = false;
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrWhiteSpace(pathname))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
@@ -350,18 +351,23 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (!Directory.Exists(path))
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the folder '{pathname}' is writeable..."
+                );
+
+                if (!Directory.Exists(pathname))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
-                        $"*** ERROR *** The system could not locate the folder having the path '{path}' on the disk.  This folder is required to exist in order for us to proceed."
+                        $"*** ERROR *** The system could not locate the folder having the path '{pathname}' on the disk.  This folder is required to exist in order for us to proceed."
                     );
                     return result;
                 }
 
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the folder)
-                var rules = Directory.GetAccessControl(path)
+                var rules = Directory.GetAccessControl(pathname)
                                      .GetAccessRules(
                                          true, true, typeof(SecurityIdentifier)
                                      );
@@ -370,8 +376,39 @@ namespace xyLOGIX.Core.Debug
                 // user is in.
                 var groups = WindowsIdentity.GetCurrent()
                                             .Groups;
+                if (!groups.Any())
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR *** The current user is not a member of any groups."
+                    );
+
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"*** INFO: {groups.Count} group(s) found of which the current user is a member."
+                );
+
                 var sidCurrentUser = WindowsIdentity.GetCurrent()
                                                     .User.Value;
+
+                if (string.IsNullOrWhiteSpace(sidCurrentUser))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR *** Could not find the Security ID (SID) of the current user."
+                    );
+
+                    return result;
+                }
+
+                // Dump the current user's SID to the log
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"*** INFO: Current User's SID = '{sidCurrentUser}'"
+                );
 
                 // Check if writing to the folder is explicitly denied for this
                 // user or a group the user is in.
@@ -390,7 +427,7 @@ namespace xyLOGIX.Core.Debug
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "DebugFileAndFolderHelper.IsFolderWriteable: The folder '{0}' is not writeable due to security settings.",
-                        path
+                        pathname
                     );
                     return result;
                 }

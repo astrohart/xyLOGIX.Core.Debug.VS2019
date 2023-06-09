@@ -44,7 +44,7 @@ namespace xyLOGIX.Core.Debug
              * collection is itself non-null, log that exception first.
              */
 
-            foreach (var exception in exceptions.Where(e => e != null)) 
+            foreach (var exception in exceptions.Where(e => e != null))
                 DebugUtils.LogException(exception);
         }
     }

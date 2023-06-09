@@ -80,6 +80,18 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Else, specify here the path to the log file to be created.
         /// </param>
+        /// <param name="verbosity">
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
+        /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
         /// <see
@@ -91,7 +103,7 @@ namespace xyLOGIX.Core.Debug
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            string logFileName = "",
+            string logFileName = "", int verbosity = 1,
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default)
         {
@@ -118,7 +130,8 @@ namespace xyLOGIX.Core.Debug
 
                 _infrastructure.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFilePathname, muteConsole, logFileName
+                    configurationFilePathname, muteConsole, logFileName,
+                    verbosity
                 );
             }
             catch (Exception ex)
@@ -146,7 +159,16 @@ namespace xyLOGIX.Core.Debug
         /// to the console and to the log.
         /// </param>
         /// <param name="verbosity">
-        /// Zero to suppress every message; greater than zero to echo every message.
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
         /// </param>
         /// <param name="muteConsole">
         /// If set to <see langword="true" />, suppresses all console output.
@@ -168,9 +190,9 @@ namespace xyLOGIX.Core.Debug
             _infrastructure = _infrastructure ??
                               GetLoggingInfrastructure.For(infrastructureType);
 
-            _infrastructure.SetUpDebugUtils(
-                muteDebugLevelIfReleaseMode, isLogging, consoleOnly, verbosity,
-                muteConsole
+            _infrastructure?.SetUpDebugUtils(
+                muteDebugLevelIfReleaseMode, isLogging, consoleOnly,
+                verbosity, muteConsole
             );
         }
     }

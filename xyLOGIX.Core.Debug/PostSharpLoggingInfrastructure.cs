@@ -53,7 +53,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// This method is solely utilized in order to implement the
         /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        ///     cref="P:Core.Debug.ILoggingInfrastructure.LogFilePath" />
         /// property.
         /// </remarks>
         public override string GetRootFileAppenderFileName()
@@ -89,6 +89,18 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Else, specify here the path to the log file to be created.
         /// </param>
+        /// <param name="verbosity">
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that implements
         /// the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
@@ -98,7 +110,8 @@ namespace xyLOGIX.Core.Debug
         public override void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            string logFileName = "", ILoggerRepository repository = null)
+            string logFileName = "", int verbosity = 1,
+            ILoggerRepository repository = null)
         {
             if (_relay != null)
             {
@@ -114,7 +127,8 @@ namespace xyLOGIX.Core.Debug
 
             base.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, muteConsole, logFileName, _relay
+                configurationFilePathname, muteConsole, logFileName,
+                verbosity, _relay
             );
 
             // set it as the default backend:
