@@ -222,9 +222,12 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationBase.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine 'xyLOGIX.Core.Debug.OutputLocationBase.WriteLine')
 - [OutputLocationProvider](#T-xyLOGIX-Core-Debug-OutputLocationProvider 'xyLOGIX.Core.Debug.OutputLocationProvider')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-#ctor 'xyLOGIX.Core.Debug.OutputLocationProvider.#ctor')
   - [_muteConsole](#F-xyLOGIX-Core-Debug-OutputLocationProvider-_muteConsole 'xyLOGIX.Core.Debug.OutputLocationProvider._muteConsole')
+  - [Instance](#P-xyLOGIX-Core-Debug-OutputLocationProvider-Instance 'xyLOGIX.Core.Debug.OutputLocationProvider.Instance')
   - [InternalOutputLocationList](#P-xyLOGIX-Core-Debug-OutputLocationProvider-InternalOutputLocationList 'xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-OutputLocationProvider-MuteConsole 'xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsole')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-#cctor 'xyLOGIX.Core.Debug.OutputLocationProvider.#cctor')
   - [AddLocation(location)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-AddLocation-xyLOGIX-Core-Debug-IOutputLocation- 'xyLOGIX.Core.Debug.OutputLocationProvider.AddLocation(xyLOGIX.Core.Debug.IOutputLocation)')
   - [Clear()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Clear 'xyLOGIX.Core.Debug.OutputLocationProvider.Clear')
   - [OnMuteConsoleChanged(e)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-OnMuteConsoleChanged-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs- 'xyLOGIX.Core.Debug.OutputLocationProvider.OnMuteConsoleChanged(xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs)')
@@ -4257,6 +4260,17 @@ xyLOGIX.Core.Debug
 
 Provides access to a list of output locations for debugging.
 
+<a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Empty, protected constructor to prohibit direct allocation of this class.
+
+##### Parameters
+
+This constructor has no parameters.
+
 <a name='F-xyLOGIX-Core-Debug-OutputLocationProvider-_muteConsole'></a>
 ### _muteConsole `constants`
 
@@ -4264,6 +4278,14 @@ Provides access to a list of output locations for debugging.
 
 A [Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') value indicating whether the console
 output location is turned on or off.
+
+<a name='P-xyLOGIX-Core-Debug-OutputLocationProvider-Instance'></a>
+### Instance `property`
+
+##### Summary
+
+Gets a reference to the one and only instance of the object that implements the
+[IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider') interface.
 
 <a name='P-xyLOGIX-Core-Debug-OutputLocationProvider-InternalOutputLocationList'></a>
 ### InternalOutputLocationList `property`
@@ -4286,6 +4308,17 @@ off.
 This property raises the
 [](#E-xyLOGIX-Core-Debug-OutputLocationProvider-MuteConsoleChanged 'xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged')
 event when its value is updated.
+
+<a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Empty, static constructor to prohibit direct allocation of this class.
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-AddLocation-xyLOGIX-Core-Debug-IOutputLocation-'></a>
 ### AddLocation(location) `method`
