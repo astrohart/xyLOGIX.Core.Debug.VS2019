@@ -140,17 +140,17 @@ namespace xyLOGIX.Core.Debug
             string logFileName = "", int verbosity = 1,
             ILoggerRepository repository = null)
         {
-            var entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly == null)
+            var eventLoggingAssembly = GetAssembly.ToUseForEventLogging();
+            if (eventLoggingAssembly == null)
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
-                    "DefaultLoggingInfrastructure.InitializeLogging: Could not obtain a reference to the .NET assembly that contains the application entry-point."
+                    "*** ERROR *** Could not obtain a reference to the .NET assembly that contains the application entry-point.  Falling back to the calling assembly..."
                 );
                 return;
             }
 
-            var entryAssemblyName = entryAssembly.Location;
+            var entryAssemblyName = eventLoggingAssembly.Location;
             if (string.IsNullOrWhiteSpace(entryAssemblyName) ||
                 !File.Exists(entryAssemblyName))
             {

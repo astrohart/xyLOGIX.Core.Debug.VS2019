@@ -119,6 +119,7 @@
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
+    <Compile Include="GetAssembly.cs" />
     <Compile Include="GetLog.cs" />
     <Compile Include="GetLoggingBackend.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
