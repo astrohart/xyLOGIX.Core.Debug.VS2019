@@ -94,6 +94,9 @@
 - [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager')
   - [GetAppenderByName(name)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetAppenderByName-System-String- 'xyLOGIX.Core.Debug.FileAppenderManager.GetAppenderByName(System.String)')
   - [GetFirstAppender(loggerRepository)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetFirstAppender-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.FileAppenderManager.GetFirstAppender(log4net.Repository.ILoggerRepository)')
+- [GetAssembly](#T-xyLOGIX-Core-Debug-GetAssembly 'xyLOGIX.Core.Debug.GetAssembly')
+  - [Pathname(assembly)](#M-xyLOGIX-Core-Debug-GetAssembly-Pathname-System-Reflection-Assembly- 'xyLOGIX.Core.Debug.GetAssembly.Pathname(System.Reflection.Assembly)')
+  - [ToUseForEventLogging()](#M-xyLOGIX-Core-Debug-GetAssembly-ToUseForEventLogging 'xyLOGIX.Core.Debug.GetAssembly.ToUseForEventLogging')
 - [GetLog](#T-xyLOGIX-Core-Debug-GetLog 'xyLOGIX.Core.Debug.GetLog')
   - [FileName](#F-xyLOGIX-Core-Debug-GetLog-FileName 'xyLOGIX.Core.Debug.GetLog.FileName')
   - [FileFolder](#P-xyLOGIX-Core-Debug-GetLog-FileFolder 'xyLOGIX.Core.Debug.GetLog.FileFolder')
@@ -1765,6 +1768,73 @@ logger object and then obtain the first
 configured on the root
 logger repository. If a suitable appender can still not be located,
 then the return value of this method is `null`.
+
+<a name='T-xyLOGIX-Core-Debug-GetAssembly'></a>
+## GetAssembly `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Exposes static methods to get information on .NET assemblies.
+
+<a name='M-xyLOGIX-Core-Debug-GetAssembly-Pathname-System-Reflection-Assembly-'></a>
+### Pathname(assembly) `method`
+
+##### Summary
+
+Obtains the fully-qualified pathname of the specified
+`assembly`.
+
+##### Returns
+
+If successful, the fully-qualified pathname of the specified
+`assembly`; the [Empty](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String.Empty 'System.String.Empty') value if
+it could not be obtained, or if the argument of the
+`assembly` parameter is a `null` reference.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| assembly | [System.Reflection.Assembly](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Reflection.Assembly 'System.Reflection.Assembly') | (Required.) Reference to an instance of
+[Assembly](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Reflection.Assembly 'System.Reflection.Assembly') for which to obtain the
+fully-qualified pathname. |
+
+<a name='M-xyLOGIX-Core-Debug-GetAssembly-ToUseForEventLogging'></a>
+### ToUseForEventLogging() `method`
+
+##### Summary
+
+Attempts to obtain a reference to an instance of the
+[Assembly](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Reflection.Assembly 'System.Reflection.Assembly') that should be used for the
+application event logging source.
+
+##### Returns
+
+If successful, a reference to an instance of the
+[Assembly](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Reflection.Assembly 'System.Reflection.Assembly') that should be used for the
+application event logging source; `null` otherwise.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+To find the assembly to use as a source for event logging, this method first
+attempts to locate the assembly containing the application's entry-point, and
+use that.
+
+
+
+Failing that, the assembly that is currently executing is tried.
+
+
+
+Failing that, then the assembly that called this method is used.
 
 <a name='T-xyLOGIX-Core-Debug-GetLog'></a>
 ## GetLog `type`
