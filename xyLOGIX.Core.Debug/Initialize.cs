@@ -1,14 +1,7 @@
 using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Text.RegularExpressions;
-
-#if DEBUG
-
-using Console = System.Diagnostics.Debug;
-
-#else
-using Console = System.Console;
-#endif
+using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {

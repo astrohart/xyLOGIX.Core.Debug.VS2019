@@ -1,12 +1,5 @@
 using System;
-
-#if DEBUG
-
-using Console = System.Diagnostics.Debug;
-
-#else
-using Console = System.Console;
-#endif
+using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -109,7 +102,8 @@ namespace xyLOGIX.Core.Debug
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true, bool overwrite = true,
             string configurationFilePathname = "", bool muteConsole = false,
-            string logFileName = "", int verbosity = 1, string applicationName = "",
+            string logFileName = "", int verbosity = 1,
+            string applicationName = "",
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default)
         {
@@ -197,8 +191,8 @@ namespace xyLOGIX.Core.Debug
                               GetLoggingInfrastructure.For(infrastructureType);
 
             _infrastructure?.SetUpDebugUtils(
-                muteDebugLevelIfReleaseMode, isLogging, consoleOnly,
-                verbosity, muteConsole
+                muteDebugLevelIfReleaseMode, isLogging, consoleOnly, verbosity,
+                muteConsole
             );
         }
     }

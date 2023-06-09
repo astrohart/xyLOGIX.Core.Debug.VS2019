@@ -6,12 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using xyLOGIX.Core.Debug.Properties;
-#if DEBUG
-using Console = System.Diagnostics.Debug;
-
-#else
-using Console = System.Console;
-#endif
+using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {

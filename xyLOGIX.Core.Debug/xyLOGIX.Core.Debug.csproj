@@ -108,9 +108,11 @@
     <Compile Include="Activate.cs" />
     <Compile Include="AppDomainFriendlyNames.cs" />
     <Compile Include="Compute.cs" />
+    <Compile Include="ConsoleOutputLocation.cs" />
     <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="DebuggerDump.cs" />
     <Compile Include="DebugLevel.cs" />
+    <Compile Include="DebugOutputLocation.cs" />
     <Compile Include="DebugUtils.cs" />
     <Compile Include="DefaultLoggingInfrastructure.cs" />
     <Compile Include="Delete.cs" />
@@ -120,15 +122,27 @@
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="GetAssembly.cs" />
+    <Compile Include="GetConsoleOutputLocation.cs" />
+    <Compile Include="GetDebugOutputLocation.cs" />
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetLog.cs" />
     <Compile Include="GetLoggingBackend.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
+    <Compile Include="GetOutputLocation.cs" />
+    <Compile Include="GetOutputLocationProvider.cs" />
     <Compile Include="GetPatternLayout.cs" />
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="IEventLogManager.cs" />
+    <Compile Include="IOutputLocation.cs" />
+    <Compile Include="IOutputLocationProvider.cs" />
+    <Compile Include="MuteConsoleChangedEventArgs.cs" />
+    <Compile Include="MuteConsoleChangedEventHandler.cs" />
+    <Compile Include="OutputLocationBase.cs" />
+    <Compile Include="OutputLocationProvider.cs" />
+    <Compile Include="OutputLocationType.cs" />
+    <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="ServiceFlowHelper.cs" />
     <Compile Include="SetLog.cs" />
     <Compile Include="Setup.cs" />
@@ -136,6 +150,7 @@
     <Compile Include="TextEmittedEventHandler.cs" />
     <Compile Include="TextWrittenEventArgs.cs" />
     <Compile Include="TextWrittenEventHandler.cs" />
+    <Compile Include="TraceOutputLocation.cs" />
     <Compile Include="VerbosityChangedEventArgs.cs" />
     <Compile Include="VerbosityChangedEventHandler.cs" />
   </ItemGroup>

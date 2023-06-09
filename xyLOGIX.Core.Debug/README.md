@@ -131,6 +131,8 @@
   - [For(type)](#M-xyLOGIX-Core-Debug-GetLoggingInfrastructure-For-xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.GetLoggingInfrastructure.For(xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [GetOutputLocation](#T-xyLOGIX-Core-Debug-GetOutputLocation 'xyLOGIX.Core.Debug.GetOutputLocation')
   - [OfType(type)](#M-xyLOGIX-Core-Debug-GetOutputLocation-OfType-xyLOGIX-Core-Debug-OutputLocationType- 'xyLOGIX.Core.Debug.GetOutputLocation.OfType(xyLOGIX.Core.Debug.OutputLocationType)')
+- [GetOutputLocationProvider](#T-xyLOGIX-Core-Debug-GetOutputLocationProvider 'xyLOGIX.Core.Debug.GetOutputLocationProvider')
+  - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetOutputLocationProvider-SoleInstance 'xyLOGIX.Core.Debug.GetOutputLocationProvider.SoleInstance')
 - [GetPatternLayout](#T-xyLOGIX-Core-Debug-GetPatternLayout 'xyLOGIX.Core.Debug.GetPatternLayout')
   - [ForConversionPattern(conversionPattern)](#M-xyLOGIX-Core-Debug-GetPatternLayout-ForConversionPattern-System-String- 'xyLOGIX.Core.Debug.GetPatternLayout.ForConversionPattern(System.String)')
 - [Has](#T-xyLOGIX-Core-Debug-Has 'xyLOGIX.Core.Debug.Has')
@@ -230,6 +232,7 @@
   - [#cctor()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-#cctor 'xyLOGIX.Core.Debug.OutputLocationProvider.#cctor')
   - [AddLocation(location)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-AddLocation-xyLOGIX-Core-Debug-IOutputLocation- 'xyLOGIX.Core.Debug.OutputLocationProvider.AddLocation(xyLOGIX.Core.Debug.IOutputLocation)')
   - [Clear()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Clear 'xyLOGIX.Core.Debug.OutputLocationProvider.Clear')
+  - [InitializeInternalOutputLocationList()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-InitializeInternalOutputLocationList 'xyLOGIX.Core.Debug.OutputLocationProvider.InitializeInternalOutputLocationList')
   - [OnMuteConsoleChanged(e)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-OnMuteConsoleChanged-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs- 'xyLOGIX.Core.Debug.OutputLocationProvider.OnMuteConsoleChanged(xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationProvider.Write(System.String,System.Object[])')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationProvider.WriteLine(System.String,System.Object[])')
@@ -241,6 +244,7 @@
   - [Unknown](#F-xyLOGIX-Core-Debug-OutputLocationType-Unknown 'xyLOGIX.Core.Debug.OutputLocationType.Unknown')
 - [OutputMultiplexer](#T-xyLOGIX-Core-Debug-OutputMultiplexer 'xyLOGIX.Core.Debug.OutputMultiplexer')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-OutputMultiplexer-MuteConsole 'xyLOGIX.Core.Debug.OutputMultiplexer.MuteConsole')
+  - [OutputLocationProvider](#P-xyLOGIX-Core-Debug-OutputMultiplexer-OutputLocationProvider 'xyLOGIX.Core.Debug.OutputMultiplexer.OutputLocationProvider')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-OutputMultiplexer-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputMultiplexer.Write(System.String,System.Object[])')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine')
@@ -2499,6 +2503,36 @@ This method will throw an exception if there are no types implemented
 that correspond to the enumeration value passed for the argument of the
 `type` parameter.
 
+<a name='T-xyLOGIX-Core-Debug-GetOutputLocationProvider'></a>
+## GetOutputLocationProvider `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Provides access to the one and only instance of the object that implements the
+[IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider') interface.
+
+<a name='M-xyLOGIX-Core-Debug-GetOutputLocationProvider-SoleInstance'></a>
+### SoleInstance() `method`
+
+##### Summary
+
+Obtains access to the sole instance of the object that implements the
+[IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider') interface, and
+returns a reference to it.
+
+##### Returns
+
+Reference to the one, and only, instance of the object that implements the
+[IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider') interface.
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='T-xyLOGIX-Core-Debug-GetPatternLayout'></a>
 ## GetPatternLayout `type`
 
@@ -4351,6 +4385,19 @@ Clears the internal list of output locations.
 
 This method has no parameters.
 
+<a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-InitializeInternalOutputLocationList'></a>
+### InitializeInternalOutputLocationList() `method`
+
+##### Summary
+
+Initializes the
+[InternalOutputLocationList](#P-xyLOGIX-Core-Debug-OutputLocationProvider-InternalOutputLocationList 'xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList')
+to have default values.
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-OnMuteConsoleChanged-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-'></a>
 ### OnMuteConsoleChanged(e) `method`
 
@@ -4496,7 +4543,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to multiplex debugging output; i.e., write it to multiple locations at the same time.
+Exposes static methods to multiplex debugging output; i.e., write it to
+multiple locations at the same time.
 
 <a name='P-xyLOGIX-Core-Debug-OutputMultiplexer-MuteConsole'></a>
 ### MuteConsole `property`
@@ -4505,6 +4553,14 @@ Exposes static methods to multiplex debugging output; i.e., write it to multiple
 
 Gets or sets a value indicating whether the console multiplexer is turned on or
 off.
+
+<a name='P-xyLOGIX-Core-Debug-OutputMultiplexer-OutputLocationProvider'></a>
+### OutputLocationProvider `property`
+
+##### Summary
+
+Gets a reference to an instance of an object that implements the
+[IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider') interface.
 
 <a name='M-xyLOGIX-Core-Debug-OutputMultiplexer-Write-System-String,System-Object[]-'></a>
 ### Write(format,arg) `method`
