@@ -237,6 +237,11 @@ namespace xyLOGIX.Core.Debug
                     );
                     return;
                 }
+                
+                /*
+                 * By the time Activate.LoggingForLogFileName returns TRUE, the containing
+                 * folder for our log, plus a zero-byte log file, will exist on the disk.
+                 */
             }
 
             SetUpDebugUtils(
