@@ -297,8 +297,8 @@ namespace xyLOGIX.Core.Debug
             => InternalOutputLocationList = new List<IOutputLocation>
             {
                 GetOutputLocation.OfType(OutputLocationType.Console),
-                GetOutputLocation.OfType(OutputLocationType.Debug),
-                GetOutputLocation.OfType(OutputLocationType.Trace)
+                GetOutputLocation.OfType(OutputLocationType.Debug)
+                /* we do not add the trace location because trace messages appear twice that way. */
             };
     }
 }
