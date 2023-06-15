@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following set
 // of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("xyLOGIX Core Debugging Library")]
+[assembly: AssemblyTitle("xyLOGIX.Core.Debug")]
 [assembly:
     AssemblyDescription(
         "Provides objects and functionality support to do such things as debugging and logging."
@@ -14,10 +14,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("xyLOGIX Core Debugging Library")]
 [assembly:
     AssemblyCopyright(
-        "Copyright © 2017 by xyLOGIX, LLC.  All rights reserved."
+        "Copyright © 2017-23 by xyLOGIX, LLC.  All rights reserved."
     )]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTrademark("This software component is a part of the xyLOGIX Core Debugging Library.  xyLOGIX Core Debugging Library is a trademark of xyLOGIX, LLC.  All rights reserved, especially those granted by international treaties.")] [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible to
 // COM components. If you need to access a type in this assembly from COM, set
