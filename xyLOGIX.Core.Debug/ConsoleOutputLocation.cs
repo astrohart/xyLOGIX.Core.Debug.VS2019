@@ -1,5 +1,6 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -79,7 +80,10 @@ namespace xyLOGIX.Core.Debug
 
             if (MuteConsole) return;
 
-            Console.Write(format, arg);
+            if (!arg.Any())
+                Console.Write(format);
+            else
+                Console.Write(format, arg);
         }
 
         /// <summary>
@@ -122,9 +126,13 @@ namespace xyLOGIX.Core.Debug
                 ((arg == null) | (arg.Length == 0)))
                 return;
 
+
             if (MuteConsole) return;
 
-            Console.WriteLine(format, arg);
+            if (!arg.Any())
+                Console.WriteLine(format);
+            else
+                Console.WriteLine(format, arg);
         }
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>
