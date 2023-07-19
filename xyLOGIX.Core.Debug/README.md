@@ -46,7 +46,6 @@
   - [_verbosity](#F-xyLOGIX-Core-Debug-DebugUtils-_verbosity 'xyLOGIX.Core.Debug.DebugUtils._verbosity')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
-  - [ExceptionStackDepth](#P-xyLOGIX-Core-Debug-DebugUtils-ExceptionStackDepth 'xyLOGIX.Core.Debug.DebugUtils.ExceptionStackDepth')
   - [InfrastructureType](#P-xyLOGIX-Core-Debug-DebugUtils-InfrastructureType 'xyLOGIX.Core.Debug.DebugUtils.InfrastructureType')
   - [IsLogging](#P-xyLOGIX-Core-Debug-DebugUtils-IsLogging 'xyLOGIX.Core.Debug.DebugUtils.IsLogging')
   - [IsPostSharp](#P-xyLOGIX-Core-Debug-DebugUtils-IsPostSharp 'xyLOGIX.Core.Debug.DebugUtils.IsPostSharp')
@@ -54,6 +53,7 @@
   - [MuteConsole](#P-xyLOGIX-Core-Debug-DebugUtils-MuteConsole 'xyLOGIX.Core.Debug.DebugUtils.MuteConsole')
   - [MuteDebugLevelIfReleaseMode](#P-xyLOGIX-Core-Debug-DebugUtils-MuteDebugLevelIfReleaseMode 'xyLOGIX.Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode')
   - [Out](#P-xyLOGIX-Core-Debug-DebugUtils-Out 'xyLOGIX.Core.Debug.DebugUtils.Out')
+  - [OutputLocationProvider](#P-xyLOGIX-Core-Debug-DebugUtils-OutputLocationProvider 'xyLOGIX.Core.Debug.DebugUtils.OutputLocationProvider')
   - [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DebugUtils-#cctor 'xyLOGIX.Core.Debug.DebugUtils.#cctor')
   - [DumpCollection(collection)](#M-xyLOGIX-Core-Debug-DebugUtils-DumpCollection-System-Collections-ICollection- 'xyLOGIX.Core.Debug.DebugUtils.DumpCollection(System.Collections.ICollection)')
@@ -63,6 +63,8 @@
   - [GenerateContentFromFormat(format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-GenerateContentFromFormat-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.GenerateContentFromFormat(System.String,System.Object[])')
   - [LogEachLineIfMultiline(content,logMethod,level)](#M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.LogEachLineIfMultiline(System.String,System.Action{xyLOGIX.Core.Debug.DebugLevel,System.String},xyLOGIX.Core.Debug.DebugLevel)')
   - [LogException(e)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception)')
+  - [OnMuteConsoleChanged()](#M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChanged 'xyLOGIX.Core.Debug.DebugUtils.OnMuteConsoleChanged')
+  - [OnMuteConsoleChangedInOutputLocationProvider(sender,e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChangedInOutputLocationProvider-System-Object,xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnMuteConsoleChangedInOutputLocationProvider(System.Object,xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs)')
   - [OnTextEmitted(e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(xyLOGIX.Core.Debug.TextEmittedEventArgs)')
   - [OnVerbosityChanged()](#M-xyLOGIX-Core-Debug-DebugUtils-OnVerbosityChanged-xyLOGIX-Core-Debug-VerbosityChangedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnVerbosityChanged(xyLOGIX.Core.Debug.VerbosityChangedEventArgs)')
   - [Write(debugLevel,format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String,System.Object[])')
@@ -989,23 +991,13 @@ logging. Leave blank to not send events to the Application event log.
 Gets or sets a value indicating whether the logging produced by this
 object should only be written to the console as opposed to a log file.
 
-<a name='P-xyLOGIX-Core-Debug-DebugUtils-ExceptionStackDepth'></a>
-### ExceptionStackDepth `property`
-
-##### Summary
-
-Gets or sets the depth down the call stack from which Exception
-information should be obtained.
-
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-InfrastructureType'></a>
 ### InfrastructureType `property`
 
 ##### Summary
 
-Gets or sets a
-[LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
-value
-indicating which type of logging infrastructure is in use.
+Gets or sets the depth down the call stack from which Exception
+information should be obtained.
 
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-IsLogging'></a>
 ### IsLogging `property`
@@ -1036,6 +1028,11 @@ Users should set this property to the path to the log file, if logging.
 
 Gets or sets a value telling us to mute all console output.
 
+##### Remarks
+
+When this property's value is updated, it raises the
+[](#E-xyLOGIX-Core-Debug-DebugUtils-MuteConsoleChanged 'xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged') event.
+
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-MuteDebugLevelIfReleaseMode'></a>
 ### MuteDebugLevelIfReleaseMode `property`
 
@@ -1051,6 +1048,14 @@ in Release mode.
 
 Gets or sets a value that represents the spigot of text from that
 which is produced by calls to this class' methods.
+
+<a name='P-xyLOGIX-Core-Debug-DebugUtils-OutputLocationProvider'></a>
+### OutputLocationProvider `property`
+
+##### Summary
+
+Gets a reference to an instance of an object that implements the
+[IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider') interface.
 
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-Verbosity'></a>
 ### Verbosity `property`
@@ -1224,6 +1229,49 @@ stack trace.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | e | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be logged. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChanged'></a>
+### OnMuteConsoleChanged() `method`
+
+##### Summary
+
+Raises the [](#E-xyLOGIX-Core-Debug-DebugUtils-MuteConsoleChanged 'xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged')
+event.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChangedInOutputLocationProvider-System-Object,xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-'></a>
+### OnMuteConsoleChangedInOutputLocationProvider(sender,e) `method`
+
+##### Summary
+
+Handles the
+[](#E-xyLOGIX-Core-Debug-IOutputLocationProvider-MuteConsoleChanged 'xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsoleChanged')
+event raised by the component..
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| sender | [System.Object](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Object 'System.Object') | Reference to an instance of the object that raised the
+event. |
+| e | [xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs') | A
+[MuteConsoleChangedEventArgs](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs') that contains
+the event data. |
+
+##### Remarks
+
+The event that this handler responds to is raised when the value of
+the [MuteConsole](#P-xyLOGIX-Core-Debug-IOutputLocationProvider-MuteConsole 'xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole')
+property is updated.
+
+
+
+This handler responds by synchronizing the value of the
+[MuteConsole](#P-xyLOGIX-Core-Debug-DebugUtils-MuteConsole 'xyLOGIX.Core.Debug.DebugUtils.MuteConsole') property with its
+own.
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs-'></a>
 ### OnTextEmitted(e) `method`

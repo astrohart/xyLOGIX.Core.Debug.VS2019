@@ -16,6 +16,8 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true)]
     public static class DebugUtils
     {
+        private static bool _muteConsole;
+
         /// <summary>
         /// The verbosity level.
         /// </summary>
@@ -28,28 +30,13 @@ namespace xyLOGIX.Core.Debug
         /// Initializes a new static instance of <see cref="DebugUtils" />.
         /// </summary>
         static DebugUtils()
+        {
+            InitializeOutputLocationProvider();
 
             // default ExceptionStackDepth is 1 for a Windows Forms app. Set to
             // 2 for a Console App.
-            => ExceptionStackDepth = 1;
-
-        /// <summary>
-        /// Occurs whenever text has been emitted by the
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />
-        /// or
-        /// <see
-        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
-        /// methods.
-        /// </summary>
-        public static event TextEmittedEventHandler TextEmitted;
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" />
-        /// property is updated.
-        /// </summary>
-        public static event VerbosityChangedEventHandler VerbosityChanged;
+            ExceptionStackDepth = 1;
+        }
 
         /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
@@ -63,14 +50,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool ConsoleOnly { get; set; }
 
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
+        public static int ExceptionStackDepth { get; set; }
+
         /// <summary>
         /// Gets or sets the depth down the call stack from which Exception
         /// information should be obtained.
         /// </summary>
-
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
-        public static int ExceptionStackDepth { get; set; }
-
         /// <summary>
         /// Gets or sets a
         /// <see
@@ -90,6 +76,13 @@ namespace xyLOGIX.Core.Debug
         public static bool IsLogging { get; set; }
 
         /// <summary>
+        /// Gets a value that indicates whether PostSharp is in use as the
+        /// logging infrastructure.
+        /// </summary>
+        private static bool IsPostSharp
+            => InfrastructureType == LoggingInfrastructureType.PostSharp;
+
+        /// <summary>
         /// Users should set this property to the path to the log file, if logging.
         /// </summary>
         public static string LogFilePath { get; set; }
@@ -97,7 +90,20 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Gets or sets a value telling us to mute all console output.
         /// </summary>
-        public static bool MuteConsole { get; set; }
+        /// <remarks>
+        /// When this property's value is updated, it raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged" /> event.
+        /// </remarks>
+        public static bool MuteConsole
+        {
+            get => _muteConsole;
+            set
+            {
+                var changed = _muteConsole != value;
+                _muteConsole = value;
+                if (changed) OnMuteConsoleChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to mute "DEBUG" log messages
@@ -110,6 +116,13 @@ namespace xyLOGIX.Core.Debug
         /// which is produced by calls to this class' methods.
         /// </summary>
         public static TextWriter Out { get; set; }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
+        /// </summary>
+        private static IOutputLocationProvider OutputLocationProvider { get; } =
+            GetOutputLocationProvider.SoleInstance();
 
         /// <summary>
         /// Gets or sets the verbosity level.
@@ -133,11 +146,28 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a value that indicates whether PostSharp is in use as the
-        /// logging infrastructure.
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteConsole" /> property is updated.
         /// </summary>
-        private static bool IsPostSharp
-            => InfrastructureType == LoggingInfrastructureType.PostSharp;
+        public static event Action MuteConsoleChanged;
+
+        /// <summary>
+        /// Occurs whenever text has been emitted by the
+        /// <see
+        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" />
+        /// or
+        /// <see
+        ///     cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" />
+        /// methods.
+        /// </summary>
+        public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" />
+        /// property is updated.
+        /// </summary>
+        public static event VerbosityChangedEventHandler VerbosityChanged;
 
         /// <summary>
         /// Dumps a collection to the debug log.
@@ -297,8 +327,11 @@ namespace xyLOGIX.Core.Debug
         /// does nothing. This method does not add a newline character after
         /// writing its content to the log.
         /// </remarks>
-        public static void Write(DebugLevel debugLevel, string format,
-            params object[] args)
+        public static void Write(
+            DebugLevel debugLevel,
+            string format,
+            params object[] args
+        )
         {
             if (string.IsNullOrWhiteSpace(format))
 
@@ -384,8 +417,11 @@ namespace xyLOGIX.Core.Debug
         /// does nothing. This method adds a newline character after writing its
         /// content to the log.
         /// </remarks>
-        public static void WriteLine(DebugLevel debugLevel, string format,
-            params object[] args)
+        public static void WriteLine(
+            DebugLevel debugLevel,
+            string format,
+            params object[] args
+        )
         {
             if (string.IsNullOrWhiteSpace(format))
 
@@ -489,9 +525,15 @@ namespace xyLOGIX.Core.Debug
         /// The string content of the <paramref name="format" /> parameter is
         /// left untouched if there are no <paramref name="args" />.
         /// </remarks>
-        private static string GenerateContentFromFormat(string format,
-            params object[] args)
+        private static string GenerateContentFromFormat(
+            string format,
+            params object[] args
+        )
             => args.Any() ? string.Format(format, args) : format;
+
+        private static void InitializeOutputLocationProvider()
+            => OutputLocationProvider.MuteConsoleChanged +=
+                OnMuteConsoleChangedInOutputLocationProvider;
 
         /// <summary>
         /// Detects whether the <paramref name="content" /> is multiline. If so,
@@ -511,9 +553,11 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> specifying the
         /// debugLevel of logging to utilize.
         /// </param>
-        private static void LogEachLineIfMultiline(string content,
+        private static void LogEachLineIfMultiline(
+            string content,
             Action<DebugLevel, string> logMethod,
-            DebugLevel level = DebugLevel.Debug)
+            DebugLevel level = DebugLevel.Debug
+        )
         {
             // first, format the text with string.Format
             if (string.IsNullOrWhiteSpace(content))
@@ -537,6 +581,46 @@ namespace xyLOGIX.Core.Debug
             // For each line, write it out at the debugLevel indicated, one by
             // one. We do this by calling the delegate supplied to this method
             foreach (var line in lines) logMethod(level, line);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged" />
+        /// event.
+        /// </summary>
+        private static void OnMuteConsoleChanged()
+            => MuteConsoleChanged?.Invoke();
+
+        /// <summary>
+        /// Handles the
+        /// <see cref="E:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsoleChanged" />
+        /// event raised by the <b>Output Location Provider</b> component..
+        /// </summary>
+        /// <param name="sender">
+        /// Reference to an instance of the object that raised the
+        /// event.
+        /// </param>
+        /// <param name="e">
+        /// A
+        /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> that contains
+        /// the event data.
+        /// </param>
+        /// <remarks>
+        /// The event that this handler responds to is raised when the value of
+        /// the <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is updated.
+        /// <para />
+        /// This handler responds by synchronizing the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteConsole" /> property with its
+        /// own.
+        /// </remarks>
+        private static void OnMuteConsoleChangedInOutputLocationProvider(
+            object sender,
+            MuteConsoleChangedEventArgs e
+        )
+        {
+            if (MuteConsole == e.NewValue) return;
+
+            MuteConsole = e.NewValue;
         }
 
         /// <summary>
@@ -591,7 +675,7 @@ namespace xyLOGIX.Core.Debug
             {
                 if (Verbosity == 0) return;
 
-                if (!MuteConsole) Console.Write(content);
+                if (!MuteConsole) OutputMultiplexer.Write(content);
 
                 if (ConsoleOnly) return;
 
@@ -600,7 +684,8 @@ namespace xyLOGIX.Core.Debug
                 // If we are being called from LINQPad, then use Debug.WriteLine
                 if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
                 {
-                    Console.Write(content);
+                    OutputLocationProvider.MuteConsole = true;
+                    OutputMultiplexer.Write(content);
                     return;
                 }
 
@@ -679,12 +764,12 @@ namespace xyLOGIX.Core.Debug
                 // If we are being called from LINQPad, then use Debug.WriteLine
                 if (AppDomain.CurrentDomain.FriendlyName.Contains("LINQPad"))
                 {
-                    Console.WriteLine(content);
+                    OutputMultiplexer.WriteLine(content);
                     return;
                 }
 
                 if (!MuteConsole)
-                    Console.WriteLine(content);
+                    OutputMultiplexer.WriteLine(content);
 
                 if (ConsoleOnly) return;
 

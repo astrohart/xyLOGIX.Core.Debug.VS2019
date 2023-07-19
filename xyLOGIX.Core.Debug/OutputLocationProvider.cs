@@ -285,7 +285,19 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         protected virtual void OnMuteConsoleChanged(
             MuteConsoleChangedEventArgs e)
-            => MuteConsoleChanged?.Invoke(this, e);
+        {
+            MuteConsoleChanged?.Invoke(this, e);
+
+            /*
+             * If any locations are set up, then set their corresponding
+             * MuteConsole properties to match the value of ours.
+             */
+
+            if (!InternalOutputLocationList.Any()) return;
+
+            foreach (var location in InternalOutputLocationList)
+                location.MuteConsole = MuteConsole;
+        }
 
         /// <summary>
         /// Initializes the
