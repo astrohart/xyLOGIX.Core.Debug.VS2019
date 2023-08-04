@@ -1,5 +1,6 @@
 //Copyright (C) Microsoft Corporation.  All rights reserved.
 
+using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Collections;
 using System.IO;
@@ -12,6 +13,7 @@ namespace xyLOGIX.Core.Debug
     /// objects to the log file. Works in a way very similar to LINQPad's Dump()
     /// method.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public class ObjectDumper
     {
         /// <summary>

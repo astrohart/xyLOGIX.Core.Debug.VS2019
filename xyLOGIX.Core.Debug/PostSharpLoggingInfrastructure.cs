@@ -1,5 +1,6 @@
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Diagnostics.Backends;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 
 #if DEBUG
@@ -133,11 +134,9 @@ namespace xyLOGIX.Core.Debug
                 applicationName, _relay
             );
 
-            // set it as the default backend:
             var backend = GetLoggingBackend.For(
                 LoggingBackendType.Log4Net, _relay
             );
-            LoggingServices.DefaultBackend = backend;
             LoggingServices.Roles[LoggingRoles.Meta]
                            .Backend = backend;
 
