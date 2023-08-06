@@ -35,10 +35,8 @@ namespace xyLOGIX.Core.Debug
         /// to the provided <paramref name="type" /> and/or <paramref name="relay" />
         /// values.
         /// </returns>
-        public static LoggingBackend For(
-            LoggingBackendType type,
-            ILoggerRepository relay = null
-        )
+        public static LoggingBackend For(LoggingBackendType type,
+            ILoggerRepository relay = null)
         {
             LoggingBackend result = default;
 
