@@ -19,6 +19,8 @@
   - [WriteLine(value)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-Object- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine')
+- [CustomLog4NetLayout](#T-xyLOGIX-Core-Debug-CustomLog4NetLayout 'xyLOGIX.Core.Debug.CustomLog4NetLayout')
+  - [Format(loggingEvent,writer)](#M-xyLOGIX-Core-Debug-CustomLog4NetLayout-Format-System-IO-TextWriter,log4net-Core-LoggingEvent- 'xyLOGIX.Core.Debug.CustomLog4NetLayout.Format(System.IO.TextWriter,log4net.Core.LoggingEvent)')
 - [DebugFileAndFolderHelper](#T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper')
   - [ClearTempFileDir()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.ClearTempFileDir')
   - [CreateDirectoryIfNotExists(directoryPath)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-CreateDirectoryIfNotExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.CreateDirectoryIfNotExists(System.String)')
@@ -567,6 +569,44 @@ This method has no parameters.
 | Name | Description |
 | ---- | ----------- |
 | [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
+<a name='T-xyLOGIX-Core-Debug-CustomLog4NetLayout'></a>
+## CustomLog4NetLayout `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Represents a custom layout for log4net, a tool for outputting log statements
+from applications.
+This class extends the PatternLayout class provided by log4net.
+
+##### Remarks
+
+The Format method in this class modifies the log message by removing any
+trailing period before logging it.
+
+<a name='M-xyLOGIX-Core-Debug-CustomLog4NetLayout-Format-System-IO-TextWriter,log4net-Core-LoggingEvent-'></a>
+### Format(loggingEvent,writer) `method`
+
+##### Summary
+
+Produces a formatted string as specified by the conversion pattern.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| loggingEvent | [System.IO.TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') | the event being logged |
+| writer | [log4net.Core.LoggingEvent](#T-log4net-Core-LoggingEvent 'log4net.Core.LoggingEvent') | The TextWriter to write the formatted event to |
+
+##### Remarks
+
+Parse the [LoggingEvent](#T-log4net-Core-LoggingEvent 'log4net.Core.LoggingEvent') using the patter
+format specified in the
+[ConversionPattern](#P-log4net-Layout-PatternLayout-ConversionPattern 'log4net.Layout.PatternLayout.ConversionPattern') property.
 
 <a name='T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper'></a>
 ## DebugFileAndFolderHelper `type`
