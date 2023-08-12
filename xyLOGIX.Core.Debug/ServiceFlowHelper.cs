@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using xyLOGIX.Beacons.Interfaces;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -15,19 +16,22 @@ namespace xyLOGIX.Core.Debug
         public static event Action DebuggerStartPending;
 
         /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Beacons.Interfaces.IBeacon" /> interface that represents
+        /// an object that sends out a flash to the entire software system if "the cord"
+        /// got pulled.
+        /// </summary>
+        private static IBeacon EmergencyBeacon { get; } =
+            GetEmergencyBeacon.SoleInstance();
+
+        /// <summary>
         /// Brings the Windows Service screeching suddenly to a halt.
         /// </summary>
-        /// <param name="notificationAction">
-        /// (Optional.) Code to be called immediately prior to the emergency stop.
-        /// <para />
-        /// If this parameter is passed a <see langword="null" /> reference as its
-        /// argument, then nothing will be called.
-        /// </param>
         /// <remarks>
         /// Before calling this method, services should de-configure themselves to
         /// be automatically re-started by the operating system.
         /// </remarks>
-        public static void EmergencyStop(Action notificationAction = null)
+        public static void EmergencyStop()
         {
             // write the name of the current class and method we are now
             // entering, into the log
@@ -35,7 +39,7 @@ namespace xyLOGIX.Core.Debug
                 DebugLevel.Debug, "In ServiceFlowHelper.EmergencyStop"
             );
 
-            notificationAction?.Invoke();
+            EmergencyBeacon.Trigger();
 
             DebugUtils.WriteLine(
                 DebugLevel.Debug, "ServiceFlowHelper.EmergencyStop: Done."
