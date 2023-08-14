@@ -43,6 +43,7 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-DebugOutputLocation-WriteLine 'xyLOGIX.Core.Debug.DebugOutputLocation.WriteLine')
 - [DebugUtils](#T-xyLOGIX-Core-Debug-DebugUtils 'xyLOGIX.Core.Debug.DebugUtils')
+  - [_muteConsole](#F-xyLOGIX-Core-Debug-DebugUtils-_muteConsole 'xyLOGIX.Core.Debug.DebugUtils._muteConsole')
   - [_verbosity](#F-xyLOGIX-Core-Debug-DebugUtils-_verbosity 'xyLOGIX.Core.Debug.DebugUtils._verbosity')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
@@ -62,7 +63,7 @@
   - [FormatExceptionAndWrite(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatExceptionAndWrite-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatExceptionAndWrite(System.Exception)')
   - [GenerateContentFromFormat(format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-GenerateContentFromFormat-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.GenerateContentFromFormat(System.String,System.Object[])')
   - [LogEachLineIfMultiline(content,logMethod,level)](#M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.LogEachLineIfMultiline(System.String,System.Action{xyLOGIX.Core.Debug.DebugLevel,System.String},xyLOGIX.Core.Debug.DebugLevel)')
-  - [LogException(e)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception)')
+  - [OnExceptionLogged(e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnExceptionLogged-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnExceptionLogged(xyLOGIX.Core.Debug.ExceptionLoggedEventArgs)')
   - [OnMuteConsoleChanged()](#M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChanged 'xyLOGIX.Core.Debug.DebugUtils.OnMuteConsoleChanged')
   - [OnMuteConsoleChangedInOutputLocationProvider(sender,e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChangedInOutputLocationProvider-System-Object,xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnMuteConsoleChangedInOutputLocationProvider(System.Object,xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs)')
   - [OnTextEmitted(e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(xyLOGIX.Core.Debug.TextEmittedEventArgs)')
@@ -92,10 +93,7 @@
   - [WriteTimestamp()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-WriteTimestamp 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.WriteTimestamp')
 - [Delete](#T-xyLOGIX-Core-Debug-Delete 'xyLOGIX.Core.Debug.Delete')
   - [LogFile(path)](#M-xyLOGIX-Core-Debug-Delete-LogFile-System-String- 'xyLOGIX.Core.Debug.Delete.LogFile(System.String)')
-- [EmergencyBeacon](#T-xyLOGIX-Core-Debug-EmergencyBeacon 'xyLOGIX.Core.Debug.EmergencyBeacon')
-  - [#ctor()](#M-xyLOGIX-Core-Debug-EmergencyBeacon-#ctor 'xyLOGIX.Core.Debug.EmergencyBeacon.#ctor')
-  - [Instance](#P-xyLOGIX-Core-Debug-EmergencyBeacon-Instance 'xyLOGIX.Core.Debug.EmergencyBeacon.Instance')
-  - [#cctor()](#M-xyLOGIX-Core-Debug-EmergencyBeacon-#cctor 'xyLOGIX.Core.Debug.EmergencyBeacon.#cctor')
+- [EmergencyStopPendingEventHandler](#T-xyLOGIX-Core-Debug-EmergencyStopPendingEventHandler 'xyLOGIX.Core.Debug.EmergencyStopPendingEventHandler')
 - [EventLogManager](#T-xyLOGIX-Core-Debug-EventLogManager 'xyLOGIX.Core.Debug.EventLogManager')
   - [#ctor()](#M-xyLOGIX-Core-Debug-EventLogManager-#ctor 'xyLOGIX.Core.Debug.EventLogManager.#ctor')
   - [Instance](#P-xyLOGIX-Core-Debug-EventLogManager-Instance 'xyLOGIX.Core.Debug.EventLogManager.Instance')
@@ -115,6 +113,10 @@
   - [Unknown](#F-xyLOGIX-Core-Debug-EventLogType-Unknown 'xyLOGIX.Core.Debug.EventLogType.Unknown')
 - [ExceptionExtensions](#T-xyLOGIX-Core-Debug-ExceptionExtensions 'xyLOGIX.Core.Debug.ExceptionExtensions')
   - [LogAllExceptions(exceptions)](#M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}- 'xyLOGIX.Core.Debug.ExceptionExtensions.LogAllExceptions(System.Collections.Generic.IEnumerable{System.Exception})')
+- [ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs')
+  - [#ctor(exception)](#M-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-#ctor-System-Exception- 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs.#ctor(System.Exception)')
+  - [Exception](#P-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-Exception 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs.Exception')
+- [ExceptionLoggedEventHandler](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventHandler 'xyLOGIX.Core.Debug.ExceptionLoggedEventHandler')
 - [FileAppenderConfigurator](#T-xyLOGIX-Core-Debug-FileAppenderConfigurator 'xyLOGIX.Core.Debug.FileAppenderConfigurator')
   - [SetMinimalLock(appender)](#M-xyLOGIX-Core-Debug-FileAppenderConfigurator-SetMinimalLock-log4net-Appender-FileAppender- 'xyLOGIX.Core.Debug.FileAppenderConfigurator.SetMinimalLock(log4net.Appender.FileAppender)')
 - [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager')
@@ -127,8 +129,6 @@
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetConsoleOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetConsoleOutputLocation.SoleInstance')
 - [GetDebugOutputLocation](#T-xyLOGIX-Core-Debug-GetDebugOutputLocation 'xyLOGIX.Core.Debug.GetDebugOutputLocation')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetDebugOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetDebugOutputLocation.SoleInstance')
-- [GetEmergencyBeacon](#T-xyLOGIX-Core-Debug-GetEmergencyBeacon 'xyLOGIX.Core.Debug.GetEmergencyBeacon')
-  - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetEmergencyBeacon-SoleInstance 'xyLOGIX.Core.Debug.GetEmergencyBeacon.SoleInstance')
 - [GetEvent](#T-xyLOGIX-Core-Debug-GetEvent 'xyLOGIX.Core.Debug.GetEvent')
   - [SourceName()](#M-xyLOGIX-Core-Debug-GetEvent-SourceName 'xyLOGIX.Core.Debug.GetEvent.SourceName')
 - [GetEventLogManager](#T-xyLOGIX-Core-Debug-GetEventLogManager 'xyLOGIX.Core.Debug.GetEventLogManager')
@@ -277,8 +277,8 @@
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
 - [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper')
-  - [EmergencyBeacon](#P-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyBeacon 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyBeacon')
   - [EmergencyStop()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStop 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStop')
+  - [OnEmergencyStopPending()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-OnEmergencyStopPending-System-ComponentModel-CancelEventArgs- 'xyLOGIX.Core.Debug.ProgramFlowHelper.OnEmergencyStopPending(System.ComponentModel.CancelEventArgs)')
   - [StartDebugger()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger')
 - [Resources](#T-xyLOGIX-Core-Debug-Properties-Resources 'xyLOGIX.Core.Debug.Properties.Resources')
   - [Culture](#P-xyLOGIX-Core-Debug-Properties-Resources-Culture 'xyLOGIX.Core.Debug.Properties.Resources.Culture')
@@ -287,9 +287,9 @@
   - [ExceptionMessageFormat](#P-xyLOGIX-Core-Debug-Properties-Resources-ExceptionMessageFormat 'xyLOGIX.Core.Debug.Properties.Resources.ExceptionMessageFormat')
   - [ResourceManager](#P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager 'xyLOGIX.Core.Debug.Properties.Resources.ResourceManager')
 - [ServiceFlowHelper](#T-xyLOGIX-Core-Debug-ServiceFlowHelper 'xyLOGIX.Core.Debug.ServiceFlowHelper')
-  - [EmergencyBeacon](#P-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyBeacon 'xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyBeacon')
   - [EmergencyStop()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop 'xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop')
   - [OnDebuggerStartPending()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnDebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.OnDebuggerStartPending')
+  - [OnEmergencyStopPending()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnEmergencyStopPending-System-ComponentModel-CancelEventArgs- 'xyLOGIX.Core.Debug.ServiceFlowHelper.OnEmergencyStopPending(System.ComponentModel.CancelEventArgs)')
   - [StartDebugger()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ServiceFlowHelper.StartDebugger')
 - [SetLog](#T-xyLOGIX-Core-Debug-SetLog 'xyLOGIX.Core.Debug.SetLog')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-SetLog-ApplicationName 'xyLOGIX.Core.Debug.SetLog.ApplicationName')
@@ -972,6 +972,14 @@ xyLOGIX.Core.Debug
 
 Helpers to manage the writing of content to the debugging log.
 
+<a name='F-xyLOGIX-Core-Debug-DebugUtils-_muteConsole'></a>
+### _muteConsole `constants`
+
+##### Summary
+
+Value that indicates whether to mute any log messages that ordinarily would be
+written to the interactive console.
+
 <a name='F-xyLOGIX-Core-Debug-DebugUtils-_verbosity'></a>
 ### _verbosity `constants`
 
@@ -1222,21 +1230,21 @@ executed for each line of content. |
 | level | [xyLOGIX.Core.Debug.DebugLevel](#T-xyLOGIX-Core-Debug-DebugLevel 'xyLOGIX.Core.Debug.DebugLevel') | A [DebugLevel](#T-xyLOGIX-Core-Debug-DebugLevel 'xyLOGIX.Core.Debug.DebugLevel') specifying the
 debugLevel of logging to utilize. |
 
-<a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception-'></a>
-### LogException(e) `method`
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-OnExceptionLogged-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-'></a>
+### OnExceptionLogged(e) `method`
 
 ##### Summary
 
-Logs the complete information about an exception to the log, under
-the Error Level. Outputs the source file and line number where the
-exception occurred, as well as the message of the exception and its
-stack trace.
+Raises the [](#E-xyLOGIX-Core-Debug-DebugUtils-ExceptionLogged 'xyLOGIX.Core.Debug.DebugUtils.ExceptionLogged')
+event.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| e | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be logged. |
+| e | [xyLOGIX.Core.Debug.ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs') | (Required.) A
+[ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs') that contains the
+event data. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-OnMuteConsoleChanged'></a>
 ### OnMuteConsoleChanged() `method`
@@ -1931,8 +1939,8 @@ If the `path` parameter is blank or
 This method also takes no action if the file having the specified
 `path` does not already exist on the disk.
 
-<a name='T-xyLOGIX-Core-Debug-EmergencyBeacon'></a>
-## EmergencyBeacon `type`
+<a name='T-xyLOGIX-Core-Debug-EmergencyStopPendingEventHandler'></a>
+## EmergencyStopPendingEventHandler `type`
 
 ##### Namespace
 
@@ -1940,42 +1948,24 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Beacon that appraises the AI that someone's pulled "the cord."
+Represents a handler for a `EmergencyStopPending` event.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| e | [T:xyLOGIX.Core.Debug.EmergencyStopPendingEventHandler](#T-T-xyLOGIX-Core-Debug-EmergencyStopPendingEventHandler 'T:xyLOGIX.Core.Debug.EmergencyStopPendingEventHandler') | A [CancelEventArgs](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ComponentModel.CancelEventArgs 'System.ComponentModel.CancelEventArgs') that contains the
+event data.
+
+
+
+Set the [Cancel](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ComponentModel.CancelEventArgs.Cancel 'System.ComponentModel.CancelEventArgs.Cancel') property
+to `true` to stop the pending operation. |
 
 ##### Remarks
 
-Here, "the cord" means that "pull here to stop the train" sort of
-cord.
-
-<a name='M-xyLOGIX-Core-Debug-EmergencyBeacon-#ctor'></a>
-### #ctor() `constructor`
-
-##### Summary
-
-Empty, protected constructor to prohibit direct allocation of this class.
-
-##### Parameters
-
-This constructor has no parameters.
-
-<a name='P-xyLOGIX-Core-Debug-EmergencyBeacon-Instance'></a>
-### Instance `property`
-
-##### Summary
-
-Gets a reference to the one and only instance of the object that implements the
-[IBeacon](#T-xyLOGIX-Beacons-Interfaces-IBeacon 'xyLOGIX.Beacons.Interfaces.IBeacon') interface.
-
-<a name='M-xyLOGIX-Core-Debug-EmergencyBeacon-#cctor'></a>
-### #cctor() `method`
-
-##### Summary
-
-Empty, static constructor to prohibit direct allocation of this class.
-
-##### Parameters
-
-This method has no parameters.
+This delegate merely specifies the signature of all methods that handle the
+`EmergencyStopPending` event.
 
 <a name='T-xyLOGIX-Core-Debug-EventLogManager'></a>
 ## EventLogManager `type`
@@ -2215,6 +2205,64 @@ nothing.
 If any element of the `exceptions` collection is
 `null`, then it is skipped.
 
+<a name='T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs'></a>
+## ExceptionLoggedEventArgs `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Provides information for `ExceptionLogged` event handlers.
+
+<a name='M-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-#ctor-System-Exception-'></a>
+### #ctor(exception) `constructor`
+
+##### Summary
+
+Constructs a new instance of
+[ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs') and returns a
+reference to it.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | (Required.) Reference to an instance of the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception')
+that was logged. |
+
+<a name='P-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-Exception'></a>
+### Exception `property`
+
+##### Summary
+
+Gets or sets a reference to an instance of the
+[Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') that was logged.
+
+<a name='T-xyLOGIX-Core-Debug-ExceptionLoggedEventHandler'></a>
+## ExceptionLoggedEventHandler `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Represents a handler for a `ExceptionLogged` event.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| e | [T:xyLOGIX.Core.Debug.ExceptionLoggedEventHandler](#T-T-xyLOGIX-Core-Debug-ExceptionLoggedEventHandler 'T:xyLOGIX.Core.Debug.ExceptionLoggedEventHandler') | A [ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs') that contains
+the event data. |
+
+##### Remarks
+
+This delegate merely specifies the signature of all methods that handle the
+`ExceptionLogged` event.
+
 <a name='T-xyLOGIX-Core-Debug-FileAppenderConfigurator'></a>
 ## FileAppenderConfigurator `type`
 
@@ -2453,36 +2501,6 @@ Reference to the one, and only, instance of the object that implements the
 debugging output to the window in Visual Studio or whichever other
 debugger can listen to the output of the [Debug](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Diagnostics.Debug 'System.Diagnostics.Debug')
 class' methods.
-
-##### Parameters
-
-This method has no parameters.
-
-<a name='T-xyLOGIX-Core-Debug-GetEmergencyBeacon'></a>
-## GetEmergencyBeacon `type`
-
-##### Namespace
-
-xyLOGIX.Core.Debug
-
-##### Summary
-
-Provides access to the one and only instance of the object that implements the
-[IBeacon](#T-xyLOGIX-Beacons-Interfaces-IBeacon 'xyLOGIX.Beacons.Interfaces.IBeacon') interface that is reserved for emergencies.
-
-<a name='M-xyLOGIX-Core-Debug-GetEmergencyBeacon-SoleInstance'></a>
-### SoleInstance() `method`
-
-##### Summary
-
-Obtains access to the sole instance of the object that implements the
-[IBeacon](#T-xyLOGIX-Beacons-Interfaces-IBeacon 'xyLOGIX.Beacons.Interfaces.IBeacon') interface, and returns a
-reference to it.
-
-##### Returns
-
-Reference to the one, and only, instance of the object that implements the
-[IBeacon](#T-xyLOGIX-Beacons-Interfaces-IBeacon 'xyLOGIX.Beacons.Interfaces.IBeacon') interface.
 
 ##### Parameters
 
@@ -5208,22 +5226,35 @@ xyLOGIX.Core.Debug
 
 Defines methods and properties to aid in controlling the flow of the program.
 
-<a name='P-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyBeacon'></a>
-### EmergencyBeacon `property`
-
-##### Summary
-
-Gets a reference to the one and only instance of the object that implements the
-[IBeacon](#T-xyLOGIX-Beacons-Interfaces-IBeacon 'xyLOGIX.Beacons.Interfaces.IBeacon') interface that represents
-an object that sends out a flash to the entire software system if "the cord"
-got pulled.
-
 <a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStop'></a>
 ### EmergencyStop() `method`
 
 ##### Summary
 
 Brings the application to an immediate halt.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This method raises the
+[](#E-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStopPending 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending')
+event just before bringing the application to a halt.
+
+
+
+Handlers of the event can cancel the operation before it is undertaken.
+
+<a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-OnEmergencyStopPending-System-ComponentModel-CancelEventArgs-'></a>
+### OnEmergencyStopPending() `method`
+
+##### Summary
+
+Raises the
+[](#E-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStopPending 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending')
+event.
 
 ##### Parameters
 
@@ -5310,16 +5341,6 @@ xyLOGIX.Core.Debug
 Exposes static methods and properties to assist with the operational flow of a
 Windows service.
 
-<a name='P-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyBeacon'></a>
-### EmergencyBeacon `property`
-
-##### Summary
-
-Gets a reference to the one and only instance of the object that implements the
-[IBeacon](#T-xyLOGIX-Beacons-Interfaces-IBeacon 'xyLOGIX.Beacons.Interfaces.IBeacon') interface that represents
-an object that sends out a flash to the entire software system if "the cord"
-got pulled.
-
 <a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop'></a>
 ### EmergencyStop() `method`
 
@@ -5343,6 +5364,19 @@ be automatically re-started by the operating system.
 
 Raises the
 [](#E-xyLOGIX-Core-Debug-ServiceFlowHelper-DebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending')
+event.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnEmergencyStopPending-System-ComponentModel-CancelEventArgs-'></a>
+### OnEmergencyStopPending() `method`
+
+##### Summary
+
+Raises the
+[](#E-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStopPending 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending')
 event.
 
 ##### Parameters
