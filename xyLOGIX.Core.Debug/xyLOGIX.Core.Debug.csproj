@@ -120,6 +120,8 @@
     <Compile Include="EventLogManager.cs" />
     <Compile Include="EventLogType.cs" />
     <Compile Include="ExceptionExtensions.cs" />
+    <Compile Include="ExceptionLoggedEventArgs.cs" />
+    <Compile Include="ExceptionLoggedEventHandler.cs" />
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="GetAssembly.cs" />
