@@ -1,6 +1,6 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
-using xyLOGIX.Beacons.Interfaces;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -16,13 +16,15 @@ namespace xyLOGIX.Core.Debug
         public static event Action DebuggerStartPending;
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Beacons.Interfaces.IBeacon" /> interface that represents
-        /// an object that sends out a flash to the entire software system if "the cord"
-        /// got pulled.
+        /// Raised when the
+        /// <see cref="M:xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop" /> method is
+        /// called.
         /// </summary>
-        private static IBeacon EmergencyBeacon { get; } =
-            GetEmergencyBeacon.SoleInstance();
+        /// <remarks>
+        /// Handlers of the event can cancel the operation before it is undertaken.
+        /// </remarks>
+        public static event EmergencyStopPendingEventHandler
+            EmergencyStopPending;
 
         /// <summary>
         /// Brings the Windows Service screeching suddenly to a halt.
@@ -39,7 +41,9 @@ namespace xyLOGIX.Core.Debug
                 DebugLevel.Debug, "In ServiceFlowHelper.EmergencyStop"
             );
 
-            EmergencyBeacon.Trigger();
+            var cea = new CancelEventArgs();
+            OnEmergencyStopPending(cea);
+            if (cea.Cancel) return;
 
             DebugUtils.WriteLine(
                 DebugLevel.Debug, "ServiceFlowHelper.EmergencyStop: Done."
@@ -92,5 +96,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static void OnDebuggerStartPending()
             => DebuggerStartPending?.Invoke();
+
+        /// <summary>
+        /// Raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending" />
+        /// event.
+        /// </summary>
+        private static void OnEmergencyStopPending(CancelEventArgs e)
+            => EmergencyStopPending?.Invoke(e);
     }
 }

@@ -1,6 +1,6 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
-using xyLOGIX.Beacons.Interfaces;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -10,20 +10,31 @@ namespace xyLOGIX.Core.Debug
     public static class ProgramFlowHelper
     {
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Beacons.Interfaces.IBeacon" /> interface that represents
-        /// an object that sends out a flash to the entire software system if "the cord"
-        /// got pulled.
+        /// Raised when the
+        /// <see cref="M:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStop" /> method is
+        /// called.
         /// </summary>
-        private static IBeacon EmergencyBeacon { get; } =
-            GetEmergencyBeacon.SoleInstance();
+        /// <remarks>
+        /// Handlers of the event can cancel the operation before it is undertaken.
+        /// </remarks>
+        public static event EmergencyStopPendingEventHandler
+            EmergencyStopPending;
 
         /// <summary>
         /// Brings the application to an immediate halt.
         /// </summary>
+        /// <remarks>
+        /// This method raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending" />
+        /// event just before bringing the application to a halt.
+        /// <para />
+        /// Handlers of the event can cancel the operation before it is undertaken.
+        /// </remarks>
         public static void EmergencyStop()
         {
-            EmergencyBeacon.Trigger(); // pull the cord, I wanna get off
+            var cea = new CancelEventArgs();
+            OnEmergencyStopPending(cea);
+            if (cea.Cancel) return;
 
             Environment.Exit(-1);
         }
@@ -43,5 +54,13 @@ namespace xyLOGIX.Core.Debug
             Debugger.Launch();
             Debugger.Break();
         }
+
+        /// <summary>
+        /// Raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending" />
+        /// event.
+        /// </summary>
+        private static void OnEmergencyStopPending(CancelEventArgs e)
+            => EmergencyStopPending?.Invoke(e);
     }
 }
