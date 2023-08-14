@@ -16,6 +16,10 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true)]
     public static class DebugUtils
     {
+        /// <summary>
+        /// Value that indicates whether to mute any log messages that ordinarily would be
+        /// written to the interactive console.
+        /// </summary>
         private static bool _muteConsole;
 
         /// <summary>
@@ -146,6 +150,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Raised when the <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException" />
+        /// method has been called.
+        /// </summary>
+        public static event ExceptionLoggedEventHandler ExceptionLogged;
+
+        /// <summary>
         /// Occurs when the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteConsole" /> property is updated.
         /// </summary>
@@ -267,14 +277,15 @@ namespace xyLOGIX.Core.Debug
             => WriteLine(DebugLevel.Error, FormatException(e));
 
         /// <summary>
-        /// Logs the complete information about an exception to the log, under
-        /// the Error Level. Outputs the source file and line number where the
-        /// exception occurred, as well as the message of the exception and its
-        /// stack trace.
-        /// </summary>
-        /// <param name="e">
-        /// Reference to the <see cref="Exception" /> to be logged.
-        /// </param>
+        ///     <summary>
+        ///     Logs the complete information about an exception to the log, under
+        ///     the Error Level. Outputs the source file and line number where the
+        ///     exception occurred, as well as the message of the exception and its
+        ///     stack trace.
+        ///     </summary>
+        ///     <param name="e">
+        ///     Reference to the <see cref="Exception" /> to be logged.
+        ///     </param>
         public static void LogException(Exception e)
         {
             if (e == null) return;
@@ -288,6 +299,8 @@ namespace xyLOGIX.Core.Debug
             );
 
             WriteLine(DebugLevel.Error, message);
+
+            OnExceptionLogged(new ExceptionLoggedEventArgs(e));
         }
 
         /// <summary>
@@ -582,6 +595,18 @@ namespace xyLOGIX.Core.Debug
             // one. We do this by calling the delegate supplied to this method
             foreach (var line in lines) logMethod(level, line);
         }
+
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.ExceptionLogged" />
+        /// event.
+        /// </summary>
+        /// <param name="e">
+        /// (Required.) A
+        /// <see cref="T:xyLOGIX.Core.Debug.ExceptionLoggedEventArgs" /> that contains the
+        /// event data.
+        /// </param>
+        private static void OnExceptionLogged(ExceptionLoggedEventArgs e)
+            => ExceptionLogged?.Invoke(e);
 
         /// <summary>
         /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged" />
