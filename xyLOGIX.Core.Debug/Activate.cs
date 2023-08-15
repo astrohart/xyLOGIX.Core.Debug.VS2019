@@ -85,10 +85,6 @@ namespace xyLOGIX.Core.Debug
                     hierarchy.Root.AddAppender(roller);
                 }
 
-                var memory = new MemoryAppender();
-                memory.ActivateOptions();
-                hierarchy.Root.AddAppender(memory);
-
                 hierarchy.Root.Level = Level.All;
                 hierarchy.Configured = true;
 
