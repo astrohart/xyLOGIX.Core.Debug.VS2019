@@ -12,6 +12,12 @@ namespace xyLOGIX.Core.Debug
     public static class Activate
     {
         /// <summary>
+        /// Gets a reference to an instance of an object that is to be used for thread
+        /// synchronization purposes.
+        /// </summary>
+        private static object SyncRoot { get; } = new object();
+
+        /// <summary>
         /// Sets up logging programmatically (as opposed to using an <c>app.config</c>
         /// file), using the specified <paramref name="logFileName" /> for the log and
         /// perhaps the provided log file <paramref name="repository" /> (say, serving as a
@@ -28,8 +34,10 @@ namespace xyLOGIX.Core.Debug
         /// logging.
         /// </param>
         /// <returns></returns>
-        public static bool LoggingForLogFileName(string logFileName,
-            ILoggerRepository repository)
+        public static bool LoggingForLogFileName(
+            string logFileName,
+            ILoggerRepository repository
+        )
         {
             var result = false;
 
@@ -74,17 +82,16 @@ namespace xyLOGIX.Core.Debug
                              .ThatShouldAppendToFile(true)
                              .AndThatHasAStaticLogFileName(true);
 
-                roller.ActivateOptions();
-                hierarchy.Root.AddAppender(roller);
+                lock (SyncRoot)
+                {
+                    roller.ActivateOptions();
+                    hierarchy.Root.AddAppender(roller);
 
-                var memory = new MemoryAppender();
-                memory.ActivateOptions();
-                hierarchy.Root.AddAppender(memory);
+                    hierarchy.Root.Level = Level.All;
+                    hierarchy.Configured = true;
 
-                hierarchy.Root.Level = Level.All;
-                hierarchy.Configured = true;
-
-                result = hierarchy.Configured;
+                    result = hierarchy.Configured;
+                }
             }
             catch (Exception ex)
             {

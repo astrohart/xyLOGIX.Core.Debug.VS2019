@@ -19,6 +19,12 @@ namespace xyLOGIX.Core.Debug
     public static class DebugFileAndFolderHelper
     {
         /// <summary>
+        /// Gets a reference to an instance of an object that is to be used for thread
+        /// synchronization purposes.
+        /// </summary>
+        private static object SyncRoot { get; } = new object();
+
+        /// <summary>
         /// Attempts to clear the files and folders from the user's temporary
         /// files folder.
         /// </summary>
@@ -44,11 +50,15 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                using (var processTemp = new Process())
+                lock
+                    (SyncRoot) // only one thread at a time to clear the temp folder please!
                 {
-                    processTemp.StartInfo = psi;
-                    processTemp.Start();
-                    processTemp.WaitForExit();
+                    using (var processTemp = new Process())
+                    {
+                        processTemp.StartInfo = psi;
+                        processTemp.Start();
+                        processTemp.WaitForExit();
+                    }
                 }
             }
             catch (Exception ex)
@@ -92,7 +102,12 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                Directory.CreateDirectory(directoryPath);
+                lock
+                    (SyncRoot) // only one thread at a time to create folders on the disk
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
                 if (Directory.Exists(directoryPath))
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
@@ -251,19 +266,34 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
+                AuthorizationRuleCollection rules;
+
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the file)
-                var rules = File.GetAccessControl(path)
+                lock (SyncRoot)
+                {
+                    rules = File.GetAccessControl(path)
                                 .GetAccessRules(
                                     true, true, typeof(SecurityIdentifier)
                                 );
+                }
 
                 // Get the identity of the current user and the groups that the
                 // user is in.
-                var groups = WindowsIdentity.GetCurrent()
+                IdentityReferenceCollection groups;
+                lock (SyncRoot)
+                {
+                    groups = WindowsIdentity.GetCurrent()
                                             .Groups;
-                var sidCurrentUser = WindowsIdentity.GetCurrent()
+                }
+
+                string sidCurrentUser;
+
+                lock (SyncRoot)
+                {
+                    sidCurrentUser = WindowsIdentity.GetCurrent()
                                                     .User.Value;
+                }
 
                 // Check if writing to the file is explicitly denied for this
                 // user or a group the user is in.
