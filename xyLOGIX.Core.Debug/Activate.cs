@@ -12,7 +12,8 @@ namespace xyLOGIX.Core.Debug
     public static class Activate
     {
         /// <summary>
-        /// Gets a reference to an instance of an object that is to be used for thread synchronization purposes.
+        /// Gets a reference to an instance of an object that is to be used for thread
+        /// synchronization purposes.
         /// </summary>
         private static object SyncRoot { get; } = new object();
 
@@ -33,8 +34,10 @@ namespace xyLOGIX.Core.Debug
         /// logging.
         /// </param>
         /// <returns></returns>
-        public static bool LoggingForLogFileName(string logFileName,
-            ILoggerRepository repository)
+        public static bool LoggingForLogFileName(
+            string logFileName,
+            ILoggerRepository repository
+        )
         {
             var result = false;
 
@@ -83,12 +86,12 @@ namespace xyLOGIX.Core.Debug
                 {
                     roller.ActivateOptions();
                     hierarchy.Root.AddAppender(roller);
+
+                    hierarchy.Root.Level = Level.All;
+                    hierarchy.Configured = true;
+
+                    result = hierarchy.Configured;
                 }
-
-                hierarchy.Root.Level = Level.All;
-                hierarchy.Configured = true;
-
-                result = hierarchy.Configured;
             }
             catch (Exception ex)
             {
