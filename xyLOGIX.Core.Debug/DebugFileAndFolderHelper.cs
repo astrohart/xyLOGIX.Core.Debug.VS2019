@@ -19,7 +19,8 @@ namespace xyLOGIX.Core.Debug
     public static class DebugFileAndFolderHelper
     {
         /// <summary>
-        /// Gets a reference to an instance of an object that is to be used for thread synchronization purposes.
+        /// Gets a reference to an instance of an object that is to be used for thread
+        /// synchronization purposes.
         /// </summary>
         private static object SyncRoot { get; } = new object();
 
@@ -49,7 +50,8 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                lock (SyncRoot) // only one thread at a time to clear the temp folder please!
+                lock
+                    (SyncRoot) // only one thread at a time to clear the temp folder please!
                 {
                     using (var processTemp = new Process())
                     {
@@ -100,11 +102,12 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                lock (SyncRoot) // only one thread at a time to create folders on the disk
+                lock
+                    (SyncRoot) // only one thread at a time to create folders on the disk
                 {
                     Directory.CreateDirectory(directoryPath);
                 }
-                
+
                 if (Directory.Exists(directoryPath))
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
