@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug

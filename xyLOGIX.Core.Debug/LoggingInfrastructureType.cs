@@ -1,4 +1,4 @@
-﻿namespace xyLOGIX.Core.Debug
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Values describing the type of logging infrastructure you want to utilize.

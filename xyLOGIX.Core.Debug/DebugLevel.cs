@@ -1,4 +1,4 @@
-﻿namespace xyLOGIX.Core.Debug
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Identifies the debug message level for a logging message.

@@ -1,4 +1,4 @@
-﻿namespace xyLOGIX.Core.Debug
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Exposes static methods for performing mathematical computations.

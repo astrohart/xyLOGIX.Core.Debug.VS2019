@@ -1,4 +1,4 @@
-﻿namespace xyLOGIX.Core.Debug
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Exposes <see cref="T:System.String" /> constants that contain standardized

@@ -1,4 +1,4 @@
-﻿namespace xyLOGIX.Core.Debug
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Exposes static methods and properties to determine whether facts about logs or

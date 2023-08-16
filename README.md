@@ -1,4 +1,4 @@
-﻿# xyLOGIX.Core.Debug `class library`
+# xyLOGIX.Core.Debug `class library`
 
 This project provides basic logging functionality.  Its caller-facing interface is designed to mimic that of the more sophisticated [xyLOGIX.Core.Debug](https://github.com/astrohart/xyLOGIX.Core.Debug.VS2019) project.
 
