@@ -4,6 +4,7 @@
 ## Contents
 
 - [Activate](#T-xyLOGIX-Core-Debug-Activate 'xyLOGIX.Core.Debug.Activate')
+  - [SyncRoot](#P-xyLOGIX-Core-Debug-Activate-SyncRoot 'xyLOGIX.Core.Debug.Activate.SyncRoot')
   - [LoggingForLogFileName(logFileName,repository)](#M-xyLOGIX-Core-Debug-Activate-LoggingForLogFileName-System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.Activate.LoggingForLogFileName(System.String,log4net.Repository.ILoggerRepository)')
 - [AppDomainFriendlyNames](#T-xyLOGIX-Core-Debug-AppDomainFriendlyNames 'xyLOGIX.Core.Debug.AppDomainFriendlyNames')
   - [LINQPad](#F-xyLOGIX-Core-Debug-AppDomainFriendlyNames-LINQPad 'xyLOGIX.Core.Debug.AppDomainFriendlyNames.LINQPad')
@@ -20,6 +21,7 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine')
 - [DebugFileAndFolderHelper](#T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper')
+  - [SyncRoot](#P-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-SyncRoot 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.SyncRoot')
   - [ClearTempFileDir()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.ClearTempFileDir')
   - [CreateDirectoryIfNotExists(directoryPath)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-CreateDirectoryIfNotExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.CreateDirectoryIfNotExists(System.String)')
   - [GetFilesInFolder(folder)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-GetFilesInFolder-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.GetFilesInFolder(System.String)')
@@ -146,6 +148,7 @@
 - [GetOutputLocationProvider](#T-xyLOGIX-Core-Debug-GetOutputLocationProvider 'xyLOGIX.Core.Debug.GetOutputLocationProvider')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetOutputLocationProvider-SoleInstance 'xyLOGIX.Core.Debug.GetOutputLocationProvider.SoleInstance')
 - [GetPatternLayout](#T-xyLOGIX-Core-Debug-GetPatternLayout 'xyLOGIX.Core.Debug.GetPatternLayout')
+  - [SyncRoot](#P-xyLOGIX-Core-Debug-GetPatternLayout-SyncRoot 'xyLOGIX.Core.Debug.GetPatternLayout.SyncRoot')
   - [ForConversionPattern(conversionPattern)](#M-xyLOGIX-Core-Debug-GetPatternLayout-ForConversionPattern-System-String- 'xyLOGIX.Core.Debug.GetPatternLayout.ForConversionPattern(System.String)')
 - [GetTraceOutputLocation](#T-xyLOGIX-Core-Debug-GetTraceOutputLocation 'xyLOGIX.Core.Debug.GetTraceOutputLocation')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetTraceOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetTraceOutputLocation.SoleInstance')
@@ -331,6 +334,14 @@ xyLOGIX.Core.Debug
 ##### Summary
 
 Exposes static methods to activate functionality, such as logging.
+
+<a name='P-xyLOGIX-Core-Debug-Activate-SyncRoot'></a>
+### SyncRoot `property`
+
+##### Summary
+
+Gets a reference to an instance of an object that is to be used for thread
+synchronization purposes.
 
 <a name='M-xyLOGIX-Core-Debug-Activate-LoggingForLogFileName-System-String,log4net-Repository-ILoggerRepository-'></a>
 ### LoggingForLogFileName(logFileName,repository) `method`
@@ -591,6 +602,14 @@ Methods to work with files and folders in a robust way.
 
 These methods are here in order to assist applications in working with
 log files and prepping for application startup and first-time use.
+
+<a name='P-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-SyncRoot'></a>
+### SyncRoot `property`
+
+##### Summary
+
+Gets a reference to an instance of an object that is to be used for thread
+synchronization purposes.
 
 <a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir'></a>
 ### ClearTempFileDir() `method`
@@ -2791,6 +2810,14 @@ xyLOGIX.Core.Debug
 
 Creates instances of [PatternLayout](#T-log4net-Layout-PatternLayout 'log4net.Layout.PatternLayout') that are
 initialized properly.
+
+<a name='P-xyLOGIX-Core-Debug-GetPatternLayout-SyncRoot'></a>
+### SyncRoot `property`
+
+##### Summary
+
+Gets a reference to an instance of an object that is to be used for thread
+synchronization purposes.
 
 <a name='M-xyLOGIX-Core-Debug-GetPatternLayout-ForConversionPattern-System-String-'></a>
 ### ForConversionPattern(conversionPattern) `method`
