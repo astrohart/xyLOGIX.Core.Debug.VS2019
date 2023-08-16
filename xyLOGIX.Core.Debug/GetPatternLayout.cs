@@ -1,4 +1,4 @@
-using log4net.Layout;
+﻿using log4net.Layout;
 using System;
 
 namespace xyLOGIX.Core.Debug

@@ -1,4 +1,4 @@
-namespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Sets elements of the log.

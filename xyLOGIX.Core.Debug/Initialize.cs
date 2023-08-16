@@ -1,4 +1,4 @@
-using Alphaleonis.Win32.Filesystem;
+﻿using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Text.RegularExpressions;
 using Console = xyLOGIX.Core.Debug.OutputMultiplexer;

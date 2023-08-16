@@ -1,4 +1,4 @@
-namespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Defines the publicly-exposed methods and properties of an object that manages
