@@ -27,7 +27,7 @@ namespace xyLOGIX.Core.Debug
         {
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
-            ObjectDumper.Write(element);
+            ObjectDumper.Write(element, 1);
         }
 
         /// <summary>
