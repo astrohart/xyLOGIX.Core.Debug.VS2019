@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\PostSharp.2023.0.4\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.2023.0.4\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -116,7 +116,7 @@
     <Compile Include="DebugUtils.cs" />
     <Compile Include="DefaultLoggingInfrastructure.cs" />
     <Compile Include="Delete.cs" />
-    <Compile Include="EmergencyStopped.cs" />
+    <Compile Include="EmergencyStopPendingEventHandler.cs" />
     <Compile Include="EventLogManager.cs" />
     <Compile Include="EventLogType.cs" />
     <Compile Include="ExceptionExtensions.cs" />
