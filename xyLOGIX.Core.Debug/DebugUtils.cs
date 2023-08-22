@@ -2,6 +2,7 @@ using log4net;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -518,7 +519,7 @@ namespace xyLOGIX.Core.Debug
         /// Thrown if the <paramref name="debugLevel" /> parameter is not one of
         /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
         /// </exception>
-        public static void WriteLine(DebugLevel debugLevel, string content)
+        [DebuggerStepThrough] public static void WriteLine(DebugLevel debugLevel, string content)
             => LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
 
         /// <summary>
@@ -566,7 +567,7 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> specifying the
         /// debugLevel of logging to utilize.
         /// </param>
-        private static void LogEachLineIfMultiline(
+        [DebuggerStepThrough] private static void LogEachLineIfMultiline(
             string content,
             Action<DebugLevel, string> logMethod,
             DebugLevel level = DebugLevel.Debug
