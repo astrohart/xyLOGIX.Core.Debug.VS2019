@@ -1,47 +1,48 @@
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Writes debugging output to the standard output of the application and/or a
-    /// console window, if present.
+    /// Writes debugging output to the standard output of the application
+    /// and/or a console window, if present.
     /// </summary>
     [Log(AttributeExclude = true)]
     public class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this class.
+        /// Empty, static constructor to prohibit direct allocation of this
+        /// class.
         /// </summary>
         static ConsoleOutputLocation() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this class.
+        /// Empty, protected constructor to prohibit direct allocation of this
+        /// class.
         /// </summary>
-        protected ConsoleOutputLocation()
-        { }
+        protected ConsoleOutputLocation() { }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that directs
-        /// debugging output to the standard output of the application and/or a console
-        /// window, if present.
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+        /// that directs debugging output to the standard output of the application and/or
+        /// a console window, if present.
         /// </summary>
         public static IOutputLocation Instance { get; } =
             new ConsoleOutputLocation();
 
         /// <summary>
-        /// Gets one of the <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" />
-        /// enumeration values that indicates the final destination of text strings that
-        /// are fed to this location.
+        /// Gets one of the
+        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration values that
+        /// indicates the final destination of text strings that are fed to this location.
         /// </summary>
         public override OutputLocationType Type { get; } =
             OutputLocationType.Console;
 
         /// <summary>
-        /// Writes the text representation of the specified object to the standard
-        /// output stream.
+        /// Writes the text representation of the specified object to the
+        /// standard output stream.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
@@ -60,13 +61,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using <paramref name="format" />
-        /// .
+        /// An array of objects to write using
+        /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or <paramref name="arg" /> is
-        /// <see langword="null" />.
+        /// <paramref name="format" /> or
+        /// <paramref name="arg" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in
@@ -108,13 +109,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using <paramref name="format" />
-        /// .
+        /// An array of objects to write using
+        /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or <paramref name="arg" /> is
-        /// <see langword="null" />.
+        /// <paramref name="format" /> or
+        /// <paramref name="arg" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in

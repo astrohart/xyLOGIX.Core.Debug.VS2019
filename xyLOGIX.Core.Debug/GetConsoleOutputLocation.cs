@@ -1,12 +1,12 @@
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
-    /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that directs
-    /// debugging output to the standard output of the application and/or a console
-    /// window, if present.
+    /// Provides access to the one and only instance of the object that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+    /// that directs debugging output to the standard output of the application and/or
+    /// a console window, if present.
     /// </summary>
     [Log(AttributeExclude = true)]
     public static class GetConsoleOutputLocation
@@ -17,10 +17,10 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that directs
-        /// debugging output to the standard output of the application and/or a console
-        /// window, if present.
+        /// Reference to the one, and only, instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+        /// that directs debugging output to the standard output of the application and/or
+        /// a console window, if present.
         /// </returns>
         public static IOutputLocation SoleInstance()
             => ConsoleOutputLocation.Instance;

@@ -1,4 +1,4 @@
-using log4net.Appender;
+﻿using log4net.Appender;
 using log4net.Core;
 using log4net.Repository;
 using log4net.Repository.Hierarchy;
@@ -6,32 +6,30 @@ using System;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static methods to activate functionality, such as logging.
-    /// </summary>
+    /// <summary> Exposes static methods to activate functionality, such as logging. </summary>
     public static class Activate
     {
         /// <summary>
-        /// Gets a reference to an instance of an object that is to be used for thread
-        /// synchronization purposes.
+        /// Gets a reference to an instance of an object that is to be used for
+        /// thread synchronization purposes.
         /// </summary>
         private static object SyncRoot { get; } = new object();
 
         /// <summary>
-        /// Sets up logging programmatically (as opposed to using an <c>app.config</c>
-        /// file), using the specified <paramref name="logFileName" /> for the log and
-        /// perhaps the provided log file <paramref name="repository" /> (say, serving as a
-        /// relay to PostSharp).
+        /// Sets up logging programmatically (as opposed to using an
+        /// <c>app.config</c> file), using the specified <paramref name="logFileName" />
+        /// for the log and perhaps the provided log file <paramref name="repository" />
+        /// (say, serving as a relay to PostSharp).
         /// </summary>
         /// <param name="logFileName">
         /// (Required.) A <see cref="T:System.String" />
         /// containing the fully-qualified pathname of the log file that is to be written.
         /// </param>
         /// <param name="repository">
-        /// (Required.) Reference to an instance of an object that
-        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface
-        /// that plays the role of the <c>Hierarchy</c> object that is configured for
-        /// logging.
+        /// (Required.) Reference to an instance of an object
+        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
+        /// interface that plays the role of the <c>Hierarchy</c> object that is configured
+        /// for logging.
         /// </param>
         /// <returns></returns>
         public static bool LoggingForLogFileName(

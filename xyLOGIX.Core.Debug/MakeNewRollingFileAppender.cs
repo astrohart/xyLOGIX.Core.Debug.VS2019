@@ -1,4 +1,4 @@
-using log4net.Appender;
+﻿using log4net.Appender;
 using log4net.Layout;
 using PostSharp.Patterns.Diagnostics;
 using System;
@@ -14,28 +14,23 @@ namespace xyLOGIX.Core.Debug
     {
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see
-        ///     cref="P:log4net.Appender.RollingFileAppender.File" />
-        /// property.
+        /// <see cref="P:log4net.Appender.RollingFileAppender.File" /> property.
         /// </summary>
         /// <param name="self">
-        /// (Required.) Reference to an instance of an object that implements
-        /// the
-        /// <see
-        ///     cref="T:log4net.Appender.RollingFileAppender" />
-        /// interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="file">
-        /// (Required.) A <see cref="T:System.String" /> containing the fully-qualified
-        /// pathname of where logging entries will be written.
+        /// (Required.) A <see cref="T:System.String" /> containing the
+        /// fully-qualified pathname of where logging entries will be written.
         /// </param>
         /// <returns>
-        /// Reference to the same instance of the object that called this
-        /// method, for fluent use.
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="self" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required
+        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentException">
         /// Thrown if the required parameter,
@@ -43,7 +38,9 @@ namespace xyLOGIX.Core.Debug
         /// for a value.
         /// </exception>
         public static RollingFileAppender AndHavingLogFileName(
-            this RollingFileAppender self, string file)
+            this RollingFileAppender self,
+            string file
+        )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
             if (string.IsNullOrWhiteSpace(file))
@@ -57,28 +54,25 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see
-        ///     cref="P:log4net.Appender.RollingFileAppender.MaxSizeRollBackups" />
+        /// <see cref="P:log4net.Appender.RollingFileAppender.MaxSizeRollBackups" />
         /// property.
         /// </summary>
         /// <param name="self">
-        /// (Required.) Reference to an instance of an object that implements
-        /// the
-        /// <see
-        ///     cref="T:log4net.Appender.RollingFileAppender" />
-        /// interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="maxSizeRollingBackups">
-        /// (Required.) An <see cref="T:System.Int32" /> that specifies the maximum number
-        /// of backup files that are kept before the oldest backup file is erased.
+        /// (Required.) An
+        /// <see cref="T:System.Int32" /> that specifies the maximum number of backup files
+        /// that are kept before the oldest backup file is erased.
         /// </param>
         /// <returns>
-        /// Reference to the same instance of the object that called this
-        /// method, for fluent use.
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="self" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required
+        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
         /// </exception>
         /// <remarks>
         ///     <para>
@@ -87,8 +81,8 @@ namespace xyLOGIX.Core.Debug
         ///     <see cref="P:log4net.Appender.RollingFileAppender.MaxFileSize" />.
         ///     </para>
         ///     <para>
-        ///     If a negative number is supplied then no deletions will be made.  Note
-        ///     that this could result in very slow performance as a large number of
+        ///     If a negative number is supplied then no deletions will be made.
+        ///     Note that this could result in very slow performance as a large number of
         ///     files are rolled over unless
         ///     <see cref="P:log4net.Appender.RollingFileAppender.CountDirection" /> is
         ///     used.
@@ -99,7 +93,9 @@ namespace xyLOGIX.Core.Debug
         ///     </para>
         /// </remarks>
         public static RollingFileAppender AndMaximumNumberOfRollingBackups(
-            this RollingFileAppender self, int maxSizeRollingBackups)
+            this RollingFileAppender self,
+            int maxSizeRollingBackups
+        )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
 
@@ -109,31 +105,27 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see
-        ///     cref="P:log4net.Appender.RollingFileAppender.StaticLogFileName" />
+        /// <see cref="P:log4net.Appender.RollingFileAppender.StaticLogFileName" />
         /// property.
         /// </summary>
         /// <param name="self">
-        /// (Required.) Reference to an instance of an object that implements
-        /// the
-        /// <see
-        ///     cref="T:log4net.Appender.RollingFileAppender" />
-        /// interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="staticLogFileName">
-        /// (Required.) A <see cref="T:System.Boolean" /> value indicating whether to
-        /// always log to the same file.
+        /// (Required.) A <see cref="T:System.Boolean" />
+        /// value indicating whether to always log to the same file.
         /// <para />
         /// Set to <see langword="true" /> if always should be logged to the same file,
         /// otherwise <see langword="false" />.
         /// </param>
         /// <returns>
-        /// Reference to the same instance of the object that called this
-        /// method, for fluent use.
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="self" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required
+        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
         /// </exception>
         /// <remarks>
         ///     <para>
@@ -148,7 +140,9 @@ namespace xyLOGIX.Core.Debug
         ///     </para>
         /// </remarks>
         public static RollingFileAppender AndThatHasAStaticLogFileName(
-            this RollingFileAppender self, bool staticLogFileName)
+            this RollingFileAppender self,
+            bool staticLogFileName
+        )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
 
@@ -157,8 +151,9 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:log4net.Appender.RollingFileAppender" />
-        /// and initializes it with the specified rolling <paramref name="style" />.
+        /// Creates a new instance of
+        /// <see cref="T:log4net.Appender.RollingFileAppender" /> and initializes it with
+        /// the specified rolling <paramref name="style" />.
         /// </summary>
         /// <param name="style">
         /// (Required.) One or a combination of the
@@ -173,37 +168,35 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" /> is returned.
         /// </returns>
         public static RollingFileAppender ForRollingStyle(
-            RollingFileAppender.RollingMode style)
+            RollingFileAppender.RollingMode style
+        )
             => new RollingFileAppender { RollingStyle = style };
 
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see
-        ///     cref="P:log4net.Appender.RollingFileAppender.AppendToFile" />
-        /// property.
+        /// <see cref="P:log4net.Appender.RollingFileAppender.AppendToFile" /> property.
         /// </summary>
         /// <param name="self">
-        /// (Required.) Reference to an instance of an object that implements
-        /// the
-        /// <see
-        ///     cref="T:log4net.Appender.RollingFileAppender" />
-        /// interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="appendToFile">
-        /// (Required.) A <see cref="T:System.Boolean" /> value that is set to
-        /// <see langword="true" /> if the logger should append to the log file,
-        /// <see langword="false" /> if the file should be overwritten.
+        /// (Required.) A <see cref="T:System.Boolean" /> value
+        /// that is set to <see langword="true" /> if the logger should append to the log
+        /// file, <see langword="false" /> if the file should be overwritten.
         /// </param>
         /// <returns>
-        /// Reference to the same instance of the object that called this
-        /// method, for fluent use.
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="self" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required
+        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
         /// </exception>
         public static RollingFileAppender ThatShouldAppendToFile(
-            this RollingFileAppender self, bool appendToFile)
+            this RollingFileAppender self,
+            bool appendToFile
+        )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
 
@@ -213,29 +206,24 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see
-        ///     cref="P:log4net.Appender.RollingFileAppender.MaximumFileSize" />
-        /// property.
+        /// <see cref="P:log4net.Appender.RollingFileAppender.MaximumFileSize" /> property.
         /// </summary>
         /// <param name="self">
-        /// (Required.) Reference to an instance of an object that implements
-        /// the
-        /// <see
-        ///     cref="T:log4net.Appender.RollingFileAppender" />
-        /// interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="maximumFileSize">
-        /// (Required.) A <see cref="T:System.String" /> that describes the maximum size
-        /// that the output file is allowed to reach before being rolled over to backup
-        /// files.
+        /// (Required.) A <see cref="T:System.String" />
+        /// that describes the maximum size that the output file is allowed to reach before
+        /// being rolled over to backup files.
         /// </param>
         /// <returns>
-        /// Reference to the same instance of the object that called this
-        /// method, for fluent use.
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="self" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required
+        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentException">
         /// Thrown if the required parameter,
@@ -245,25 +233,23 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         ///     <para>
         ///     This property allows you to specify the maximum size with the
-        ///     suffixes "KB", "MB" or "GB" so that the size is interpreted being
-        ///     expressed respectively in kilobytes, megabytes or gigabytes.
+        ///     suffixes "KB", "MB" or "GB" so that the size is interpreted being expressed
+        ///     respectively in kilobytes, megabytes or gigabytes.
         ///     </para>
-        ///     <para>
-        ///     For example, the value "10KB" will be interpreted as 10240 bytes.
-        ///     </para>
-        ///     <para>
-        ///     The default maximum file size is 10MB.
-        ///     </para>
+        ///     <para> For example, the value "10KB" will be interpreted as 10240 bytes. </para>
+        ///     <para> The default maximum file size is 10MB. </para>
         ///     <para>
         ///     If you have the option to set the maximum file size programmatically
         ///     consider using the
         ///     <see cref="P:log4net.Appender.RollingFileAppender.MaxFileSize" /> property
-        ///     instead as this
-        ///     allows you to set the size in bytes as a <see cref="T:System.Int64" />.
+        ///     instead as this allows you to set the size in bytes as a
+        ///     <see cref="T:System.Int64" />.
         ///     </para>
         /// </remarks>
         public static RollingFileAppender WithMaximumFileSizeOf(
-            this RollingFileAppender self, string maximumFileSize)
+            this RollingFileAppender self,
+            string maximumFileSize
+        )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
             if (string.IsNullOrWhiteSpace(maximumFileSize))
@@ -278,16 +264,11 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see
-        ///     cref="P:log4net.Appender.RollingFileAppender.Layout" />
-        /// property.
+        /// <see cref="P:log4net.Appender.RollingFileAppender.Layout" /> property.
         /// </summary>
         /// <param name="self">
-        /// (Required.) Reference to an instance of an object that implements
-        /// the
-        /// <see
-        ///     cref="T:log4net.Appender.RollingFileAppender" />
-        /// interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="layout">
         /// (Required.) Reference to an instance of
@@ -295,15 +276,18 @@ namespace xyLOGIX.Core.Debug
         /// utilize for each line of the log file.
         /// </param>
         /// <returns>
-        /// Reference to the same instance of the object that called this
-        /// method, for fluent use.
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if either of the required parameters, <paramref name="self" /> or
-        /// <paramref name="layout" />, are passed a <see langword="null" /> value.
+        /// Thrown if either of the
+        /// required parameters, <paramref name="self" /> or <paramref name="layout" />,
+        /// are passed a <see langword="null" /> value.
         /// </exception>
         public static RollingFileAppender WithPatternLayout(
-            this RollingFileAppender self, PatternLayout layout)
+            this RollingFileAppender self,
+            PatternLayout layout
+        )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
             if (layout == null) throw new ArgumentNullException(nameof(layout));

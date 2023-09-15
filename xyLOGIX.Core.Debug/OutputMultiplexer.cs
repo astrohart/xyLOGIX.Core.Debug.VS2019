@@ -1,17 +1,17 @@
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods to multiplex debugging output; i.e., write it to
-    /// multiple locations at the same time.
+    /// Exposes static methods to multiplex debugging output; i.e., write it
+    /// to multiple locations at the same time.
     /// </summary>
     [Log(AttributeExclude = true)]
     public static class OutputMultiplexer
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the console multiplexer is turned on or
-        /// off.
+        /// Gets or sets a value indicating whether the console multiplexer is
+        /// turned on or off.
         /// </summary>
         public static bool MuteConsole
             => OutputLocationProvider.MuteConsole;
@@ -29,13 +29,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using <paramref name="format" />
-        /// .
+        /// An array of objects to write using
+        /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or <paramref name="arg" /> is
-        /// <see langword="null" />.
+        /// <paramref name="format" /> or
+        /// <paramref name="arg" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in
@@ -57,13 +57,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using <paramref name="format" />
-        /// .
+        /// An array of objects to write using
+        /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or <paramref name="arg" /> is
-        /// <see langword="null" />.
+        /// <paramref name="format" /> or
+        /// <paramref name="arg" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in

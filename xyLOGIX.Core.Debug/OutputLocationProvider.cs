@@ -1,50 +1,50 @@
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Provides access to a list of output locations for debugging.
-    /// </summary>
+    /// <summary> Provides access to a list of output locations for debugging. </summary>
     [Log(AttributeExclude = true)]
     public class OutputLocationProvider : IOutputLocationProvider
     {
         /// <summary>
-        /// A <see cref="T:System.Boolean" /> value indicating whether the console
-        /// output location is turned on or off.
+        /// A <see cref="T:System.Boolean" /> value indicating whether the
+        /// console output location is turned on or off.
         /// </summary>
         private bool _muteConsole;
 
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this class.
+        /// Empty, static constructor to prohibit direct allocation of this
+        /// class.
         /// </summary>
         static OutputLocationProvider() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this class.
+        /// Empty, protected constructor to prohibit direct allocation of this
+        /// class.
         /// </summary>
         protected OutputLocationProvider()
             => InitializeInternalOutputLocationList();
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is updated.
-        /// </summary>
-        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
-
-        /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
+        /// interface.
         /// </summary>
         public static IOutputLocationProvider Instance { get; } =
             new OutputLocationProvider();
 
         /// <summary>
-        /// Gets or sets a value indicating whether the console multiplexer is turned on or
-        /// off.
+        /// Gets a reference to a collection, each element of which implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// </summary>
+        private IList<IOutputLocation> InternalOutputLocationList { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the console multiplexer is
+        /// turned on or off.
         /// </summary>
         /// <remarks>
         /// This property raises the
@@ -66,22 +66,23 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to a collection, each element of which implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is updated.
         /// </summary>
-        private IList<IOutputLocation> InternalOutputLocationList { get; set; }
+        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
-        /// Adds the specified output <paramref name="location" /> to the internal list
-        /// maintained by this object.
+        /// Adds the specified output <paramref name="location" /> to the
+        /// internal list maintained by this object.
         /// </summary>
         /// <param name="location">
-        /// (Required.) Reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </param>
         /// <remarks>
-        /// If the specified <paramref name="location" /> has already been added, then this
-        /// method does nothing.
+        /// If the specified <paramref name="location" /> has already been added,
+        /// then this method does nothing.
         /// </remarks>
         public void AddLocation(IOutputLocation location)
         {
@@ -100,9 +101,7 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>
-        /// Clears the internal list of output locations.
-        /// </summary>
+        /// <summary> Clears the internal list of output locations. </summary>
         public void Clear()
         {
             try
@@ -120,8 +119,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Writes the text representation of the specified object to the standard
-        /// output stream.
+        /// Writes the text representation of the specified object to the
+        /// standard output stream.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
@@ -150,13 +149,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using <paramref name="format" />
-        /// .
+        /// An array of objects to write using
+        /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or <paramref name="arg" /> is
-        /// <see langword="null" />.
+        /// <paramref name="format" /> or
+        /// <paramref name="arg" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in
@@ -217,13 +216,13 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using <paramref name="format" />
-        /// .
+        /// An array of objects to write using
+        /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or <paramref name="arg" /> is
-        /// <see langword="null" />.
+        /// <paramref name="format" /> or
+        /// <paramref name="arg" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in
@@ -284,7 +283,8 @@ namespace xyLOGIX.Core.Debug
         /// the event data.
         /// </param>
         protected virtual void OnMuteConsoleChanged(
-            MuteConsoleChangedEventArgs e)
+            MuteConsoleChangedEventArgs e
+        )
         {
             MuteConsoleChanged?.Invoke(this, e);
 

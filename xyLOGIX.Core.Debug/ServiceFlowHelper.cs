@@ -1,18 +1,16 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods and properties to assist with the operational flow of a
-    /// Windows service.
+    /// Exposes static methods and properties to assist with the operational
+    /// flow of a Windows service.
     /// </summary>
     public static class ServiceFlowHelper
     {
-        /// <summary>
-        /// Raised when a start of the debugger is about to occur.
-        /// </summary>
+        /// <summary> Raised when a start of the debugger is about to occur. </summary>
         public static event Action DebuggerStartPending;
 
         /// <summary>
@@ -21,17 +19,16 @@ namespace xyLOGIX.Core.Debug
         /// called.
         /// </summary>
         /// <remarks>
-        /// Handlers of the event can cancel the operation before it is undertaken.
+        /// Handlers of the event can cancel the operation before it is
+        /// undertaken.
         /// </remarks>
         public static event EmergencyStopPendingEventHandler
             EmergencyStopPending;
 
-        /// <summary>
-        /// Brings the Windows Service screeching suddenly to a halt.
-        /// </summary>
+        /// <summary> Brings the Windows Service screeching suddenly to a halt. </summary>
         /// <remarks>
-        /// Before calling this method, services should de-configure themselves to
-        /// be automatically re-started by the operating system.
+        /// Before calling this method, services should de-configure themselves
+        /// to be automatically re-started by the operating system.
         /// </remarks>
         public static void EmergencyStop()
         {
@@ -54,15 +51,12 @@ namespace xyLOGIX.Core.Debug
             Environment.Exit(-1);
         }
 
-        /// <summary>
-        /// Call this method to invoke the just-in-time debugger.
-        /// </summary>
+        /// <summary> Call this method to invoke the just-in-time debugger. </summary>
         /// <remarks>
         /// Raises the
-        /// <see
-        ///     cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
-        /// event prior to actually breaking into the debugger. This is helpful
-        /// to run, e.g., service configuration code, prior to the operation.
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
+        /// event prior to actually breaking into the debugger. This is helpful to run,
+        /// e.g., service configuration code, prior to the operation.
         /// </remarks>
         [DebuggerStepThrough]
         public static void StartDebugger()
@@ -90,8 +84,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Raises the
-        /// <see
-        ///     cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
         /// event.
         /// </summary>
         private static void OnDebuggerStartPending()

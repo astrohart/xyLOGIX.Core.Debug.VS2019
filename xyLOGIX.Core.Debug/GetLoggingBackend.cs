@@ -1,4 +1,4 @@
-using log4net.Repository;
+﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
@@ -22,8 +22,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) The
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration value
-        /// that explains which type of backend to get.
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration value that
+        /// explains which type of backend to get.
         /// </param>
         /// <param name="relay">
         /// (Optional.) Reference to an instance of an object that
@@ -35,8 +35,10 @@ namespace xyLOGIX.Core.Debug
         /// to the provided <paramref name="type" /> and/or <paramref name="relay" />
         /// values.
         /// </returns>
-        public static LoggingBackend For(LoggingBackendType type,
-            ILoggerRepository relay = null)
+        public static LoggingBackend For(
+            LoggingBackendType type,
+            ILoggerRepository relay = null
+        )
         {
             LoggingBackend result = default;
 

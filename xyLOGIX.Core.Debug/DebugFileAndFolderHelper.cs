@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,18 +9,16 @@ using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Methods to work with files and folders in a robust way.
-    /// </summary>
+    /// <summary> Methods to work with files and folders in a robust way. </summary>
     /// <remarks>
-    /// These methods are here in order to assist applications in working with
-    /// log files and prepping for application startup and first-time use.
+    /// These methods are here in order to assist applications in working
+    /// with log files and prepping for application startup and first-time use.
     /// </remarks>
     public static class DebugFileAndFolderHelper
     {
         /// <summary>
-        /// Gets a reference to an instance of an object that is to be used for thread
-        /// synchronization purposes.
+        /// Gets a reference to an instance of an object that is to be used for
+        /// thread synchronization purposes.
         /// </summary>
         private static object SyncRoot { get; } = new object();
 
@@ -68,19 +66,19 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>
-        /// Creates a folder if the folder does not already exist.
-        /// </summary>
+        /// <summary> Creates a folder if the folder does not already exist. </summary>
         /// <param name="directoryPath">
-        /// (Required.) Path to the folder that you want to create.
+        /// (Required.) Path to the folder that you want to
+        /// create.
         /// </param>
         /// <remarks>
         /// If the folder specified by the <paramref name="directoryPath" />
         /// parameter already exists on the disk, then this method does nothing.
         /// </remarks>
         /// <exception cref="T:System.ArgumentException">
-        /// Thrown if the required parameter, <paramref name="directoryPath" />,
-        /// is passed a blank or <see langword="null" /> value.
+        /// Thrown if the required parameter,
+        /// <paramref name="directoryPath" />, is passed a blank or <see langword="null" />
+        /// value.
         /// </exception>
         public static void CreateDirectoryIfNotExists(string directoryPath)
         {
@@ -133,12 +131,12 @@ namespace xyLOGIX.Core.Debug
         /// a file is present in the specified <paramref name="folder" />.
         /// </summary>
         /// <param name="folder">
-        /// (Required.) String containing the full pathname of the folder whose
-        /// files are to be listed.
+        /// (Required.) String containing the full pathname of the
+        /// folder whose files are to be listed.
         /// </param>
         /// <returns>
-        /// Collection of strings, each element of which contains the pathname
-        /// of a file located in the specified <paramref name="folder" />.
+        /// Collection of strings, each element of which contains the pathname of
+        /// a file located in the specified <paramref name="folder" />.
         /// </returns>
         public static List<string> GetFilesInFolder(string folder)
         {
@@ -191,10 +189,10 @@ namespace xyLOGIX.Core.Debug
         /// error message and returns false; otherwise, returns true.
         /// </summary>
         /// <returns>
-        /// This method returns <see langword="true" /> if the file with path specified by
-        /// the <paramref name="fileName" /> parameter exists on the disk in the
-        /// specified location or <see langword="false" /> if either the file is not found
-        /// or if it does exist but an operating system error occurs (such as
+        /// This method returns <see langword="true" /> if the file with path
+        /// specified by the <paramref name="fileName" /> parameter exists on the disk in
+        /// the specified location or <see langword="false" /> if either the file is not
+        /// found or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.
         /// </returns>
         public static bool InsistPathExists(string fileName)
@@ -229,24 +227,21 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>
-        /// Checks for write access for the given file.
-        /// </summary>
+        /// <summary> Checks for write access for the given file. </summary>
         /// <param name="path">
-        /// (Required.) String containing the full pathname for which write
-        /// permissions should be checked.
+        /// (Required.) String containing the full pathname for which
+        /// write permissions should be checked.
         /// </param>
         /// <returns>
-        /// This method returns <see langword="true" /> if write access is allowed to the
-        /// file with the specified <paramref name="path" />, otherwise
+        /// This method returns <see langword="true" /> if write access is
+        /// allowed to the file with the specified <paramref name="path" />, otherwise
         /// <see langword="false" />.
         /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
         /// <paramref name="path" /> parameter is a <see langword="null" /> value or blank.
         /// <para />
         /// The value <see langword="false" /> is also returned if an operating system
-        /// error
-        /// or exception occurs while trying to look up the file's permissions.
+        /// error or exception occurs while trying to look up the file's permissions.
         /// </returns>
         public static bool IsFileWriteable(string path)
         {
@@ -341,25 +336,22 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>
-        /// Checks for write access for the given folder.
-        /// </summary>
+        /// <summary> Checks for write access for the given folder. </summary>
         /// <param name="pathname">
-        /// (Required.) String containing the full pathname of the folder whose
-        /// permissions are to be checked.
+        /// (Required.) String containing the full pathname of the
+        /// folder whose permissions are to be checked.
         /// </param>
         /// <returns>
-        /// This method returns <see langword="true" /> if write access is allowed to the
-        /// folder with the specified <paramref name="pathname" />, otherwise
-        /// <see langword="false" />.
+        /// This method returns <see langword="true" /> if write access is
+        /// allowed to the folder with the specified <paramref name="pathname" />,
+        /// otherwise <see langword="false" />.
         /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
         /// <paramref name="pathname" /> parameter is a <see langword="null" /> value or
         /// blank.
         /// <para />
         /// The value <see langword="false" /> is also returned if an operating system
-        /// error
-        /// or exception occurs while trying to look up the folder's permissions.
+        /// error or exception occurs while trying to look up the folder's permissions.
         /// </returns>
         public static bool IsFolderWriteable(string pathname)
         {
@@ -483,18 +475,17 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a value indicating whether the
-        /// <paramref
-        ///     name="fullyQualifiedPath" />
-        /// is actually a valid path on the system,
+        /// <paramref name="fullyQualifiedPath" /> is actually a valid path on the system,
         /// according to operating-system-specific rules.
         /// </summary>
         /// <param name="fullyQualifiedPath">
-        /// (Required.) String containing the path that is to be validated.
+        /// (Required.) String containing the path that
+        /// is to be validated.
         /// </param>
         /// <returns>
         /// If the path provided in <paramref name="fullyQualifiedPath" /> is a
-        /// valid path according to operating-system-specified rules, then this
-        /// method returns <see langword="true" />. Otherwise, the return value is
+        /// valid path according to operating-system-specified rules, then this method
+        /// returns <see langword="true" />. Otherwise, the return value is
         /// <see langword="false" />.
         /// </returns>
         public static bool IsValidPath(string fullyQualifiedPath)

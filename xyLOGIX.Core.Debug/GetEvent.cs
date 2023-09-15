@@ -1,18 +1,16 @@
-using Alphaleonis.Win32.Filesystem;
+﻿using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static methods for interacting with the Windows Event Log.
-    /// </summary>
+    /// <summary> Exposes static methods for interacting with the Windows Event Log. </summary>
     public static class GetEvent
     {
         /// <summary>
-        /// Attempts to obtain a user-friendly display name for the event-logging source,
-        /// based on the name of the application that is calling this debug logging
+        /// Attempts to obtain a user-friendly display name for the event-logging
+        /// source, based on the name of the application that is calling this debug logging
         /// library.
         /// </summary>
         /// <returns></returns>
@@ -59,7 +57,9 @@ namespace xyLOGIX.Core.Debug
                 result = string.Empty;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Debug, $"GetEvent.SourceName: Result = '{result}'");
+            DebugUtils.WriteLine(
+                DebugLevel.Debug, $"GetEvent.SourceName: Result = '{result}'"
+            );
 
             return result;
         }

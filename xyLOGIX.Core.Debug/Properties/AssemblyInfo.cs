@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following set
@@ -16,7 +16,10 @@ using System.Runtime.InteropServices;
     AssemblyCopyright(
         "Copyright © 2017-23 by xyLOGIX, LLC.  All rights reserved."
     )]
-[assembly: AssemblyTrademark("This software component is a part of the xyLOGIX Core Debugging Library.  xyLOGIX Core Debugging Library is a trademark of xyLOGIX, LLC.  All rights reserved, especially those granted by international treaties.")] 
+[assembly:
+    AssemblyTrademark(
+        "This software component is a part of the xyLOGIX Core Debugging Library.  xyLOGIX Core Debugging Library is a trademark of xyLOGIX, LLC.  All rights reserved, especially those granted by international treaties."
+    )]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible to

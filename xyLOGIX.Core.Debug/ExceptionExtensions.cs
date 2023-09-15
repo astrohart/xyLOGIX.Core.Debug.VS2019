@@ -1,22 +1,24 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static extension methods in order to facilitate handling exceptions.
+    /// Exposes static extension methods in order to facilitate handling
+    /// exceptions.
     /// </summary>
     public static class ExceptionExtensions
     {
         /// <summary>
-        /// Iterates through the specified collection of <paramref name="exceptions" /> and
-        /// logs each one, including its inner exception, if any, by calling the
+        /// Iterates through the specified collection of
+        /// <paramref name="exceptions" /> and logs each one, including its inner
+        /// exception, if any, by calling the
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException" /> method.
         /// </summary>
         /// <param name="exceptions">
-        /// (Required.) A collection of references to instances of
-        /// <see cref="T:System.Exception" /> that represents the exception(s) to be
+        /// (Required.) A collection of references to instances
+        /// of <see cref="T:System.Exception" /> that represents the exception(s) to be
         /// logged.
         /// </param>
         /// <remarks>
@@ -28,7 +30,8 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" />, then it is skipped.
         /// </remarks>
         public static void LogAllExceptions(
-            this IEnumerable<Exception> exceptions)
+            this IEnumerable<Exception> exceptions
+        )
         {
             /*
              * Nothing to do if there are no exceptions to be logged.

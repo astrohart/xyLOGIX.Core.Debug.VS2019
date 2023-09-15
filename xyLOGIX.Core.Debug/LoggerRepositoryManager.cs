@@ -1,12 +1,10 @@
-using log4net;
+﻿using log4net;
 using log4net.Repository;
 using log4net.Repository.Hierarchy;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Provides methods to access the log4net Repository.
-    /// </summary>
+    /// <summary> Provides methods to access the log4net Repository. </summary>
     public static class LoggerRepositoryManager
     {
         /// <summary>
@@ -15,20 +13,16 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <returns>
         /// Reference to an instance of a <see cref="I:ILoggerRepository" /> that
-        /// derives from <see cref="T:log4net.Repository.Hierarchy" />, or null
-        /// if no such object has been found.
+        /// derives from <see cref="T:log4net.Repository.Hierarchy" />, or null if no such
+        /// object has been found.
         /// </returns>
         public static Hierarchy GetHierarchyRepository()
             => LogManager.GetRepository() as Hierarchy;
 
-        /// <summary>
-        /// Wraps the <see cref="M:log4net.LogManager.GetRepository" /> method.
-        /// </summary>
+        /// <summary> Wraps the <see cref="M:log4net.LogManager.GetRepository" /> method. </summary>
         /// <returns>
         /// Reference to an instance of an object that implements
-        /// <see
-        ///     cref="ILoggerRepository" />
-        /// , or null if such an object cannot be found.
+        /// <see cref="ILoggerRepository" /> , or null if such an object cannot be found.
         /// </returns>
         public static ILoggerRepository GetLoggerRepository()
             => LogManager.GetRepository();

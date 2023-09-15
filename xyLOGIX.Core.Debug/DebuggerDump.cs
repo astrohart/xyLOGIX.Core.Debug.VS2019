@@ -1,27 +1,26 @@
-using System;
+﻿using System;
 using System.IO;
 using xyLOGIX.Core.Debug.Properties;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Methods to send objects to the log by calling an extension method called
-    /// 'Dump', like in LINQpad.
+    /// Methods to send objects to the log by calling an extension method
+    /// called 'Dump', like in LINQpad.
     /// </summary>
     public static class DebuggerDump
     {
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log.
+        /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are to be dumped.
+        /// (Required.) Reference to the object whose contents are
+        /// to be dumped.
         /// </param>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="element" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required parameter,
+        /// <paramref name="element" />, is passed a <see langword="null" /> value.
         /// </exception>
         public static void Dump(this object element)
         {
@@ -32,24 +31,24 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log.
+        /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are to be dumped.
+        /// (Required.) Reference to the object whose contents are
+        /// to be dumped.
         /// </param>
         /// ///
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which the object
-        /// should be dumped.
+        /// (Required.) Integer value specifying the depth to which
+        /// the object should be dumped.
         /// </param>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="element" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required parameter,
+        /// <paramref name="element" />, is passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is less than zero.
+        /// Thrown if the
+        /// <paramref name="depth" /> parameter is less than zero.
         /// </exception>
         public static void Dump(this object element, int depth)
         {
@@ -64,31 +63,28 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log.
+        /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are to be dumped.
+        /// (Required.) Reference to the object whose contents are
+        /// to be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which the object
-        /// should be dumped.
+        /// (Required.) Integer value specifying the depth to which
+        /// the object should be dumped.
         /// </param>
         /// <param name="log">
         /// (Required.) Reference to an instance of
-        /// <see
-        ///     cref="T:System.IO.TextWriter" />
-        /// that is open on the target log file.
+        /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the either of the required parameters,
-        /// <paramref
-        ///     name="element" />
-        /// or <paramref name="log" />, are passed a <see langword="null" /> value.
+        /// Thrown if the either of the required
+        /// parameters, <paramref name="element" /> or <paramref name="log" />, are passed
+        /// a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is less than zero.
+        /// Thrown if the
+        /// <paramref name="depth" /> parameter is less than zero.
         /// </exception>
         public static void Dump(this object element, int depth, TextWriter log)
         {
@@ -104,16 +100,16 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log, followed by a newline character.
+        /// <paramref name="element" /> parameter, to the log, followed by a newline
+        /// character.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are to be dumped.
+        /// (Required.) Reference to the object whose contents are
+        /// to be dumped.
         /// </param>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="element" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required parameter,
+        /// <paramref name="element" />, is passed a <see langword="null" /> value.
         /// </exception>
         public static void DumpLines(this object element)
         {
@@ -124,23 +120,24 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log, followed by a newline character.
+        /// <paramref name="element" /> parameter, to the log, followed by a newline
+        /// character.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are to be dumped.
+        /// (Required.) Reference to the object whose contents are
+        /// to be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which the object
-        /// should be dumped.
+        /// (Required.) Integer value specifying the depth to which
+        /// the object should be dumped.
         /// </param>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter, <paramref name="element" />, is
-        /// passed a <see langword="null" /> value.
+        /// Thrown if the required parameter,
+        /// <paramref name="element" />, is passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is less than zero.
+        /// Thrown if the
+        /// <paramref name="depth" /> parameter is less than zero.
         /// </exception>
         public static void DumpLines(this object element, int depth)
         {
@@ -155,34 +152,34 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
-        /// <paramref
-        ///     name="element" />
-        /// parameter, to the log.
+        /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are to be dumped.
+        /// (Required.) Reference to the object whose contents are
+        /// to be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which the object
-        /// should be dumped.
+        /// (Required.) Integer value specifying the depth to which
+        /// the object should be dumped.
         /// </param>
         /// <param name="log">
         /// (Required.) Reference to an instance of
-        /// <see
-        ///     cref="T:System.IO.TextWriter" />
-        /// that is open on the target log file.
+        /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
         /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the either of the required parameters,
-        /// <paramref
-        ///     name="element" />
-        /// or <paramref name="log" />, are passed a <see langword="null" /> value.
+        /// Thrown if the either of the required
+        /// parameters, <paramref name="element" /> or <paramref name="log" />, are passed
+        /// a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the <paramref name="depth" /> parameter is less than zero.
+        /// Thrown if the
+        /// <paramref name="depth" /> parameter is less than zero.
         /// </exception>
-        public static void DumpLines(this object element, int depth,
-            TextWriter log)
+        public static void DumpLines(
+            this object element,
+            int depth,
+            TextWriter log
+        )
         {
             if (element == null)
                 throw new ArgumentNullException(nameof(element));

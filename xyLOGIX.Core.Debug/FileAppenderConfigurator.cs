@@ -1,11 +1,9 @@
-using log4net.Appender;
+﻿using log4net.Appender;
 using System;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Provides methods for configurating log4net's FileAppender
-    /// </summary>
+    /// <summary> Provides methods for configurating log4net's FileAppender </summary>
     public static class FileAppenderConfigurator
     {
         /// <summary>
@@ -17,10 +15,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown if the instance of the object referenced by
-        /// <paramref
-        ///     name="appender" />
-        /// is <see langword="null" />.
+        /// Thrown if the instance of the object
+        /// referenced by <paramref name="appender" /> is <see langword="null" />.
         /// </exception>
         public static void SetMinimalLock(FileAppender appender)
         {

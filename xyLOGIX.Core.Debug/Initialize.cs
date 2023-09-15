@@ -1,21 +1,17 @@
-using Alphaleonis.Win32.Filesystem;
+﻿using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Text.RegularExpressions;
 using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static methods to initialize data.
-    /// </summary>
+    /// <summary> Exposes static methods to initialize data. </summary>
     public static class Initialize
     {
-        /// <summary>
-        /// Called once per application to initialize the logging subsystem.
-        /// </summary>
+        /// <summary> Called once per application to initialize the logging subsystem. </summary>
         /// <param name="applicationName">
-        /// (Required.) String containing the name to be used
-        /// for the application in the log file's pathname.
+        /// (Required.) String containing the name to be
+        /// used for the application in the log file's pathname.
         /// <para />
         /// All whitespace will be removed.
         /// </param>

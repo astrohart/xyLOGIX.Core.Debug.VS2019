@@ -1,16 +1,12 @@
-using System;
+﻿using System;
 using System.IO;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Methods to delete files and folders.
-    /// </summary>
+    /// <summary> Methods to delete files and folders. </summary>
     public static class Delete
     {
-        /// <summary>
-        /// Deletes a log file having the specified <paramref name="path" />.
-        /// </summary>
+        /// <summary> Deletes a log file having the specified <paramref name="path" />. </summary>
         /// <param name="path">
         /// (Required.) String containing the fully-qualified pathname
         /// of the file that is to be deleted.

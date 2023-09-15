@@ -1,22 +1,25 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods to determine whether a console window is present.
+    /// Exposes static methods to determine whether a console window is
+    /// present.
     /// </summary>
     public static class Has
     {
         /// <summary>
-        /// Value that is initialized with a <see cref="T:System.Boolean" /> that indicates
-        /// whether the calling application is a Windows GUI app or a console app.
+        /// Value that is initialized with a <see cref="T:System.Boolean" /> that
+        /// indicates whether the calling application is a Windows GUI app or a console
+        /// app.
         /// </summary>
         private static bool? _isWindowsGuiApp;
 
         /// <summary>
-        /// Determines whether the application is currently running in a console window.
+        /// Determines whether the application is currently running in a console
+        /// window.
         /// </summary>
         /// <returns>
         /// <see langword="true" /> if the application is running in a console
@@ -35,9 +38,9 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="false" />, from this method if the caller is not running in a
         /// console and is NOT GUI-based; i.e., it is like a console app but it is set to
         /// <c>Windows Application</c> application type in the <b>Project Properties</b>
-        /// window in Visual Studio, but it never creates a window (at least, not using
-        /// WPF or WinForms; this method cannot detect native Win32 P/Invoke calls to create
-        /// a main window).
+        /// window in Visual Studio, but it never creates a window (at least, not using WPF
+        /// or WinForms; this method cannot detect native Win32 P/Invoke calls to create a
+        /// main window).
         /// </remarks>
         public static bool ConsoleWindow()
         {
@@ -64,10 +67,10 @@ namespace xyLOGIX.Core.Debug
         /// WinForms.
         /// </summary>
         /// <param name="useEntryAssembly">
-        /// (Optional.) Default is <see langword="false" />.  If <see langword="true" />,
-        /// uses the entry-point assembly of the application to make its determination.
-        /// Setting this parameter to <see langword="false" /> means the calling assembly
-        /// is used instead.
+        /// (Optional.) Default is <see langword="false" />
+        /// .  If <see langword="true" />, uses the entry-point assembly of the application
+        /// to make its determination. Setting this parameter to <see langword="false" />
+        /// means the calling assembly is used instead.
         /// </param>
         /// <returns>
         /// A value that indicates whether the calling assembly (or the entry

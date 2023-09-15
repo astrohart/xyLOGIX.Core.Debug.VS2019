@@ -1,11 +1,9 @@
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static methods to get information on .NET assemblies.
-    /// </summary>
+    /// <summary> Exposes static methods to get information on .NET assemblies. </summary>
     public static class GetAssembly
     {
         /// <summary>
@@ -56,9 +54,9 @@ namespace xyLOGIX.Core.Debug
         /// application event logging source; <see langword="null" /> otherwise.
         /// </returns>
         /// <remarks>
-        /// To find the assembly to use as a source for event logging, this method first
-        /// attempts to locate the assembly containing the application's entry-point, and
-        /// use that.
+        /// To find the assembly to use as a source for event logging, this
+        /// method first attempts to locate the assembly containing the application's
+        /// entry-point, and use that.
         /// <para />
         /// Failing that, the assembly that is currently executing is tried.
         /// <para />

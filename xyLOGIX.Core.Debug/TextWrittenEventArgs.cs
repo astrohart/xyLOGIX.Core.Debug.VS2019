@@ -1,11 +1,9 @@
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 using System;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Provides information for <c>TextWritten</c> event handlers.
-    /// </summary>
+    /// <summary> Provides information for <c>TextWritten</c> event handlers. </summary>
     [Log(AttributeExclude = true)]
     public class TextWrittenEventArgs : EventArgs
     {
@@ -18,9 +16,7 @@ namespace xyLOGIX.Core.Debug
         public TextWrittenEventArgs(string text)
             => Text = text;
 
-        /// <summary>
-        /// Gets a string containing the text to be written.
-        /// </summary>
+        /// <summary> Gets a string containing the text to be written. </summary>
         public string Text { get; }
     }
 }

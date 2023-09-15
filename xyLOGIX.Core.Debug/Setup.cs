@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static methods to perform setup tasks.
-    /// </summary>
+    /// <summary> Exposes static methods to perform setup tasks. </summary>
     public static class Setup
     {
         /// <summary>
@@ -15,14 +13,14 @@ namespace xyLOGIX.Core.Debug
             GetEventLogManager.SoleInstance();
 
         /// <summary>
-        /// Sets up the Windows Event Log Application log source to correspond either to
-        /// the specified <paramref name="applicationName" />, or to a event source name
-        /// that we automatically obtain.
+        /// Sets up the Windows Event Log Application log source to correspond
+        /// either to the specified <paramref name="applicationName" />, or to a event
+        /// source name that we automatically obtain.
         /// </summary>
         /// <param name="applicationName">
-        /// (Optional.) A <see cref="T:System.String" /> that
-        /// provides a user-friendly version of the application's name for viewing in the
-        /// Windows Event Log Viewer; leave blank to use the default value.
+        /// (Optional.) A <see cref="T:System.String" />
+        /// that provides a user-friendly version of the application's name for viewing in
+        /// the Windows Event Log Viewer; leave blank to use the default value.
         /// </param>
         public static void EventLogging(string applicationName = "")
         {

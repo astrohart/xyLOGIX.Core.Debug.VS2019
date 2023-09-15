@@ -1,13 +1,11 @@
-namespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static methods for performing mathematical computations.
-    /// </summary>
+    /// <summary> Exposes static methods for performing mathematical computations. </summary>
     public static class Compute
     {
         /// <summary>
-        /// Computes the zero floor.  Meaning, if the specified <paramref name="value" />
-        /// is negative, then this method returns zero.
+        /// Computes the zero floor.  Meaning, if the specified
+        /// <paramref name="value" /> is negative, then this method returns zero.
         /// <para />
         /// If the specified <paramref name="value" /> is zero or greater, then this method
         /// is the identity.
