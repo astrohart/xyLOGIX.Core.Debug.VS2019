@@ -1,11 +1,11 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>MuteConsoleChanged</c> event. </summary>
-    /// <param name="sender">
+    /// <param name="sender" >
     /// Reference to the instance of the object that raised the
     /// event.
     /// </param>
-    /// <param name="e">
+    /// <param name="e" >
     /// A
     /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> that contains
     /// the event data.

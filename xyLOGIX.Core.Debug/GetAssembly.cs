@@ -64,7 +64,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public static Assembly ToUseForEventLogging(Assembly assembly)
         {
-            Assembly result = default;
+            Assembly result;
 
             try
             {

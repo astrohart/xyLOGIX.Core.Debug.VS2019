@@ -30,8 +30,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
-        /// interface.
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
         /// </summary>
         public static IOutputLocationProvider Instance { get; } =
             new OutputLocationProvider();
@@ -48,8 +47,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <remarks>
         /// This property raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
-        /// event when its value is updated.
+        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" /> event
+        /// when its value is updated.
         /// </remarks>
         public bool MuteConsole
         {
@@ -67,8 +66,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is updated.
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" /> property is
+        /// updated.
         /// </summary>
         public event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
@@ -274,43 +273,29 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
-        /// event.
+        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" /> event.
         /// </summary>
         /// <param name="e">
         /// A
-        /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> that contains
+        /// <see cref="T:xyLOGIX.Core.Debug.Events.MuteConsoleChangedEventArgs" /> that contains
         /// the event data.
         /// </param>
         protected virtual void OnMuteConsoleChanged(
             MuteConsoleChangedEventArgs e
         )
-        {
-            MuteConsoleChanged?.Invoke(this, e);
-
-            /*
-             * If any locations are set up, then set their corresponding
-             * MuteConsole properties to match the value of ours.
-             */
-
-            if (!InternalOutputLocationList.Any()) return;
-
-            foreach (var location in InternalOutputLocationList)
-                location.MuteConsole = MuteConsole;
-        }
+            => MuteConsoleChanged?.Invoke(this, e);
 
         /// <summary>
         /// Initializes the
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
         /// to have default values.
         /// </summary>
         private void InitializeInternalOutputLocationList()
             => InternalOutputLocationList = new List<IOutputLocation>
             {
                 GetOutputLocation.OfType(OutputLocationType.Console),
-                GetOutputLocation.OfType(OutputLocationType.Debug)
-                /* we do not add the trace location because trace messages appear twice that way. */
+                GetOutputLocation.OfType(OutputLocationType.Debug),
+                GetOutputLocation.OfType(OutputLocationType.Trace)
             };
     }
 }

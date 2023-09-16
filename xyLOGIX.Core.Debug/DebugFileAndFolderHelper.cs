@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -16,12 +15,6 @@ namespace xyLOGIX.Core.Debug
     /// </remarks>
     public static class DebugFileAndFolderHelper
     {
-        /// <summary>
-        /// Gets a reference to an instance of an object that is to be used for
-        /// thread synchronization purposes.
-        /// </summary>
-        private static object SyncRoot { get; } = new object();
-
         /// <summary>
         /// Attempts to clear the files and folders from the user's temporary
         /// files folder.
@@ -48,15 +41,11 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                lock
-                    (SyncRoot) // only one thread at a time to clear the temp folder please!
+                using (var processTemp = new Process())
                 {
-                    using (var processTemp = new Process())
-                    {
-                        processTemp.StartInfo = psi;
-                        processTemp.Start();
-                        processTemp.WaitForExit();
-                    }
+                    processTemp.StartInfo = psi;
+                    processTemp.Start();
+                    processTemp.WaitForExit();
                 }
             }
             catch (Exception ex)
@@ -100,12 +89,7 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                lock
-                    (SyncRoot) // only one thread at a time to create folders on the disk
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
+                Directory.CreateDirectory(directoryPath);
                 if (Directory.Exists(directoryPath))
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
@@ -261,34 +245,19 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                AuthorizationRuleCollection rules;
-
                 // Get the access rules of the specified files (user groups and
                 // user names that have access to the file)
-                lock (SyncRoot)
-                {
-                    rules = File.GetAccessControl(path)
+                var rules = File.GetAccessControl(path)
                                 .GetAccessRules(
                                     true, true, typeof(SecurityIdentifier)
                                 );
-                }
 
                 // Get the identity of the current user and the groups that the
                 // user is in.
-                IdentityReferenceCollection groups;
-                lock (SyncRoot)
-                {
-                    groups = WindowsIdentity.GetCurrent()
+                var groups = WindowsIdentity.GetCurrent()
                                             .Groups;
-                }
-
-                string sidCurrentUser;
-
-                lock (SyncRoot)
-                {
-                    sidCurrentUser = WindowsIdentity.GetCurrent()
+                var sidCurrentUser = WindowsIdentity.GetCurrent()
                                                     .User.Value;
-                }
 
                 // Check if writing to the file is explicitly denied for this
                 // user or a group the user is in.

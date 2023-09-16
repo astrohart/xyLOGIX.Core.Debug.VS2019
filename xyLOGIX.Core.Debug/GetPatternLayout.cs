@@ -10,12 +10,6 @@ namespace xyLOGIX.Core.Debug
     public static class GetPatternLayout
     {
         /// <summary>
-        /// Gets a reference to an instance of an object that is to be used for
-        /// thread synchronization purposes.
-        /// </summary>
-        private static object SyncRoot { get; } = new object();
-
-        /// <summary>
         /// Creates a new instance of
         /// <see cref="T:log4net.Layout.PatternLayout" /> and initializes the
         /// <see cref="P:log4net.Layout.PatternLayout.ConversionPattern" /> property with
@@ -43,11 +37,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     ConversionPattern = conversionPattern
                 };
-
-                lock (SyncRoot)
-                {
-                    layout.ActivateOptions();
-                }
+                layout.ActivateOptions();
             }
             catch (Exception ex)
             {

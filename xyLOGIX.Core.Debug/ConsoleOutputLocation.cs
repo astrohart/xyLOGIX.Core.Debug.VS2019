@@ -1,6 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using System;
-using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -12,30 +11,31 @@ namespace xyLOGIX.Core.Debug
     public class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this
-        /// class.
+        /// Empty, static constructor to prohibit direct allocation of
+        /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
         static ConsoleOutputLocation() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
-        /// class.
+        /// Empty, protected constructor to prohibit direct allocation of the
+        /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
         protected ConsoleOutputLocation() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
-        /// that directs debugging output to the standard output of the application and/or
-        /// a console window, if present.
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that
+        /// directs debugging output to the standard output of the application and/or a
+        /// console window, if present.
         /// </summary>
         public static IOutputLocation Instance { get; } =
             new ConsoleOutputLocation();
 
         /// <summary>
         /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration values that
-        /// indicates the final destination of text strings that are fed to this location.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration values
+        /// that indicates the final destination of text strings that are fed to this
+        /// location.
         /// </summary>
         public override OutputLocationType Type { get; } =
             OutputLocationType.Console;
@@ -81,10 +81,7 @@ namespace xyLOGIX.Core.Debug
 
             if (MuteConsole) return;
 
-            if (!arg.Any())
-                Console.Write(format);
-            else
-                Console.Write(format, arg);
+            Console.Write(format, arg);
         }
 
         /// <summary>
@@ -127,13 +124,9 @@ namespace xyLOGIX.Core.Debug
                 ((arg == null) | (arg.Length == 0)))
                 return;
 
-
             if (MuteConsole) return;
 
-            if (!arg.Any())
-                Console.WriteLine(format);
-            else
-                Console.WriteLine(format, arg);
+            Console.WriteLine(format, arg);
         }
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>

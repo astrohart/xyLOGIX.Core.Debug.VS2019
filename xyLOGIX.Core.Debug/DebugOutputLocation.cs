@@ -1,6 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using System.Diagnostics;
-using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -26,8 +25,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
-        /// that directs debugging output to the <b>Output</b> window in Visual Studio or
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that
+        /// directs debugging output to the <b>Output</b> window in Visual Studio or
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
         /// </summary>
@@ -36,8 +35,9 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration values that
-        /// indicates the final destination of text strings that are fed to this location.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration values
+        /// that indicates the final destination of text strings that are fed to this
+        /// location.
         /// </summary>
         public override OutputLocationType Type { get; } =
             OutputLocationType.Debug;
@@ -83,9 +83,7 @@ namespace xyLOGIX.Core.Debug
                 ((arg == null) | (arg.Length == 0)))
                 return;
 
-            System.Diagnostics.Debug.Write(
-                !arg.Any() ? format : string.Format(format, arg)
-            );
+            System.Diagnostics.Debug.Write(string.Format(format, arg));
         }
 
         /// <summary>
@@ -130,10 +128,7 @@ namespace xyLOGIX.Core.Debug
                 ((arg == null) | (arg.Length == 0)))
                 return;
 
-            if (!arg.Any())
-                System.Diagnostics.Debug.WriteLine(format);
-            else
-                System.Diagnostics.Debug.WriteLine(format, arg);
+            System.Diagnostics.Debug.WriteLine(format, arg);
         }
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>

@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.ExceptionLoggedEventArgs" /> and returns a
         /// reference to it.
         /// </summary>
-        /// <param name="exception">
+        /// <param name="exception" >
         /// (Required.) Reference to an instance of the
         /// <see cref="T:System.Exception" /> that was logged.
         /// </param>

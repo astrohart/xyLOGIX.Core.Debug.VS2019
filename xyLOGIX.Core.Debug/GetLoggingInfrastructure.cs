@@ -16,7 +16,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> values that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values that
         /// describes what type of object you want.
         /// </param>
         /// <returns>

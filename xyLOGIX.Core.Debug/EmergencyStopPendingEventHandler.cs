@@ -3,7 +3,7 @@
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>EmergencyStopPending</c> event. </summary>
-    /// <param name="e">
+    /// <param name="e" >
     /// A <see cref="T:System.ComponentModel.CancelEventArgs" /> that
     /// contains the event data.
     /// <para />

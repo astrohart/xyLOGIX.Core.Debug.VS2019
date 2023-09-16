@@ -290,9 +290,8 @@ namespace xyLOGIX.Core.Debug
         )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
-            if (layout == null) throw new ArgumentNullException(nameof(layout));
-
-            self.Layout = layout;
+            self.Layout =
+                layout ?? throw new ArgumentNullException(nameof(layout));
             return self;
         }
     }

@@ -1,7 +1,7 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a TextWritten event. </summary>
-    /// <param name="e">
+    /// <param name="e" >
     /// A <see cref="T:xyLOGIX.Core.Debug.TextWrittenEventArgs" />
     /// that contains the event data.
     /// </param>

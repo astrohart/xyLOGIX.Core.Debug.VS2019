@@ -18,15 +18,16 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the object whose contents are
         /// to be dumped.
         /// </param>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter,
-        /// <paramref name="element" />, is passed a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
+        /// value.
         /// </exception>
         public static void Dump(this object element)
         {
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
-            ObjectDumper.Write(element, 1);
+            ObjectDumper.Write(element);
         }
 
         /// <summary>
@@ -42,9 +43,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Integer value specifying the depth to which
         /// the object should be dumped.
         /// </param>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter,
-        /// <paramref name="element" />, is passed a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
+        /// value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -77,10 +79,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of
         /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the either of the required
-        /// parameters, <paramref name="element" /> or <paramref name="log" />, are passed
-        /// a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the either of the
+        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
+        /// are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -107,9 +109,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the object whose contents are
         /// to be dumped.
         /// </param>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter,
-        /// <paramref name="element" />, is passed a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
+        /// value.
         /// </exception>
         public static void DumpLines(this object element)
         {
@@ -131,9 +134,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Integer value specifying the depth to which
         /// the object should be dumped.
         /// </param>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter,
-        /// <paramref name="element" />, is passed a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
+        /// value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -166,10 +170,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of
         /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the either of the required
-        /// parameters, <paramref name="element" /> or <paramref name="log" />, are passed
-        /// a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the either of the
+        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
+        /// are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the

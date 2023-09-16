@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -13,24 +12,19 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Raised when a start of the debugger is about to occur. </summary>
         public static event Action DebuggerStartPending;
 
-        /// <summary>
-        /// Raised when the
-        /// <see cref="M:xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop" /> method is
-        /// called.
-        /// </summary>
-        /// <remarks>
-        /// Handlers of the event can cancel the operation before it is
-        /// undertaken.
-        /// </remarks>
-        public static event EmergencyStopPendingEventHandler
-            EmergencyStopPending;
-
         /// <summary> Brings the Windows Service screeching suddenly to a halt. </summary>
+        /// <param name="notificationAction">
+        /// (Optional.) Code to be called immediately
+        /// prior to the emergency stop.
+        /// <para />
+        /// If this parameter is passed a <see langword="null" /> reference as its
+        /// argument, then nothing will be called.
+        /// </param>
         /// <remarks>
         /// Before calling this method, services should de-configure themselves
         /// to be automatically re-started by the operating system.
         /// </remarks>
-        public static void EmergencyStop()
+        public static void EmergencyStop(Action notificationAction = null)
         {
             // write the name of the current class and method we are now
             // entering, into the log
@@ -38,9 +32,7 @@ namespace xyLOGIX.Core.Debug
                 DebugLevel.Debug, "In ServiceFlowHelper.EmergencyStop"
             );
 
-            var cea = new CancelEventArgs();
-            OnEmergencyStopPending(cea);
-            if (cea.Cancel) return;
+            notificationAction?.Invoke();
 
             DebugUtils.WriteLine(
                 DebugLevel.Debug, "ServiceFlowHelper.EmergencyStop: Done."
@@ -54,9 +46,9 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Call this method to invoke the just-in-time debugger. </summary>
         /// <remarks>
         /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
-        /// event prior to actually breaking into the debugger. This is helpful to run,
-        /// e.g., service configuration code, prior to the operation.
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" /> event
+        /// prior to actually breaking into the debugger. This is helpful to run, e.g.,
+        /// service configuration code, prior to the operation.
         /// </remarks>
         [DebuggerStepThrough]
         public static void StartDebugger()
@@ -84,18 +76,9 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
-        /// event.
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" /> event.
         /// </summary>
         private static void OnDebuggerStartPending()
             => DebuggerStartPending?.Invoke();
-
-        /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending" />
-        /// event.
-        /// </summary>
-        private static void OnEmergencyStopPending(CancelEventArgs e)
-            => EmergencyStopPending?.Invoke(e);
     }
 }

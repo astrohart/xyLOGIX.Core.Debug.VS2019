@@ -2,12 +2,10 @@
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Collections;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using xyLOGIX.Core.Debug.Properties;
-using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -15,25 +13,19 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true)]
     public static class DebugUtils
     {
-        /// <summary>
-        /// Value that indicates whether to mute any log messages that ordinarily
-        /// would be written to the interactive console.
-        /// </summary>
-        private static bool _muteConsole;
-
         /// <summary> The verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
         private static int _verbosity = 1;
 
-        /// <summary> Initializes a new static instance of <see cref="DebugUtils" />. </summary>
+        /// <summary>
+        /// Initializes a new static instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugUtils" />.
+        /// </summary>
         static DebugUtils()
-        {
-            InitializeOutputLocationProvider();
 
             // default ExceptionStackDepth is 1 for a Windows Forms app. Set to
             // 2 for a Console App.
-            ExceptionStackDepth = 1;
-        }
+            => ExceptionStackDepth = 1;
 
         /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
@@ -47,17 +39,18 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool ConsoleOnly { get; set; }
 
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
-        public static int ExceptionStackDepth { get; set; }
-
         /// <summary>
         /// Gets or sets the depth down the call stack from which Exception
         /// information should be obtained.
         /// </summary>
+
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
+        public static int ExceptionStackDepth { get; set; }
+
         /// <summary>
         /// Gets or sets a
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value indicating
-        /// which type of logging infrastructure is in use.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
+        /// indicating which type of logging infrastructure is in use.
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
@@ -82,20 +75,7 @@ namespace xyLOGIX.Core.Debug
         public static string LogFilePath { get; set; }
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
-        /// <remarks>
-        /// When this property's value is updated, it raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged" /> event.
-        /// </remarks>
-        public static bool MuteConsole
-        {
-            get => _muteConsole;
-            set
-            {
-                var changed = _muteConsole != value;
-                _muteConsole = value;
-                if (changed) OnMuteConsoleChanged();
-            }
-        }
+        public static bool MuteConsole { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to mute "DEBUG" log messages
@@ -108,13 +88,6 @@ namespace xyLOGIX.Core.Debug
         /// which is produced by calls to this class' methods.
         /// </summary>
         public static TextWriter Out { get; set; }
-
-        /// <summary>
-        /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
-        /// </summary>
-        private static IOutputLocationProvider OutputLocationProvider { get; } =
-            GetOutputLocationProvider.SoleInstance();
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
@@ -132,19 +105,6 @@ namespace xyLOGIX.Core.Debug
                     );
             }
         }
-
-        /// <summary>
-        /// Raised when the
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException" /> method has been
-        /// called.
-        /// </summary>
-        public static event ExceptionLoggedEventHandler ExceptionLogged;
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteConsole" /> property is updated.
-        /// </summary>
-        public static event Action MuteConsoleChanged;
 
         /// <summary>
         /// Occurs whenever text has been emitted by the
@@ -244,13 +204,14 @@ namespace xyLOGIX.Core.Debug
             => WriteLine(DebugLevel.Error, FormatException(e));
 
         /// <summary>
-        ///     <summary>
-        ///     Logs the complete information about an exception to the log,
-        ///     under the Error Level. Outputs the source file and line number where the
-        ///     exception occurred, as well as the message of the exception and its stack
-        ///     trace.
-        ///     </summary>
-        ///     <param name="e"> Reference to the <see cref="Exception" /> to be logged. </param>
+        /// Logs the complete information about an exception to the log, under
+        /// the Error Level. Outputs the source file and line number where the exception
+        /// occurred, as well as the message of the exception and its stack trace.
+        /// </summary>
+        /// <param name="e">
+        /// Reference to the <see cref="T:System.Exception" /> to be
+        /// logged.
+        /// </param>
         public static void LogException(Exception e)
         {
             if (e == null) return;
@@ -264,8 +225,6 @@ namespace xyLOGIX.Core.Debug
             );
 
             WriteLine(DebugLevel.Error, message);
-
-            OnExceptionLogged(new ExceptionLoggedEventArgs(e));
         }
 
         /// <summary>
@@ -274,8 +233,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that indicates which log
-        /// (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="format">
         /// (Required.) String containing an optional format
@@ -292,9 +251,9 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then this method
-        /// does nothing. This method does not add a newline character after writing its
-        /// content to the log.
+        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then this
+        /// method does nothing. This method does not add a newline character after writing
+        /// its content to the log.
         /// </remarks>
         public static void Write(
             DebugLevel debugLevel,
@@ -312,8 +271,7 @@ namespace xyLOGIX.Core.Debug
              * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
              * parameter is set to DebugLevel.Debug, simply stop executing this method. */
 
-            if (MuteDebugLevelIfReleaseMode
-                && debugLevel == DebugLevel.Debug)
+            if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
                 return;
 #endif
 
@@ -329,8 +287,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that indicates which log
-        /// (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="content"> (Required.) string containing the content to be written. </param>
         /// <remarks>
@@ -342,7 +300,7 @@ namespace xyLOGIX.Core.Debug
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
         /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
         public static void Write(DebugLevel debugLevel, string content)
             => LogEachLineIfMultiline(content, WriteCore, debugLevel);
@@ -353,8 +311,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that indicates which log
-        /// (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="format">
         /// (Required.) String containing an optional format
@@ -371,9 +329,9 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then this method
-        /// does nothing. This method adds a newline character after writing its content to
-        /// the log.
+        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then this
+        /// method does nothing. This method adds a newline character after writing its
+        /// content to the log.
         /// </remarks>
         public static void WriteLine(
             DebugLevel debugLevel,
@@ -391,8 +349,7 @@ namespace xyLOGIX.Core.Debug
              * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
              * parameter is set to DebugLevel.Debug, simply stop executing this method. */
 
-            if (MuteDebugLevelIfReleaseMode
-                && debugLevel == DebugLevel.Debug)
+            if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
                 return;
 #endif
 
@@ -403,10 +360,10 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Works the same as the overload which takes a
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> as its first argument, but if
-        /// the formatted content consists of several lines of content, then the lines are
-        /// split and logged separately, all under the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> debugLevel.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> as its first argument, but
+        /// if the formatted content consists of several lines of content, then the lines
+        /// are split and logged separately, all under the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> debugLevel.
         /// </summary>
         /// <param name="format">
         /// (Required.) String containing an optional format
@@ -418,8 +375,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <remarks>
         /// This overload specifies that the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> logging debugLevel is to
-        /// be utilized for each line.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> logging debugLevel is
+        /// to be utilized for each line.
         /// </remarks>
         public static void WriteLine(string format, params object[] args)
         {
@@ -439,8 +396,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that indicates which log
-        /// (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="content"> (Required.) string containing the content to be written. </param>
         /// <remarks>
@@ -452,9 +409,8 @@ namespace xyLOGIX.Core.Debug
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
         /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
-        [DebuggerStepThrough]
         public static void WriteLine(DebugLevel debugLevel, string content)
             => LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
 
@@ -475,10 +431,6 @@ namespace xyLOGIX.Core.Debug
         )
             => args.Any() ? string.Format(format, args) : format;
 
-        private static void InitializeOutputLocationProvider()
-            => OutputLocationProvider.MuteConsoleChanged +=
-                OnMuteConsoleChangedInOutputLocationProvider;
-
         /// <summary>
         /// Detects whether the <paramref name="content" /> is multiline. If so,
         /// then each line of content is logged separately, using the
@@ -493,10 +445,9 @@ namespace xyLOGIX.Core.Debug
         /// is to be executed for each line of content.
         /// </param>
         /// <param name="level">
-        /// A <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
+        /// A <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" />
         /// specifying the debugLevel of logging to utilize.
         /// </param>
-        [DebuggerStepThrough]
         private static void LogEachLineIfMultiline(
             string content,
             Action<DebugLevel, string> logMethod,
@@ -527,74 +478,22 @@ namespace xyLOGIX.Core.Debug
             foreach (var line in lines) logMethod(level, line);
         }
 
-        /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.DebugUtils.ExceptionLogged" /> event.
-        /// </summary>
-        /// <param name="e">
-        /// (Required.) A
-        /// <see cref="T:xyLOGIX.Core.Debug.ExceptionLoggedEventArgs" /> that contains the
-        /// event data.
-        /// </param>
-        private static void OnExceptionLogged(ExceptionLoggedEventArgs e)
-            => ExceptionLogged?.Invoke(e);
-
-        /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.DebugUtils.MuteConsoleChanged" /> event.
-        /// </summary>
-        private static void OnMuteConsoleChanged()
-            => MuteConsoleChanged?.Invoke();
-
-        /// <summary>
-        /// Handles the
-        /// <see cref="E:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsoleChanged" />
-        /// event raised by the <b>Output Location Provider</b> component..
-        /// </summary>
-        /// <param name="sender">
-        /// Reference to an instance of the object that raised the
-        /// event.
-        /// </param>
-        /// <param name="e">
-        /// A
-        /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> that contains
-        /// the event data.
-        /// </param>
-        /// <remarks>
-        /// The event that this handler responds to is raised when the value of
-        /// the <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is updated.
-        /// <para />
-        /// This handler responds by synchronizing the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.MuteConsole" /> property with its
-        /// own.
-        /// </remarks>
-        private static void OnMuteConsoleChangedInOutputLocationProvider(
-            object sender,
-            MuteConsoleChangedEventArgs e
-        )
-        {
-            if (MuteConsole == e.NewValue) return;
-
-            MuteConsole = e.NewValue;
-        }
-
         /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
         /// <param name="e">
         /// (Required.) A
-        /// <see cref="T:xyLOGIX.Core.Debug.TextEmittedEventArgs" /> that contains the
+        /// <see cref="T:xyLOGIX.Core.Debug.Events.TextEmittedEventArgs" /> that contains the
         /// event data.
         /// </param>
         private static void OnTextEmitted(TextEmittedEventArgs e)
             => TextEmitted?.Invoke(e);
 
         /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" /> event.
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" />
+        /// event.
         /// </summary>
         /// <remarks>
-        /// The <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" />
-        /// event is raised whenever the value of the
+        /// The <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" /> event
+        /// is raised whenever the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
         /// </remarks>
         private static void OnVerbosityChanged(VerbosityChangedEventArgs e)
@@ -606,7 +505,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that determine what
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that determine what
         /// logging debugLevel to utilize.
         /// </param>
         /// <param name="content">
@@ -620,7 +519,7 @@ namespace xyLOGIX.Core.Debug
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
         /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
         private static void WriteCore(DebugLevel debugLevel, string content)
         {
@@ -631,7 +530,7 @@ namespace xyLOGIX.Core.Debug
             {
                 if (Verbosity == 0) return;
 
-                if (!MuteConsole) OutputMultiplexer.Write(content);
+                if (!MuteConsole) Console.Write(content);
 
                 if (ConsoleOnly) return;
 
@@ -640,8 +539,7 @@ namespace xyLOGIX.Core.Debug
                 // If we are being called from LINQPad, then use Debug.WriteLine
                 if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
                 {
-                    OutputLocationProvider.MuteConsole = true;
-                    OutputMultiplexer.Write(content);
+                    Console.Write(content);
                     return;
                 }
 
@@ -688,7 +586,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that determine what
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that determine what
         /// logging debugLevel to utilize.
         /// </param>
         /// <param name="content">
@@ -702,7 +600,7 @@ namespace xyLOGIX.Core.Debug
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
         /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values.
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
         private static void WriteLineCore(DebugLevel debugLevel, string content)
         {
@@ -723,12 +621,12 @@ namespace xyLOGIX.Core.Debug
                 // If we are being called from LINQPad, then use Debug.WriteLine
                 if (AppDomain.CurrentDomain.FriendlyName.Contains("LINQPad"))
                 {
-                    OutputMultiplexer.WriteLine(content);
+                    Console.WriteLine(content);
                     return;
                 }
 
                 if (!MuteConsole)
-                    OutputMultiplexer.WriteLine(content);
+                    Console.WriteLine(content);
 
                 if (ConsoleOnly) return;
 

@@ -12,11 +12,11 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.TextEmittedEventArgs" /> and returns a
         /// reference to it.
         /// </summary>
-        /// <param name="text">
+        /// <param name="text" >
         /// (Required.) A <see cref="T:System.String" /> containing the
         /// text that is otherwise going to be written to the log.
         /// </param>
-        /// <param name="level">
+        /// <param name="level" >
         /// One of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
         /// enumeration values that indicates of what level of severity is the message.
         /// </param>

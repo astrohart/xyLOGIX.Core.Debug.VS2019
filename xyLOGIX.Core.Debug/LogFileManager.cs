@@ -1,5 +1,4 @@
 ﻿using System;
-using Console = xyLOGIX.Core.Debug.OutputMultiplexer;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -8,8 +7,8 @@ namespace xyLOGIX.Core.Debug
     {
         /// <summary>
         /// Reference to an instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
-        /// logging infrastructure type chosen.
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the logging
+        /// infrastructure type chosen.
         /// </summary>
         /// <remarks>
         /// This is the object that will provide the behind-the-scenes
@@ -19,7 +18,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value that
         /// represents the type of infrastructure currently in use by this
         /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
         /// </summary>
@@ -29,8 +28,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Gets the full path and filename to the log file for this application. </summary>
         /// <remarks>
         /// This property should only be called after the
-        /// <see cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging" /> method has
-        /// been called.
+        /// <see cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging" /> method has been
+        /// called.
         /// </remarks>
         public static string LogFilePath
             => _infrastructure?.GetRootFileAppenderFileName();
@@ -83,7 +82,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> values that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values that
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp, for example).
         /// </param>
@@ -101,41 +100,31 @@ namespace xyLOGIX.Core.Debug
         {
             Console.WriteLine("In LogFileManager.InitializeLogging");
 
-            try
+            /* We now 'outsource' the functionality of this method (and all the
+              other methods of this class) to an 'infrastructure' object that follows (loosely)
+             the Abstract Factory pattern.  Either we use the Default way of initializing logging
+             or we do things the way PostSharp needs us to.*/
+            _infrastructure = _infrastructure ??
+                              GetLoggingInfrastructure.For(infrastructureType);
+            if (_infrastructure == null)
             {
-                /* We now 'outsource' the functionality of this method (and all the
-                  other methods of this class) to an 'infrastructure' object that follows (loosely)
-                 the Abstract Factory pattern.  Either we use the Default way of initializing logging
-                 or we do things the way PostSharp needs us to.*/
-                _infrastructure = _infrastructure ??
-                                  GetLoggingInfrastructure.For(
-                                      infrastructureType
-                                  );
-                if (_infrastructure == null)
-                {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
-                        $"ERROR Unable to initializing the logging subsystem for the '{infrastructureType}' logging infrastructure."
-                    );
-                    return;
-                }
-
-                _infrastructure.InitializeLogging(
-                    muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFilePathname, muteConsole, logFileName,
-                    verbosity, applicationName
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    $"ERROR Unable to initializing the logging subsystem for the '{infrastructureType}' logging infrastructure."
                 );
+                return;
             }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-            }
+
+            _infrastructure.InitializeLogging(
+                muteDebugLevelIfReleaseMode, overwrite,
+                configurationFilePathname, muteConsole, logFileName, verbosity,
+                applicationName
+            );
         }
 
         /// <summary>
-        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
-        /// initialize its functionality.
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to initialize
+        /// its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any
@@ -168,7 +157,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> values that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values that
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp).
         /// </param>

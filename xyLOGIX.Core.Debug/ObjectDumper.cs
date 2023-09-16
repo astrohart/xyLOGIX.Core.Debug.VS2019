@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
@@ -74,9 +75,10 @@ namespace xyLOGIX.Core.Debug
         /// By default, this overload of the method sends the dump output to the
         /// <see cref="T:System.Console.Out" /> stream.
         /// </remarks>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter,
-        /// <paramref name="element" />, is passed a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
+        /// value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -114,10 +116,10 @@ namespace xyLOGIX.Core.Debug
         /// By default, this overload of the method sends the dump output to the
         /// <see cref="T:System.Console.Out" /> stream.
         /// </remarks>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if either of the required
-        /// parameters, <paramref name="element" /> or <paramref name="log" />, are passed
-        /// a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if either of the
+        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
+        /// are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -152,9 +154,10 @@ namespace xyLOGIX.Core.Debug
         /// By default, this overload of the method sends the dump output to the
         /// <see cref="T:System.Console.Out" /> stream.
         /// </remarks>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if the required parameter,
-        /// <paramref name="element" />, is passed a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
+        /// value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -192,10 +195,10 @@ namespace xyLOGIX.Core.Debug
         /// By default, this overload of the method sends the dump output to the
         /// <see cref="T:System.Console.Out" /> stream.
         /// </remarks>
-        /// <exception cref="T:ArgumentNullException">
-        /// Thrown if either of the required
-        /// parameters, <paramref name="element" /> or <paramref name="log" />, are passed
-        /// a <see langword="null" /> value.
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if either of the
+        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
+        /// are passed a <see langword="null" /> value.
         /// </exception>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -213,11 +216,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" /> event.
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" />
+        /// event.
         /// </summary>
         /// <param name="e">
-        /// A <see cref="T:xyLOGIX.Core.Debug.TextWrittenEventArgs" />
+        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
         /// that contains the event data.
         /// </param>
         protected static void OnTextWritten(TextWrittenEventArgs e)
@@ -242,8 +245,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Writes an indent -- a 4 space tab -- to the
         /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
-        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
-        /// level given by the value of the
+        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent level
+        /// given by the value of the
         /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
         /// </summary>
         private void WriteIndent()
@@ -330,6 +333,9 @@ namespace xyLOGIX.Core.Debug
                                              BindingFlags.Public |
                                              BindingFlags.Instance
                                          );
+                    if (members == null || !members.Any())
+                        return;
+
                     WriteIndent();
                     Write(prefix);
                     var propWritten = false;
@@ -360,22 +366,23 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     if (propWritten) WriteLine();
-                    if (_indentLevel < _depth)
-                        foreach (var m in members)
-                        {
-                            var f = m as FieldInfo;
-                            var p = m as PropertyInfo;
-                            if (f == null && p == null) continue;
-                            var t = f != null ? f.FieldType : p.PropertyType;
-                            if (t.IsValueType || t == typeof(string)) continue;
-                            var value = f != null
-                                ? f.GetValue(element)
-                                : p.GetValue(element, null);
-                            if (value == null) continue;
-                            _indentLevel++;
-                            WriteObject(m.Name + ": ", value);
-                            _indentLevel--;
-                        }
+                    if (_indentLevel >= _depth) return;
+
+                    foreach (var m in members)
+                    {
+                        var f = m as FieldInfo;
+                        var p = m as PropertyInfo;
+                        if (f == null && p == null) continue;
+                        var t = f != null ? f.FieldType : p.PropertyType;
+                        if (t.IsValueType || t == typeof(string)) continue;
+                        var value = f != null
+                            ? f.GetValue(element)
+                            : p.GetValue(element, null);
+                        if (value == null) continue;
+                        _indentLevel++;
+                        WriteObject(m.Name + ": ", value);
+                        _indentLevel--;
+                    }
                 }
             }
         }
@@ -431,6 +438,8 @@ namespace xyLOGIX.Core.Debug
                                              BindingFlags.Public |
                                              BindingFlags.Instance
                                          );
+                    if (members == null || !members.Any()) return;
+
                     WriteLine();
                     Write(prefix);
                     var propWritten = false;
@@ -461,22 +470,23 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     if (propWritten) WriteLine();
-                    if (_indentLevel < _depth)
-                        foreach (var m in members)
-                        {
-                            var f = m as FieldInfo;
-                            var p = m as PropertyInfo;
-                            if (f == null && p == null) continue;
-                            var t = f != null ? f.FieldType : p.PropertyType;
-                            if (t.IsValueType || t == typeof(string)) continue;
-                            var value = f != null
-                                ? f.GetValue(element)
-                                : p.GetValue(element, null);
-                            if (value == null) continue;
-                            _indentLevel++;
-                            WriteObjectToLines(m.Name + ": ", value);
-                            _indentLevel--;
-                        }
+                    if (_indentLevel >= _depth) return;
+
+                    foreach (var m in members)
+                    {
+                        var f = m as FieldInfo;
+                        var p = m as PropertyInfo;
+                        if (f == null && p == null) continue;
+                        var t = f != null ? f.FieldType : p.PropertyType;
+                        if (t.IsValueType || t == typeof(string)) continue;
+                        var value = f != null
+                            ? f.GetValue(element)
+                            : p.GetValue(element, null);
+                        if (value == null) continue;
+                        _indentLevel++;
+                        WriteObjectToLines(m.Name + ": ", value);
+                        _indentLevel--;
+                    }
                 }
             }
         }

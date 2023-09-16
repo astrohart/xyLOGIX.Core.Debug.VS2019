@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -10,34 +9,9 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public static class ProgramFlowHelper
     {
-        /// <summary>
-        /// Raised when the
-        /// <see cref="M:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStop" /> method is
-        /// called.
-        /// </summary>
-        /// <remarks>
-        /// Handlers of the event can cancel the operation before it is
-        /// undertaken.
-        /// </remarks>
-        public static event EmergencyStopPendingEventHandler
-            EmergencyStopPending;
-
         /// <summary> Brings the application to an immediate halt. </summary>
-        /// <remarks>
-        /// This method raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending" />
-        /// event just before bringing the application to a halt.
-        /// <para />
-        /// Handlers of the event can cancel the operation before it is undertaken.
-        /// </remarks>
         public static void EmergencyStop()
-        {
-            var cea = new CancelEventArgs();
-            OnEmergencyStopPending(cea);
-            if (cea.Cancel) return;
-
-            Environment.Exit(-1);
-        }
+            => Environment.Exit(-1);
 
         /// <summary> Launches the Visual Studio Debugger. </summary>
         /// <remarks>
@@ -52,13 +26,5 @@ namespace xyLOGIX.Core.Debug
             Debugger.Launch();
             Debugger.Break();
         }
-
-        /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStopPending" />
-        /// event.
-        /// </summary>
-        private static void OnEmergencyStopPending(CancelEventArgs e)
-            => EmergencyStopPending?.Invoke(e);
     }
 }

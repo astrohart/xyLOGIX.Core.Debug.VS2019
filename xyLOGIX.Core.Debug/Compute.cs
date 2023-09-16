@@ -16,7 +16,7 @@
         /// otherwise, if the specified <paramref name="value" /> is zero or greater, then
         /// the method is the identity map.
         /// </returns>
-        public static int ZeroFloor(this int value)
+        public static int ZeroFloor(int value)
             => value < 0 ? 0 : value;
     }
 }
