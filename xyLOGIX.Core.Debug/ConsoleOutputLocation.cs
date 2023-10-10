@@ -20,11 +20,13 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of the
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
-        protected ConsoleOutputLocation() { }
+        protected ConsoleOutputLocation()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+        /// that
         /// directs debugging output to the standard output of the application and/or a
         /// console window, if present.
         /// </summary>
@@ -33,7 +35,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration values
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
+        /// values
         /// that indicates the final destination of text strings that are fed to this
         /// location.
         /// </summary>

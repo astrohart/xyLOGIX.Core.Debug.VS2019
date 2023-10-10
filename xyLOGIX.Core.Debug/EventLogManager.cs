@@ -26,7 +26,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface
+        /// that
         /// manages our access to the Windows System Event Logs.
         /// </summary>
         public static IEventLogManager Instance { get; } =
@@ -63,7 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Sends an Error event to the system event log pointed to by the
         /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" /> and
-        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The content of
+        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The
+        /// content of
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content"> String specifying the content of the event log message. </param>
@@ -82,7 +84,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Sends an Info event to the system event log pointed to by the
         /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" /> and
-        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The content of
+        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The
+        /// content of
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content">
@@ -108,7 +111,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="logType">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.EventLogType" /> values that specifies the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.EventLogType" /> values that
+        /// specifies the
         /// type of log to send events to.
         /// </param>
         public void Initialize(string eventSourceName, EventLogType logType)
@@ -151,7 +155,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Sends a Warning event to the system event log pointed to by the
         /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" /> and
-        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The content of
+        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The
+        /// content of
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content"> String specifying the content of the event log message. </param>

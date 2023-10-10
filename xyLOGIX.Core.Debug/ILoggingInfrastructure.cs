@@ -40,33 +40,33 @@ namespace xyLOGIX.Core.Debug
         string GetRootFileAppenderFileName();
 
         /// <summary> Initializes the application's logging subsystem. </summary>
-        /// <param name="muteDebugLevelIfReleaseMode" >
+        /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
         /// out "DEBUG" messages to the log file when in the Release mode. Set to false if
         /// all messages should always be logged.
         /// </param>
-        /// <param name="overwrite" >
+        /// <param name="overwrite">
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
-        /// <param name="configurationFilePathname" >
+        /// <param name="configurationFilePathname">
         /// Specifies the path to the
         /// configuration file to be utilized for initializing log4net. If blank, the
         /// system attempts to utilize the default App.config file.
         /// </param>
-        /// <param name="muteConsole" >
+        /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the
         /// display of logging messages to the console if a log file is being used. If a
         /// log file is not used, then no logging at all will occur if this parameter is
         /// set to <see langword="true" />.
         /// </param>
-        /// <param name="logFileName" >
+        /// <param name="logFileName">
         /// (Optional.) If blank, then the
         /// <c>XMLConfigurator</c> object is used to configure logging.
         /// <para />
         /// Else, specify here the path to the log file to be created.
         /// </param>
-        /// <param name="verbosity" >
+        /// <param name="verbosity">
         /// (Optional.) An <see cref="T:System.Int32" /> whose
         /// value must be <c>0</c> or greater.
         /// <para />
@@ -78,14 +78,14 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// The default value of this parameter is <c>1</c>.
         /// </param>
-        /// <param name="applicationName" >
+        /// <param name="applicationName">
         /// (Required.) A <see cref="T:System.String" />
         /// containing a user-friendly display name of the application that is using this
         /// logging library.
         /// <para />
         /// Leave blank to use the default value.
         /// </param>
-        /// <param name="repository" >
+        /// <param name="repository">
         /// (Optional.) Reference to an instance of an object
         /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
         /// interface. Supply a value for this parameter if your infrastructure is not
@@ -106,24 +106,24 @@ namespace xyLOGIX.Core.Debug
         /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to initialize
         /// its functionality.
         /// </summary>
-        /// <param name="muteDebugLevelIfReleaseMode" >
+        /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any
         /// logging statements that are set to <see cref="F:DebugLevel.Debug" />.
         /// </param>
-        /// <param name="isLogging" >
+        /// <param name="isLogging">
         /// True to activate the functionality of writing to a log
         /// file; false to suppress. Usually used with the <paramref name="consoleOnly" />
         /// parameter set to <see langword="true" />.
         /// </param>
-        /// <param name="consoleOnly" >
+        /// <param name="consoleOnly">
         /// True to only write messages to the console; false to
         /// write them both to the console and to the log.
         /// </param>
-        /// <param name="verbosity" >
+        /// <param name="verbosity">
         /// Zero to suppress every message; greater than zero to
         /// echo every message.
         /// </param>
-        /// <param name="muteConsole" >
+        /// <param name="muteConsole">
         /// If set to <see langword="true" />, suppresses all
         /// console output.
         /// </param>

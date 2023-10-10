@@ -21,11 +21,13 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected TraceOutputLocation() { }
+        protected TraceOutputLocation()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+        /// that
         /// directs debugging output to the <b>Output</b> window in Visual Studio or
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
@@ -35,7 +37,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration values
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
+        /// values
         /// that indicates the final destination of text strings that are fed to this
         /// location.
         /// </summary>

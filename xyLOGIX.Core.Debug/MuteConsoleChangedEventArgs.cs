@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> and returns a
         /// reference to it.
         /// </summary>
-        /// <param name="newValue" >
+        /// <param name="newValue">
         /// (Required.) A <see cref="T:System.Boolean" /> value
         /// that matches the current value of the
         /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />

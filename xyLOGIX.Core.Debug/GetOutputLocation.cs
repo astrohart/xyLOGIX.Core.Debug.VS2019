@@ -5,7 +5,8 @@ namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Obtains references to instances of objects that implement the
-    /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that change depending
+    /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that change
+    /// depending
     /// on the strategy desired.
     /// </summary>
     [Log(AttributeExclude = true)]
@@ -13,17 +14,20 @@ namespace xyLOGIX.Core.Debug
     {
         /// <summary>
         /// Obtains a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds to
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds
+        /// to
         /// the specified meeting <paramref name="type" />.
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration values
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
+        /// values
         /// that describes the type of output location to be created.
         /// </param>
         /// <returns>
         /// Reference to the instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds to
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds
+        /// to
         /// the specific enumeration value that is specified for the argument of the
         /// <paramref name="type" /> parameter.
         /// </returns>
@@ -35,7 +39,8 @@ namespace xyLOGIX.Core.Debug
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if there is no
         /// corresponding concrete type defined that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface and which corresponds
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface and which
+        /// corresponds
         /// to the specific enumeration value that was passed for the argument of the
         /// <paramref name="type" /> parameter, if it is not supported.
         /// </exception>

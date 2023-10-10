@@ -46,7 +46,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Call this method to invoke the just-in-time debugger. </summary>
         /// <remarks>
         /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" /> event
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
+        /// event
         /// prior to actually breaking into the debugger. This is helpful to run, e.g.,
         /// service configuration code, prior to the operation.
         /// </remarks>
@@ -76,7 +77,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" /> event.
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
+        /// event.
         /// </summary>
         private static void OnDebuggerStartPending()
             => DebuggerStartPending?.Invoke();

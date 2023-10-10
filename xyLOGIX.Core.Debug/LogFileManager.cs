@@ -7,7 +7,8 @@ namespace xyLOGIX.Core.Debug
     {
         /// <summary>
         /// Reference to an instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the logging
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
+        /// logging
         /// infrastructure type chosen.
         /// </summary>
         /// <remarks>
@@ -18,7 +19,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
+        /// that
         /// represents the type of infrastructure currently in use by this
         /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
         /// </summary>
@@ -28,7 +30,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Gets the full path and filename to the log file for this application. </summary>
         /// <remarks>
         /// This property should only be called after the
-        /// <see cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging" /> method has been
+        /// <see cref="M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging" /> method has
+        /// been
         /// called.
         /// </remarks>
         public static string LogFilePath
@@ -82,7 +85,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values
+        /// that
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp, for example).
         /// </param>
@@ -157,7 +161,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values that
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values
+        /// that
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp).
         /// </param>

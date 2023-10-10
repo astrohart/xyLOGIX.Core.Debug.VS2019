@@ -245,7 +245,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Writes an indent -- a 4 space tab -- to the
         /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
-        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent level
+        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
+        /// level
         /// given by the value of the
         /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
         /// </summary>

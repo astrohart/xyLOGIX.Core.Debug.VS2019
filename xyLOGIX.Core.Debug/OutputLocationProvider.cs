@@ -30,7 +30,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
+        /// interface.
         /// </summary>
         public static IOutputLocationProvider Instance { get; } =
             new OutputLocationProvider();
@@ -47,7 +48,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <remarks>
         /// This property raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" /> event
+        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
+        /// event
         /// when its value is updated.
         /// </remarks>
         public bool MuteConsole
@@ -66,7 +68,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" /> property is
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
         /// updated.
         /// </summary>
         public event MuteConsoleChangedEventHandler MuteConsoleChanged;
@@ -273,11 +276,13 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" /> event.
+        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
+        /// event.
         /// </summary>
         /// <param name="e">
         /// A
-        /// <see cref="T:xyLOGIX.Core.Debug.Events.MuteConsoleChangedEventArgs" /> that contains
+        /// <see cref="T:xyLOGIX.Core.Debug.Events.MuteConsoleChangedEventArgs" /> that
+        /// contains
         /// the event data.
         /// </param>
         protected virtual void OnMuteConsoleChanged(
@@ -287,7 +292,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Initializes the
-        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
+        /// <see
+        ///     cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
         /// to have default values.
         /// </summary>
         private void InitializeInternalOutputLocationList()

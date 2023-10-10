@@ -12,14 +12,16 @@
         /// </summary>
         /// <remarks>
         /// This property raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsoleChanged" /> event
+        /// <see cref="E:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsoleChanged" />
+        /// event
         /// when its value is updated.
         /// </remarks>
         bool MuteConsole { get; set; }
 
         /// <summary>
         /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" /> property is
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
         /// updated.
         /// </summary>
         event MuteConsoleChangedEventHandler MuteConsoleChanged;

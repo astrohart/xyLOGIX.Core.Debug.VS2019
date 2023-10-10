@@ -4,7 +4,8 @@ namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Provides access to the one and only instance of the object that
-    /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+    /// that
     /// directs debugging output to the <b>Output</b> window in Visual Studio or
     /// whichever other debugger can listen to the output of the
     /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
@@ -19,7 +20,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <returns>
         /// Reference to the one, and only, instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+        /// that
         /// directs debugging output to the <b>Output</b> window in Visual Studio or
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Trace" /> class' methods.

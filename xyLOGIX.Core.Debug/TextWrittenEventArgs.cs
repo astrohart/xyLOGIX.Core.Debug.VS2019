@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.TextWrittenEventArgs" /> and returns a
         /// reference to it.
         /// </summary>
-        /// <param name="text" >(Required.) String containing the text to be written.</param>
+        /// <param name="text">(Required.) String containing the text to be written.</param>
         public TextWrittenEventArgs(string text)
             => Text = text;
 

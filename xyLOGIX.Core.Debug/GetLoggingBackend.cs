@@ -9,7 +9,8 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Obtains a reference to a new instance of the
     /// <see cref="T:PostSharp.Patterns.Diagnostics.LoggingBackend" /> that corresponds
-    /// to the specified <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" />
+    /// to the specified
+    /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" />
     /// enumeration value.
     /// </summary>
     public static class GetLoggingBackend
@@ -22,7 +23,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) The
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" /> enumeration value
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" /> enumeration
+        /// value
         /// that explains which type of backend to get.
         /// </param>
         /// <param name="relay">

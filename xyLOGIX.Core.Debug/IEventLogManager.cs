@@ -35,7 +35,8 @@
         /// <summary>
         /// Sends an Error event to the system event log pointed to by the
         /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" /> and
-        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The content of
+        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The
+        /// content of
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content"> String specifying the content of the event log message. </param>
@@ -44,7 +45,8 @@
         /// <summary>
         /// Sends an Info event to the system event log pointed to by the
         /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" /> and
-        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The content of
+        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The
+        /// content of
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content">
@@ -60,7 +62,8 @@
         /// </param>
         /// <param name="logType">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.EventLogType" /> values that specifies the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.EventLogType" /> values that
+        /// specifies the
         /// type of log to send events to.
         /// </param>
         void Initialize(string eventSourceName, EventLogType logType);
@@ -68,7 +71,8 @@
         /// <summary>
         /// Sends a Warning event to the system event log pointed to by the
         /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Source" /> and
-        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The content of
+        /// <see cref="P:xyLOGIX.Core.Debug.EventLogManager.Type" /> properties. The
+        /// content of
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content"> String specifying the content of the event log message. </param>
