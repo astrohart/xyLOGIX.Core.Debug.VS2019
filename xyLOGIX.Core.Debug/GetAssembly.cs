@@ -1,4 +1,4 @@
-﻿careusing System;
+﻿using System;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug

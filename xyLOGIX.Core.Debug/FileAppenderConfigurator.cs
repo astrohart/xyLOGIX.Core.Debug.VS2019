@@ -1,4 +1,4 @@
-﻿ulusing log4net.Appender;
+﻿using log4net.Appender;
 using System;
 
 namespace xyLOGIX.Core.Debug

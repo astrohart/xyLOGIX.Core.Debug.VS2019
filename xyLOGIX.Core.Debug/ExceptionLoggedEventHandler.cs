@@ -1,4 +1,4 @@
-﻿hnamespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>ExceptionLogged</c> event. </summary>
     /// <param name="e">
@@ -9,7 +9,7 @@
     /// This delegate merely specifies the signature of all methods that
     /// handle the <c>ExceptionLogged</c> event.
     /// </remarks>
-public delegate void ExceptionLoggedEventHandler(
+    public delegate void ExceptionLoggedEventHandler(
         ExceptionLoggedEventArgs e
     );
 }
