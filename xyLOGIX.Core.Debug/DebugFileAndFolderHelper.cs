@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -108,64 +107,6 @@ namespace xyLOGIX.Core.Debug
                 // dump all the exception info to the log
                 DebugUtils.LogException(e);
             }
-        }
-
-        /// <summary>
-        /// Gets a collection of strings, each of which contains the pathname of
-        /// a file is present in the specified <paramref name="folder" />.
-        /// </summary>
-        /// <param name="folder">
-        /// (Required.) String containing the full pathname of the
-        /// folder whose files are to be listed.
-        /// </param>
-        /// <returns>
-        /// Collection of strings, each element of which contains the pathname of
-        /// a file located in the specified <paramref name="folder" />.
-        /// </returns>
-        public static List<string> GetFilesInFolder(string folder)
-        {
-            // write the name of the current class and method we are now
-            var result = new List<string>();
-
-            // Check to see if the required parameter, folder, is blank,
-            // whitespace, or null. If it is any of these, send an error to the
-            if (string.IsNullOrWhiteSpace(folder))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    "DebugFileAndFolderHelper.GetFilesInFolder: Blank value passed for the 'folder' parameter. This parameter is required."
-                );
-
-                // stop.
-                return result;
-            }
-
-            if (!Directory.Exists(folder))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    $"*** ERROR *** The system could not locate the folder having the path '{folder}' on the disk.  This folder is required to exist in order for us to proceed."
-                );
-                return result;
-            }
-
-            try
-            {
-                result = Directory.GetFiles(
-                                      folder, "*.*", SearchOption.AllDirectories
-                                  )
-                                  .Where(File.Exists)
-                                  .ToList();
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-
-                result = new List<string>();
-            }
-
-            return result;
         }
 
         /// <summary>
