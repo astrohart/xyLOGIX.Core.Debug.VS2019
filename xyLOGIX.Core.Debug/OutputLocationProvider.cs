@@ -40,7 +40,8 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to a collection, each element of which implements
         /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </summary>
-        private IList<IOutputLocation> InternalOutputLocationList { get; set; }
+        private IList<IOutputLocation> InternalOutputLocationList { get; } =
+            new SynchronizedCollection<IOutputLocation>();
 
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
@@ -94,7 +95,17 @@ namespace xyLOGIX.Core.Debug
                 if (InternalOutputLocationList == null) return;
                 if (InternalOutputLocationList.Contains(location)) return;
 
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"OutputLocationProvider.AddLocation: Adding output location of type, '{location.Type}'..."
+                );
+
                 InternalOutputLocationList.Add(location);
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"OutputLocationProvider.AddLocation: The output location of type, '{location.Type}', has been added."
+                );
             }
             catch (Exception ex)
             {
@@ -297,11 +308,22 @@ namespace xyLOGIX.Core.Debug
         /// to have default values.
         /// </summary>
         private void InitializeInternalOutputLocationList()
-            => InternalOutputLocationList = new List<IOutputLocation>
+        {
+            try
             {
-                GetOutputLocation.OfType(OutputLocationType.Console),
-                GetOutputLocation.OfType(OutputLocationType.Debug),
-                GetOutputLocation.OfType(OutputLocationType.Trace)
-            };
+                if (InternalOutputLocationList == null) return;
+
+                AddLocation(
+                    GetOutputLocation.OfType(OutputLocationType.Console)
+                );
+                AddLocation(GetOutputLocation.OfType(OutputLocationType.Debug));
+                AddLocation(GetOutputLocation.OfType(OutputLocationType.Trace));
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
+        }
     }
 }
