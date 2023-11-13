@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		approvedPackages.json = approvedPackages.json
 		README.md = README.md
+		xyLOGIX.Core.Debug.pssln = xyLOGIX.Core.Debug.pssln
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xyLOGIX.Core.Debug", "xyLOGIX.Core.Debug\xyLOGIX.Core.Debug.csproj", "{C445C052-26B6-4884-9A7B-25DC7ABC0DED}"
