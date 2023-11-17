@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -8,6 +9,17 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public static class GetLoggingInfrastructure
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.GetLoggingInfrastructure" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static GetLoggingInfrastructure() { }
+
         /// <summary>
         /// Creates an instance of an object implementing the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface which

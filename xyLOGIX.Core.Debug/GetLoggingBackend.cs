@@ -16,6 +16,17 @@ namespace xyLOGIX.Core.Debug
     public static class GetLoggingBackend
     {
         /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.GetLoggingBackend" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static GetLoggingBackend() { }
+
+        /// <summary>
         /// Obtains a reference to a new instance of the
         /// <see cref="T:PostSharp.Patterns.Diagnostics.LoggingBackend" /> that corresponds
         /// to the specified logging backend <paramref name="type" /> and, if necessary,

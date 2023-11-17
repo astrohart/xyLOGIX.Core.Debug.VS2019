@@ -9,9 +9,19 @@ namespace xyLOGIX.Core.Debug
     /// depending
     /// on the strategy desired.
     /// </summary>
-    [Log(AttributeExclude = true)]
     public static class GetOutputLocation
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.GetOutputLocation" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static GetOutputLocation() { }
+
         /// <summary>
         /// Obtains a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds

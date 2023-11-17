@@ -1,11 +1,21 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Exposes static methods to get information on .NET assemblies. </summary>
-    public static class GetAssembly
+    public static class GetAssembly 
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only for the <see cref="T:xyLOGIX.Core.Debug.GetAssembly"/> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static GetAssembly() { }
+
         /// <summary>
         /// Obtains the fully-qualified pathname of the specified
         /// <paramref name="assembly" />.

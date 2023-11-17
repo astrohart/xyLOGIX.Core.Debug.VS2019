@@ -1,4 +1,5 @@
 ﻿using log4net.Layout;
+using PostSharp.Patterns.Diagnostics;
 using System;
 
 namespace xyLOGIX.Core.Debug
@@ -9,6 +10,17 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public static class GetPatternLayout
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.GetPatternLayout" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static GetPatternLayout() { }
+
         /// <summary>
         /// Creates a new instance of
         /// <see cref="T:log4net.Layout.PatternLayout" /> and initializes the
