@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Threading;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -24,6 +25,7 @@ namespace xyLOGIX.Core.Debug
         /// Before calling this method, services should de-configure themselves
         /// to be automatically re-started by the operating system.
         /// </remarks>
+        [Yielder]
         public static void EmergencyStop(Action notificationAction = null)
         {
             // write the name of the current class and method we are now
@@ -80,6 +82,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
         /// event.
         /// </summary>
+        [Yielder]
         private static void OnDebuggerStartPending()
             => DebuggerStartPending?.Invoke();
     }

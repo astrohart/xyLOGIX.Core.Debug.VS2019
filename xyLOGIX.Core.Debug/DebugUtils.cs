@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
 using System.IO;
@@ -493,6 +494,7 @@ namespace xyLOGIX.Core.Debug
         /// the
         /// event data.
         /// </param>
+        [Yielder]
         private static void OnTextEmitted(TextEmittedEventArgs e)
             => TextEmitted?.Invoke(e);
 
@@ -505,6 +507,7 @@ namespace xyLOGIX.Core.Debug
         /// is raised whenever the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
         /// </remarks>
+        [Yielder]
         private static void OnVerbosityChanged(VerbosityChangedEventArgs e)
             => VerbosityChanged?.Invoke(e);
 

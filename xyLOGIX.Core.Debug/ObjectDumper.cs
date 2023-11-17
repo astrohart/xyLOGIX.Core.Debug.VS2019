@@ -1,5 +1,6 @@
 ﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
 
+using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
 using System.IO;
@@ -223,6 +224,7 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
         /// that contains the event data.
         /// </param>
+        [Yielder]
         protected static void OnTextWritten(TextWrittenEventArgs e)
             => TextWritten?.Invoke(e);
 

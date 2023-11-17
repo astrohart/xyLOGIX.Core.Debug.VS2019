@@ -1,9 +1,12 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Threading;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Defines the publicly-exposed methods and properties of an object that
     /// writes output logging lines to multiple destinations at the same time..
     /// </summary>
+    [Actor]
     public interface IOutputLocationProvider
     {
         /// <summary>

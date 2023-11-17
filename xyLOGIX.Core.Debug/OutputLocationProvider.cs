@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -296,6 +297,7 @@ namespace xyLOGIX.Core.Debug
         /// contains
         /// the event data.
         /// </param>
+        [Yielder]
         protected virtual void OnMuteConsoleChanged(
             MuteConsoleChangedEventArgs e
         )
