@@ -1,5 +1,4 @@
 ﻿using log4net.Repository;
-using PostSharp.Patterns.Threading;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -8,7 +7,6 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" /> delegates the implementation
     /// of its properties and methods.
     /// </summary>
-    [Synchronized]
     public interface ILoggingInfrastructure
     {
         /// <summary> Gets the full path and filename to the log file for this application. </summary>

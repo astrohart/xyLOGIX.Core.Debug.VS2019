@@ -1,12 +1,9 @@
-﻿using PostSharp.Patterns.Threading;
-
-namespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Defines the publicly-exposed methods and properties of an object that
     /// manages our access to the Windows System Event Log(s).
     /// </summary>
-    [Actor]
     public interface IEventLogManager
     {
         /// <summary>
