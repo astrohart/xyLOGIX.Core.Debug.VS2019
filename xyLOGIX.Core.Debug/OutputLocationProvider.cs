@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to a collection, each element of which implements
         /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </summary>
+        [Child]
         private IList<IOutputLocation> InternalOutputLocationList { get; } =
             new SynchronizedCollection<IOutputLocation>();
 

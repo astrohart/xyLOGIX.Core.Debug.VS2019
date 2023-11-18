@@ -119,31 +119,43 @@
   - [GetAppenderByName(name)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetAppenderByName-System-String- 'xyLOGIX.Core.Debug.FileAppenderManager.GetAppenderByName(System.String)')
   - [GetFirstAppender(loggerRepository)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetFirstAppender-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.FileAppenderManager.GetFirstAppender(log4net.Repository.ILoggerRepository)')
 - [GetAssembly](#T-xyLOGIX-Core-Debug-GetAssembly 'xyLOGIX.Core.Debug.GetAssembly')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetAssembly-#cctor 'xyLOGIX.Core.Debug.GetAssembly.#cctor')
   - [Pathname(assembly)](#M-xyLOGIX-Core-Debug-GetAssembly-Pathname-System-Reflection-Assembly- 'xyLOGIX.Core.Debug.GetAssembly.Pathname(System.Reflection.Assembly)')
   - [ToUseForEventLogging()](#M-xyLOGIX-Core-Debug-GetAssembly-ToUseForEventLogging-System-Reflection-Assembly- 'xyLOGIX.Core.Debug.GetAssembly.ToUseForEventLogging(System.Reflection.Assembly)')
 - [GetConsoleOutputLocation](#T-xyLOGIX-Core-Debug-GetConsoleOutputLocation 'xyLOGIX.Core.Debug.GetConsoleOutputLocation')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetConsoleOutputLocation-#cctor 'xyLOGIX.Core.Debug.GetConsoleOutputLocation.#cctor')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetConsoleOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetConsoleOutputLocation.SoleInstance')
 - [GetDebugOutputLocation](#T-xyLOGIX-Core-Debug-GetDebugOutputLocation 'xyLOGIX.Core.Debug.GetDebugOutputLocation')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetDebugOutputLocation-#cctor 'xyLOGIX.Core.Debug.GetDebugOutputLocation.#cctor')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetDebugOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetDebugOutputLocation.SoleInstance')
 - [GetEvent](#T-xyLOGIX-Core-Debug-GetEvent 'xyLOGIX.Core.Debug.GetEvent')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetEvent-#cctor 'xyLOGIX.Core.Debug.GetEvent.#cctor')
   - [SourceName()](#M-xyLOGIX-Core-Debug-GetEvent-SourceName 'xyLOGIX.Core.Debug.GetEvent.SourceName')
 - [GetEventLogManager](#T-xyLOGIX-Core-Debug-GetEventLogManager 'xyLOGIX.Core.Debug.GetEventLogManager')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetEventLogManager-#cctor 'xyLOGIX.Core.Debug.GetEventLogManager.#cctor')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetEventLogManager-SoleInstance 'xyLOGIX.Core.Debug.GetEventLogManager.SoleInstance')
 - [GetLog](#T-xyLOGIX-Core-Debug-GetLog 'xyLOGIX.Core.Debug.GetLog')
   - [FileName](#F-xyLOGIX-Core-Debug-GetLog-FileName 'xyLOGIX.Core.Debug.GetLog.FileName')
   - [FileFolder](#P-xyLOGIX-Core-Debug-GetLog-FileFolder 'xyLOGIX.Core.Debug.GetLog.FileFolder')
   - [FilePath](#P-xyLOGIX-Core-Debug-GetLog-FilePath 'xyLOGIX.Core.Debug.GetLog.FilePath')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetLog-#cctor 'xyLOGIX.Core.Debug.GetLog.#cctor')
 - [GetLoggingBackend](#T-xyLOGIX-Core-Debug-GetLoggingBackend 'xyLOGIX.Core.Debug.GetLoggingBackend')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetLoggingBackend-#cctor 'xyLOGIX.Core.Debug.GetLoggingBackend.#cctor')
   - [For(type,relay)](#M-xyLOGIX-Core-Debug-GetLoggingBackend-For-xyLOGIX-Core-Debug-LoggingBackendType,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.GetLoggingBackend.For(xyLOGIX.Core.Debug.LoggingBackendType,log4net.Repository.ILoggerRepository)')
 - [GetLoggingInfrastructure](#T-xyLOGIX-Core-Debug-GetLoggingInfrastructure 'xyLOGIX.Core.Debug.GetLoggingInfrastructure')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetLoggingInfrastructure-#cctor 'xyLOGIX.Core.Debug.GetLoggingInfrastructure.#cctor')
   - [For(type)](#M-xyLOGIX-Core-Debug-GetLoggingInfrastructure-For-xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.GetLoggingInfrastructure.For(xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [GetOutputLocation](#T-xyLOGIX-Core-Debug-GetOutputLocation 'xyLOGIX.Core.Debug.GetOutputLocation')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetOutputLocation-#cctor 'xyLOGIX.Core.Debug.GetOutputLocation.#cctor')
   - [OfType(type)](#M-xyLOGIX-Core-Debug-GetOutputLocation-OfType-xyLOGIX-Core-Debug-OutputLocationType- 'xyLOGIX.Core.Debug.GetOutputLocation.OfType(xyLOGIX.Core.Debug.OutputLocationType)')
 - [GetOutputLocationProvider](#T-xyLOGIX-Core-Debug-GetOutputLocationProvider 'xyLOGIX.Core.Debug.GetOutputLocationProvider')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetOutputLocationProvider-#cctor 'xyLOGIX.Core.Debug.GetOutputLocationProvider.#cctor')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetOutputLocationProvider-SoleInstance 'xyLOGIX.Core.Debug.GetOutputLocationProvider.SoleInstance')
 - [GetPatternLayout](#T-xyLOGIX-Core-Debug-GetPatternLayout 'xyLOGIX.Core.Debug.GetPatternLayout')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetPatternLayout-#cctor 'xyLOGIX.Core.Debug.GetPatternLayout.#cctor')
   - [ForConversionPattern(conversionPattern)](#M-xyLOGIX-Core-Debug-GetPatternLayout-ForConversionPattern-System-String- 'xyLOGIX.Core.Debug.GetPatternLayout.ForConversionPattern(System.String)')
 - [GetTraceOutputLocation](#T-xyLOGIX-Core-Debug-GetTraceOutputLocation 'xyLOGIX.Core.Debug.GetTraceOutputLocation')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-GetTraceOutputLocation-#cctor 'xyLOGIX.Core.Debug.GetTraceOutputLocation.#cctor')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetTraceOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetTraceOutputLocation.SoleInstance')
 - [Has](#T-xyLOGIX-Core-Debug-Has 'xyLOGIX.Core.Debug.Has')
   - [_isWindowsGuiApp](#F-xyLOGIX-Core-Debug-Has-_isWindowsGuiApp 'xyLOGIX.Core.Debug.Has._isWindowsGuiApp')
@@ -2313,6 +2325,21 @@ xyLOGIX.Core.Debug
 
 Exposes static methods to get information on .NET assemblies.
 
+<a name='M-xyLOGIX-Core-Debug-GetAssembly-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only for the [GetAssembly](#T-xyLOGIX-Core-Debug-GetAssembly 'xyLOGIX.Core.Debug.GetAssembly') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+
 <a name='M-xyLOGIX-Core-Debug-GetAssembly-Pathname-System-Reflection-Assembly-'></a>
 ### Pathname(assembly) `method`
 
@@ -2384,6 +2411,23 @@ that
 directs debugging output to the standard output of the application and/or a
 console window, if present.
 
+<a name='M-xyLOGIX-Core-Debug-GetConsoleOutputLocation-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetConsoleOutputLocation](#T-xyLOGIX-Core-Debug-GetConsoleOutputLocation 'xyLOGIX.Core.Debug.GetConsoleOutputLocation') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
 <a name='M-xyLOGIX-Core-Debug-GetConsoleOutputLocation-SoleInstance'></a>
 ### SoleInstance() `method`
 
@@ -2421,6 +2465,23 @@ directs debugging output to the window in Visual Studio or
 whichever other debugger can listen to the output of the
 [Debug](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Diagnostics.Debug 'System.Diagnostics.Debug') class' methods.
 
+<a name='M-xyLOGIX-Core-Debug-GetDebugOutputLocation-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetDebugOutputLocation](#T-xyLOGIX-Core-Debug-GetDebugOutputLocation 'xyLOGIX.Core.Debug.GetDebugOutputLocation') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
 <a name='M-xyLOGIX-Core-Debug-GetDebugOutputLocation-SoleInstance'></a>
 ### SoleInstance() `method`
 
@@ -2454,6 +2515,23 @@ xyLOGIX.Core.Debug
 
 Exposes static methods for interacting with the Windows Event Log.
 
+<a name='M-xyLOGIX-Core-Debug-GetEvent-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetEvent](#T-xyLOGIX-Core-Debug-GetEvent 'xyLOGIX.Core.Debug.GetEvent') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
 <a name='M-xyLOGIX-Core-Debug-GetEvent-SourceName'></a>
 ### SourceName() `method`
 
@@ -2484,6 +2562,23 @@ Provides access to the one and only instance of the object that
 implements the [IEventLogManager](#T-xyLOGIX-Core-Debug-IEventLogManager 'xyLOGIX.Core.Debug.IEventLogManager') interface
 that
 manages our access to the Windows System Event Logs.
+
+<a name='M-xyLOGIX-Core-Debug-GetEventLogManager-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetEventLogManager](#T-xyLOGIX-Core-Debug-GetEventLogManager 'xyLOGIX.Core.Debug.GetEventLogManager') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetEventLogManager-SoleInstance'></a>
 ### SoleInstance() `method`
@@ -2539,6 +2634,23 @@ current user's temporary files folder.
 Gets a string containing the fully-qualified pathname to use for the
 current log file.
 
+<a name='M-xyLOGIX-Core-Debug-GetLog-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetLog](#T-xyLOGIX-Core-Debug-GetLog 'xyLOGIX.Core.Debug.GetLog') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
 <a name='T-xyLOGIX-Core-Debug-GetLoggingBackend'></a>
 ## GetLoggingBackend `type`
 
@@ -2553,6 +2665,23 @@ Obtains a reference to a new instance of the
 to the specified
 [LoggingBackendType](#T-xyLOGIX-Core-Debug-Constants-LoggingBackendType 'xyLOGIX.Core.Debug.Constants.LoggingBackendType')
 enumeration value.
+
+<a name='M-xyLOGIX-Core-Debug-GetLoggingBackend-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetLoggingBackend](#T-xyLOGIX-Core-Debug-GetLoggingBackend 'xyLOGIX.Core.Debug.GetLoggingBackend') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetLoggingBackend-For-xyLOGIX-Core-Debug-LoggingBackendType,log4net-Repository-ILoggerRepository-'></a>
 ### For(type,relay) `method`
@@ -2593,6 +2722,23 @@ xyLOGIX.Core.Debug
 
 Creates instances of objects that implement the
 [ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure') interface.
+
+<a name='M-xyLOGIX-Core-Debug-GetLoggingInfrastructure-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetLoggingInfrastructure](#T-xyLOGIX-Core-Debug-GetLoggingInfrastructure 'xyLOGIX.Core.Debug.GetLoggingInfrastructure') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetLoggingInfrastructure-For-xyLOGIX-Core-Debug-LoggingInfrastructureType-'></a>
 ### For(type) `method`
@@ -2646,6 +2792,23 @@ Obtains references to instances of objects that implement the
 [IOutputLocation](#T-xyLOGIX-Core-Debug-IOutputLocation 'xyLOGIX.Core.Debug.IOutputLocation') interface that change
 depending
 on the strategy desired.
+
+<a name='M-xyLOGIX-Core-Debug-GetOutputLocation-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetOutputLocation](#T-xyLOGIX-Core-Debug-GetOutputLocation 'xyLOGIX.Core.Debug.GetOutputLocation') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetOutputLocation-OfType-xyLOGIX-Core-Debug-OutputLocationType-'></a>
 ### OfType(type) `method`
@@ -2704,6 +2867,23 @@ Provides access to the one and only instance of the object that
 implements the [IOutputLocationProvider](#T-xyLOGIX-Core-Debug-IOutputLocationProvider 'xyLOGIX.Core.Debug.IOutputLocationProvider')
 interface.
 
+<a name='M-xyLOGIX-Core-Debug-GetOutputLocationProvider-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetOutputLocationProvider](#T-xyLOGIX-Core-Debug-GetOutputLocationProvider 'xyLOGIX.Core.Debug.GetOutputLocationProvider') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
 <a name='M-xyLOGIX-Core-Debug-GetOutputLocationProvider-SoleInstance'></a>
 ### SoleInstance() `method`
 
@@ -2735,6 +2915,23 @@ xyLOGIX.Core.Debug
 
 Creates instances of [PatternLayout](#T-log4net-Layout-PatternLayout 'log4net.Layout.PatternLayout')
 that are initialized properly.
+
+<a name='M-xyLOGIX-Core-Debug-GetPatternLayout-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetPatternLayout](#T-xyLOGIX-Core-Debug-GetPatternLayout 'xyLOGIX.Core.Debug.GetPatternLayout') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetPatternLayout-ForConversionPattern-System-String-'></a>
 ### ForConversionPattern(conversionPattern) `method`
@@ -2775,6 +2972,23 @@ that
 directs debugging output to the window in Visual Studio or
 whichever other debugger can listen to the output of the
 [Trace](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Diagnostics.Trace 'System.Diagnostics.Trace') class' methods.
+
+<a name='M-xyLOGIX-Core-Debug-GetTraceOutputLocation-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [GetTraceOutputLocation](#T-xyLOGIX-Core-Debug-GetTraceOutputLocation 'xyLOGIX.Core.Debug.GetTraceOutputLocation') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetTraceOutputLocation-SoleInstance'></a>
 ### SoleInstance() `method`
