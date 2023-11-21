@@ -8,7 +8,7 @@ using System.Linq;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides access to a list of output locations for debugging. </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), Aggregatable]
     public class OutputLocationProvider : IOutputLocationProvider
     {
         /// <summary>

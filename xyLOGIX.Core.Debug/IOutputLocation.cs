@@ -6,6 +6,7 @@ namespace xyLOGIX.Core.Debug
     /// Defines the publicly-exposed methods and properties of an object that
     /// writes output logging lines to multiple destinations at the same time..
     /// </summary>
+    [Synchronized]
     public interface IOutputLocation
     {
         /// <summary>
