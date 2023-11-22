@@ -14,6 +14,7 @@ namespace xyLOGIX.Core.Debug
     /// of objects to the log file. Works in a way very similar to LINQPad's Dump()
     /// method.
     /// </summary>
+    [ExplicitlySynchronized]
     public class ObjectDumper
     {
         /// <summary>

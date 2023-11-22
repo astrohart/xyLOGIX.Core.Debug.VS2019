@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods and properties to assist with the operational
+    /// Exposes <see langword="static" /> methods and properties to assist with the operational
     /// flow of a Windows service.
     /// </summary>
     public static class ServiceFlowHelper

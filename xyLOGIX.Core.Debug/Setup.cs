@@ -2,7 +2,7 @@
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes static methods to perform setup tasks. </summary>
+    /// <summary> Exposes <see langword="static" /> methods to perform setup tasks. </summary>
     public static class Setup
     {
         /// <summary>

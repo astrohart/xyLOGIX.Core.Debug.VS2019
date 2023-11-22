@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug

@@ -1,4 +1,5 @@
-﻿using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Collections;
+using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
@@ -46,8 +47,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         [Child]
         private IList<IOutputLocation> InternalOutputLocationList { get; } =
-            new SynchronizedCollection<IOutputLocation>();
-
+            new AdvisableCollection<IOutputLocation>();
+        
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.

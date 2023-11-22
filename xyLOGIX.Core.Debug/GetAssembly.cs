@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes static methods to get information on .NET assemblies. </summary>
+    /// <summary> Exposes <see langword="static" /> methods to get information on .NET assemblies. </summary>
     public static class GetAssembly 
     {
         /// <summary>

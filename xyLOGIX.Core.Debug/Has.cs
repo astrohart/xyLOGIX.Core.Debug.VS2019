@@ -5,7 +5,7 @@ using System.Reflection;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods to determine whether a console window is
+    /// Exposes <see langword="static" /> methods to determine whether a console window is
     /// present.
     /// </summary>
     public static class Has

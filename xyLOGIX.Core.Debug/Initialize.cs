@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes static methods to initialize data. </summary>
+    /// <summary> Exposes <see langword="static" /> methods to initialize data. </summary>
     public static class Initialize
     {
         /// <summary> Called once per application to initialize the logging subsystem. </summary>

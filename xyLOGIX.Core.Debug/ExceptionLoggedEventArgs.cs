@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PostSharp.Patterns.Threading;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>ExceptionLogged</c> event handlers. </summary>
+    [ExplicitlySynchronized]
     public class ExceptionLoggedEventArgs : EventArgs
     {
         /// <summary>

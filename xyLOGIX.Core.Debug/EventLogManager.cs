@@ -1,10 +1,11 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Class to manage access to the event log. </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class EventLogManager : IEventLogManager
     {
         /// <summary>

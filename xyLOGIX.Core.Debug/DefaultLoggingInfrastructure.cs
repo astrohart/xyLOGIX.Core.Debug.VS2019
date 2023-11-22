@@ -3,6 +3,7 @@ using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
+using PostSharp.Patterns.Threading;
 using System;
 using System.IO;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
@@ -16,7 +17,7 @@ namespace xyLOGIX.Core.Debug
     /// Default implementation details for the
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />.
     /// </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), Actor]
     public class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary> Gets the full path and filename to the log file for this application. </summary>

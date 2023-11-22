@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -6,7 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all output
     /// location objects.
     /// </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), Immutable]
     public abstract class OutputLocationBase : IOutputLocation
     {
         /// <summary>

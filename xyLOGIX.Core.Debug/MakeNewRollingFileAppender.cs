@@ -6,7 +6,7 @@ using System;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods to create new instances of
+    /// Exposes <see langword="static" /> methods to create new instances of
     /// <see cref="T:log4net.Appender.RollingFileAppender" /> and initialize them.
     /// </summary>
     [Log(AttributeExclude = true)]

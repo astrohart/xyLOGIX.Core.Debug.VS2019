@@ -1,6 +1,7 @@
 ﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
+using PostSharp.Patterns.Threading;
 
 #if DEBUG
 #else
