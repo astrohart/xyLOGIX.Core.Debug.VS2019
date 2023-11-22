@@ -7,7 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all output
     /// location objects.
     /// </summary>
-    [Log(AttributeExclude = true), Immutable]
+    [Log(AttributeExclude = true)]
     public abstract class OutputLocationBase : IOutputLocation
     {
         /// <summary>

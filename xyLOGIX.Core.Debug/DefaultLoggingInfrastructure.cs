@@ -17,7 +17,7 @@ namespace xyLOGIX.Core.Debug
     /// Default implementation details for the
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />.
     /// </summary>
-    [Log(AttributeExclude = true), Actor]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary> Gets the full path and filename to the log file for this application. </summary>

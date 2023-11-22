@@ -336,7 +336,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to activate functionality, such as logging.
+Exposes `static` methods to activate functionality, such as logging.
 
 <a name='M-xyLOGIX-Core-Debug-Activate-LoggingForLogFileName-System-String,log4net-Repository-ILoggerRepository-'></a>
 ### LoggingForLogFileName(logFileName,repository) `method`
@@ -392,7 +392,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods for performing mathematical computations.
+Exposes `static` methods for performing mathematical computations.
 
 <a name='M-xyLOGIX-Core-Debug-Compute-ZeroFloor-System-Int32-'></a>
 ### ZeroFloor(value) `method`
@@ -2323,7 +2323,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to get information on .NET assemblies.
+Exposes `static` methods to get information on .NET assemblies.
 
 <a name='M-xyLOGIX-Core-Debug-GetAssembly-#cctor'></a>
 ### #cctor() `method`
@@ -2513,7 +2513,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods for interacting with the Windows Event Log.
+Exposes `static` methods for interacting with the Windows Event Log.
 
 <a name='M-xyLOGIX-Core-Debug-GetEvent-#cctor'></a>
 ### #cctor() `method`
@@ -3021,7 +3021,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to determine whether a console window is
+Exposes `static` methods to determine whether a console window is
 present.
 
 <a name='F-xyLOGIX-Core-Debug-Has-_isWindowsGuiApp'></a>
@@ -3686,7 +3686,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to initialize data.
+Exposes `static` methods to initialize data.
 
 <a name='M-xyLOGIX-Core-Debug-Initialize-Logging-System-String-'></a>
 ### Logging(applicationName) `method`
@@ -3725,7 +3725,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods and properties to determine whether facts
+Exposes `static` methods and properties to determine whether facts
 about logs or logging are true.
 
 <a name='P-xyLOGIX-Core-Debug-IsLog-Initialized'></a>
@@ -4032,7 +4032,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to create new instances of
+Exposes `static` methods to create new instances of
 [RollingFileAppender](#T-log4net-Appender-RollingFileAppender 'log4net.Appender.RollingFileAppender') and initialize them.
 
 <a name='M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-AndHavingLogFileName-log4net-Appender-RollingFileAppender,System-String-'></a>
@@ -5145,7 +5145,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to multiplex debugging output; i.e., write it
+Exposes `static` methods to multiplex debugging output; i.e., write it
 to multiple locations at the same time.
 
 <a name='P-xyLOGIX-Core-Debug-OutputMultiplexer-MuteConsole'></a>
@@ -5471,7 +5471,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods and properties to assist with the operational
+Exposes `static` methods and properties to assist with the operational
 flow of a Windows service.
 
 <a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action-'></a>
@@ -5558,7 +5558,7 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes static methods to perform setup tasks.
+Exposes `static` methods to perform setup tasks.
 
 <a name='P-xyLOGIX-Core-Debug-Setup-EventLogManager'></a>
 ### EventLogManager `property`
