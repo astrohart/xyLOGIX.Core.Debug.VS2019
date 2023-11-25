@@ -5,7 +5,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes <see langword="static" /> methods and properties to assist with the operational
+    /// Exposes <see langword="static" /> methods and properties to assist with the
+    /// operational
     /// flow of a Windows service.
     /// </summary>
     public static class ServiceFlowHelper
@@ -56,10 +57,35 @@ namespace xyLOGIX.Core.Debug
         [DebuggerStepThrough]
         public static void StartDebugger()
         {
-            // write the name of the current class and method we are now
-            // entering, into the log
+            /*
+             * Detect whether the software is launched interactively by the
+             * user.  If so, then the ProgramFlowHelper class' version of
+             * this method should be called instead.
+             */
+
             DebugUtils.WriteLine(
-                DebugLevel.Debug, "In ServiceFlowHelper.StartDebugger"
+                DebugLevel.Info,
+                "*** ServiceFlowHelper.StartDebugger: Checking whether the 'Environment.UserInteractive' Boolean expression evaluates to FALSE..."
+            );
+
+            // Check to see whether the Boolean expression, Environment.UserInteractive, evaluates to FALSE.  If it does not, log an error message to the log file and then terminate the execution of this method.
+            if (Environment.UserInteractive)
+            {
+                // the Boolean expression, Environment.UserInteractive, evaluated to TRUE.  This is not desirable.
+                DebugUtils.WriteLine(
+                    DebugLevel.Error,
+                    "*** ERROR: The Boolean expression, 'Environment.UserInteractive, evaluated to TRUE.  Calling the ProgramFlowHelper class' equivalent of this method..."
+                );
+
+                ProgramFlowHelper.StartDebugger();
+
+                // stop.
+                return;
+            }
+
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "ServiceFlowHelper.StartDebugger: *** SUCCESS *** The Boolean expression, 'Environment.UserInteractive', evaluated to FALSE.  Proceeding..."
             );
 
             OnDebuggerStartPending();
