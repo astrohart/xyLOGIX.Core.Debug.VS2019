@@ -1,6 +1,6 @@
 ﻿# xyLOGIX.Core.Debug `class library`
 
-This project provides basic logging functionality.  Its caller-facing interface is designed to mimic that of the more sophisticated [xyLOGIX.Core.Debug](https://github.com/astrohart/xyLOGIX.Core.Debug.VS2019) project.
+This project provides basic logging functionality.
 
 This project provides stripped-down logging to text files that are appended to, without the bulk of log4net.
 
