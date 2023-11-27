@@ -5471,7 +5471,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods and properties to assist with the operational
+Exposes `static` methods and properties to assist with the
+operational
 flow of a Windows service.
 
 <a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action-'></a>

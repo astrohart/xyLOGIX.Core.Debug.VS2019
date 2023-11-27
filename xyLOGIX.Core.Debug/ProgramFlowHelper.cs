@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -7,8 +8,20 @@ namespace xyLOGIX.Core.Debug
     /// Defines methods and properties to aid in controlling the flow of the
     /// program.
     /// </summary>
+    [DebuggerStepThrough]
     public static class ProgramFlowHelper
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.ProgramFlowHelper" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static ProgramFlowHelper() { }
+
         /// <summary> Brings the application to an immediate halt. </summary>
         public static void EmergencyStop()
             => Environment.Exit(-1);

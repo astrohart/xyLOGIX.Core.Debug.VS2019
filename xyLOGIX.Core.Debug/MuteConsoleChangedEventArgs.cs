@@ -4,9 +4,27 @@ using System;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>MuteConsoleChanged</c> event handlers. </summary>
-    [Log(AttributeExclude = true)]
     public class MuteConsoleChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static MuteConsoleChangedEventArgs() { }
+
+        /// <summary>
+        /// Creates a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> and returns a
+        /// reference to it.
+        /// </summary>
+        [Log(AttributeExclude = true)]
+        public MuteConsoleChangedEventArgs() { }
+
         /// <summary>
         /// Constructs a new instance of
         /// <see cref="T:xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs" /> and returns a
@@ -18,6 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
         /// property.
         /// </param>
+        [Log(AttributeExclude = true)]
         public MuteConsoleChangedEventArgs(bool newValue)
             => NewValue = newValue;
 
