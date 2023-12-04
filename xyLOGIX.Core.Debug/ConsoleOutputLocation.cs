@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Writes debugging output to the standard output of the application
     /// and/or a console window, if present.
     /// </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>

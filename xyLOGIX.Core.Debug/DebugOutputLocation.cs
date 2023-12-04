@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -8,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// or whichever other debugger can listen to the output of the
     /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
     /// </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class DebugOutputLocation : OutputLocationBase
     {
         /// <summary>

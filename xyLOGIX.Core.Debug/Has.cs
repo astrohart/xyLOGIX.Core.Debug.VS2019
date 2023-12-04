@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -6,26 +7,35 @@ using System.Reflection;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes <see langword="static" /> methods to determine whether a console window is
+    /// Exposes <see langword="static" /> methods to determine whether a console window
+    /// is
     /// present.
     /// </summary>
+    [ExplicitlySynchronized]
     public static class Has
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only for the <see cref="T:xyLOGIX.Core.Debug.Has"/> class.
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.Has" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static Has() { }
 
         /// <summary>
-        /// Value that is initialized with a <see cref="T:System.Boolean" /> that
-        /// indicates whether the calling application is a Windows GUI app or a console
-        /// app.
+        /// Gets or sets a value that is initialized with a <see cref="T:System.Boolean" />
+        /// that indicates whether the calling application is a Windows GUI app or a
+        /// console app.
         /// </summary>
-        private static bool? _isWindowsGuiApp;
+        /// <remarks>
+        /// We use this property to avoid re-determining the nature of the current app if
+        /// the <see cref="M:xyLOGIX.Core.Debug.Has.WindowsGui" /> method is called more
+        /// than once.
+        /// </remarks>
+        private static bool? IsWindowsGUI { get; set; }
 
         /// <summary>
         /// Determines whether the application is currently running in a console
@@ -95,10 +105,10 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public static bool WindowsGui(bool useEntryAssembly = false)
         {
-            if (_isWindowsGuiApp.HasValue)
-                return _isWindowsGuiApp.Value;
+            if (IsWindowsGUI.HasValue)
+                return IsWindowsGUI.Value;
 
-            _isWindowsGuiApp = false;
+            IsWindowsGUI = false;
 
             try
             {
@@ -107,7 +117,7 @@ namespace xyLOGIX.Core.Debug
                     : Assembly.GetCallingAssembly();
 
                 if (assemblyToCheck == null)
-                    return _isWindowsGuiApp.Value;
+                    return IsWindowsGUI.Value;
 
                 var wpfAssemblies = new[]
                 {
@@ -119,24 +129,24 @@ namespace xyLOGIX.Core.Debug
                 var referencedAssemblies =
                     assemblyToCheck.GetReferencedAssemblies();
                 if (referencedAssemblies == null || !referencedAssemblies.Any())
-                    return _isWindowsGuiApp.Value;
+                    return IsWindowsGUI.Value;
 
                 foreach (var assemblyName in referencedAssemblies)
                 {
                     if (assemblyName == null ||
                         string.IsNullOrWhiteSpace(assemblyName.Name))
-                        return _isWindowsGuiApp.Value;
+                        return IsWindowsGUI.Value;
 
                     if (wpfAssemblies.Contains(assemblyName.Name))
                     {
-                        _isWindowsGuiApp = true; // WPF
+                        IsWindowsGUI = true; // WPF
                         break;
                     }
 
                     if (!winFormsAssemblies.Contains(assemblyName.Name))
                         continue;
 
-                    _isWindowsGuiApp = true; // WinForms
+                    IsWindowsGUI = true; // WinForms
                     break;
                 }
             }
@@ -145,10 +155,10 @@ namespace xyLOGIX.Core.Debug
                 // dump all the exception info to the log
                 DebugUtils.LogException(ex);
 
-                _isWindowsGuiApp = false;
+                IsWindowsGUI = false;
             }
 
-            return _isWindowsGuiApp.Value;
+            return IsWindowsGUI.Value;
         }
     }
 }
