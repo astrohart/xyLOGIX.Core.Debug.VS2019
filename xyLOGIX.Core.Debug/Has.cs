@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -10,6 +11,15 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public static class Has
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only for the <see cref="T:xyLOGIX.Core.Debug.Has"/> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static Has() { }
+
         /// <summary>
         /// Value that is initialized with a <see cref="T:System.Boolean" /> that
         /// indicates whether the calling application is a Windows GUI app or a console

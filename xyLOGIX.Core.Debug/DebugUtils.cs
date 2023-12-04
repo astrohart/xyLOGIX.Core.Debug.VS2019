@@ -11,7 +11,7 @@ using xyLOGIX.Core.Debug.Properties;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Helpers to manage the writing of content to the debugging log. </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class DebugUtils
     {
         /// <summary> The verbosity level. </summary>

@@ -222,8 +222,10 @@
   - [WithMaximumFileSizeOf(self,maximumFileSize)](#M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-WithMaximumFileSizeOf-log4net-Appender-RollingFileAppender,System-String- 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender.WithMaximumFileSizeOf(log4net.Appender.RollingFileAppender,System.String)')
   - [WithPatternLayout(self,layout)](#M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-WithPatternLayout-log4net-Appender-RollingFileAppender,log4net-Layout-PatternLayout- 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender.WithPatternLayout(log4net.Appender.RollingFileAppender,log4net.Layout.PatternLayout)')
 - [MuteConsoleChangedEventArgs](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-#ctor 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs.#ctor')
   - [#ctor(newValue)](#M-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-#ctor-System-Boolean- 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs.#ctor(System.Boolean)')
   - [NewValue](#P-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-NewValue 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs.NewValue')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-#cctor 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs.#cctor')
 - [MuteConsoleChangedEventHandler](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventHandler 'xyLOGIX.Core.Debug.MuteConsoleChangedEventHandler')
 - [ObjectDumper](#T-xyLOGIX-Core-Debug-ObjectDumper 'xyLOGIX.Core.Debug.ObjectDumper')
   - [#ctor(depth)](#M-xyLOGIX-Core-Debug-ObjectDumper-#ctor-System-Int32- 'xyLOGIX.Core.Debug.ObjectDumper.#ctor(System.Int32)')
@@ -285,6 +287,7 @@
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
 - [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-#cctor 'xyLOGIX.Core.Debug.ProgramFlowHelper.#cctor')
   - [EmergencyStop()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStop 'xyLOGIX.Core.Debug.ProgramFlowHelper.EmergencyStop')
   - [StartDebugger()](#M-xyLOGIX-Core-Debug-ProgramFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger')
 - [Resources](#T-xyLOGIX-Core-Debug-Properties-Resources 'xyLOGIX.Core.Debug.Properties.Resources')
@@ -308,8 +311,10 @@
   - [Text](#P-xyLOGIX-Core-Debug-TextEmittedEventArgs-Text 'xyLOGIX.Core.Debug.TextEmittedEventArgs.Text')
 - [TextEmittedEventHandler](#T-xyLOGIX-Core-Debug-TextEmittedEventHandler 'xyLOGIX.Core.Debug.TextEmittedEventHandler')
 - [TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor 'xyLOGIX.Core.Debug.TextWrittenEventArgs.#ctor')
   - [#ctor(text)](#M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor-System-String- 'xyLOGIX.Core.Debug.TextWrittenEventArgs.#ctor(System.String)')
   - [Text](#P-xyLOGIX-Core-Debug-TextWrittenEventArgs-Text 'xyLOGIX.Core.Debug.TextWrittenEventArgs.Text')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#cctor 'xyLOGIX.Core.Debug.TextWrittenEventArgs.#cctor')
 - [TextWrittenEventHandler](#T-xyLOGIX-Core-Debug-TextWrittenEventHandler 'xyLOGIX.Core.Debug.TextWrittenEventHandler')
 - [TraceOutputLocation](#T-xyLOGIX-Core-Debug-TraceOutputLocation 'xyLOGIX.Core.Debug.TraceOutputLocation')
   - [#ctor()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-#ctor 'xyLOGIX.Core.Debug.TraceOutputLocation.#ctor')
@@ -322,9 +327,11 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine')
 - [VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#ctor')
   - [#ctor(oldValue,newValue)](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor-System-Int32,System-Int32- 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#ctor(System.Int32,System.Int32)')
   - [NewValue](#P-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-NewValue 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.NewValue')
   - [OldValue](#P-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-OldValue 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.OldValue')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#cctor 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#cctor')
 - [VerbosityChangedEventHandler](#T-xyLOGIX-Core-Debug-VerbosityChangedEventHandler 'xyLOGIX.Core.Debug.VerbosityChangedEventHandler')
 
 <a name='T-xyLOGIX-Core-Debug-Activate'></a>
@@ -4304,6 +4311,19 @@ xyLOGIX.Core.Debug
 
 Provides information for `MuteConsoleChanged` event handlers.
 
+<a name='M-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Creates a new instance of
+[MuteConsoleChangedEventArgs](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs') and returns a
+reference to it.
+
+##### Parameters
+
+This constructor has no parameters.
+
 <a name='M-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-#ctor-System-Boolean-'></a>
 ### #ctor(newValue) `constructor`
 
@@ -4331,6 +4351,23 @@ Gets a [Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=
 value of the
 [MuteConsole](#P-xyLOGIX-Core-Debug-IOutputLocationProvider-MuteConsole 'xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole')
 property.
+
+<a name='M-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [MuteConsoleChangedEventArgs](#T-xyLOGIX-Core-Debug-MuteConsoleChangedEventArgs 'xyLOGIX.Core.Debug.MuteConsoleChangedEventArgs') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='T-xyLOGIX-Core-Debug-MuteConsoleChangedEventHandler'></a>
 ## MuteConsoleChangedEventHandler `type`
@@ -5384,6 +5421,23 @@ xyLOGIX.Core.Debug
 Defines methods and properties to aid in controlling the flow of the
 program.
 
+<a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
 <a name='M-xyLOGIX-Core-Debug-ProgramFlowHelper-EmergencyStop'></a>
 ### EmergencyStop() `method`
 
@@ -5665,6 +5719,19 @@ xyLOGIX.Core.Debug
 
 Provides information for `TextWritten` event handlers.
 
+<a name='M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Initializes a new instance of
+[TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs') and returns a
+reference to it.
+
+##### Parameters
+
+This constructor has no parameters.
+
 <a name='M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor-System-String-'></a>
 ### #ctor(text) `constructor`
 
@@ -5686,6 +5753,23 @@ reference to it.
 ##### Summary
 
 Gets a string containing the text to be written.
+
+<a name='M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='T-xyLOGIX-Core-Debug-TextWrittenEventHandler'></a>
 ## TextWrittenEventHandler `type`
@@ -5897,6 +5981,19 @@ xyLOGIX.Core.Debug
 
 Provides information for `VerbosityChanged` event handlers.
 
+<a name='M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Creates a new instance of
+[VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs') and returns a
+reference to it.
+
+##### Parameters
+
+This constructor has no parameters.
+
 <a name='M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor-System-Int32,System-Int32-'></a>
 ### #ctor(oldValue,newValue) `constructor`
 
@@ -5932,6 +6029,23 @@ the [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.D
 
 Gets an [Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') value that is the former value
 of the [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity') property.
+
+<a name='M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='T-xyLOGIX-Core-Debug-VerbosityChangedEventHandler'></a>
 ## VerbosityChangedEventHandler `type`

@@ -9,7 +9,7 @@ using System.Linq;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides access to a list of output locations for debugging. </summary>
-    [Log(AttributeExclude = true), Aggregatable]
+    [Log(AttributeExclude = true), Aggregatable, ExplicitlySynchronized]
     public class OutputLocationProvider : IOutputLocationProvider
     {
         /// <summary>
@@ -302,7 +302,6 @@ namespace xyLOGIX.Core.Debug
         /// contains
         /// the event data.
         /// </param>
-        [Yielder]
         protected virtual void OnMuteConsoleChanged(
             MuteConsoleChangedEventArgs e
         )
@@ -314,6 +313,7 @@ namespace xyLOGIX.Core.Debug
         ///     cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
         /// to have default values.
         /// </summary>
+        [EntryPoint]
         private void InitializeInternalOutputLocationList()
         {
             try
