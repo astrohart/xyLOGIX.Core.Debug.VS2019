@@ -13,6 +13,7 @@ namespace xyLOGIX.Core.Debug
     /// Implements log-file management for the case when we are utilizing
     /// PostSharp aspects to handle the bulk of logging for us.
     /// </summary>
+    [ExplicitlySynchronized]
     public class PostSharpLoggingInfrastructure : DefaultLoggingInfrastructure
     {
         /// <summary> Reference to the object that relays all logging to PostSharp. </summary>

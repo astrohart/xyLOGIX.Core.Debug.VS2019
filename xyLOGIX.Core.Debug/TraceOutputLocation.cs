@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// or whichever other debugger can listen to the output of the
     /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
     /// </summary>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class TraceOutputLocation : OutputLocationBase
     {
         /// <summary>
