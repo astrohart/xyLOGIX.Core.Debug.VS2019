@@ -158,7 +158,8 @@
   - [#cctor()](#M-xyLOGIX-Core-Debug-GetTraceOutputLocation-#cctor 'xyLOGIX.Core.Debug.GetTraceOutputLocation.#cctor')
   - [SoleInstance()](#M-xyLOGIX-Core-Debug-GetTraceOutputLocation-SoleInstance 'xyLOGIX.Core.Debug.GetTraceOutputLocation.SoleInstance')
 - [Has](#T-xyLOGIX-Core-Debug-Has 'xyLOGIX.Core.Debug.Has')
-  - [_isWindowsGuiApp](#F-xyLOGIX-Core-Debug-Has-_isWindowsGuiApp 'xyLOGIX.Core.Debug.Has._isWindowsGuiApp')
+  - [IsWindowsGUI](#P-xyLOGIX-Core-Debug-Has-IsWindowsGUI 'xyLOGIX.Core.Debug.Has.IsWindowsGUI')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Has-#cctor 'xyLOGIX.Core.Debug.Has.#cctor')
   - [ConsoleWindow()](#M-xyLOGIX-Core-Debug-Has-ConsoleWindow 'xyLOGIX.Core.Debug.Has.ConsoleWindow')
   - [WindowsGui(useEntryAssembly)](#M-xyLOGIX-Core-Debug-Has-WindowsGui-System-Boolean- 'xyLOGIX.Core.Debug.Has.WindowsGui(System.Boolean)')
 - [IEventLogManager](#T-xyLOGIX-Core-Debug-IEventLogManager 'xyLOGIX.Core.Debug.IEventLogManager')
@@ -3028,17 +3029,41 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods to determine whether a console window is
+Exposes `static` methods to determine whether a console window
+is
 present.
 
-<a name='F-xyLOGIX-Core-Debug-Has-_isWindowsGuiApp'></a>
-### _isWindowsGuiApp `constants`
+<a name='P-xyLOGIX-Core-Debug-Has-IsWindowsGUI'></a>
+### IsWindowsGUI `property`
 
 ##### Summary
 
-Value that is initialized with a [Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') that
-indicates whether the calling application is a Windows GUI app or a console
-app.
+Gets or sets a value that is initialized with a [Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean')
+that indicates whether the calling application is a Windows GUI app or a
+console app.
+
+##### Remarks
+
+We use this property to avoid re-determining the nature of the current app if
+the [WindowsGui](#M-xyLOGIX-Core-Debug-Has-WindowsGui 'xyLOGIX.Core.Debug.Has.WindowsGui') method is called more
+than once.
+
+<a name='M-xyLOGIX-Core-Debug-Has-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [Has](#T-xyLOGIX-Core-Debug-Has 'xyLOGIX.Core.Debug.Has') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-Has-ConsoleWindow'></a>
 ### ConsoleWindow() `method`
