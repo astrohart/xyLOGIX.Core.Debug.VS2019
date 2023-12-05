@@ -1,6 +1,5 @@
 using PostSharp.Patterns.Collections;
 using PostSharp.Patterns.Diagnostics;
-using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
@@ -79,7 +78,6 @@ namespace xyLOGIX.Core.Debug
         /// property is
         /// updated.
         /// </summary>
-        [WeakEvent]
         public event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>

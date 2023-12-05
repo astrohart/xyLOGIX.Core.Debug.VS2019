@@ -1,4 +1,3 @@
-using PostSharp.Patterns.Model;
 using log4net;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
@@ -113,14 +112,12 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
         /// </summary>
-        [WeakEvent]
         public static event TextEmittedEventHandler TextEmitted;
 
         /// <summary>
         /// Occurs when the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
         /// </summary>
-        [WeakEvent]
         public static event VerbosityChangedEventHandler VerbosityChanged;
 
         /// <summary> Dumps a collection to the debug log. </summary>
