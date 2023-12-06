@@ -1,5 +1,6 @@
 ﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
 
+using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;

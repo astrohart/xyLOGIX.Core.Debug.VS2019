@@ -1,3 +1,4 @@
+using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ namespace xyLOGIX.Core.Debug
     public static class ServiceFlowHelper
     {
         /// <summary> Raised when a start of the debugger is about to occur. </summary>
+        [WeakEvent]
         public static event Action DebuggerStartPending;
 
         /// <summary> Brings the Windows Service screeching suddenly to a halt. </summary>
