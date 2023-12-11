@@ -1,9 +1,11 @@
-﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
+using PostSharp.Patterns.Diagnostics;
 using System;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>MuteConsoleChanged</c> event handlers. </summary>
+[ExplicitlySynchronized]
     public class MuteConsoleChangedEventArgs : EventArgs
     {
         /// <summary>
