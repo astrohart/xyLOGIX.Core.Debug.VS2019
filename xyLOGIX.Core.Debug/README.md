@@ -199,9 +199,9 @@
 - [IsLog](#T-xyLOGIX-Core-Debug-IsLog 'xyLOGIX.Core.Debug.IsLog')
   - [Initialized](#P-xyLOGIX-Core-Debug-IsLog-Initialized 'xyLOGIX.Core.Debug.IsLog.Initialized')
 - [LogFileManager](#T-xyLOGIX-Core-Debug-LogFileManager 'xyLOGIX.Core.Debug.LogFileManager')
-  - [_infrastructure](#F-xyLOGIX-Core-Debug-LogFileManager-_infrastructure 'xyLOGIX.Core.Debug.LogFileManager._infrastructure')
   - [InfrastructureType](#P-xyLOGIX-Core-Debug-LogFileManager-InfrastructureType 'xyLOGIX.Core.Debug.LogFileManager.InfrastructureType')
   - [LogFilePath](#P-xyLOGIX-Core-Debug-LogFileManager-LogFilePath 'xyLOGIX.Core.Debug.LogFileManager.LogFilePath')
+  - [LoggingInfrastructure](#P-xyLOGIX-Core-Debug-LogFileManager-LoggingInfrastructure 'xyLOGIX.Core.Debug.LogFileManager.LoggingInfrastructure')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,infrastructureType)](#M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.LogFileManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,xyLOGIX.Core.Debug.LoggingInfrastructureType)')
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole,infrastructureType)](#M-xyLOGIX-Core-Debug-LogFileManager-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean,xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.LogFileManager.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean,xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [LoggerManager](#T-xyLOGIX-Core-Debug-LoggerManager 'xyLOGIX.Core.Debug.LoggerManager')
@@ -3784,27 +3784,12 @@ xyLOGIX.Core.Debug
 
 Methods to be used to manage the application log.
 
-<a name='F-xyLOGIX-Core-Debug-LogFileManager-_infrastructure'></a>
-### _infrastructure `constants`
-
-##### Summary
-
-Reference to an instance of the object that implements the
-[ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure') interface for the
-logging
-infrastructure type chosen.
-
-##### Remarks
-
-This is the object that will provide the behind-the-scenes
-implementation for this object from now on.
-
 <a name='P-xyLOGIX-Core-Debug-LogFileManager-InfrastructureType'></a>
 ### InfrastructureType `property`
 
 ##### Summary
 
-Gets the
+Gets or sets the
 [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-Constants-LoggingInfrastructureType 'xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType') value
 that
 represents the type of infrastructure currently in use by this
@@ -3823,6 +3808,16 @@ This property should only be called after the
 [InitializeLogging](#M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging 'xyLOGIX.Core.Debug.LogFileManager.InitializeLogging') method has
 been
 called.
+
+<a name='P-xyLOGIX-Core-Debug-LogFileManager-LoggingInfrastructure'></a>
+### LoggingInfrastructure `property`
+
+##### Summary
+
+Gets a reference to an instance of an object that implements the
+[ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure') interface that
+corresponds to the value of the
+[InfrastructureType](#P-xyLOGIX-Core-Debug-LogFileManager-InfrastructureType 'xyLOGIX.Core.Debug.LogFileManager.InfrastructureType') property.
 
 <a name='M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,xyLOGIX-Core-Debug-LoggingInfrastructureType-'></a>
 ### InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,infrastructureType) `method`

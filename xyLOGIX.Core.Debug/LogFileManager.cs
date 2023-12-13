@@ -6,26 +6,13 @@ namespace xyLOGIX.Core.Debug
     public static class LogFileManager
     {
         /// <summary>
-        /// Reference to an instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
-        /// logging
-        /// infrastructure type chosen.
-        /// </summary>
-        /// <remarks>
-        /// This is the object that will provide the behind-the-scenes
-        /// implementation for this object from now on.
-        /// </remarks>
-        private static ILoggingInfrastructure _infrastructure;
-
-        /// <summary>
-        /// Gets the
+        /// Gets or sets the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
         /// that
         /// represents the type of infrastructure currently in use by this
         /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
         /// </summary>
-        public static LoggingInfrastructureType InfrastructureType
-            => _infrastructure?.Type ?? LoggingInfrastructureType.Unknown;
+        public static LoggingInfrastructureType InfrastructureType { get; set; }
 
         /// <summary> Gets the full path and filename to the log file for this application. </summary>
         /// <remarks>
@@ -35,7 +22,38 @@ namespace xyLOGIX.Core.Debug
         /// called.
         /// </remarks>
         public static string LogFilePath
-            => _infrastructure?.GetRootFileAppenderFileName();
+        {
+            get
+            {
+                var result = string.Empty;
+
+                try
+                {
+                    if (LoggingInfrastructure == null) return result;
+
+                    result = LoggingInfrastructure
+                        .GetRootFileAppenderFileName();
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the log
+                    DebugUtils.LogException(ex);
+
+                    result = string.Empty;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface that
+        /// corresponds to the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.LogFileManager.InfrastructureType" /> property.
+        /// </summary>
+        private static ILoggingInfrastructure LoggingInfrastructure
+            => GetLoggingInfrastructure.For(InfrastructureType);
 
         /// <summary> Initializes the application's logging subsystem. </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
@@ -102,24 +120,39 @@ namespace xyLOGIX.Core.Debug
                 LoggingInfrastructureType.Default
         )
         {
-            Console.WriteLine("In LogFileManager.InitializeLogging");
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                "LogFileManager.InitializeLogging: Validating infrastructure type..."
+            );
+
+            if (LoggingInfrastructureType.Unknown.Equals(infrastructureType))
+                return;
+            if (!Enum.IsDefined(
+                    typeof(LoggingInfrastructureType), infrastructureType
+                )) return;
+
+            DebugUtils.WriteLine(
+                DebugLevel.Info,
+                $"LogFileManager.InitializeLogging: Setting infrastructure type to '{infrastructureType}'..."
+            );
+
+            InfrastructureType = infrastructureType;
 
             /* We now 'outsource' the functionality of this method (and all the
               other methods of this class) to an 'infrastructure' object that follows (loosely)
              the Abstract Factory pattern.  Either we use the Default way of initializing logging
              or we do things the way PostSharp needs us to.*/
-            _infrastructure = _infrastructure ??
-                              GetLoggingInfrastructure.For(infrastructureType);
-            if (_infrastructure == null)
+
+            if (LoggingInfrastructure == null)
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
-                    $"ERROR Unable to initializing the logging subsystem for the '{infrastructureType}' logging infrastructure."
+                    $"LogFileManager.InitializeLogging: *** ERROR *** Unable to initializing the logging subsystem for the '{InfrastructureType}' logging infrastructure."
                 );
                 return;
             }
 
-            _infrastructure.InitializeLogging(
+            LoggingInfrastructure.InitializeLogging(
                 muteDebugLevelIfReleaseMode, overwrite,
                 configurationFilePathname, muteConsole, logFileName, verbosity,
                 applicationName
@@ -176,13 +209,56 @@ namespace xyLOGIX.Core.Debug
                 LoggingInfrastructureType.Default
         )
         {
-            _infrastructure = _infrastructure ??
-                              GetLoggingInfrastructure.For(infrastructureType);
+            try
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "LogFileManager.SetUpDebugUtils: Validating infrastructure type..."
+                );
 
-            _infrastructure?.SetUpDebugUtils(
-                muteDebugLevelIfReleaseMode, isLogging, consoleOnly, verbosity,
-                muteConsole
-            );
+                if (LoggingInfrastructureType.Unknown.Equals(
+                        infrastructureType
+                    )) return;
+                if (!Enum.IsDefined(
+                        typeof(LoggingInfrastructureType), infrastructureType
+                    )) return;
+
+                InfrastructureType = infrastructureType;
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** LogFileManager.SetUpDebugUtils: Checking whether the 'LoggingInfrastructure' property has a null reference for a value..."
+                );
+
+                // Check to see if the required property, LoggingInfrastructure, is null. If it is, send an
+                // error to the log file and quit, returning from the method.
+                if (LoggingInfrastructure == null)
+                {
+                    // the property LoggingInfrastructure is required.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "LogFileManager.SetUpDebugUtils: *** ERROR *** The 'LoggingInfrastructure' property has a null reference.  Stopping."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "LogFileManager.SetUpDebugUtils: *** SUCCESS *** The 'LoggingInfrastructure' property has a valid object reference for its value."
+                );
+
+                LoggingInfrastructure.SetUpDebugUtils(
+                    muteDebugLevelIfReleaseMode, isLogging, consoleOnly,
+                    verbosity, muteConsole
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
         }
     }
 }

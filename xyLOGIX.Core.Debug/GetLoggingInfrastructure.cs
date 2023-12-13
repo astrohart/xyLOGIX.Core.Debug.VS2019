@@ -49,25 +49,41 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         public static ILoggingInfrastructure For(LoggingInfrastructureType type)
         {
-            ILoggingInfrastructure infrastructure;
+            ILoggingInfrastructure result = default;
 
-            switch (type)
+            try
             {
-                case LoggingInfrastructureType.Default:
-                    infrastructure = new DefaultLoggingInfrastructure();
-                    break;
+                if (LoggingInfrastructureType.Unknown.Equals(type))
+                    return result;
+                if (!Enum.IsDefined(typeof(LoggingInfrastructureType), type))
+                    return result;
 
-                case LoggingInfrastructureType.PostSharp:
-                    infrastructure = new PostSharpLoggingInfrastructure();
-                    break;
+                switch (type)
+                {
+                    case LoggingInfrastructureType.Default:
+                        result = new DefaultLoggingInfrastructure();
+                        break;
 
-                default:
-                    throw new ArgumentOutOfRangeException(
-                        nameof(type), type, null
-                    );
+                    case LoggingInfrastructureType.PostSharp:
+                        result = new PostSharpLoggingInfrastructure();
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(type), type,
+                            $"A Logging Infrastructure object is not implemented for the infrastructure type, '{type}'."
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
             }
 
-            return infrastructure;
+            return result;
         }
     }
 }
