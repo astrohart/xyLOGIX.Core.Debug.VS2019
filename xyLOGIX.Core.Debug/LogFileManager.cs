@@ -37,7 +37,7 @@ namespace xyLOGIX.Core.Debug
                 catch (Exception ex)
                 {
                     // dump all the exception info to the log
-                    DebugUtils.LogException(ex);
+                    Console.WriteLine(ex);
 
                     result = string.Empty;
                 }
@@ -120,43 +120,54 @@ namespace xyLOGIX.Core.Debug
                 LoggingInfrastructureType.Default
         )
         {
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                "LogFileManager.InitializeLogging: Validating infrastructure type..."
-            );
+            try
+            {
+                Console.WriteLine(
+                    $"LogFileManager.InitializeLogging: Validating infrastructure type '{infrastructureType}'..."
+                );
 
-            if (LoggingInfrastructureType.Unknown.Equals(infrastructureType))
-                return;
-            if (!Enum.IsDefined(
-                    typeof(LoggingInfrastructureType), infrastructureType
-                )) return;
+                if (LoggingInfrastructureType.Unknown.Equals(
+                        infrastructureType
+                    ))
+                    return;
+                if (!Enum.IsDefined(
+                        typeof(LoggingInfrastructureType), infrastructureType
+                    )) return;
 
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
-                $"LogFileManager.InitializeLogging: Setting infrastructure type to '{infrastructureType}'..."
-            );
+                Console.WriteLine(
+                    $"LogFileManager.InitializeLogging: Setting infrastructure type to '{infrastructureType}'..."
+                );
 
-            InfrastructureType = infrastructureType;
+                InfrastructureType = infrastructureType;
 
-            /* We now 'outsource' the functionality of this method (and all the
+                /* We now 'outsource' the functionality of this method (and all the
               other methods of this class) to an 'infrastructure' object that follows (loosely)
              the Abstract Factory pattern.  Either we use the Default way of initializing logging
              or we do things the way PostSharp needs us to.*/
 
-            if (LoggingInfrastructure == null)
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    $"LogFileManager.InitializeLogging: *** ERROR *** Unable to initializing the logging subsystem for the '{InfrastructureType}' logging infrastructure."
-                );
-                return;
-            }
+                if (LoggingInfrastructure == null)
+                {
+                    Console.WriteLine(
+                        $"LogFileManager.InitializeLogging: *** ERROR *** Unable to initializing the logging subsystem for the '{InfrastructureType}' logging infrastructure."
+                    );
+                    return;
+                }
 
-            LoggingInfrastructure.InitializeLogging(
-                muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, muteConsole, logFileName, verbosity,
-                applicationName
-            );
+                Console.WriteLine(
+                    "LogFileManager.InitializeLogging: Proceeding to task the logging infrastructure to initialize itself..."
+                );
+
+                LoggingInfrastructure.InitializeLogging(
+                    muteDebugLevelIfReleaseMode, overwrite,
+                    configurationFilePathname, muteConsole, logFileName,
+                    verbosity, applicationName
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                Console.WriteLine(ex);
+            }
         }
 
         /// <summary>
