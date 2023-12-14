@@ -1,11 +1,11 @@
-using PostSharp.Patterns.Threading;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>TextWritten</c> event handlers. </summary>
-[ExplicitlySynchronized]
+    [ExplicitlySynchronized]
     public class TextWrittenEventArgs : EventArgs
     {
         /// <summary>
