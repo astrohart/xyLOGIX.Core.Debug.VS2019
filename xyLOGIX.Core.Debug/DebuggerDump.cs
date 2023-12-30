@@ -38,7 +38,6 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the object whose contents are
         /// to be dumped.
         /// </param>
-        /// ///
         /// <param name="depth">
         /// (Required.) Integer value specifying the depth to which
         /// the object should be dumped.
