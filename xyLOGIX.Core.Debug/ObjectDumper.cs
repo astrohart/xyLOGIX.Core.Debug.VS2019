@@ -1,5 +1,6 @@
 ﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
 
+using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
@@ -49,6 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// Thrown if the
         /// <paramref name="depth" /> parameter is not zero or greater.
         /// </exception>
+        [Log(AttributeExclude = true)]
         private ObjectDumper(int depth)
         {
             if (depth < 0)
