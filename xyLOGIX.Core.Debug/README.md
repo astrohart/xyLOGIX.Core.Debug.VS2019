@@ -234,6 +234,7 @@
   - [_depth](#F-xyLOGIX-Core-Debug-ObjectDumper-_depth 'xyLOGIX.Core.Debug.ObjectDumper._depth')
   - [_indentLevel](#F-xyLOGIX-Core-Debug-ObjectDumper-_indentLevel 'xyLOGIX.Core.Debug.ObjectDumper._indentLevel')
   - [_writer](#F-xyLOGIX-Core-Debug-ObjectDumper-_writer 'xyLOGIX.Core.Debug.ObjectDumper._writer')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-ObjectDumper-#cctor 'xyLOGIX.Core.Debug.ObjectDumper.#cctor')
   - [OnTextWritten(e)](#M-xyLOGIX-Core-Debug-ObjectDumper-OnTextWritten-xyLOGIX-Core-Debug-TextWrittenEventArgs- 'xyLOGIX.Core.Debug.ObjectDumper.OnTextWritten(xyLOGIX.Core.Debug.TextWrittenEventArgs)')
   - [Write(element,depth)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.Object,System.Int32)')
   - [Write(element,depth,log)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.Object,System.Int32,System.IO.TextWriter)')
@@ -4484,6 +4485,28 @@ Must be 1 or greater.
 
 Reference to a [TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') to which to send
 the logged data.
+
+<a name='M-xyLOGIX-Core-Debug-ObjectDumper-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [ObjectDumper](#T-xyLOGIX-Core-Debug-ObjectDumper 'xyLOGIX.Core.Debug.ObjectDumper') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-ObjectDumper-OnTextWritten-xyLOGIX-Core-Debug-TextWrittenEventArgs-'></a>
 ### OnTextWritten(e) `method`
