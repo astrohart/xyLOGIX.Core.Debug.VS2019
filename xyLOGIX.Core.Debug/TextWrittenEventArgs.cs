@@ -25,7 +25,8 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         [Log(AttributeExclude = true)]
-        public TextWrittenEventArgs() { }
+        public TextWrittenEventArgs()
+        { }
 
         /// <summary>
         /// Constructs a new instance of

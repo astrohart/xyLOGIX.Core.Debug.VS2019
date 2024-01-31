@@ -6,7 +6,10 @@ using System;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes <see langword="static" /> methods to activate functionality, such as logging. </summary>
+    /// <summary>
+    /// Exposes <see langword="static" /> methods to activate functionality,
+    /// such as logging.
+    /// </summary>
     public static class Activate
     {
         /// <summary>

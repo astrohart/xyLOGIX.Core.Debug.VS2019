@@ -6,7 +6,10 @@ using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes <see langword="static" /> methods for interacting with the Windows Event Log. </summary>
+    /// <summary>
+    /// Exposes <see langword="static" /> methods for interacting with the
+    /// Windows Event Log.
+    /// </summary>
     public static class GetEvent
     {
         /// <summary>

@@ -3,7 +3,8 @@
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes <see langword="static" /> methods to multiplex debugging output; i.e., write it
+    /// Exposes <see langword="static" /> methods to multiplex debugging output; i.e.,
+    /// write it
     /// to multiple locations at the same time.
     /// </summary>
     [Log(AttributeExclude = true)]

@@ -1,6 +1,9 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes <see langword="static" /> methods for performing mathematical computations. </summary>
+    /// <summary>
+    /// Exposes <see langword="static" /> methods for performing mathematical
+    /// computations.
+    /// </summary>
     public static class Compute
     {
         /// <summary>

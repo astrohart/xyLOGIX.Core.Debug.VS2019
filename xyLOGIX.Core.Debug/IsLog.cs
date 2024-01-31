@@ -1,7 +1,8 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes <see langword="static" /> methods and properties to determine whether facts
+    /// Exposes <see langword="static" /> methods and properties to determine whether
+    /// facts
     /// about logs or logging are true.
     /// </summary>
     public static class IsLog

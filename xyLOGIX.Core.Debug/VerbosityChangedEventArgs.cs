@@ -25,7 +25,8 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         [Log(AttributeExclude = true)]
-        public VerbosityChangedEventArgs() { }
+        public VerbosityChangedEventArgs()
+        { }
 
         /// <summary>
         /// Constructs a new instance of
