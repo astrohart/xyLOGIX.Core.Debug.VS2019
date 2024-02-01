@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace xyLOGIX.Core.Debug.Properties {
+namespace xyLOGIX.xyLOGIX.Debug.Properties {
     using System;
     
     
@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("xyLOGIX.Core.Debug.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("xyLOGIX.xyLOGIX.Debug.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
