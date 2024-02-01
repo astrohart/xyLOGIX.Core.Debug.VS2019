@@ -345,7 +345,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods to activate functionality, such as logging.
+Exposes `static` methods to activate functionality,
+such as logging.
 
 <a name='M-xyLOGIX-Core-Debug-Activate-LoggingForLogFileName-System-String,log4net-Repository-ILoggerRepository-'></a>
 ### LoggingForLogFileName(logFileName,repository) `method`
@@ -401,7 +402,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods for performing mathematical computations.
+Exposes `static` methods for performing mathematical
+computations.
 
 <a name='M-xyLOGIX-Core-Debug-Compute-ZeroFloor-System-Int32-'></a>
 ### ZeroFloor(value) `method`
@@ -2332,14 +2334,16 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods to get information on .NET assemblies.
+Exposes `static` methods to get information on .NET
+assemblies.
 
 <a name='M-xyLOGIX-Core-Debug-GetAssembly-#cctor'></a>
 ### #cctor() `method`
 
 ##### Summary
 
-Initializes static data or performs actions that need to be performed once only for the [GetAssembly](#T-xyLOGIX-Core-Debug-GetAssembly 'xyLOGIX.Core.Debug.GetAssembly') class.
+Initializes static data or performs actions that need to be performed once only
+for the [GetAssembly](#T-xyLOGIX-Core-Debug-GetAssembly 'xyLOGIX.Core.Debug.GetAssembly') class.
 
 ##### Parameters
 
@@ -2347,7 +2351,8 @@ This method has no parameters.
 
 ##### Remarks
 
-This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-GetAssembly-Pathname-System-Reflection-Assembly-'></a>
 ### Pathname(assembly) `method`
@@ -2522,7 +2527,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods for interacting with the Windows Event Log.
+Exposes `static` methods for interacting with the
+Windows Event Log.
 
 <a name='M-xyLOGIX-Core-Debug-GetEvent-#cctor'></a>
 ### #cctor() `method`
@@ -3758,7 +3764,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods and properties to determine whether facts
+Exposes `static` methods and properties to determine whether
+facts
 about logs or logging are true.
 
 <a name='P-xyLOGIX-Core-Debug-IsLog-Initialized'></a>
@@ -5225,7 +5232,8 @@ xyLOGIX.Core.Debug
 
 ##### Summary
 
-Exposes `static` methods to multiplex debugging output; i.e., write it
+Exposes `static` methods to multiplex debugging output; i.e.,
+write it
 to multiple locations at the same time.
 
 <a name='P-xyLOGIX-Core-Debug-OutputMultiplexer-MuteConsole'></a>
