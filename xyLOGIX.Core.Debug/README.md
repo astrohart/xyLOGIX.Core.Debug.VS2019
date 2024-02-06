@@ -651,7 +651,7 @@ value. |
 ##### Remarks
 
 If the folder specified by the `directoryPath`
-parameter already exists on the disk, then this method does nothing.
+parameter already exists on the filesystem, then this method does nothing.
 
 <a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-InsistPathExists-System-String-'></a>
 ### InsistPathExists() `method`
@@ -664,7 +664,7 @@ error message and returns false; otherwise, returns true.
 ##### Returns
 
 This method returns `true` if the file with path
-specified by the `fileName` parameter exists on the disk in
+specified by the `fileName` parameter exists on the filesystem in
 the specified location or `false` if either the file is not
 found or if it does exist but an operating system error occurs (such as
 insufficient permissions) during the search.
@@ -1897,7 +1897,7 @@ If the `path` parameter is blank or
 
 
 This method also takes no action if the file having the specified
-`path` does not already exist on the disk.
+`path` does not already exist on the filesystem.
 
 <a name='T-xyLOGIX-Core-Debug-EmergencyStopPendingEventHandler'></a>
 ## EmergencyStopPendingEventHandler `type`
