@@ -16,7 +16,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" />, then this method does nothing.
         /// <para />
         /// This method also takes no action if the file having the specified
-        /// <paramref name="path" /> does not already exist on the disk.
+        /// <paramref name="path" /> does not already exist on the filesystem.
         /// </remarks>
         public static void LogFile(string path)
         {

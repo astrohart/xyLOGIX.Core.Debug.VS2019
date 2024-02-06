@@ -61,7 +61,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <remarks>
         /// If the folder specified by the <paramref name="directoryPath" />
-        /// parameter already exists on the disk, then this method does nothing.
+        /// parameter already exists on the filesystem, then this method does nothing.
         /// </remarks>
         /// <exception cref="T:System.ArgumentException">
         /// Thrown if the required parameter,
@@ -115,7 +115,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <returns>
         /// This method returns <see langword="true" /> if the file with path
-        /// specified by the <paramref name="fileName" /> parameter exists on the disk in
+        /// specified by the <paramref name="fileName" /> parameter exists on the filesystem in
         /// the specified location or <see langword="false" /> if either the file is not
         /// found or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.
@@ -287,7 +287,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
-                        $"*** ERROR *** The system could not locate the folder having the path '{pathname}' on the disk.  This folder is required to exist in order for us to proceed."
+                        $"*** ERROR *** The system could not locate the folder having the path '{pathname}' on the filesystem.  This folder is required to exist in order for us to proceed."
                     );
                     return result;
                 }

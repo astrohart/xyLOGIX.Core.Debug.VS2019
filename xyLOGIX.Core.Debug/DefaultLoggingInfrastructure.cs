@@ -192,7 +192,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
-                        "*** INFO: Not only is the 'configurationFilePathname' parameter's argument not the blank string, but the file that it references has been found on the disk."
+                        "*** INFO: Not only is the 'configurationFilePathname' parameter's argument not the blank string, but the file that it references has been found on the filesystem."
                     );
 
                     /*

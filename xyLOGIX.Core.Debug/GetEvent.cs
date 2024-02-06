@@ -55,7 +55,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
-                        "GetEvent.SourceName: The fully-qualified pathname of the entry-point assembly could not be determined, or a ile having that path could not be located on the disk."
+                        "GetEvent.SourceName: The fully-qualified pathname of the entry-point assembly could not be determined, or a ile having that path could not be located on the filesystem."
                     );
                     return result;
                 }
