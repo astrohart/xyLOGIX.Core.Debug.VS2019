@@ -34,20 +34,20 @@ namespace xyLOGIX.Core.Debug
             => InitializeInternalOutputLocationList();
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is
-        /// updated.
-        /// </summary>
-        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
-
-        /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
         /// interface.
         /// </summary>
         public static IOutputLocationProvider Instance { get; } =
             new OutputLocationProvider();
+
+        /// <summary>
+        /// Gets a reference to a collection, each element of which implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// </summary>
+        [Child]
+        private IList<IOutputLocation> InternalOutputLocationList { get; } =
+            new AdvisableCollection<IOutputLocation>();
 
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
@@ -74,12 +74,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to a collection, each element of which implements
-        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
+        /// updated.
         /// </summary>
-        [Child]
-        private IList<IOutputLocation> InternalOutputLocationList { get; } =
-            new AdvisableCollection<IOutputLocation>();
+        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the

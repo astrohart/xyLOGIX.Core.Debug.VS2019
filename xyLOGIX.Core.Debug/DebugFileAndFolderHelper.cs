@@ -115,7 +115,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <returns>
         /// This method returns <see langword="true" /> if the file with path
-        /// specified by the <paramref name="fileName" /> parameter exists on the filesystem in
+        /// specified by the <paramref name="fileName" /> parameter exists on the
+        /// filesystem in
         /// the specified location or <see langword="false" /> if either the file is not
         /// found or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.

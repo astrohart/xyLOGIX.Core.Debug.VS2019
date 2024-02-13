@@ -22,8 +22,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected TraceOutputLocation()
-        { }
+        protected TraceOutputLocation() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that

@@ -7,14 +7,6 @@
     public interface IOutputLocationProvider
     {
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is
-        /// updated.
-        /// </summary>
-        event MuteConsoleChangedEventHandler MuteConsoleChanged;
-
-        /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
@@ -25,6 +17,14 @@
         /// when its value is updated.
         /// </remarks>
         bool MuteConsole { get; set; }
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
+        /// updated.
+        /// </summary>
+        event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
