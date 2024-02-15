@@ -664,7 +664,8 @@ error message and returns false; otherwise, returns true.
 ##### Returns
 
 This method returns `true` if the file with path
-specified by the `fileName` parameter exists on the filesystem in
+specified by the `fileName` parameter exists on the
+filesystem in
 the specified location or `false` if either the file is not
 found or if it does exist but an operating system error occurs (such as
 insufficient permissions) during the search.
