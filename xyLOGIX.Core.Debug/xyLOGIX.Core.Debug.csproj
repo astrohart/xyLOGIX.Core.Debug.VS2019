@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\PostSharp.2024.0.5\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.2024.0.5\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -7,7 +7,8 @@
     <TargetFrameworkProfile />
     <ProjectGuid>{C445C052-26B6-4884-9A7B-25DC7ABC0DED}</ProjectGuid>
     <Deterministic>false</Deterministic>
-    <NuGetPackageImportStamp />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -269,6 +270,8 @@ SET ERRORLEVEL=0</PostBuildEvent>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\PostSharp.2024.0.5\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.2024.0.5\build\PostSharp.props'))" />
     <Error Condition="!Exists('..\packages\PostSharp.2024.0.5\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.2024.0.5\build\PostSharp.targets'))" />
+    <Error Condition="!Exists('..\packages\StrongNamer.0.2.5\build\StrongNamer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StrongNamer.0.2.5\build\StrongNamer.targets'))" />
   </Target>
   <Import Project="..\packages\PostSharp.2024.0.5\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.2024.0.5\build\PostSharp.targets')" />
+  <Import Project="..\packages\StrongNamer.0.2.5\build\StrongNamer.targets" Condition="Exists('..\packages\StrongNamer.0.2.5\build\StrongNamer.targets')" />
 </Project>
