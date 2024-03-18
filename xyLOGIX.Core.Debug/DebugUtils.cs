@@ -229,6 +229,12 @@ namespace xyLOGIX.Core.Debug
             );
 
             WriteLine(DebugLevel.Error, message);
+
+            if (e.InnerException == null ||
+                e is TypeInitializationException) return;
+
+            WriteLine(DebugLevel.Error, "---");
+            LogException(e.InnerException);
         }
 
         /// <summary>
