@@ -259,7 +259,7 @@ namespace xyLOGIX.Core.Debug
         /// If the <paramref name="format" /> parameter is a blank or empty
         /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
         /// defined, then this method assumes that the application was built in Release
-        /// mode. If this is so, then the method checks the value of the
+        /// mode. If this so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
         /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
@@ -340,7 +340,7 @@ namespace xyLOGIX.Core.Debug
         /// If the <paramref name="format" /> parameter is a blank or empty
         /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
         /// defined, then this method assumes that the application was built in Release
-        /// mode. If this is so, then the method checks the value of the
+        /// mode. If this so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
         /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then

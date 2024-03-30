@@ -53,7 +53,7 @@ namespace xyLOGIX.Core.Debug
         /// Raises the
         /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
         /// event
-        /// prior to actually breaking into the debugger. This is helpful to run, e.g.,
+        /// prior to actually breaking into the debugger. This helpful to run, e.g.,
         /// service configuration code, prior to the operation.
         /// </remarks>
         [DebuggerStepThrough]
@@ -73,7 +73,7 @@ namespace xyLOGIX.Core.Debug
             // Check to see whether the Boolean expression, Environment.UserInteractive, evaluates to FALSE.  If it does not, log an error message to the log file and then terminate the execution of this method.
             if (Environment.UserInteractive)
             {
-                // the Boolean expression, Environment.UserInteractive, evaluated to TRUE.  This is not desirable.
+                // the Boolean expression, Environment.UserInteractive, evaluated to TRUE.  This not desirable.
                 DebugUtils.WriteLine(
                     DebugLevel.Error,
                     "*** ERROR: The Boolean expression, 'Environment.UserInteractive, evaluated to TRUE.  Calling the ProgramFlowHelper class' equivalent of this method..."
