@@ -38,7 +38,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // If we found a value for the ApplicationName, then initialize the
-                // This handy in the case where the user does not have write
+                // This is handy in the case where the user does not have write
                 // access to the C:\ProgramData directory, for example.
                 if (string.IsNullOrWhiteSpace(DebugUtils.ApplicationName))
                     return;
