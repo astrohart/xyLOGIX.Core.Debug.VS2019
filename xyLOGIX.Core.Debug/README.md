@@ -1298,7 +1298,7 @@ included in the `format` and written to the log. |
 If the `format` parameter is a blank or empty
 string, then this method does nothing. If the `DEBUG` constant is not
 defined, then this method assumes that the application was built in Release
-mode. If this so, then the method checks the value of the
+mode. If this is so, then the method checks the value of the
 [MuteDebugLevelIfReleaseMode](#P-Core-Debug-DebugUtils-MuteDebugLevelIfReleaseMode 'Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode') property. If
 the property is set to true AND the `debugLevel` parameter is
 set to [Debug](#T-xyLOGIX-Core-Debug-Constants-DebugLevel-Debug 'xyLOGIX.Core.Debug.Constants.DebugLevel.Debug') , then
@@ -1398,7 +1398,7 @@ included in the `format` and written to the log. |
 If the `format` parameter is a blank or empty
 string, then this method does nothing. If the `DEBUG` constant is not
 defined, then this method assumes that the application was built in Release
-mode. If this so, then the method checks the value of the
+mode. If this is so, then the method checks the value of the
 [MuteDebugLevelIfReleaseMode](#P-Core-Debug-DebugUtils-MuteDebugLevelIfReleaseMode 'Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode') property. If
 the property is set to true AND the `debugLevel` parameter is
 set to [Debug](#T-xyLOGIX-Core-Debug-Constants-DebugLevel-Debug 'xyLOGIX.Core.Debug.Constants.DebugLevel.Debug') , then
@@ -1974,7 +1974,7 @@ initialized.
 
 ##### Summary
 
-Gets or sets the source of events. Typically this the name of the
+Gets or sets the source of events. Typically, this is the name of the
 application that is sending the events.
 
 ##### Remarks
@@ -3169,7 +3169,7 @@ initialized.
 
 ##### Summary
 
-Gets or sets the source of events. Typically this the name of the
+Gets or sets the source of events. Typically, this is the name of the
 application that is sending the events.
 
 ##### Remarks
@@ -5634,7 +5634,7 @@ This method has no parameters.
 Raises the
 [](#E-xyLOGIX-Core-Debug-ServiceFlowHelper-DebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending')
 event
-prior to actually breaking into the debugger. This helpful to run, e.g.,
+prior to actually breaking into the debugger. This is helpful to run, e.g.,
 service configuration code, prior to the operation.
 
 <a name='T-xyLOGIX-Core-Debug-SetLog'></a>
