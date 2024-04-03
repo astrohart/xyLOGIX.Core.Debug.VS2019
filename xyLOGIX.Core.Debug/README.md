@@ -328,6 +328,8 @@
   - [WriteLine(value)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-Object- 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine(System.Object)')
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine')
+- [Validate](#T-xyLOGIX-Core-Debug-Validate 'xyLOGIX.Core.Debug.Validate')
+  - [LoggingInfrastructureType(type)](#M-xyLOGIX-Core-Debug-Validate-LoggingInfrastructureType-xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.Validate.LoggingInfrastructureType(xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs')
   - [#ctor()](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#ctor')
   - [#ctor(oldValue,newValue)](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor-System-Int32,System-Int32- 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#ctor(System.Int32,System.Int32)')
@@ -6021,6 +6023,38 @@ This method has no parameters.
 | Name | Description |
 | ---- | ----------- |
 | [System.IO.IOException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.IOException 'System.IO.IOException') | An I/O error occurred. |
+
+<a name='T-xyLOGIX-Core-Debug-Validate'></a>
+## Validate `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Exposes static methods to validate information and settings.
+
+<a name='M-xyLOGIX-Core-Debug-Validate-LoggingInfrastructureType-xyLOGIX-Core-Debug-LoggingInfrastructureType-'></a>
+### LoggingInfrastructureType(type) `method`
+
+##### Summary
+
+Determines whether the specified logging infrastructure
+`type` value is in the set of valid values.
+
+##### Returns
+
+`true` if the specified logging infrastructure
+`type` is in the set of valid values.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| type | [xyLOGIX.Core.Debug.LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') | (Required.) The
+[LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType') enumeration value
+that is to be validated. |
 
 <a name='T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs'></a>
 ## VerbosityChangedEventArgs `type`

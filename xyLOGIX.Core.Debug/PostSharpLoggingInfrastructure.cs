@@ -2,6 +2,7 @@
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using PostSharp.Patterns.Threading;
+using System;
 
 #if DEBUG
 #else
@@ -114,28 +115,134 @@ namespace xyLOGIX.Core.Debug
             ILoggerRepository repository = null
         )
         {
-            if (_relay != null)
+            try
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the log relay is configured..."
+                );
+
+                if (_relay != null)
 
                 // logging is already configured
-                return;
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Warning,
+                        $"PostSharpLoggingInfrastructure.InitializeLogging: We've detected that logging is, apparently, already configured."
+                    );
 
-            _relay = _relay ?? Log4NetCollectingRepositorySelector
-                .RedirectLoggingToPostSharp();
+                    return;
+                }
 
-            base.InitializeLogging(
-                muteDebugLevelIfReleaseMode, overwrite,
-                configurationFilePathname, muteConsole, logFileName, verbosity,
-                applicationName, _relay
-            );
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Apparently, the log relay is NOT configured.  This is good.  Proceeding..."
+                );
 
-            // set it as the default backend:
-            var backend = GetLoggingBackend.For(
-                LoggingBackendType.Log4Net, _relay
-            );
-            LoggingServices.DefaultBackend = backend;
-            LoggingServices.Roles[LoggingRoles.Meta].Backend = backend;
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
+                );
 
-            PrepareLogFile(overwrite, _relay);
+                _relay = _relay ?? Log4NetCollectingRepositorySelector
+                    .RedirectLoggingToPostSharp();
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** INFO: Checking whether the '_relay' field has a null reference for a value..."
+                );
+
+                // Check to see if the required field, '_relay', is null. If it is, send an
+                // error to the log file and quit.
+                if (_relay == null)
+                {
+                    // the field '_relay' is required.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR: The '_relay' field has a null reference.  This field is required."
+                    );
+
+                    DebugUtils.WriteLine(DebugLevel.Debug, "PostSharpLoggingInfrastructure.InitializeLogging: Done.");
+
+                    // stop.
+                    return;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** SUCCESS *** The '_relay' field has a valid object reference for its value."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
+                );
+
+                base.InitializeLogging(
+                    muteDebugLevelIfReleaseMode, overwrite,
+                    configurationFilePathname, muteConsole, logFileName, verbosity,
+                    applicationName, _relay
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The base-class DefaultLoggingInfrastructure.InitializeLogging method appears to have succeeded.  Proceeding..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Configuring log4net logging backend..."
+                );
+
+                // set it as the default backend:
+                var backend = GetLoggingBackend.For(
+                    LoggingBackendType.Log4Net, _relay
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'backend', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, backend, is null. If it is, send an error to the log file and quit, returning from the method.
+                if (backend == null)
+                {
+                    // the variable backend is required to have a valid object reference.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "PostSharpLoggingInfrastructure.InitializeLogging: *** ERROR ***  The 'backend' variable has a null reference.  Stopping."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                // We can use the variable, backend, because it's not set to a null reference.
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'backend' variable has a valid object reference for its value."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}..."
+                );
+
+                LoggingServices.DefaultBackend = backend;
+                LoggingServices.Roles[LoggingRoles.Meta].Backend = backend;
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
+                );
+
+                PrepareLogFile(overwrite, _relay);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
         }
     }
 }

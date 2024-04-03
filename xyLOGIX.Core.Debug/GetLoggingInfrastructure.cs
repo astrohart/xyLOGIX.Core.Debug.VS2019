@@ -53,9 +53,7 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (LoggingInfrastructureType.Unknown.Equals(type))
-                    return result;
-                if (!Enum.IsDefined(typeof(LoggingInfrastructureType), type))
+                if (!Validate.LoggingInfrastructureType(type))
                     return result;
 
                 switch (type)
