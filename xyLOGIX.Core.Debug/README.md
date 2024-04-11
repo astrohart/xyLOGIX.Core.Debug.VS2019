@@ -204,6 +204,7 @@
   - [InfrastructureType](#P-xyLOGIX-Core-Debug-LogFileManager-InfrastructureType 'xyLOGIX.Core.Debug.LogFileManager.InfrastructureType')
   - [LogFilePath](#P-xyLOGIX-Core-Debug-LogFileManager-LogFilePath 'xyLOGIX.Core.Debug.LogFileManager.LogFilePath')
   - [LoggingInfrastructure](#P-xyLOGIX-Core-Debug-LogFileManager-LoggingInfrastructure 'xyLOGIX.Core.Debug.LogFileManager.LoggingInfrastructure')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-LogFileManager-#cctor 'xyLOGIX.Core.Debug.LogFileManager.#cctor')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,infrastructureType)](#M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.LogFileManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,xyLOGIX.Core.Debug.LoggingInfrastructureType)')
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole,infrastructureType)](#M-xyLOGIX-Core-Debug-LogFileManager-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean,xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.LogFileManager.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean,xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [LoggerManager](#T-xyLOGIX-Core-Debug-LoggerManager 'xyLOGIX.Core.Debug.LoggerManager')
@@ -3868,6 +3869,28 @@ Gets a reference to an instance of an object that implements the
 [ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure') interface that
 corresponds to the value of the
 [InfrastructureType](#P-xyLOGIX-Core-Debug-LogFileManager-InfrastructureType 'xyLOGIX.Core.Debug.LogFileManager.InfrastructureType') property.
+
+<a name='M-xyLOGIX-Core-Debug-LogFileManager-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [LogFileManager](#T-xyLOGIX-Core-Debug-LogFileManager 'xyLOGIX.Core.Debug.LogFileManager') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,xyLOGIX-Core-Debug-LoggingInfrastructureType-'></a>
 ### InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,infrastructureType) `method`
