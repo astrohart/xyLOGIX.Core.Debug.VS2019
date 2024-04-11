@@ -8,6 +8,20 @@ namespace xyLOGIX.Core.Debug
     public static class LogFileManager
     {
         /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.LogFileManager" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static LogFileManager() { }
+
+        /// <summary>
         /// Gets or sets the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
         /// that
@@ -38,7 +52,7 @@ namespace xyLOGIX.Core.Debug
                 }
                 catch (Exception ex)
                 {
-                     // dump all the exception info to the log
+                    // dump all the exception info to the log
                     DebugUtils.LogException(ex);
 
                     result = string.Empty;
@@ -127,7 +141,8 @@ namespace xyLOGIX.Core.Debug
                 if (!Validate.LoggingInfrastructureType(infrastructureType))
                     return;
 
-                DebugUtils.WriteLine(DebugLevel.Debug, 
+                DebugUtils.WriteLine(
+                    DebugLevel.Debug,
                     $"LogFileManager.InitializeLogging: Setting infrastructure type to '{infrastructureType}'..."
                 );
 
@@ -140,13 +155,15 @@ namespace xyLOGIX.Core.Debug
 
                 if (LoggingInfrastructure == null)
                 {
-                    DebugUtils.WriteLine(DebugLevel.Debug, 
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
                         $"LogFileManager.InitializeLogging: *** ERROR *** Unable to initializing the logging subsystem for the '{InfrastructureType}' logging infrastructure."
                     );
                     return;
                 }
 
-                DebugUtils.WriteLine(DebugLevel.Debug, 
+                DebugUtils.WriteLine(
+                    DebugLevel.Debug,
                     "LogFileManager.InitializeLogging: Proceeding to task the logging infrastructure to initialize itself..."
                 );
 
