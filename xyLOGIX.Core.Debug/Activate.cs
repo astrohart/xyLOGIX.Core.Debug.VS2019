@@ -38,9 +38,64 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                // Dump the argument of the parameter, logFileName, to the log
+                DebugUtils.WriteLine(
+                    DebugLevel.Debug,
+                    $"Activate.LoggingForLogFileName: logFileName = '{logFileName}'"
+                );
+
                 if (string.IsNullOrWhiteSpace(logFileName)) return result;
 
-                if (!(repository is Hierarchy hierarchy)) return result;
+                // Dump the parameter, 'repository', to the log.
+                DebugUtils.WriteLine(
+                    DebugLevel.Debug,
+                    $"Activate.LoggingForLogFileName: repository = {repository}"
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: Checking whether the 'repository' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, repository, is null. If it is, send an
+                // error to the log file and quit, returning the default return value of this
+                // method.
+                if (repository == null)
+                {
+                    // the parameter repository is required.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "Activate.LoggingForLogFileName: *** ERROR *** A null reference was passed for the 'repository' method parameter.  Stopping."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'..."
+                );
+
+                if (!(repository is Hierarchy hierarchy))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
+                    );
+
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
+                );
 
                 /*
                  * If we are here, and the Configured property of the
@@ -53,12 +108,46 @@ namespace xyLOGIX.Core.Debug
                  * if the logger is already set up.
                  */
 
-                if (result = hierarchy.Configured) return result;
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: Checking whether the logger is already configured..."
+                );
+
+                // Dump the value of the property, hierarchy.Configured, to the log
+                DebugUtils.WriteLine(
+                    DebugLevel.Debug,
+                    $"Activate.LoggingForLogFileName: hierarchy.Configured = {hierarchy.Configured}"
+                );
+
+                if (result = hierarchy.Configured)
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "Activate.LoggingForLogFileName: *** SUCCESS *** The logger is already configured.  Stopping..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        $"Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Warning,
+                    "*** WARNING: The logger is not configured yet.  Doing so..."
+                );
 
                 /*
                  * If we are here, then the logging infrastructure has not
                  * yet been configured, so we do so now.
                  */
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: Configuring the logging infrastructure..."
+                );
 
                 var patternLayout =
                     GetPatternLayout.ForConversionPattern(
@@ -88,12 +177,22 @@ namespace xyLOGIX.Core.Debug
                 hierarchy.Configured = true;
 
                 result = hierarchy.Configured;
+
+                if (result)
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "Activate.LoggingForLogFileName: *** SUCCESS *** The logging infrastructure has been configured."
+                    );
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the log
                 DebugUtils.LogException(ex);
+
+                result = false;
             }
+
+            DebugUtils.WriteLine(DebugLevel.Debug, $"Activate.LoggingForLogFileName: Result = {result}");
 
             return result;
         }

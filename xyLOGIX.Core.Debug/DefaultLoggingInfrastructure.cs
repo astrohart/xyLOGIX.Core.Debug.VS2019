@@ -222,6 +222,12 @@ namespace xyLOGIX.Core.Debug
                     DebugLevel.Info,
                     "*** INFO: The 'logFileName' parameter was initialized."
                 );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "DefaultLoggingInfrastructure.InitializeLogging: Attempting to activate logging..."
+                );
+
                 if (!Activate.LoggingForLogFileName(
                         logFileName, repository ?? new Hierarchy()
                     ))
@@ -232,6 +238,11 @@ namespace xyLOGIX.Core.Debug
                     );
                     return;
                 }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The logging infrastructure has been configured."
+                );
             }
 
             SetUpDebugUtils(

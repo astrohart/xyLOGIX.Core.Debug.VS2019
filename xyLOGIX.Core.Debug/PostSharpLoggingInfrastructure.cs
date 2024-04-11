@@ -119,16 +119,16 @@ namespace xyLOGIX.Core.Debug
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the log relay is configured..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the log relay is configured..."
                 );
 
                 if (_relay != null)
 
-                // logging is already configured
+                    // logging is already configured
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Warning,
-                        $"PostSharpLoggingInfrastructure.InitializeLogging: We've detected that logging is, apparently, already configured."
+                        "PostSharpLoggingInfrastructure.InitializeLogging: We've detected that logging is, apparently, already configured."
                     );
 
                     return;
@@ -136,12 +136,12 @@ namespace xyLOGIX.Core.Debug
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Apparently, the log relay is NOT configured.  This is good.  Proceeding..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Apparently, the log relay is NOT configured.  This is good.  Proceeding..."
                 );
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
                 );
 
                 _relay = _relay ?? Log4NetCollectingRepositorySelector
@@ -162,7 +162,10 @@ namespace xyLOGIX.Core.Debug
                         "*** ERROR: The '_relay' field has a null reference.  This field is required."
                     );
 
-                    DebugUtils.WriteLine(DebugLevel.Debug, "PostSharpLoggingInfrastructure.InitializeLogging: Done.");
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        "PostSharpLoggingInfrastructure.InitializeLogging: Done."
+                    );
 
                     // stop.
                     return;
@@ -175,23 +178,23 @@ namespace xyLOGIX.Core.Debug
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
+                    "*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
                 );
 
                 base.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFilePathname, muteConsole, logFileName, verbosity,
-                    applicationName, _relay
+                    configurationFilePathname, muteConsole, logFileName,
+                    verbosity, applicationName, _relay
                 );
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The base-class DefaultLoggingInfrastructure.InitializeLogging method appears to have succeeded.  Proceeding..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The base-class DefaultLoggingInfrastructure.InitializeLogging method appears to have succeeded.  Proceeding..."
                 );
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Configuring log4net logging backend..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Configuring log4net logging backend..."
                 );
 
                 // set it as the default backend:
@@ -233,7 +236,7 @@ namespace xyLOGIX.Core.Debug
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
                 );
 
                 PrepareLogFile(overwrite, _relay);
