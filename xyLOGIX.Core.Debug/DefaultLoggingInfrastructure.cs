@@ -20,6 +20,29 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static DefaultLoggingInfrastructure() { }
+
+        /// <summary>
+        /// Initializes a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure" /> and returns a
+        /// reference to it.
+        /// </summary>
+        /// <remarks>
+        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
+        /// due to the fact that this class is marked <see langword="abstract" />.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        public DefaultLoggingInfrastructure() { }
+
         /// <summary> Gets the full path and filename to the log file for this application. </summary>
         public virtual string LogFilePath
             => GetRootFileAppenderFileName();
@@ -51,7 +74,7 @@ namespace xyLOGIX.Core.Debug
                     Path.GetDirectoryName(LogFilePath)
                 ))
 
-                // deleted sits in, then Heaven help us! However the software
+                // deleted sits in, then Heaven help us! However, the software
                 // should try to work at all costs, so this method should just
                 // silently fail in this case.
                 return;
@@ -178,7 +201,7 @@ namespace xyLOGIX.Core.Debug
 
                     /*
                      * If we have no configuration file to work with, try to
-                     * setup logging with the passed ILoggerRepository.
+                     * set up logging with the passed ILoggerRepository.
                      */
 
                     if (repository == null)

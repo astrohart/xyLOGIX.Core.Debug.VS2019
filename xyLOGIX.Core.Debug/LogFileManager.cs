@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Methods to be used to manage the application log. </summary>
+    [Log(AttributeExclude = true)]
     public static class LogFileManager
     {
         /// <summary>

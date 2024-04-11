@@ -14,7 +14,7 @@ namespace xyLOGIX.Core.Debug
     /// Implements log-file management for the case when we are utilizing
     /// PostSharp aspects to handle the bulk of logging for us.
     /// </summary>
-    [Log(AttributeExclude = true), ExplicitlySynchronized]
+    [ExplicitlySynchronized]
     public class PostSharpLoggingInfrastructure : DefaultLoggingInfrastructure
     {
         /// <summary> Reference to the object that relays all logging to PostSharp. </summary>
@@ -24,6 +24,26 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </remarks>
         private ILoggerRepository _relay;
+
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure" />
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static PostSharpLoggingInfrastructure() { }
+
+        /// <summary>
+        /// Initializes a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure" /> and returns
+        /// a reference to it.
+        /// </summary>
+        [Log(AttributeExclude = true)]
+        public PostSharpLoggingInfrastructure() { }
 
         /// <summary>
         /// Gets the

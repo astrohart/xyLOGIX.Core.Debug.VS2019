@@ -79,8 +79,10 @@
   - [DumpLines(element,depth)](#M-xyLOGIX-Core-Debug-DebuggerDump-DumpLines-System-Object,System-Int32- 'xyLOGIX.Core.Debug.DebuggerDump.DumpLines(System.Object,System.Int32)')
   - [DumpLines(element,depth,log)](#M-xyLOGIX-Core-Debug-DebuggerDump-DumpLines-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.DebuggerDump.DumpLines(System.Object,System.Int32,System.IO.TextWriter)')
 - [DefaultLoggingInfrastructure](#T-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-#ctor 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.#ctor')
   - [LogFilePath](#P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-LogFilePath 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath')
   - [Type](#P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.Type')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-#cctor 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.#cctor')
   - [DeleteLogIfExists()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.DeleteLogIfExists')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
@@ -284,8 +286,10 @@
   - [WriteLine()](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine')
   - [WriteLine(value)](#M-xyLOGIX-Core-Debug-OutputMultiplexer-WriteLine-System-Object- 'xyLOGIX.Core.Debug.OutputMultiplexer.WriteLine(System.Object)')
 - [PostSharpLoggingInfrastructure](#T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#ctor 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.#ctor')
   - [_relay](#F-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-_relay 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure._relay')
   - [Type](#P-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.Type')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#cctor 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.#cctor')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
 - [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper')
@@ -1685,6 +1689,24 @@ xyLOGIX.Core.Debug
 Default implementation details for the
 [ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure').
 
+<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Initializes a new instance of
+[DefaultLoggingInfrastructure](#T-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure') and returns a
+reference to it.
+
+##### Parameters
+
+This constructor has no parameters.
+
+##### Remarks
+
+This constructor is marked `protected`
+due to the fact that this class is marked `abstract`.
+
 <a name='P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-LogFilePath'></a>
 ### LogFilePath `property`
 
@@ -1700,6 +1722,23 @@ Gets the full path and filename to the log file for this application.
 Gets the
 [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-Constants-LoggingInfrastructureType 'xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType') value
 that corresponds to the type of infrastructure that is being utilized.
+
+<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [DefaultLoggingInfrastructure](#T-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists'></a>
 ### DeleteLogIfExists() `method`
@@ -5357,6 +5396,19 @@ xyLOGIX.Core.Debug
 Implements log-file management for the case when we are utilizing
 PostSharp aspects to handle the bulk of logging for us.
 
+<a name='M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Initializes a new instance of
+[PostSharpLoggingInfrastructure](#T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure') and returns
+a reference to it.
+
+##### Parameters
+
+This constructor has no parameters.
+
 <a name='F-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-_relay'></a>
 ### _relay `constants`
 
@@ -5379,6 +5431,24 @@ Gets the
 [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-Constants-LoggingInfrastructureType 'xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType') value
 that
 corresponds to the type of infrastructure that is being utilized.
+
+<a name='M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [PostSharpLoggingInfrastructure](#T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure')
+class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName'></a>
 ### GetRootFileAppenderFileName() `method`
