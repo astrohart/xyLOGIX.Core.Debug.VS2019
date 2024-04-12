@@ -290,7 +290,6 @@
   - [#ctor()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#ctor 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.#ctor')
   - [_relay](#F-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-_relay 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure._relay')
   - [Type](#P-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.Type')
-  - [#cctor()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#cctor 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.#cctor')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
 - [ProgramFlowHelper](#T-xyLOGIX-Core-Debug-ProgramFlowHelper 'xyLOGIX.Core.Debug.ProgramFlowHelper')
@@ -5454,24 +5453,6 @@ Gets the
 [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-Constants-LoggingInfrastructureType 'xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType') value
 that
 corresponds to the type of infrastructure that is being utilized.
-
-<a name='M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-#cctor'></a>
-### #cctor() `method`
-
-##### Summary
-
-Initializes static data or performs actions that need to be performed once only
-for the [PostSharpLoggingInfrastructure](#T-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure 'xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure')
-class.
-
-##### Parameters
-
-This method has no parameters.
-
-##### Remarks
-
-This constructor is called automatically prior to the first instance being
-created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-PostSharpLoggingInfrastructure-GetRootFileAppenderFileName'></a>
 ### GetRootFileAppenderFileName() `method`
