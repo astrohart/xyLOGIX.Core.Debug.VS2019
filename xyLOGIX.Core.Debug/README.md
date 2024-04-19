@@ -359,7 +359,7 @@ such as logging.
 
 ##### Summary
 
-Sets up logging programmatically (as opposed to using an
+Sets up logging programmatically (as opposed to using a
 `app.config` file), using the specified `logFileName`
 for the log and perhaps the provided log file `repository`
 (say, serving as a relay to PostSharp).
