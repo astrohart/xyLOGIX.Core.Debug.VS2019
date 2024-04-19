@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
     public static class Activate
     {
         /// <summary>
-        /// Sets up logging programmatically (as opposed to using an
+        /// Sets up logging programmatically (as opposed to using a
         /// <c>app.config</c> file), using the specified <paramref name="logFileName" />
         /// for the log and perhaps the provided log file <paramref name="repository" />
         /// (say, serving as a relay to PostSharp).
@@ -77,25 +77,29 @@ namespace xyLOGIX.Core.Debug
                     "Activate.LoggingForLogFileName: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter."
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'..."
-                );
+                //DebugUtils.WriteLine(
+                //    DebugLevel.Info,
+                //    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'..."
+                //);
 
-                if (!(repository is Hierarchy hierarchy))
-                {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
-                        "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
-                    );
+                //if (!(repository is Hierarchy hierarchy))
+                //{
+                //    DebugUtils.WriteLine(
+                //        DebugLevel.Error,
+                //        "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
+                //    );
 
-                    return result;
-                }
+                //    DebugUtils.WriteLine(
+                //        DebugLevel.Debug, $"Activate.LoggingForLogFileName: Result = {result}"
+                //    );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
-                );
+                //    return result;
+                //}
+
+                //DebugUtils.WriteLine(
+                //    DebugLevel.Info,
+                //    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
+                //);
 
                 /*
                  * If we are here, and the Configured property of the
@@ -116,10 +120,10 @@ namespace xyLOGIX.Core.Debug
                 // Dump the value of the property, hierarchy.Configured, to the log
                 DebugUtils.WriteLine(
                     DebugLevel.Debug,
-                    $"Activate.LoggingForLogFileName: hierarchy.Configured = {hierarchy.Configured}"
+                    $"Activate.LoggingForLogFileName: hierarchy.Configured = {((Hierarchy)repository).Configured}"
                 );
 
-                if (result = hierarchy.Configured)
+                if (result = ((Hierarchy)repository).Configured)
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
@@ -167,16 +171,16 @@ namespace xyLOGIX.Core.Debug
                              .AndThatHasAStaticLogFileName(true);
 
                 roller.ActivateOptions();
-                hierarchy.Root.AddAppender(roller);
+                ((Hierarchy)repository).Root.AddAppender(roller);
 
                 var memory = new MemoryAppender();
                 memory.ActivateOptions();
-                hierarchy.Root.AddAppender(memory);
+                ((Hierarchy)repository).Root.AddAppender(memory);
 
-                hierarchy.Root.Level = Level.All;
-                hierarchy.Configured = true;
+                ((Hierarchy)repository).Root.Level = Level.All;
+                ((Hierarchy)repository).Configured = true;
 
-                result = hierarchy.Configured;
+                result = ((Hierarchy)repository).Configured;
 
                 if (result)
                     DebugUtils.WriteLine(
