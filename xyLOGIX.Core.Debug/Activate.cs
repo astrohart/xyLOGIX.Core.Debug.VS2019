@@ -77,29 +77,29 @@ namespace xyLOGIX.Core.Debug
                     "Activate.LoggingForLogFileName: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter."
                 );
 
-                //DebugUtils.WriteLine(
-                //    DebugLevel.Info,
-                //    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'..."
-                //);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'..."
+                );
 
-                //if (!(repository is Hierarchy hierarchy))
-                //{
-                //    DebugUtils.WriteLine(
-                //        DebugLevel.Error,
-                //        "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
-                //    );
+                if (!(repository is Hierarchy hierarchy))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
+                    );
 
-                //    DebugUtils.WriteLine(
-                //        DebugLevel.Debug, $"Activate.LoggingForLogFileName: Result = {result}"
-                //    );
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug, $"Activate.LoggingForLogFileName: Result = {result}"
+                    );
 
-                //    return result;
-                //}
+                    return result;
+                }
 
-                //DebugUtils.WriteLine(
-                //    DebugLevel.Info,
-                //    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
-                //);
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
+                );
 
                 /*
                  * If we are here, and the Configured property of the
