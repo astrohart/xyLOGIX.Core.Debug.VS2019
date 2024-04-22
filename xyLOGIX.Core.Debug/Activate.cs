@@ -120,10 +120,10 @@ namespace xyLOGIX.Core.Debug
                 // Dump the value of the property, hierarchy.Configured, to the log
                 DebugUtils.WriteLine(
                     DebugLevel.Debug,
-                    $"Activate.LoggingForLogFileName: hierarchy.Configured = {((Hierarchy)repository).Configured}"
+                    $"Activate.LoggingForLogFileName: hierarchy.Configured = {hierarchy.Configured}"
                 );
 
-                if (result = ((Hierarchy)repository).Configured)
+                if (result = hierarchy.Configured)
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
@@ -171,16 +171,16 @@ namespace xyLOGIX.Core.Debug
                              .AndThatHasAStaticLogFileName(true);
 
                 roller.ActivateOptions();
-                ((Hierarchy)repository).Root.AddAppender(roller);
+                hierarchy.Root.AddAppender(roller);
 
                 var memory = new MemoryAppender();
                 memory.ActivateOptions();
-                ((Hierarchy)repository).Root.AddAppender(memory);
+                hierarchy.Root.AddAppender(memory);
 
-                ((Hierarchy)repository).Root.Level = Level.All;
-                ((Hierarchy)repository).Configured = true;
+                hierarchy.Root.Level = Level.All;
+                hierarchy.Configured = true;
 
-                result = ((Hierarchy)repository).Configured;
+                result = hierarchy.Configured;
 
                 if (result)
                     DebugUtils.WriteLine(
