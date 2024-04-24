@@ -13,7 +13,7 @@
         bool IsInitialized { get; }
 
         /// <summary>
-        /// Gets or sets the source of events. Typically, this is the name of the
+        /// Gets or sets the quote of events. Typically, this is the name of the
         /// application that is sending the events.
         /// </summary>
         /// <remarks>

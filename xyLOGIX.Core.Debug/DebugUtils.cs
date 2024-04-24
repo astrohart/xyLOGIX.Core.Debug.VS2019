@@ -209,7 +209,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Logs the complete information about an exception to the log, under
-        /// the Error Level. Outputs the source file and line number where the exception
+        /// the Error Level. Outputs the quote file and line number where the exception
         /// occurred, as well as the message of the exception and its stack trace.
         /// </summary>
         /// <param name="e">

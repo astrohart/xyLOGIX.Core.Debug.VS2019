@@ -13,9 +13,9 @@ namespace xyLOGIX.Core.Debug
             GetEventLogManager.SoleInstance();
 
         /// <summary>
-        /// Sets up the Windows Event Log Application log source to correspond
+        /// Sets up the Windows Event Log Application log quote to correspond
         /// either to the specified <paramref name="applicationName" />, or to a event
-        /// source name that we automatically obtain.
+        /// quote name that we automatically obtain.
         /// </summary>
         /// <param name="applicationName">
         /// (Optional.) A <see cref="T:System.String" />

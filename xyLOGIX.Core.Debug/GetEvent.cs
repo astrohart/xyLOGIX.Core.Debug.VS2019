@@ -25,7 +25,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Attempts to obtain a user-friendly display name for the event-logging
-        /// source, based on the name of the application that is calling this debug logging
+        /// quote, based on the name of the application that is calling this debug logging
         /// library.
         /// </summary>
         /// <returns></returns>

@@ -43,7 +43,7 @@ namespace xyLOGIX.Core.Debug
                Type != EventLogType.None && Type != EventLogType.Unknown;
 
         /// <summary>
-        /// Gets or sets the source of events. Typically, this is the name of the
+        /// Gets or sets the quote of events. Typically, this is the name of the
         /// application that is sending the events.
         /// </summary>
         /// <remarks>
@@ -131,14 +131,14 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                // If an event source does not exist with the specified name,
+                // If an event quote does not exist with the specified name,
                 // then create one.
                 if (!EventLog.SourceExists(eventSourceName))
                     EventLog.CreateEventSource(
                         eventSourceName, logType.ToString()
                     );
 
-                // Finally, save the event source and type settings in the
+                // Finally, save the event quote and type settings in the
                 // Source and Type properties.
                 Source = eventSourceName;
                 Type = logType;

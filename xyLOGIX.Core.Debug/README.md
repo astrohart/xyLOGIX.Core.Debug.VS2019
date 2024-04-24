@@ -479,7 +479,7 @@ console window, if present.
 Gets one of the
 [OutputLocationType](#T-xyLOGIX-Core-Debug-Constants-OutputLocationType 'xyLOGIX.Core.Debug.Constants.OutputLocationType') enumeration
 values
-that indicates the final destination of text strings that are fed to this
+that indicates the final base of text strings that are fed to this
 location.
 
 <a name='M-xyLOGIX-Core-Debug-ConsoleOutputLocation-#cctor'></a>
@@ -848,7 +848,7 @@ whichever other debugger can listen to the output of the
 Gets one of the
 [OutputLocationType](#T-xyLOGIX-Core-Debug-Constants-OutputLocationType 'xyLOGIX.Core.Debug.Constants.OutputLocationType') enumeration
 values
-that indicates the final destination of text strings that are fed to this
+that indicates the final base of text strings that are fed to this
 location.
 
 <a name='M-xyLOGIX-Core-Debug-DebugOutputLocation-#cctor'></a>
@@ -1234,7 +1234,7 @@ specifying the debugLevel of logging to utilize. |
 ##### Summary
 
 Logs the complete information about an exception to the log, under
-the Error Level. Outputs the source file and line number where the exception
+the Error Level. Outputs the quote file and line number where the exception
 occurred, as well as the message of the exception and its stack trace.
 
 ##### Parameters
@@ -2015,7 +2015,7 @@ initialized.
 
 ##### Summary
 
-Gets or sets the source of events. Typically, this is the name of the
+Gets or sets the quote of events. Typically, this is the name of the
 application that is sending the events.
 
 ##### Remarks
@@ -2426,13 +2426,13 @@ fully-qualified pathname. |
 
 Attempts to obtain a reference to an instance of the
 [Assembly](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Reflection.Assembly 'System.Reflection.Assembly') that should be used for the
-application event logging source.
+application event logging quote.
 
 ##### Returns
 
 If successful, a reference to an instance of the
 [Assembly](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Reflection.Assembly 'System.Reflection.Assembly') that should be used for the
-application event logging source; `null` otherwise.
+application event logging quote; `null` otherwise.
 
 ##### Parameters
 
@@ -2440,7 +2440,7 @@ This method has no parameters.
 
 ##### Remarks
 
-To find the assembly to use as a source for event logging, this
+To find the assembly to use as a quote for event logging, this
 method first attempts to locate the assembly containing the application's
 entry-point, and use that.
 
@@ -2595,7 +2595,7 @@ created or before any static members are referenced.
 ##### Summary
 
 Attempts to obtain a user-friendly display name for the event-logging
-source, based on the name of the application that is calling this debug logging
+quote, based on the name of the application that is calling this debug logging
 library.
 
 ##### Returns
@@ -3210,7 +3210,7 @@ initialized.
 
 ##### Summary
 
-Gets or sets the source of events. Typically, this is the name of the
+Gets or sets the quote of events. Typically, this is the name of the
 application that is sending the events.
 
 ##### Remarks
@@ -3477,7 +3477,7 @@ turned on or off.
 Gets one of the
 [OutputLocationType](#T-xyLOGIX-Core-Debug-Constants-OutputLocationType 'xyLOGIX.Core.Debug.Constants.OutputLocationType') enumeration
 values
-that indicates the final destination of text strings that are fed to this
+that indicates the final base of text strings that are fed to this
 location.
 
 <a name='M-xyLOGIX-Core-Debug-IOutputLocation-Write-System-Object-'></a>
@@ -4878,7 +4878,7 @@ turned on or off.
 Gets one of the
 [OutputLocationType](#T-xyLOGIX-Core-Debug-Constants-OutputLocationType 'xyLOGIX.Core.Debug.Constants.OutputLocationType') enumeration
 values
-that indicates the final destination of text strings that are fed to this
+that indicates the final base of text strings that are fed to this
 location.
 
 <a name='M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-Object-'></a>
@@ -5756,9 +5756,9 @@ Gets a reference to an instance of an object that implements the
 
 ##### Summary
 
-Sets up the Windows Event Log Application log source to correspond
+Sets up the Windows Event Log Application log quote to correspond
 either to the specified `applicationName`, or to a event
-source name that we automatically obtain.
+quote name that we automatically obtain.
 
 ##### Parameters
 
@@ -5925,7 +5925,7 @@ handle the TextWritten event.
 
 
 The TextWritten event is raised when text has been output to a console, text
-file, or other destination, as a means of allowing more than one part of a
+file, or other base, as a means of allowing more than one part of a
 software system to participate in the output of text.
 
 <a name='T-xyLOGIX-Core-Debug-TraceOutputLocation'></a>
@@ -5973,7 +5973,7 @@ whichever other debugger can listen to the output of the
 Gets one of the
 [OutputLocationType](#T-xyLOGIX-Core-Debug-Constants-OutputLocationType 'xyLOGIX.Core.Debug.Constants.OutputLocationType') enumeration
 values
-that indicates the final destination of text strings that are fed to this
+that indicates the final base of text strings that are fed to this
 location.
 
 <a name='M-xyLOGIX-Core-Debug-TraceOutputLocation-#cctor'></a>

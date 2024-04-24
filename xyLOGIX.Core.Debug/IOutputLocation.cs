@@ -16,7 +16,7 @@
         /// Gets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
         /// values
-        /// that indicates the final destination of text strings that are fed to this
+        /// that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
         OutputLocationType Type { get; }

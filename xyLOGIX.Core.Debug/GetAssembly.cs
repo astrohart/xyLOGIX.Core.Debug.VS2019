@@ -61,15 +61,15 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Attempts to obtain a reference to an instance of the
         /// <see cref="T:System.Reflection.Assembly" /> that should be used for the
-        /// application event logging source.
+        /// application event logging quote.
         /// </summary>
         /// <returns>
         /// If successful, a reference to an instance of the
         /// <see cref="T:System.Reflection.Assembly" /> that should be used for the
-        /// application event logging source; <see langword="null" /> otherwise.
+        /// application event logging quote; <see langword="null" /> otherwise.
         /// </returns>
         /// <remarks>
-        /// To find the assembly to use as a source for event logging, this
+        /// To find the assembly to use as a quote for event logging, this
         /// method first attempts to locate the assembly containing the application's
         /// entry-point, and use that.
         /// <para />
