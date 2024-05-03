@@ -4,7 +4,7 @@
     /// Exposes <see langword="static" /> methods for performing mathematical
     /// computations.
     /// </summary>
-    public static class Compute
+    internal static class Compute
     {
         /// <summary>
         /// Computes the zero floor.  Meaning, if the specified
@@ -19,7 +19,7 @@
         /// otherwise, if the specified <paramref name="value" /> is zero or greater, then
         /// the method is the identity map.
         /// </returns>
-        public static int ZeroFloor(int value)
+        internal static int ZeroFloor(int value)
             => value < 0 ? 0 : value;
     }
 }
