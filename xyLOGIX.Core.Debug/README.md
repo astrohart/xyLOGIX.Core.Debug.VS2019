@@ -55,6 +55,7 @@
   - [Out](#P-xyLOGIX-Core-Debug-DebugUtils-Out 'xyLOGIX.Core.Debug.DebugUtils.Out')
   - [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DebugUtils-#cctor 'xyLOGIX.Core.Debug.DebugUtils.#cctor')
+  - [ClearTempExceptionLog()](#M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog 'xyLOGIX.Core.Debug.DebugUtils.ClearTempExceptionLog')
   - [DumpCollection(collection)](#M-xyLOGIX-Core-Debug-DebugUtils-DumpCollection-System-Collections-ICollection- 'xyLOGIX.Core.Debug.DebugUtils.DumpCollection(System.Collections.ICollection)')
   - [EchoCommandLinkText(commandLink)](#M-xyLOGIX-Core-Debug-DebugUtils-EchoCommandLinkText-System-Object- 'xyLOGIX.Core.Debug.DebugUtils.EchoCommandLinkText(System.Object)')
   - [FormatException(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatException-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatException(System.Exception)')
@@ -1093,6 +1094,19 @@ Typically, applications set this to 1.
 
 Initializes a new static instance of
 [DebugUtils](#T-xyLOGIX-Core-Debug-DebugUtils 'xyLOGIX.Core.Debug.DebugUtils').
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog'></a>
+### ClearTempExceptionLog() `method`
+
+##### Summary
+
+Erases the file having the fully-qualified pathname specified by the value of
+the [ExceptionLogPathname](#P-xyLOGIX-Core-Debug-DebugUtils-ExceptionLogPathname 'xyLOGIX.Core.Debug.DebugUtils.ExceptionLogPathname')
+property, if it is already present on the file system.
 
 ##### Parameters
 
