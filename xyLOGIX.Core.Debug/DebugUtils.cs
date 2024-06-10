@@ -35,6 +35,9 @@ namespace xyLOGIX.Core.Debug
             ExceptionLogPathname = Path.Combine(
                 Path.GetTempPath(), $"{Guid.NewGuid():N}_log.tmp"
             );
+
+            if (File.Exists(ExceptionLogPathname))
+                File.Delete(ExceptionLogPathname);
         }
 
         /// <summary>
@@ -54,7 +57,7 @@ namespace xyLOGIX.Core.Debug
         /// which error text is to be appended in the event where the <c>WriteLineCore</c>
         /// method catches an exception.
         /// </summary>
-        private static string ExceptionLogPathname { get; }
+        public static string ExceptionLogPathname { get; }
 
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth { get; set; }
@@ -710,7 +713,7 @@ namespace xyLOGIX.Core.Debug
                     DateTime.Now.ToLongDateString(),
                     DateTime.Now.ToShortTimeString(), ex.Message, ex.StackTrace
                 ) + content;
-                
+
                 File.AppendAllText(ExceptionLogPathname, message);
             }
         }
