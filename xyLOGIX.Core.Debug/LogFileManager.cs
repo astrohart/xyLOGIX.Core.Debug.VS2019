@@ -138,6 +138,8 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
+                DebugUtils.ClearTempExceptionLog();
+                
                 if (!Validate.LoggingInfrastructureType(infrastructureType))
                     return;
 
