@@ -3,6 +3,7 @@ using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 
 #if DEBUG
 #else
@@ -238,8 +239,10 @@ namespace xyLOGIX.Core.Debug
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}..."
                 );
 
+                Debugger.Launch();
+                Debugger.Break();
+
                 LoggingServices.DefaultBackend = backend;
-                LoggingServices.Roles[LoggingRoles.Meta].Backend = backend;
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
