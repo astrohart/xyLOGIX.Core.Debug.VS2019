@@ -36,8 +36,7 @@ namespace xyLOGIX.Core.Debug
                 Path.GetTempPath(), $"{Guid.NewGuid():N}_log.tmp"
             );
 
-            if (File.Exists(ExceptionLogPathname))
-                File.Delete(ExceptionLogPathname);
+            ClearTempExceptionLog();
         }
 
         /// <summary>
@@ -139,6 +138,26 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         [WeakEvent]
         public static event VerbosityChangedEventHandler VerbosityChanged;
+
+        /// <summary>
+        /// Erases the file having the fully-qualified pathname specified by the value of
+        /// the <see cref="P:xyLOGIX.Core.Debug.DebugUtils.ExceptionLogPathname" />
+        /// property, if it is already present on the file system.
+        /// </summary>
+        public static void ClearTempExceptionLog()
+        {
+            try
+            {
+                if (!File.Exists(ExceptionLogPathname)) return;
+
+                File.Delete(ExceptionLogPathname);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                LogException(ex);
+            }
+        }
 
         /// <summary> Dumps a collection to the debug log. </summary>
         /// <param name="collection">
