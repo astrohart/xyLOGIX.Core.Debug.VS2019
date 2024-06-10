@@ -5,10 +5,6 @@ using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
-#if DEBUG
-#else
-#endif
-
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>

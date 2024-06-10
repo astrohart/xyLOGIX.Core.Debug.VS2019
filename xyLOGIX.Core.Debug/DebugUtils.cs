@@ -24,10 +24,18 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.DebugUtils" />.
         /// </summary>
         static DebugUtils()
-
+        {
             // default ExceptionStackDepth is 1 for a Windows Forms app. Set to
             // 2 for a Console App.
-            => ExceptionStackDepth = 1;
+            ExceptionStackDepth = 1;
+
+            // Create the pathname of a file that is to be utilized for logging when
+            // WriteUtils is incapable of logging (such as when the logging
+            // infrastructure has not yet been initialized.
+            ExceptionLogPathname = Path.Combine(
+                Path.GetTempPath(), $"{Guid.NewGuid():N}_log.tmp"
+            );
+        }
 
         /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
@@ -42,13 +50,19 @@ namespace xyLOGIX.Core.Debug
         public static bool ConsoleOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the depth down the call stack from which Exception
-        /// information should be obtained.
+        /// Gets a <see cref="T:System.String" /> that contains the pathname of a file to
+        /// which error text is to be appended in the event where the <c>WriteLineCore</c>
+        /// method catches an exception.
         /// </summary>
+        private static string ExceptionLogPathname { get; }
 
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth { get; set; }
 
+        /// <summary>
+        /// Gets or sets the depth down the call stack from which Exception
+        /// information should be obtained.
+        /// </summary>
         /// <summary>
         /// Gets or sets a
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
@@ -689,9 +703,15 @@ namespace xyLOGIX.Core.Debug
 
                 OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //ignore
+                var message = string.Format(
+                    Resources.TempExceptionFileMessage,
+                    DateTime.Now.ToLongDateString(),
+                    DateTime.Now.ToShortTimeString(), ex.Message, ex.StackTrace
+                ) + content;
+                
+                File.AppendAllText(ExceptionLogPathname, message);
             }
         }
     }
