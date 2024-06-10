@@ -45,7 +45,7 @@
   - [_verbosity](#F-xyLOGIX-Core-Debug-DebugUtils-_verbosity 'xyLOGIX.Core.Debug.DebugUtils._verbosity')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
-  - [ExceptionStackDepth](#P-xyLOGIX-Core-Debug-DebugUtils-ExceptionStackDepth 'xyLOGIX.Core.Debug.DebugUtils.ExceptionStackDepth')
+  - [ExceptionLogPathname](#P-xyLOGIX-Core-Debug-DebugUtils-ExceptionLogPathname 'xyLOGIX.Core.Debug.DebugUtils.ExceptionLogPathname')
   - [InfrastructureType](#P-xyLOGIX-Core-Debug-DebugUtils-InfrastructureType 'xyLOGIX.Core.Debug.DebugUtils.InfrastructureType')
   - [IsLogging](#P-xyLOGIX-Core-Debug-DebugUtils-IsLogging 'xyLOGIX.Core.Debug.DebugUtils.IsLogging')
   - [IsPostSharp](#P-xyLOGIX-Core-Debug-DebugUtils-IsPostSharp 'xyLOGIX.Core.Debug.DebugUtils.IsPostSharp')
@@ -302,6 +302,7 @@
   - [Error_UnableFindAppConfigEntries](#P-xyLOGIX-Core-Debug-Properties-Resources-Error_UnableFindAppConfigEntries 'xyLOGIX.Core.Debug.Properties.Resources.Error_UnableFindAppConfigEntries')
   - [ExceptionMessageFormat](#P-xyLOGIX-Core-Debug-Properties-Resources-ExceptionMessageFormat 'xyLOGIX.Core.Debug.Properties.Resources.ExceptionMessageFormat')
   - [ResourceManager](#P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager 'xyLOGIX.Core.Debug.Properties.Resources.ResourceManager')
+  - [TempExceptionFileMessage](#P-xyLOGIX-Core-Debug-Properties-Resources-TempExceptionFileMessage 'xyLOGIX.Core.Debug.Properties.Resources.TempExceptionFileMessage')
 - [ServiceFlowHelper](#T-xyLOGIX-Core-Debug-ServiceFlowHelper 'xyLOGIX.Core.Debug.ServiceFlowHelper')
   - [EmergencyStop(notificationAction)](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action- 'xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop(System.Action)')
   - [OnDebuggerStartPending()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnDebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.OnDebuggerStartPending')
@@ -1011,22 +1012,22 @@ logging. Leave blank to not send events to the Application event log.
 Gets or sets a value indicating whether the logging produced by this
 object should only be written to the console as opposed to a log file.
 
-<a name='P-xyLOGIX-Core-Debug-DebugUtils-ExceptionStackDepth'></a>
-### ExceptionStackDepth `property`
+<a name='P-xyLOGIX-Core-Debug-DebugUtils-ExceptionLogPathname'></a>
+### ExceptionLogPathname `property`
 
 ##### Summary
 
-Gets or sets the depth down the call stack from which Exception
-information should be obtained.
+Gets a [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that contains the pathname of a file to
+which error text is to be appended in the event where the `WriteLineCore`
+method catches an exception.
 
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-InfrastructureType'></a>
 ### InfrastructureType `property`
 
 ##### Summary
 
-Gets or sets a
-[LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-Constants-LoggingInfrastructureType 'xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType') value
-indicating which type of logging infrastructure is in use.
+Gets or sets the depth down the call stack from which Exception
+information should be obtained.
 
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-IsLogging'></a>
 ### IsLogging `property`
@@ -5614,7 +5615,8 @@ A strongly-typed resource class, for looking up localized strings, etc.
 
 ##### Summary
 
-Overrides the current thread's CurrentUICulture property for all resource lookups using this strongly typed resource class.
+Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
 
 <a name='P-xyLOGIX-Core-Debug-Properties-Resources-Error_DepthMustBeNonNegative'></a>
 ### Error_DepthMustBeNonNegative `property`
@@ -5635,7 +5637,8 @@ Looks up a localized string similar to Unable to determine the path to the log f
 
 ##### Summary
 
-Looks up a localized string similar to {0}: {1} {2}.
+Looks up a localized string similar to {0}: {1}
+{2}.
 
 <a name='P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager'></a>
 ### ResourceManager `property`
@@ -5643,6 +5646,18 @@ Looks up a localized string similar to {0}: {1} {2}.
 ##### Summary
 
 Returns the cached ResourceManager instance used by this class.
+
+<a name='P-xyLOGIX-Core-Debug-Properties-Resources-TempExceptionFileMessage'></a>
+### TempExceptionFileMessage `property`
+
+##### Summary
+
+Looks up a localized string similar to {0} at {1}: Exception caught: {2}
+	{3}
+
+---
+
+.
 
 <a name='T-xyLOGIX-Core-Debug-ServiceFlowHelper'></a>
 ## ServiceFlowHelper `type`
