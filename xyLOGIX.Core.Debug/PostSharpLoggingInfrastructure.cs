@@ -143,6 +143,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Apparently, the log relay is NOT configured.  This is good.  Proceeding..."
                 );
 
+                Debugger.Launch();
+                Debugger.Break();
+                
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."

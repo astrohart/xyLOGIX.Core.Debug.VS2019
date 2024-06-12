@@ -252,7 +252,10 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 if (!Activate.LoggingForLogFileName(
-                        logFileName, repository ?? new Hierarchy()
+                        logFileName,
+                        typeof(Hierarchy) == repository.GetType()
+                            ? repository
+                            : new Hierarchy()
                     ))
                 {
                     DebugUtils.WriteLine(
