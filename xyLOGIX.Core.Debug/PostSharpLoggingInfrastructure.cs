@@ -133,7 +133,7 @@ namespace xyLOGIX.Core.Debug
                         $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the log file..."
                     );
                     
-                    if (overwrite) DeleteLogIfExists();
+                    if (overwrite) DeleteLogIfExists(logFileName);
                     
                     WriteTimestamp();
 

@@ -1,4 +1,5 @@
 ﻿using log4net.Repository;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -9,7 +10,10 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public interface ILoggingInfrastructure
     {
-        /// <summary> Gets the full path and filename to the log file for this application. </summary>
+        /// <summary>
+        /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
+        /// of the log file of this application.
+        /// </summary>
         string LogFilePath { get; }
 
         /// <summary>
@@ -20,8 +24,19 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         LoggingInfrastructureType Type { get; }
 
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        /// property has been updated.
+        /// </summary>
+        event EventHandler LogFilePathChanged;
+
         /// <summary> Deletes the log file, if it exists. </summary>
-        void DeleteLogIfExists();
+        /// <param name="logFileName">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a file to which the log is being written.
+        /// </param>
+        void DeleteLogIfExists(string logFileName = "");
 
         /// <summary>
         /// Gets the value of the

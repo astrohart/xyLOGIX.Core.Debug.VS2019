@@ -20,6 +20,12 @@ namespace xyLOGIX.Core.Debug
     public class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary>
+        /// A <see cref="T:System.String" /> that contains the fully-qualified pathname of
+        /// the log file.
+        /// </summary>
+        private string _logFilePath = "";
+
+        /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
         /// for the <see cref="T:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure" /> class.
         /// </summary>
@@ -42,9 +48,40 @@ namespace xyLOGIX.Core.Debug
         [Log(AttributeExclude = true)]
         public DefaultLoggingInfrastructure() { }
 
-        /// <summary> Gets the full path and filename to the log file for this application. </summary>
+        /// <summary>
+        /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
+        /// of the log file of this application.
+        /// </summary>
         public virtual string LogFilePath
-            => GetRootFileAppenderFileName();
+        {
+            get
+            {
+                var result = string.Empty;
+
+                try
+                {
+                    return !string.IsNullOrWhiteSpace(_logFilePath)
+                        ? _logFilePath
+                        : _logFilePath = GetRootFileAppenderFileName();
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the log
+                    DebugUtils.LogException(ex);
+
+                    result = string.Empty;
+                }
+
+                return result;
+            }
+            protected set
+            {
+                var changed = !string.IsNullOrWhiteSpace(value) &&
+                              !value.Equals(_logFilePath);
+                _logFilePath = value;
+                if (changed) OnLogFilePathChanged();
+            }
+        }
 
         /// <summary>
         /// Gets the
@@ -53,32 +90,6 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public virtual LoggingInfrastructureType Type { get; } =
             LoggingInfrastructureType.Default;
-
-        /// <summary> Deletes the log file, if it exists. </summary>
-        public virtual void DeleteLogIfExists()
-        {
-            // write the name of the current class and method we are now
-            if (!File.Exists(LogFilePath))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: The log file '{0}' does not exist.  Nothing to do.",
-                    LogFilePath
-                );
-
-                return;
-            }
-
-            if (!DebugFileAndFolderHelper.IsFolderWriteable(
-                    Path.GetDirectoryName(LogFilePath)
-                ))
-
-                // deleted sits in, then Heaven help us! However, the software
-                // should try to work at all costs, so this method should just
-                // silently fail in this case.
-                return;
-            File.Delete(LogFilePath);
-        }
 
         /// <summary>
         /// Gets the value of the
@@ -374,6 +385,67 @@ namespace xyLOGIX.Core.Debug
                 $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Verbosity = {DebugUtils.Verbosity}"
             );
         }
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath" />
+        /// property has been updated.
+        /// </summary>
+        public event EventHandler LogFilePathChanged;
+
+        /// <summary> Deletes the log file, if it exists. </summary>
+        /// <param name="logFileName">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a file to which the log is being written.
+        /// </param>
+        public virtual void DeleteLogIfExists(string logFileName = "")
+        {
+            // Dump the value of the property, LogFilePath, to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.DeleteLogIfExists: LogFilePath = '{LogFilePath}'"
+            );
+
+            if (!string.IsNullOrWhiteSpace(logFileName) &&
+                File.Exists(logFileName))
+                LogFilePath = logFileName;
+
+            // write the name of the current class and method we are now
+            if (!File.Exists(LogFilePath))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "DefaultLoggingInfrastructure.DeleteLogIfExists: The log file '{0}' does not exist.  Nothing to do.",
+                    LogFilePath
+                );
+
+                return;
+            }
+
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(
+                    Path.GetDirectoryName(LogFilePath)
+                ))
+
+                // deleted sits in, then Heaven help us! However, the software
+                // should try to work at all costs, so this method should just
+                // silently fail in this case.
+                return;
+            File.Delete(LogFilePath);
+        }
+
+        /// <summary>
+        /// Raises the
+        /// <see
+        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePathChanged" />
+        /// event.
+        /// </summary>
+        /// <remarks>
+        /// This method is called when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath" />
+        /// property is updated.
+        /// </remarks>
+        protected virtual void OnLogFilePathChanged()
+            => LogFilePathChanged?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Prepares the log file by ensuring that the containing folder is
