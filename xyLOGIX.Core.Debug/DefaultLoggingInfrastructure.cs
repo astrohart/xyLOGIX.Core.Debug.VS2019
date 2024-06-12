@@ -1,6 +1,5 @@
 ﻿using log4net.Config;
 using log4net.Repository;
-using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using PostSharp.Patterns.Threading;
@@ -251,16 +250,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: Attempting to activate logging..."
                 );
 
-                if (!Activate.LoggingForLogFileName(
-                        logFileName,
-                        repository
-                    ))
+                if (!Activate.LoggingForLogFileName(logFileName, repository))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         $"*** ERROR *** Failed to set up logging for the log file name '{logFileName}'."
                     );
-                    
+
                     return;
                 }
 
@@ -275,7 +271,7 @@ namespace xyLOGIX.Core.Debug
             );
 
             if (Type != LoggingInfrastructureType.PostSharp)
-                PrepareLogFile(overwrite, repository);
+                PrepareLogFile(repository);
         }
 
         /// <summary>
@@ -384,21 +380,23 @@ namespace xyLOGIX.Core.Debug
         /// writeable by the current user and by then, if specified to overwrite, deleting
         /// the current log file.
         /// </summary>
-        /// <param name="overwrite">
-        /// Overwrites any existing logs for the application with
-        /// the latest logging sent out by this instance.
-        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object
         /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
         /// interface. Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
-        protected virtual void PrepareLogFile(
-            bool overwrite,
-            ILoggerRepository repository
-        )
+        protected virtual void PrepareLogFile(ILoggerRepository repository)
         {
+            /*
+             * This method is primarily concerned with deleting the previous log file and
+             * then starting a new one (for a subsequent execution, or user interaction
+             * session, with the same app.
+             *
+             * Therefore, if we are logging to the console only, then there is nothing for
+             * us to do here.
+             */
+
             if (LoggingServices.DefaultBackend is ConsoleLoggingBackend)
                 return;
 
@@ -487,11 +485,6 @@ namespace xyLOGIX.Core.Debug
             FileAppenderConfigurator.SetMinimalLock(
                 FileAppenderManager.GetFirstAppender(repository)
             );
-
-            if (overwrite)
-                DeleteLogIfExists();
-
-            WriteTimestamp();
         }
 
         /// <summary> Writes a date and time stamp to the top of the log file. </summary>

@@ -248,7 +248,11 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
                 );
 
-                PrepareLogFile(overwrite, _relay);
+                PrepareLogFile(_relay);
+                
+                DeleteLogIfExists();
+                
+                WriteTimestamp();
             }
             catch (Exception ex)
             {
