@@ -229,7 +229,7 @@ namespace xyLOGIX.Core.Debug
                     DebugLevel.Info,
                     "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'backend' variable has a valid object reference for its value."
                 );
-
+                
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}..."
