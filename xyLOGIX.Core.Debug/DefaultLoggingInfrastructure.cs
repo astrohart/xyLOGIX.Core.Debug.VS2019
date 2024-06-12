@@ -4,6 +4,7 @@ using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 using System.IO;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
@@ -400,6 +401,9 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         public virtual void DeleteLogIfExists(string logFileName = "")
         {
+            Debugger.Launch();
+            Debugger.Break();
+            
             // Dump the value of the property, LogFilePath, to the log
             DebugUtils.WriteLine(
                 DebugLevel.Debug,
