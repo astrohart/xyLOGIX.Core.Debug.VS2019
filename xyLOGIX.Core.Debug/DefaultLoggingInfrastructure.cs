@@ -241,6 +241,10 @@ namespace xyLOGIX.Core.Debug
                  * to utilize for the logfile.
                  */
 
+
+                if (!(typeof(Hierarchy) == repository.GetType()))
+                    XmlConfigurator.Configure(repository);
+                
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     "*** INFO: The 'logFileName' parameter was initialized."
@@ -253,15 +257,14 @@ namespace xyLOGIX.Core.Debug
 
                 if (!Activate.LoggingForLogFileName(
                         logFileName,
-                        typeof(Hierarchy) == repository.GetType()
-                            ? repository
-                            : new Hierarchy()
+                        repository
                     ))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         $"*** ERROR *** Failed to set up logging for the log file name '{logFileName}'."
                     );
+                    
                     return;
                 }
 
