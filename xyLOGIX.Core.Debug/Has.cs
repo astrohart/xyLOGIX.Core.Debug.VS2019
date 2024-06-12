@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Diagnostics.Backends.Null;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Linq;
@@ -56,8 +57,8 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// This algorithm assures us we get an accurate response, i.e.,
         /// <see langword="false" />, from this method if the caller is not running in a
-        /// console and is NOT GUI-based; i.e., it is like a console app but it is set to
-        /// <c>Windows Application</c> application type in the <b>Project Properties</b>
+        /// console and is NOT GUI-based; i.e., it is like a console app, but it is set to
+        /// <c>Windows Application</c> type in the <b>Project Properties</b>
         /// window in Visual Studio, but it never creates a window (at least, not using WPF
         /// or WinForms; this method cannot detect native Win32 P/Invoke calls to create a
         /// main window).
@@ -74,6 +75,39 @@ namespace xyLOGIX.Core.Debug
             }
             catch
             {
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether logging has been configured.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if a backend has been assigned to the value of
+        /// the
+        /// <see cref="P:PostSharp.Patterns.Diagnostics.LoggingServices.DefaultBackend" />
+        /// property besides the
+        /// <see cref="T:PostSharp.Patterns.Diagnostics.Backends.Null.NullLoggingBackend" />
+        /// .
+        /// </returns>
+        public static bool LoggingBeenSetUp()
+        {
+            var result = false;
+
+            try
+            {
+                if (LoggingServices.DefaultBackend == null) return result;
+
+                result =
+                    !(LoggingServices.DefaultBackend is NullLoggingBackend);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
                 result = false;
             }
 
