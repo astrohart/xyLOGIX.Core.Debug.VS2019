@@ -81,12 +81,14 @@
   - [DumpLines(element,depth,log)](#M-xyLOGIX-Core-Debug-DebuggerDump-DumpLines-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.DebuggerDump.DumpLines(System.Object,System.Int32,System.IO.TextWriter)')
 - [DefaultLoggingInfrastructure](#T-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure')
   - [#ctor()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-#ctor 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.#ctor')
+  - [_logFilePath](#F-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-_logFilePath 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure._logFilePath')
   - [LogFilePath](#P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-LogFilePath 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath')
   - [Type](#P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-Type 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.Type')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-#cctor 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.#cctor')
-  - [DeleteLogIfExists()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.DeleteLogIfExists')
+  - [DeleteLogIfExists(logFileName)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists-System-String- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.DeleteLogIfExists(System.String)')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
+  - [OnLogFilePathChanged()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-OnLogFilePathChanged 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.OnLogFilePathChanged')
   - [PrepareLogFile(repository)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.PrepareLogFile(log4net.Repository.ILoggerRepository)')
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean)')
   - [WriteTimestamp()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-WriteTimestamp 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.WriteTimestamp')
@@ -177,7 +179,7 @@
 - [ILoggingInfrastructure](#T-xyLOGIX-Core-Debug-ILoggingInfrastructure 'xyLOGIX.Core.Debug.ILoggingInfrastructure')
   - [LogFilePath](#P-xyLOGIX-Core-Debug-ILoggingInfrastructure-LogFilePath 'xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath')
   - [Type](#P-xyLOGIX-Core-Debug-ILoggingInfrastructure-Type 'xyLOGIX.Core.Debug.ILoggingInfrastructure.Type')
-  - [DeleteLogIfExists()](#M-xyLOGIX-Core-Debug-ILoggingInfrastructure-DeleteLogIfExists 'xyLOGIX.Core.Debug.ILoggingInfrastructure.DeleteLogIfExists')
+  - [DeleteLogIfExists(logFileName)](#M-xyLOGIX-Core-Debug-ILoggingInfrastructure-DeleteLogIfExists-System-String- 'xyLOGIX.Core.Debug.ILoggingInfrastructure.DeleteLogIfExists(System.String)')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-ILoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.ILoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-ILoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.ILoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole)](#M-xyLOGIX-Core-Debug-ILoggingInfrastructure-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean- 'xyLOGIX.Core.Debug.ILoggingInfrastructure.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean)')
@@ -1723,12 +1725,21 @@ This constructor has no parameters.
 This constructor is marked `protected`
 due to the fact that this class is marked `abstract`.
 
+<a name='F-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-_logFilePath'></a>
+### _logFilePath `constants`
+
+##### Summary
+
+A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that contains the fully-qualified pathname of
+the log file.
+
 <a name='P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-LogFilePath'></a>
 ### LogFilePath `property`
 
 ##### Summary
 
-Gets the full path and filename to the log file for this application.
+Gets a [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') containing the fully-qualified pathname
+of the log file of this application.
 
 <a name='P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-Type'></a>
 ### Type `property`
@@ -1756,8 +1767,8 @@ This method has no parameters.
 This constructor is called automatically prior to the first instance being
 created or before any static members are referenced.
 
-<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists'></a>
-### DeleteLogIfExists() `method`
+<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists-System-String-'></a>
+### DeleteLogIfExists(logFileName) `method`
 
 ##### Summary
 
@@ -1765,7 +1776,10 @@ Deletes the log file, if it exists.
 
 ##### Parameters
 
-This method has no parameters.
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| logFileName | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that contains the fully-qualified
+pathname of a file to which the log is being written. |
 
 <a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-GetRootFileAppenderFileName'></a>
 ### GetRootFileAppenderFileName() `method`
@@ -1849,6 +1863,25 @@ Leave blank to use the default value. |
 that implements the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository')
 interface. Supply a value for this parameter if your infrastructure is not
 utilizing the default HierarchicalRepository. |
+
+<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-OnLogFilePathChanged'></a>
+### OnLogFilePathChanged() `method`
+
+##### Summary
+
+Raises the
+[](#E-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-LogFilePathChanged 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePathChanged')
+event.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This method is called when the value of the
+[LogFilePath](#P-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-LogFilePath 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath')
+property is updated.
 
 <a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-log4net-Repository-ILoggerRepository-'></a>
 ### PrepareLogFile(repository) `method`
@@ -3353,7 +3386,8 @@ of its properties and methods.
 
 ##### Summary
 
-Gets the full path and filename to the log file for this application.
+Gets a [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') containing the fully-qualified pathname
+of the log file of this application.
 
 <a name='P-xyLOGIX-Core-Debug-ILoggingInfrastructure-Type'></a>
 ### Type `property`
@@ -3365,8 +3399,8 @@ Gets the
 that
 corresponds to the type of infrastructure that is being utilized.
 
-<a name='M-xyLOGIX-Core-Debug-ILoggingInfrastructure-DeleteLogIfExists'></a>
-### DeleteLogIfExists() `method`
+<a name='M-xyLOGIX-Core-Debug-ILoggingInfrastructure-DeleteLogIfExists-System-String-'></a>
+### DeleteLogIfExists(logFileName) `method`
 
 ##### Summary
 
@@ -3374,7 +3408,10 @@ Deletes the log file, if it exists.
 
 ##### Parameters
 
-This method has no parameters.
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| logFileName | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that contains the fully-qualified
+pathname of a file to which the log is being written. |
 
 <a name='M-xyLOGIX-Core-Debug-ILoggingInfrastructure-GetRootFileAppenderFileName'></a>
 ### GetRootFileAppenderFileName() `method`
