@@ -401,9 +401,6 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         public virtual void DeleteLogIfExists(string logFileName = "")
         {
-            Debugger.Launch();
-            Debugger.Break();
-            
             // Dump the value of the property, LogFilePath, to the log
             DebugUtils.WriteLine(
                 DebugLevel.Debug,
