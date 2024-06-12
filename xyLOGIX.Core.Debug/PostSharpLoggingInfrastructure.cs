@@ -249,8 +249,9 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 PrepareLogFile(_relay);
-                
-                DeleteLogIfExists();
+
+                if (overwrite)
+                    DeleteLogIfExists();
                 
                 WriteTimestamp();
             }
