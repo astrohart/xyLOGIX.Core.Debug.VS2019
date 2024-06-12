@@ -87,7 +87,7 @@
   - [DeleteLogIfExists()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-DeleteLogIfExists 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.DeleteLogIfExists')
   - [GetRootFileAppenderFileName()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-GetRootFileAppenderFileName 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.GetRootFileAppenderFileName')
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,repository)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,log4net.Repository.ILoggerRepository)')
-  - [PrepareLogFile(overwrite,repository)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-System-Boolean,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.PrepareLogFile(System.Boolean,log4net.Repository.ILoggerRepository)')
+  - [PrepareLogFile(repository)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.PrepareLogFile(log4net.Repository.ILoggerRepository)')
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean)')
   - [WriteTimestamp()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-WriteTimestamp 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.WriteTimestamp')
 - [Delete](#T-xyLOGIX-Core-Debug-Delete 'xyLOGIX.Core.Debug.Delete')
@@ -164,6 +164,7 @@
   - [IsWindowsGUI](#P-xyLOGIX-Core-Debug-Has-IsWindowsGUI 'xyLOGIX.Core.Debug.Has.IsWindowsGUI')
   - [#cctor()](#M-xyLOGIX-Core-Debug-Has-#cctor 'xyLOGIX.Core.Debug.Has.#cctor')
   - [ConsoleWindow()](#M-xyLOGIX-Core-Debug-Has-ConsoleWindow 'xyLOGIX.Core.Debug.Has.ConsoleWindow')
+  - [LoggingBeenSetUp()](#M-xyLOGIX-Core-Debug-Has-LoggingBeenSetUp 'xyLOGIX.Core.Debug.Has.LoggingBeenSetUp')
   - [WindowsGui(useEntryAssembly)](#M-xyLOGIX-Core-Debug-Has-WindowsGui-System-Boolean- 'xyLOGIX.Core.Debug.Has.WindowsGui(System.Boolean)')
 - [IEventLogManager](#T-xyLOGIX-Core-Debug-IEventLogManager 'xyLOGIX.Core.Debug.IEventLogManager')
   - [IsInitialized](#P-xyLOGIX-Core-Debug-IEventLogManager-IsInitialized 'xyLOGIX.Core.Debug.IEventLogManager.IsInitialized')
@@ -1849,8 +1850,8 @@ that implements the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 
 interface. Supply a value for this parameter if your infrastructure is not
 utilizing the default HierarchicalRepository. |
 
-<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-System-Boolean,log4net-Repository-ILoggerRepository-'></a>
-### PrepareLogFile(overwrite,repository) `method`
+<a name='M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-PrepareLogFile-log4net-Repository-ILoggerRepository-'></a>
+### PrepareLogFile(repository) `method`
 
 ##### Summary
 
@@ -1862,8 +1863,6 @@ the current log file.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| overwrite | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | Overwrites any existing logs for the application with
-the latest logging sent out by this instance. |
 | repository | [log4net.Repository.ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository') | (Optional.) Reference to an instance of an object
 that implements the [ILoggerRepository](#T-log4net-Repository-ILoggerRepository 'log4net.Repository.ILoggerRepository')
 interface. Supply a value for this parameter if your infrastructure is not
@@ -3162,11 +3161,31 @@ If that check passes, then we return the negation of the return value of the
 
 This algorithm assures us we get an accurate response, i.e.,
 `false`, from this method if the caller is not running in a
-console and is NOT GUI-based; i.e., it is like a console app but it is set to
-`Windows Application` application type in the 
+console and is NOT GUI-based; i.e., it is like a console app, but it is set to
+`Windows Application` type in the 
 window in Visual Studio, but it never creates a window (at least, not using WPF
 or WinForms; this method cannot detect native Win32 P/Invoke calls to create a
 main window).
+
+<a name='M-xyLOGIX-Core-Debug-Has-LoggingBeenSetUp'></a>
+### LoggingBeenSetUp() `method`
+
+##### Summary
+
+Determines whether logging has been configured.
+
+##### Returns
+
+`true` if a backend has been assigned to the value of
+the
+[DefaultBackend](#P-PostSharp-Patterns-Diagnostics-LoggingServices-DefaultBackend 'PostSharp.Patterns.Diagnostics.LoggingServices.DefaultBackend')
+property besides the
+[NullLoggingBackend](#T-PostSharp-Patterns-Diagnostics-Backends-Null-NullLoggingBackend 'PostSharp.Patterns.Diagnostics.Backends.Null.NullLoggingBackend')
+.
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='M-xyLOGIX-Core-Debug-Has-WindowsGui-System-Boolean-'></a>
 ### WindowsGui(useEntryAssembly) `method`
