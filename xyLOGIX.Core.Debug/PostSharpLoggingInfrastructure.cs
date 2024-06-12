@@ -1,6 +1,7 @@
 ﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
+using PostSharp.Patterns.Diagnostics.Backends.Null;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
@@ -151,7 +152,8 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
                 );
 
-                if (_relay == null)
+                if (LoggingServices.DefaultBackend == null
+                    || LoggingServices.DefaultBackend is NullLoggingBackend)
                     _relay = Log4NetCollectingRepositorySelector
                         .RedirectLoggingToPostSharp();
 
@@ -189,7 +191,8 @@ namespace xyLOGIX.Core.Debug
                     "*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
                 );
 
-                if (LoggingServices.DefaultBackend == null)
+                if (LoggingServices.DefaultBackend == null
+                    || LoggingServices.DefaultBackend is NullLoggingBackend)
                     base.InitializeLogging(
                         muteDebugLevelIfReleaseMode, overwrite,
                         configurationFilePathname, muteConsole, logFileName,
@@ -240,7 +243,8 @@ namespace xyLOGIX.Core.Debug
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}..."
                 );
 
-                if (LoggingServices.DefaultBackend == null)
+                if (LoggingServices.DefaultBackend == null
+                    || LoggingServices.DefaultBackend is NullLoggingBackend)
                     LoggingServices.DefaultBackend = backend;
 
                 DebugUtils.WriteLine(
