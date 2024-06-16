@@ -57,7 +57,7 @@ namespace xyLOGIX.Core.Debug
         {
             get
             {
-                var result = string.Empty;
+                string result;
 
                 try
                 {
