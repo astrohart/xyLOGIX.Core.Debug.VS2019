@@ -4,10 +4,8 @@ using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using PostSharp.Patterns.Threading;
 using System;
-using System.Diagnostics;
 using System.IO;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -483,8 +481,9 @@ namespace xyLOGIX.Core.Debug
                 return;
             }
 
-            var logFileDirectoryParent = new DirectoryInfo(logFileDirectoryPath)
-                                         .Parent?.FullName;
+
+            var logFileDirectoryParent =
+                Path.GetDirectoryName(logFileDirectoryPath);
 
             // Dump the variable logFileDirectoryParent to the log
             DebugUtils.WriteLine(
