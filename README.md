@@ -1,4 +1,4 @@
-﻿# xyLOGIX.Core.Debug `class library`
+# xyLOGIX.Core.Debug `class library`
 
 This project provides basic logging functionality.
 

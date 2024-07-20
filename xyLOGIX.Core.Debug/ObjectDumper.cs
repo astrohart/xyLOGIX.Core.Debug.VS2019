@@ -1,4 +1,4 @@
-﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
+//Copyright (C) Microsoft Corporation.  All rights reserved.
 
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
