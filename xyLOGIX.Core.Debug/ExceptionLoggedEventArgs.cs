@@ -23,6 +23,6 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets a reference to an instance of the
         /// <see cref="T:System.Exception" /> that was logged.
         /// </summary>
-        public Exception Exception { get; }
+        public Exception Exception { [DebuggerStepThrough] get; }
     }
 }

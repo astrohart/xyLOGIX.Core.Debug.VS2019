@@ -48,6 +48,6 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
         /// property.
         /// </summary>
-        public bool NewValue { get; }
+        public bool NewValue { [DebuggerStepThrough] get; }
     }
 }

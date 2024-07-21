@@ -31,12 +31,12 @@ namespace xyLOGIX.Core.Debug
         /// Gets of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
         /// enumeration values that indicates of what level of severity is the message.
         /// </summary>
-        public DebugLevel Level { get; }
+        public DebugLevel Level { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets a <see cref="T:System.String" /> containing the text that is
         /// otherwise going to be written to the log.
         /// </summary>
-        public string Text { get; }
+        public string Text { [DebuggerStepThrough] get; }
     }
 }

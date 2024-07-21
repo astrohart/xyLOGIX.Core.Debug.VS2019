@@ -30,7 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// directs debugging output to the standard output of the application and/or a
         /// console window, if present.
         /// </summary>
-        public static IOutputLocation Instance { get; } =
+        public static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new ConsoleOutputLocation();
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
-        public override OutputLocationType Type { get; } =
+        public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Console;
 
         /// <summary>

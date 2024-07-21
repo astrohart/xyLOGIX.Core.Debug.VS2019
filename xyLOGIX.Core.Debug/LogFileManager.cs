@@ -28,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         /// represents the type of infrastructure currently in use by this
         /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
         /// </summary>
-        public static LoggingInfrastructureType InfrastructureType { get; set; }
+        public static LoggingInfrastructureType InfrastructureType { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary> Gets the full path and filename to the log file for this application. </summary>
         /// <remarks>

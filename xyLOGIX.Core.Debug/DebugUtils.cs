@@ -43,23 +43,23 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets the name of the application. Used for Windows event
         /// logging. Leave blank to not send events to the Application event log.
         /// </summary>
-        public static string ApplicationName { get; set; }
+        public static string ApplicationName { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the logging produced by this
         /// object should only be written to the console as opposed to a log file.
         /// </summary>
-        public static bool ConsoleOnly { get; set; }
+        public static bool ConsoleOnly { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets a <see cref="T:System.String" /> that contains the pathname of a file to
         /// which error text is to be appended in the event where the <c>WriteLineCore</c>
         /// method catches an exception.
         /// </summary>
-        public static string ExceptionLogPathname { get; }
+        public static string ExceptionLogPathname { [DebuggerStepThrough] get; }
 
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
-        public static int ExceptionStackDepth { get; set; }
+        public static int ExceptionStackDepth { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets or sets the depth down the call stack from which Exception
@@ -77,7 +77,7 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>
-        public static bool IsLogging { get; set; }
+        public static bool IsLogging { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets a value that indicates whether PostSharp is in use as the
@@ -90,22 +90,22 @@ namespace xyLOGIX.Core.Debug
         /// Users should set this property to the path to the log file, if
         /// logging.
         /// </summary>
-        public static string LogFilePath { get; set; }
+        public static string LogFilePath { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
-        public static bool MuteConsole { get; set; }
+        public static bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to mute "DEBUG" log messages
         /// in Release mode.
         /// </summary>
-        public static bool MuteDebugLevelIfReleaseMode { get; set; }
+        public static bool MuteDebugLevelIfReleaseMode { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets or sets a value that represents the spigot of text from that
         /// which is produced by calls to this class' methods.
         /// </summary>
-        public static TextWriter Out { get; set; }
+        public static TextWriter Out { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>

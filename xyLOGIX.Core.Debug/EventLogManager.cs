@@ -31,7 +31,7 @@ namespace xyLOGIX.Core.Debug
         /// that
         /// manages our access to the Windows System Event Logs.
         /// </summary>
-        public static IEventLogManager Instance { get; } =
+        public static IEventLogManager Instance { [DebuggerStepThrough] get; } =
             new EventLogManager();
 
         /// <summary>

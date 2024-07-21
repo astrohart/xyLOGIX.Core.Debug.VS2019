@@ -21,7 +21,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
         /// </summary>
-        private static IOutputLocationProvider OutputLocationProvider { get; } =
+        private static IOutputLocationProvider OutputLocationProvider { [DebuggerStepThrough] get; } =
             GetOutputLocationProvider.SoleInstance();
 
         /// <summary>

@@ -87,7 +87,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
         /// that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public virtual LoggingInfrastructureType Type { get; } =
+        public virtual LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
             LoggingInfrastructureType.Default;
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
         /// </summary>
-        public static IOutputLocation Instance { get; } =
+        public static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new DebugOutputLocation();
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
-        public override OutputLocationType Type { get; } =
+        public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Debug;
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
         /// interface.
         /// </summary>
-        public static IOutputLocationProvider Instance { get; } =
+        public static IOutputLocationProvider Instance { [DebuggerStepThrough] get; } =
             new OutputLocationProvider();
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </summary>
         [Child]
-        private IList<IOutputLocation> InternalOutputLocationList { get; } =
+        private IList<IOutputLocation> InternalOutputLocationList { [DebuggerStepThrough] get; } =
             new AdvisableCollection<IOutputLocation>();
 
         /// <summary>

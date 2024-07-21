@@ -36,7 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="M:xyLOGIX.Core.Debug.Has.WindowsGui" /> method is called more
         /// than once.
         /// </remarks>
-        private static bool? IsWindowsGUI { get; set; }
+        private static bool? IsWindowsGUI { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Determines whether the application is currently running in a console

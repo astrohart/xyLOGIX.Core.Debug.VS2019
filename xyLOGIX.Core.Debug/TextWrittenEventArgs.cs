@@ -38,6 +38,6 @@ namespace xyLOGIX.Core.Debug
             => Text = text;
 
         /// <summary> Gets a string containing the text to be written. </summary>
-        public string Text { get; }
+        public string Text { [DebuggerStepThrough] get; }
     }
 }

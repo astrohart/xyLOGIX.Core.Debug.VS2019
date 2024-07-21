@@ -14,7 +14,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
         /// of the log file of this application.
         /// </summary>
-        string LogFilePath { get; }
+        string LogFilePath { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets the
@@ -22,7 +22,7 @@ namespace xyLOGIX.Core.Debug
         /// that
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        LoggingInfrastructureType Type { get; }
+        LoggingInfrastructureType Type { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Occurs when the value of the

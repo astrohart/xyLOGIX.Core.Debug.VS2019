@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a value indicating whether this object has been properly
         /// initialized.
         /// </summary>
-        bool IsInitialized { get; }
+        bool IsInitialized { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets or sets the quote of events. Typically, this is the name of the
@@ -20,7 +20,7 @@ namespace xyLOGIX.Core.Debug
         /// This property must be set before logging events, otherwise an error
         /// will occur.
         /// </remarks>
-        string Source { get; }
+        string Source { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets or sets the type of log to which events are to be sent
@@ -30,7 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// This property must be set before logging events, otherwise an error
         /// will occur.
         /// </remarks>
-        EventLogType Type { get; }
+        EventLogType Type { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Sends an Error event to the system event log pointed to by the

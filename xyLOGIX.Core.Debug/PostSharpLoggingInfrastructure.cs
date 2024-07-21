@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// that
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public override LoggingInfrastructureType Type { get; } =
+        public override LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
             LoggingInfrastructureType.PostSharp;
 
         /// <summary>

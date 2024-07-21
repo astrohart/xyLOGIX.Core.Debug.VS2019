@@ -53,12 +53,12 @@ namespace xyLOGIX.Core.Debug
         /// Gets an <see cref="T:System.Int32" /> value that is the new value of
         /// the <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property.
         /// </summary>
-        public int NewValue { get; }
+        public int NewValue { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets an <see cref="T:System.Int32" /> value that is the former value
         /// of the <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property.
         /// </summary>
-        public int OldValue { get; }
+        public int OldValue { [DebuggerStepThrough] get; }
     }
 }

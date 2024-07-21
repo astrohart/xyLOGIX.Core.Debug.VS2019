@@ -16,7 +16,7 @@ namespace xyLOGIX.Core.Debug
         /// event
         /// when its value is updated.
         /// </remarks>
-        bool MuteConsole { get; set; }
+        bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Occurs when the value of the

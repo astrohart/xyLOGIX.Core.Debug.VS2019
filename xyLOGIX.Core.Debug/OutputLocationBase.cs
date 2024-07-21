@@ -14,7 +14,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
-        public bool MuteConsole { get; set; }
+        public bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets one of the
@@ -23,7 +23,7 @@ namespace xyLOGIX.Core.Debug
         /// that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
-        public abstract OutputLocationType Type { get; }
+        public abstract OutputLocationType Type { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Writes the text representation of the specified object to the

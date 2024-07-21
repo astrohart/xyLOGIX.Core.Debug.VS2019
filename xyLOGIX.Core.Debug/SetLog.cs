@@ -7,6 +7,6 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets a string that provides the name to use for the
         /// application's log file.
         /// </summary>
-        public static string ApplicationName { get; set; }
+        public static string ApplicationName { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
     }
 }

@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface.
         /// </summary>
-        private static IEventLogManager EventLogManager { get; } =
+        private static IEventLogManager EventLogManager { [DebuggerStepThrough] get; } =
             GetEventLogManager.SoleInstance();
 
         /// <summary>
