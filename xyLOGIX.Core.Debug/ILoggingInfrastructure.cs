@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using log4net.Repository;
 using System;
 
