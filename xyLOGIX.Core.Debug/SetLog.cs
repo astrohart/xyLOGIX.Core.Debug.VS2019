@@ -1,3 +1,4 @@
+using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Sets elements of the log. </summary>
