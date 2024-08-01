@@ -80,7 +80,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {0}: {1}
-        ///	{2}.
+        ///	{2}
         /// </summary>
         internal static string ExceptionMessageFormat {
             get {

@@ -235,7 +235,7 @@ namespace xyLOGIX.Core.Debug
                 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}..."
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}.."
                 );
 
                 LoggingServices.DefaultBackend = backend;
