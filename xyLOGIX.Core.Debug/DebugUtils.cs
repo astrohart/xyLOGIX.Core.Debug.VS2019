@@ -112,7 +112,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks> Typically, applications set this to 1. </remarks>
         public static int Verbosity
         {
-            get => _verbosity;
+            [DebuggerStepThrough] get => _verbosity;
             set
             {
                 var changed = _verbosity != value;

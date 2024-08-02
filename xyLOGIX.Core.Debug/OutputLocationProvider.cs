@@ -62,7 +62,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public bool MuteConsole
         {
-            get => _muteConsole;
+            [DebuggerStepThrough] get => _muteConsole;
             set
             {
                 var changed = _muteConsole != value;
