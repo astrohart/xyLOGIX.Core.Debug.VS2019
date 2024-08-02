@@ -113,7 +113,7 @@ namespace xyLOGIX.Core.Debug
         public static int Verbosity
         {
             [DebuggerStepThrough] get => _verbosity;
-            set
+            [DebuggerStepThrough] set
             {
                 var changed = _verbosity != value;
                 var oldValue = _verbosity;
