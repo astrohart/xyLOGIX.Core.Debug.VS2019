@@ -5708,7 +5708,7 @@ Looks up a localized string similar to Unable to determine the path to the log f
 ##### Summary
 
 Looks up a localized string similar to {0}: {1}
-{2}
+{2}.
 
 <a name='P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager'></a>
 ### ResourceManager `property`
