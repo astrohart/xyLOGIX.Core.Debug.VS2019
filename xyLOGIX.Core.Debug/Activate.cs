@@ -93,9 +93,10 @@ namespace xyLOGIX.Core.Debug
                         DebugLevel.Info,
                         $"Activate.LoggingForLogFileName: Actual type of the 'repository' object is: '{repository.GetType()}'."
                     );
-                    
+
                     DebugUtils.WriteLine(
-                        DebugLevel.Debug, $"Activate.LoggingForLogFileName: Result = {result}"
+                        DebugLevel.Debug,
+                        $"Activate.LoggingForLogFileName: Result = {result}"
                     );
 
                     return result;
@@ -201,7 +202,10 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            DebugUtils.WriteLine(DebugLevel.Debug, $"Activate.LoggingForLogFileName: Result = {result}");
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"Activate.LoggingForLogFileName: Result = {result}"
+            );
 
             return result;
         }
