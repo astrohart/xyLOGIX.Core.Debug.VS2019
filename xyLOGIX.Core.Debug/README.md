@@ -30,6 +30,7 @@
   - [Debug](#F-xyLOGIX-Core-Debug-DebugLevel-Debug 'xyLOGIX.Core.Debug.DebugLevel.Debug')
   - [Error](#F-xyLOGIX-Core-Debug-DebugLevel-Error 'xyLOGIX.Core.Debug.DebugLevel.Error')
   - [Info](#F-xyLOGIX-Core-Debug-DebugLevel-Info 'xyLOGIX.Core.Debug.DebugLevel.Info')
+  - [Unknown](#F-xyLOGIX-Core-Debug-DebugLevel-Unknown 'xyLOGIX.Core.Debug.DebugLevel.Unknown')
   - [Warning](#F-xyLOGIX-Core-Debug-DebugLevel-Warning 'xyLOGIX.Core.Debug.DebugLevel.Warning')
 - [DebugOutputLocation](#T-xyLOGIX-Core-Debug-DebugOutputLocation 'xyLOGIX.Core.Debug.DebugOutputLocation')
   - [#ctor()](#M-xyLOGIX-Core-Debug-DebugOutputLocation-#ctor 'xyLOGIX.Core.Debug.DebugOutputLocation.#ctor')
@@ -800,6 +801,13 @@ The logging message is for error purposes only.
 ##### Summary
 
 The logging message is for informational purposes only.
+
+<a name='F-xyLOGIX-Core-Debug-DebugLevel-Unknown'></a>
+### Unknown `constants`
+
+##### Summary
+
+Unknown logging level.
 
 <a name='F-xyLOGIX-Core-Debug-DebugLevel-Warning'></a>
 ### Warning `constants`
