@@ -1,10 +1,10 @@
-using System.Diagnostics;
 using log4net;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -44,13 +44,21 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets the name of the application. Used for Windows event
         /// logging. Leave blank to not send events to the Application event log.
         /// </summary>
-        public static string ApplicationName { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static string ApplicationName
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the logging produced by this
         /// object should only be written to the console as opposed to a log file.
         /// </summary>
-        public static bool ConsoleOnly { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static bool ConsoleOnly
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets a <see cref="T:System.String" /> that contains the pathname of a file to
@@ -60,7 +68,11 @@ namespace xyLOGIX.Core.Debug
         public static string ExceptionLogPathname { [DebuggerStepThrough] get; }
 
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
-        public static int ExceptionStackDepth { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static int ExceptionStackDepth
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets or sets the depth down the call stack from which Exception
@@ -78,7 +90,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>
-        public static bool IsLogging { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static bool IsLogging
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets a value that indicates whether PostSharp is in use as the
@@ -91,29 +107,46 @@ namespace xyLOGIX.Core.Debug
         /// Users should set this property to the path to the log file, if
         /// logging.
         /// </summary>
-        public static string LogFilePath { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static string LogFilePath
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
-        public static bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static bool MuteConsole
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether to mute "DEBUG" log messages
         /// in Release mode.
         /// </summary>
-        public static bool MuteDebugLevelIfReleaseMode { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static bool MuteDebugLevelIfReleaseMode
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets or sets a value that represents the spigot of text from that
         /// which is produced by calls to this class' methods.
         /// </summary>
-        public static TextWriter Out { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static TextWriter Out
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
         public static int Verbosity
         {
             [DebuggerStepThrough] get => _verbosity;
-            [DebuggerStepThrough] set
+            [DebuggerStepThrough]
+            set
             {
                 var changed = _verbosity != value;
                 var oldValue = _verbosity;
@@ -227,7 +260,8 @@ namespace xyLOGIX.Core.Debug
             if (e == null) return string.Empty;
 
             return string.Format(
-                Resources.ExceptionMessageFormat, e.Message, e.StackTrace
+                Resources.ExceptionMessageFormat, e.GetType(), e.Message,
+                e.StackTrace
             );
         }
 
