@@ -4,10 +4,13 @@
 ## Contents
 
 - [Activate](#T-xyLOGIX-Core-Debug-Activate 'xyLOGIX.Core.Debug.Activate')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Activate-#cctor 'xyLOGIX.Core.Debug.Activate.#cctor')
   - [LoggingForLogFileName(logFileName,repository)](#M-xyLOGIX-Core-Debug-Activate-LoggingForLogFileName-System-String,log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.Activate.LoggingForLogFileName(System.String,log4net.Repository.ILoggerRepository)')
 - [AppDomainFriendlyNames](#T-xyLOGIX-Core-Debug-AppDomainFriendlyNames 'xyLOGIX.Core.Debug.AppDomainFriendlyNames')
   - [LINQPad](#F-xyLOGIX-Core-Debug-AppDomainFriendlyNames-LINQPad 'xyLOGIX.Core.Debug.AppDomainFriendlyNames.LINQPad')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-AppDomainFriendlyNames-#cctor 'xyLOGIX.Core.Debug.AppDomainFriendlyNames.#cctor')
 - [Compute](#T-xyLOGIX-Core-Debug-Compute 'xyLOGIX.Core.Debug.Compute')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Compute-#cctor 'xyLOGIX.Core.Debug.Compute.#cctor')
   - [ZeroFloor(value)](#M-xyLOGIX-Core-Debug-Compute-ZeroFloor-System-Int32- 'xyLOGIX.Core.Debug.Compute.ZeroFloor(System.Int32)')
 - [ConsoleOutputLocation](#T-xyLOGIX-Core-Debug-ConsoleOutputLocation 'xyLOGIX.Core.Debug.ConsoleOutputLocation')
   - [#ctor()](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-#ctor 'xyLOGIX.Core.Debug.ConsoleOutputLocation.#ctor')
@@ -20,6 +23,7 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-ConsoleOutputLocation-WriteLine 'xyLOGIX.Core.Debug.ConsoleOutputLocation.WriteLine')
 - [DebugFileAndFolderHelper](#T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-#cctor 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.#cctor')
   - [ClearTempFileDir()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.ClearTempFileDir')
   - [CreateDirectoryIfNotExists(directoryPath)](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-CreateDirectoryIfNotExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.CreateDirectoryIfNotExists(System.String)')
   - [InsistPathExists()](#M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-InsistPathExists-System-String- 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper.InsistPathExists(System.String)')
@@ -74,6 +78,7 @@
   - [WriteLine(debugLevel,content)](#M-xyLOGIX-Core-Debug-DebugUtils-WriteLine-xyLOGIX-Core-Debug-DebugLevel,System-String- 'xyLOGIX.Core.Debug.DebugUtils.WriteLine(xyLOGIX.Core.Debug.DebugLevel,System.String)')
   - [WriteLineCore(debugLevel,content)](#M-xyLOGIX-Core-Debug-DebugUtils-WriteLineCore-xyLOGIX-Core-Debug-DebugLevel,System-String- 'xyLOGIX.Core.Debug.DebugUtils.WriteLineCore(xyLOGIX.Core.Debug.DebugLevel,System.String)')
 - [DebuggerDump](#T-xyLOGIX-Core-Debug-DebuggerDump 'xyLOGIX.Core.Debug.DebuggerDump')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-DebuggerDump-#cctor 'xyLOGIX.Core.Debug.DebuggerDump.#cctor')
   - [Dump(element)](#M-xyLOGIX-Core-Debug-DebuggerDump-Dump-System-Object- 'xyLOGIX.Core.Debug.DebuggerDump.Dump(System.Object)')
   - [Dump(element,depth)](#M-xyLOGIX-Core-Debug-DebuggerDump-Dump-System-Object,System-Int32- 'xyLOGIX.Core.Debug.DebuggerDump.Dump(System.Object,System.Int32)')
   - [Dump(element,depth,log)](#M-xyLOGIX-Core-Debug-DebuggerDump-Dump-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.DebuggerDump.Dump(System.Object,System.Int32,System.IO.TextWriter)')
@@ -94,6 +99,7 @@
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole)](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean- 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean)')
   - [WriteTimestamp()](#M-xyLOGIX-Core-Debug-DefaultLoggingInfrastructure-WriteTimestamp 'xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.WriteTimestamp')
 - [Delete](#T-xyLOGIX-Core-Debug-Delete 'xyLOGIX.Core.Debug.Delete')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Delete-#cctor 'xyLOGIX.Core.Debug.Delete.#cctor')
   - [LogFile(path)](#M-xyLOGIX-Core-Debug-Delete-LogFile-System-String- 'xyLOGIX.Core.Debug.Delete.LogFile(System.String)')
 - [EmergencyStopPendingEventHandler](#T-xyLOGIX-Core-Debug-EmergencyStopPendingEventHandler 'xyLOGIX.Core.Debug.EmergencyStopPendingEventHandler')
 - [EventLogManager](#T-xyLOGIX-Core-Debug-EventLogManager 'xyLOGIX.Core.Debug.EventLogManager')
@@ -114,14 +120,17 @@
   - [System](#F-xyLOGIX-Core-Debug-EventLogType-System 'xyLOGIX.Core.Debug.EventLogType.System')
   - [Unknown](#F-xyLOGIX-Core-Debug-EventLogType-Unknown 'xyLOGIX.Core.Debug.EventLogType.Unknown')
 - [ExceptionExtensions](#T-xyLOGIX-Core-Debug-ExceptionExtensions 'xyLOGIX.Core.Debug.ExceptionExtensions')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-ExceptionExtensions-#cctor 'xyLOGIX.Core.Debug.ExceptionExtensions.#cctor')
   - [LogAllExceptions(exceptions)](#M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}- 'xyLOGIX.Core.Debug.ExceptionExtensions.LogAllExceptions(System.Collections.Generic.IEnumerable{System.Exception})')
 - [ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs')
   - [#ctor(exception)](#M-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-#ctor-System-Exception- 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs.#ctor(System.Exception)')
   - [Exception](#P-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-Exception 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs.Exception')
 - [ExceptionLoggedEventHandler](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventHandler 'xyLOGIX.Core.Debug.ExceptionLoggedEventHandler')
 - [FileAppenderConfigurator](#T-xyLOGIX-Core-Debug-FileAppenderConfigurator 'xyLOGIX.Core.Debug.FileAppenderConfigurator')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-FileAppenderConfigurator-#cctor 'xyLOGIX.Core.Debug.FileAppenderConfigurator.#cctor')
   - [SetMinimalLock(appender)](#M-xyLOGIX-Core-Debug-FileAppenderConfigurator-SetMinimalLock-log4net-Appender-FileAppender- 'xyLOGIX.Core.Debug.FileAppenderConfigurator.SetMinimalLock(log4net.Appender.FileAppender)')
 - [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-FileAppenderManager-#cctor 'xyLOGIX.Core.Debug.FileAppenderManager.#cctor')
   - [GetAppenderByName(name)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetAppenderByName-System-String- 'xyLOGIX.Core.Debug.FileAppenderManager.GetAppenderByName(System.String)')
   - [GetFirstAppender(loggerRepository)](#M-xyLOGIX-Core-Debug-FileAppenderManager-GetFirstAppender-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.FileAppenderManager.GetFirstAppender(log4net.Repository.ILoggerRepository)')
 - [GetAssembly](#T-xyLOGIX-Core-Debug-GetAssembly 'xyLOGIX.Core.Debug.GetAssembly')
@@ -202,6 +211,7 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.IOutputLocationProvider.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-IOutputLocationProvider-WriteLine 'xyLOGIX.Core.Debug.IOutputLocationProvider.WriteLine')
 - [Initialize](#T-xyLOGIX-Core-Debug-Initialize 'xyLOGIX.Core.Debug.Initialize')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Initialize-#cctor 'xyLOGIX.Core.Debug.Initialize.#cctor')
   - [Logging(applicationName)](#M-xyLOGIX-Core-Debug-Initialize-Logging-System-String- 'xyLOGIX.Core.Debug.Initialize.Logging(System.String)')
 - [IsLog](#T-xyLOGIX-Core-Debug-IsLog 'xyLOGIX.Core.Debug.IsLog')
   - [Initialized](#P-xyLOGIX-Core-Debug-IsLog-Initialized 'xyLOGIX.Core.Debug.IsLog.Initialized')
@@ -213,16 +223,22 @@
   - [InitializeLogging(muteDebugLevelIfReleaseMode,overwrite,configurationFilePathname,muteConsole,logFileName,verbosity,applicationName,infrastructureType)](#M-xyLOGIX-Core-Debug-LogFileManager-InitializeLogging-System-Boolean,System-Boolean,System-String,System-Boolean,System-String,System-Int32,System-String,xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.LogFileManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,System.String,System.Int32,System.String,xyLOGIX.Core.Debug.LoggingInfrastructureType)')
   - [SetUpDebugUtils(muteDebugLevelIfReleaseMode,isLogging,consoleOnly,verbosity,muteConsole,infrastructureType)](#M-xyLOGIX-Core-Debug-LogFileManager-SetUpDebugUtils-System-Boolean,System-Boolean,System-Boolean,System-Int32,System-Boolean,xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.LogFileManager.SetUpDebugUtils(System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Boolean,xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [LoggerManager](#T-xyLOGIX-Core-Debug-LoggerManager 'xyLOGIX.Core.Debug.LoggerManager')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-LoggerManager-#cctor 'xyLOGIX.Core.Debug.LoggerManager.#cctor')
   - [GetRootLogger(loggerRepository)](#M-xyLOGIX-Core-Debug-LoggerManager-GetRootLogger-log4net-Repository-ILoggerRepository- 'xyLOGIX.Core.Debug.LoggerManager.GetRootLogger(log4net.Repository.ILoggerRepository)')
 - [LoggerRepositoryManager](#T-xyLOGIX-Core-Debug-LoggerRepositoryManager 'xyLOGIX.Core.Debug.LoggerRepositoryManager')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-LoggerRepositoryManager-#cctor 'xyLOGIX.Core.Debug.LoggerRepositoryManager.#cctor')
   - [GetHierarchyRepository()](#M-xyLOGIX-Core-Debug-LoggerRepositoryManager-GetHierarchyRepository 'xyLOGIX.Core.Debug.LoggerRepositoryManager.GetHierarchyRepository')
   - [GetLoggerRepository()](#M-xyLOGIX-Core-Debug-LoggerRepositoryManager-GetLoggerRepository 'xyLOGIX.Core.Debug.LoggerRepositoryManager.GetLoggerRepository')
 - [LoggingBackendType](#T-xyLOGIX-Core-Debug-LoggingBackendType 'xyLOGIX.Core.Debug.LoggingBackendType')
+  - [Console](#F-xyLOGIX-Core-Debug-LoggingBackendType-Console 'xyLOGIX.Core.Debug.LoggingBackendType.Console')
+  - [Log4Net](#F-xyLOGIX-Core-Debug-LoggingBackendType-Log4Net 'xyLOGIX.Core.Debug.LoggingBackendType.Log4Net')
+  - [Unknown](#F-xyLOGIX-Core-Debug-LoggingBackendType-Unknown 'xyLOGIX.Core.Debug.LoggingBackendType.Unknown')
 - [LoggingInfrastructureType](#T-xyLOGIX-Core-Debug-LoggingInfrastructureType 'xyLOGIX.Core.Debug.LoggingInfrastructureType')
   - [Default](#F-xyLOGIX-Core-Debug-LoggingInfrastructureType-Default 'xyLOGIX.Core.Debug.LoggingInfrastructureType.Default')
   - [PostSharp](#F-xyLOGIX-Core-Debug-LoggingInfrastructureType-PostSharp 'xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp')
   - [Unknown](#F-xyLOGIX-Core-Debug-LoggingInfrastructureType-Unknown 'xyLOGIX.Core.Debug.LoggingInfrastructureType.Unknown')
 - [MakeNewRollingFileAppender](#T-xyLOGIX-Core-Debug-MakeNewRollingFileAppender 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-#cctor 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender.#cctor')
   - [AndHavingLogFileName(self,file)](#M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-AndHavingLogFileName-log4net-Appender-RollingFileAppender,System-String- 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender.AndHavingLogFileName(log4net.Appender.RollingFileAppender,System.String)')
   - [AndMaximumNumberOfRollingBackups(self,maxSizeRollingBackups)](#M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-AndMaximumNumberOfRollingBackups-log4net-Appender-RollingFileAppender,System-Int32- 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender.AndMaximumNumberOfRollingBackups(log4net.Appender.RollingFileAppender,System.Int32)')
   - [AndThatHasAStaticLogFileName(self,staticLogFileName)](#M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-AndThatHasAStaticLogFileName-log4net-Appender-RollingFileAppender,System-Boolean- 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender.AndThatHasAStaticLogFileName(log4net.Appender.RollingFileAppender,System.Boolean)')
@@ -242,7 +258,6 @@
   - [_depth](#F-xyLOGIX-Core-Debug-ObjectDumper-_depth 'xyLOGIX.Core.Debug.ObjectDumper._depth')
   - [_indentLevel](#F-xyLOGIX-Core-Debug-ObjectDumper-_indentLevel 'xyLOGIX.Core.Debug.ObjectDumper._indentLevel')
   - [_writer](#F-xyLOGIX-Core-Debug-ObjectDumper-_writer 'xyLOGIX.Core.Debug.ObjectDumper._writer')
-  - [#cctor()](#M-xyLOGIX-Core-Debug-ObjectDumper-#cctor 'xyLOGIX.Core.Debug.ObjectDumper.#cctor')
   - [OnTextWritten(e)](#M-xyLOGIX-Core-Debug-ObjectDumper-OnTextWritten-xyLOGIX-Core-Debug-TextWrittenEventArgs- 'xyLOGIX.Core.Debug.ObjectDumper.OnTextWritten(xyLOGIX.Core.Debug.TextWrittenEventArgs)')
   - [Write(element,depth)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.Object,System.Int32)')
   - [Write(element,depth,log)](#M-xyLOGIX-Core-Debug-ObjectDumper-Write-System-Object,System-Int32,System-IO-TextWriter- 'xyLOGIX.Core.Debug.ObjectDumper.Write(System.Object,System.Int32,System.IO.TextWriter)')
@@ -256,8 +271,10 @@
   - [WriteTab()](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteTab 'xyLOGIX.Core.Debug.ObjectDumper.WriteTab')
   - [WriteValue(o)](#M-xyLOGIX-Core-Debug-ObjectDumper-WriteValue-System-Object- 'xyLOGIX.Core.Debug.ObjectDumper.WriteValue(System.Object)')
 - [OutputLocationBase](#T-xyLOGIX-Core-Debug-OutputLocationBase 'xyLOGIX.Core.Debug.OutputLocationBase')
+  - [#ctor()](#M-xyLOGIX-Core-Debug-OutputLocationBase-#ctor 'xyLOGIX.Core.Debug.OutputLocationBase.#ctor')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-OutputLocationBase-MuteConsole 'xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole')
   - [Type](#P-xyLOGIX-Core-Debug-OutputLocationBase-Type 'xyLOGIX.Core.Debug.OutputLocationBase.Type')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-OutputLocationBase-#cctor 'xyLOGIX.Core.Debug.OutputLocationBase.#cctor')
   - [Write(value)](#M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-Object- 'xyLOGIX.Core.Debug.OutputLocationBase.Write(System.Object)')
   - [Write(format,arg)](#M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-String,System-Object[]- 'xyLOGIX.Core.Debug.OutputLocationBase.Write(System.String,System.Object[])')
   - [WriteLine(value)](#M-xyLOGIX-Core-Debug-OutputLocationBase-WriteLine-System-Object- 'xyLOGIX.Core.Debug.OutputLocationBase.WriteLine(System.Object)')
@@ -269,7 +286,6 @@
   - [Instance](#P-xyLOGIX-Core-Debug-OutputLocationProvider-Instance 'xyLOGIX.Core.Debug.OutputLocationProvider.Instance')
   - [InternalOutputLocationList](#P-xyLOGIX-Core-Debug-OutputLocationProvider-InternalOutputLocationList 'xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList')
   - [MuteConsole](#P-xyLOGIX-Core-Debug-OutputLocationProvider-MuteConsole 'xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsole')
-  - [#cctor()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-#cctor 'xyLOGIX.Core.Debug.OutputLocationProvider.#cctor')
   - [AddLocation(location)](#M-xyLOGIX-Core-Debug-OutputLocationProvider-AddLocation-xyLOGIX-Core-Debug-IOutputLocation- 'xyLOGIX.Core.Debug.OutputLocationProvider.AddLocation(xyLOGIX.Core.Debug.IOutputLocation)')
   - [Clear()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-Clear 'xyLOGIX.Core.Debug.OutputLocationProvider.Clear')
   - [InitializeInternalOutputLocationList()](#M-xyLOGIX-Core-Debug-OutputLocationProvider-InitializeInternalOutputLocationList 'xyLOGIX.Core.Debug.OutputLocationProvider.InitializeInternalOutputLocationList')
@@ -309,13 +325,16 @@
   - [ResourceManager](#P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager 'xyLOGIX.Core.Debug.Properties.Resources.ResourceManager')
   - [TempExceptionFileMessage](#P-xyLOGIX-Core-Debug-Properties-Resources-TempExceptionFileMessage 'xyLOGIX.Core.Debug.Properties.Resources.TempExceptionFileMessage')
 - [ServiceFlowHelper](#T-xyLOGIX-Core-Debug-ServiceFlowHelper 'xyLOGIX.Core.Debug.ServiceFlowHelper')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-#cctor 'xyLOGIX.Core.Debug.ServiceFlowHelper.#cctor')
   - [EmergencyStop(notificationAction)](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action- 'xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop(System.Action)')
   - [OnDebuggerStartPending()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-OnDebuggerStartPending 'xyLOGIX.Core.Debug.ServiceFlowHelper.OnDebuggerStartPending')
   - [StartDebugger()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-StartDebugger 'xyLOGIX.Core.Debug.ServiceFlowHelper.StartDebugger')
 - [SetLog](#T-xyLOGIX-Core-Debug-SetLog 'xyLOGIX.Core.Debug.SetLog')
   - [ApplicationName](#P-xyLOGIX-Core-Debug-SetLog-ApplicationName 'xyLOGIX.Core.Debug.SetLog.ApplicationName')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-SetLog-#cctor 'xyLOGIX.Core.Debug.SetLog.#cctor')
 - [Setup](#T-xyLOGIX-Core-Debug-Setup 'xyLOGIX.Core.Debug.Setup')
   - [EventLogManager](#P-xyLOGIX-Core-Debug-Setup-EventLogManager 'xyLOGIX.Core.Debug.Setup.EventLogManager')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Setup-#cctor 'xyLOGIX.Core.Debug.Setup.#cctor')
   - [EventLogging(applicationName)](#M-xyLOGIX-Core-Debug-Setup-EventLogging-System-String- 'xyLOGIX.Core.Debug.Setup.EventLogging(System.String)')
 - [TextEmittedEventArgs](#T-xyLOGIX-Core-Debug-TextEmittedEventArgs 'xyLOGIX.Core.Debug.TextEmittedEventArgs')
   - [#ctor(text,level)](#M-xyLOGIX-Core-Debug-TextEmittedEventArgs-#ctor-System-String,xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.TextEmittedEventArgs.#ctor(System.String,xyLOGIX.Core.Debug.DebugLevel)')
@@ -323,10 +342,8 @@
   - [Text](#P-xyLOGIX-Core-Debug-TextEmittedEventArgs-Text 'xyLOGIX.Core.Debug.TextEmittedEventArgs.Text')
 - [TextEmittedEventHandler](#T-xyLOGIX-Core-Debug-TextEmittedEventHandler 'xyLOGIX.Core.Debug.TextEmittedEventHandler')
 - [TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs')
-  - [#ctor()](#M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor 'xyLOGIX.Core.Debug.TextWrittenEventArgs.#ctor')
   - [#ctor(text)](#M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor-System-String- 'xyLOGIX.Core.Debug.TextWrittenEventArgs.#ctor(System.String)')
   - [Text](#P-xyLOGIX-Core-Debug-TextWrittenEventArgs-Text 'xyLOGIX.Core.Debug.TextWrittenEventArgs.Text')
-  - [#cctor()](#M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#cctor 'xyLOGIX.Core.Debug.TextWrittenEventArgs.#cctor')
 - [TextWrittenEventHandler](#T-xyLOGIX-Core-Debug-TextWrittenEventHandler 'xyLOGIX.Core.Debug.TextWrittenEventHandler')
 - [TraceOutputLocation](#T-xyLOGIX-Core-Debug-TraceOutputLocation 'xyLOGIX.Core.Debug.TraceOutputLocation')
   - [#ctor()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-#ctor 'xyLOGIX.Core.Debug.TraceOutputLocation.#ctor')
@@ -339,13 +356,12 @@
   - [WriteLine(format,arg)](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine-System-String,System-Object[]- 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine(System.String,System.Object[])')
   - [WriteLine()](#M-xyLOGIX-Core-Debug-TraceOutputLocation-WriteLine 'xyLOGIX.Core.Debug.TraceOutputLocation.WriteLine')
 - [Validate](#T-xyLOGIX-Core-Debug-Validate 'xyLOGIX.Core.Debug.Validate')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-Validate-#cctor 'xyLOGIX.Core.Debug.Validate.#cctor')
   - [LoggingInfrastructureType(type)](#M-xyLOGIX-Core-Debug-Validate-LoggingInfrastructureType-xyLOGIX-Core-Debug-LoggingInfrastructureType- 'xyLOGIX.Core.Debug.Validate.LoggingInfrastructureType(xyLOGIX.Core.Debug.LoggingInfrastructureType)')
 - [VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs')
-  - [#ctor()](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#ctor')
   - [#ctor(oldValue,newValue)](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor-System-Int32,System-Int32- 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#ctor(System.Int32,System.Int32)')
   - [NewValue](#P-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-NewValue 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.NewValue')
   - [OldValue](#P-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-OldValue 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.OldValue')
-  - [#cctor()](#M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#cctor 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs.#cctor')
 - [VerbosityChangedEventHandler](#T-xyLOGIX-Core-Debug-VerbosityChangedEventHandler 'xyLOGIX.Core.Debug.VerbosityChangedEventHandler')
 
 <a name='T-xyLOGIX-Core-Debug-Activate'></a>
@@ -359,6 +375,28 @@ xyLOGIX.Core.Debug
 
 Exposes `static` methods to activate functionality,
 such as logging.
+
+<a name='M-xyLOGIX-Core-Debug-Activate-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [Activate](#T-xyLOGIX-Core-Debug-Activate 'xyLOGIX.Core.Debug.Activate') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-Activate-LoggingForLogFileName-System-String,log4net-Repository-ILoggerRepository-'></a>
 ### LoggingForLogFileName(logFileName,repository) `method`
@@ -405,6 +443,28 @@ standardized friendly names for application domains.
 A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that contains the friendly name of
 the `AppDomain` for LINQPad.
 
+<a name='M-xyLOGIX-Core-Debug-AppDomainFriendlyNames-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [AppDomainFriendlyNames](#T-xyLOGIX-Core-Debug-AppDomainFriendlyNames 'xyLOGIX.Core.Debug.AppDomainFriendlyNames') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='T-xyLOGIX-Core-Debug-Compute'></a>
 ## Compute `type`
 
@@ -416,6 +476,28 @@ xyLOGIX.Core.Debug
 
 Exposes `static` methods for performing mathematical
 computations.
+
+<a name='M-xyLOGIX-Core-Debug-Compute-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [Compute](#T-xyLOGIX-Core-Debug-Compute 'xyLOGIX.Core.Debug.Compute') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-Compute-ZeroFloor-System-Int32-'></a>
 ### ZeroFloor(value) `method`
@@ -625,6 +707,28 @@ Methods to work with files and folders in a robust way.
 
 These methods are here in order to assist applications in working
 with log files and prepping for application startup and first-time use.
+
+<a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [DebugFileAndFolderHelper](#T-xyLOGIX-Core-Debug-DebugFileAndFolderHelper 'xyLOGIX.Core.Debug.DebugFileAndFolderHelper') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-DebugFileAndFolderHelper-ClearTempFileDir'></a>
 ### ClearTempFileDir() `method`
@@ -1543,6 +1647,28 @@ xyLOGIX.Core.Debug
 Methods to send objects to the log by calling an extension method
 called 'Dump', like in LINQpad.
 
+<a name='M-xyLOGIX-Core-Debug-DebuggerDump-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [DebuggerDump](#T-xyLOGIX-Core-Debug-DebuggerDump 'xyLOGIX.Core.Debug.DebuggerDump') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-DebuggerDump-Dump-System-Object-'></a>
 ### Dump(element) `method`
 
@@ -1972,6 +2098,28 @@ xyLOGIX.Core.Debug
 
 Methods to delete files and folders.
 
+<a name='M-xyLOGIX-Core-Debug-Delete-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [Delete](#T-xyLOGIX-Core-Debug-Delete 'xyLOGIX.Core.Debug.Delete') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-Delete-LogFile-System-String-'></a>
 ### LogFile(path) `method`
 
@@ -2231,6 +2379,28 @@ xyLOGIX.Core.Debug
 Exposes static extension methods in order to facilitate handling
 exceptions.
 
+<a name='M-xyLOGIX-Core-Debug-ExceptionExtensions-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [ExceptionExtensions](#T-xyLOGIX-Core-Debug-ExceptionExtensions 'xyLOGIX.Core.Debug.ExceptionExtensions') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}-'></a>
 ### LogAllExceptions(exceptions) `method`
 
@@ -2329,6 +2499,28 @@ xyLOGIX.Core.Debug
 
 Provides methods for configurating log4net's FileAppender
 
+<a name='M-xyLOGIX-Core-Debug-FileAppenderConfigurator-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [FileAppenderConfigurator](#T-xyLOGIX-Core-Debug-FileAppenderConfigurator 'xyLOGIX.Core.Debug.FileAppenderConfigurator') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-FileAppenderConfigurator-SetMinimalLock-log4net-Appender-FileAppender-'></a>
 ### SetMinimalLock(appender) `method`
 
@@ -2362,6 +2554,28 @@ xyLOGIX.Core.Debug
 
 Provides methods to access instances of objects of type
 [FileAppender](#T-log4net-Appender-FileAppender 'log4net.Appender.FileAppender').
+
+<a name='M-xyLOGIX-Core-Debug-FileAppenderManager-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [FileAppenderManager](#T-xyLOGIX-Core-Debug-FileAppenderManager 'xyLOGIX.Core.Debug.FileAppenderManager') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-FileAppenderManager-GetAppenderByName-System-String-'></a>
 ### GetAppenderByName(name) `method`
@@ -3848,6 +4062,26 @@ xyLOGIX.Core.Debug
 
 Exposes `static` methods to initialize data.
 
+<a name='M-xyLOGIX-Core-Debug-Initialize-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only for the [Initialize](#T-xyLOGIX-Core-Debug-Initialize 'xyLOGIX.Core.Debug.Initialize') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-Initialize-Logging-System-String-'></a>
 ### Logging(applicationName) `method`
 
@@ -4087,6 +4321,26 @@ xyLOGIX.Core.Debug
 Provides methods to access objects of type
 [Logger](#T-log4net-Hierarchy-Repository-Logger 'log4net.Hierarchy.Repository.Logger') from log4net.
 
+<a name='M-xyLOGIX-Core-Debug-LoggerManager-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only for the [LoggerManager](#T-xyLOGIX-Core-Debug-LoggerManager 'xyLOGIX.Core.Debug.LoggerManager') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-LoggerManager-GetRootLogger-log4net-Repository-ILoggerRepository-'></a>
 ### GetRootLogger(loggerRepository) `method`
 
@@ -4117,13 +4371,36 @@ xyLOGIX.Core.Debug
 
 Provides methods to access the log4net Repository.
 
+<a name='M-xyLOGIX-Core-Debug-LoggerRepositoryManager-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [LoggerRepositoryManager](#T-xyLOGIX-Core-Debug-LoggerRepositoryManager 'xyLOGIX.Core.Debug.LoggerRepositoryManager') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-LoggerRepositoryManager-GetHierarchyRepository'></a>
 ### GetHierarchyRepository() `method`
 
 ##### Summary
 
 Gets a reference to an instance of the log4net repository as an
-reference to an object of type Hierachy.
+reference to an object of type
+[Hierarchy](#T-log4net-Repository-Hierarchy-Hierarchy 'log4net.Repository.Hierarchy.Hierarchy').
 
 ##### Returns
 
@@ -4167,6 +4444,27 @@ logging backends.
 
 THis enumeration is only to be used when PostSharp is selected as the
 logging infrastructure.
+
+<a name='F-xyLOGIX-Core-Debug-LoggingBackendType-Console'></a>
+### Console `constants`
+
+##### Summary
+
+The log messages are to be routed to the console.
+
+<a name='F-xyLOGIX-Core-Debug-LoggingBackendType-Log4Net'></a>
+### Log4Net `constants`
+
+##### Summary
+
+The log messages are to be sent to `log4net`.
+
+<a name='F-xyLOGIX-Core-Debug-LoggingBackendType-Unknown'></a>
+### Unknown `constants`
+
+##### Summary
+
+Unknown logging backend.
 
 <a name='T-xyLOGIX-Core-Debug-LoggingInfrastructureType'></a>
 ## LoggingInfrastructureType `type`
@@ -4212,6 +4510,28 @@ xyLOGIX.Core.Debug
 
 Exposes `static` methods to create new instances of
 [RollingFileAppender](#T-log4net-Appender-RollingFileAppender 'log4net.Appender.RollingFileAppender') and initialize them.
+
+<a name='M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [MakeNewRollingFileAppender](#T-xyLOGIX-Core-Debug-MakeNewRollingFileAppender 'xyLOGIX.Core.Debug.MakeNewRollingFileAppender') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-MakeNewRollingFileAppender-AndHavingLogFileName-log4net-Appender-RollingFileAppender,System-String-'></a>
 ### AndHavingLogFileName(self,file) `method`
@@ -4328,7 +4648,7 @@ parameter, `self`, is passed a `null` value. |
 
 ##### Remarks
 
-By default file.log is always the current file.  Optionally
+By default, file.log is always the current file.  Optionally
     file.log.yyyy-mm-dd for current formatted datePattern can by the currently
     logging file (or file.log.curSizeRollBackup or even
     file.log.yyyy-mm-dd.curSizeRollBackup).
@@ -4412,7 +4732,7 @@ for fluent use.
 implements the [RollingFileAppender](#T-log4net-Appender-RollingFileAppender 'log4net.Appender.RollingFileAppender') interface. |
 | maximumFileSize | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String')
 that describes the maximum size that the output file is allowed to reach before
-being rolled over to backup files. |
+being rolled over to back up files. |
 
 ##### Exceptions
 
@@ -4635,28 +4955,6 @@ Must be 1 or greater.
 
 Reference to a [TextWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.TextWriter 'System.IO.TextWriter') to which to send
 the logged data.
-
-<a name='M-xyLOGIX-Core-Debug-ObjectDumper-#cctor'></a>
-### #cctor() `method`
-
-##### Summary
-
-Initializes static data or performs actions that need to be performed once only
-for the [ObjectDumper](#T-xyLOGIX-Core-Debug-ObjectDumper 'xyLOGIX.Core.Debug.ObjectDumper') class.
-
-##### Parameters
-
-This method has no parameters.
-
-##### Remarks
-
-This constructor is called automatically prior to the first instance being
-created or before any static members are referenced.
-
-
-
-We've decorated this constructor with the `[Log(AttributeExclude = true)]`
-attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-ObjectDumper-OnTextWritten-xyLOGIX-Core-Debug-TextWrittenEventArgs-'></a>
 ### OnTextWritten(e) `method`
@@ -4941,6 +5239,24 @@ xyLOGIX.Core.Debug
 Defines the events, methods, properties, and behaviors for all output
 location objects.
 
+<a name='M-xyLOGIX-Core-Debug-OutputLocationBase-#ctor'></a>
+### #ctor() `constructor`
+
+##### Summary
+
+Initializes a new instance of
+[OutputLocationBase](#T-xyLOGIX-Core-Debug-OutputLocationBase 'xyLOGIX.Core.Debug.OutputLocationBase') and returns a reference
+to it.
+
+##### Parameters
+
+This constructor has no parameters.
+
+##### Remarks
+
+This constructor is marked `protected`
+due to the fact that this class is marked `abstract`.
+
 <a name='P-xyLOGIX-Core-Debug-OutputLocationBase-MuteConsole'></a>
 ### MuteConsole `property`
 
@@ -4959,6 +5275,23 @@ Gets one of the
 values
 that indicates the final base of text strings that are fed to this
 location.
+
+<a name='M-xyLOGIX-Core-Debug-OutputLocationBase-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [OutputLocationBase](#T-xyLOGIX-Core-Debug-OutputLocationBase 'xyLOGIX.Core.Debug.OutputLocationBase') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
 
 <a name='M-xyLOGIX-Core-Debug-OutputLocationBase-Write-System-Object-'></a>
 ### Write(value) `method`
@@ -5086,8 +5419,9 @@ Provides access to a list of output locations for debugging.
 
 ##### Summary
 
-Empty, protected constructor to prohibit direct allocation of this
-class.
+Constructs a new instance of
+[OutputLocationProvider](#T-xyLOGIX-Core-Debug-OutputLocationProvider 'xyLOGIX.Core.Debug.OutputLocationProvider') and returns a
+reference to it.
 
 ##### Parameters
 
@@ -5132,18 +5466,6 @@ This property raises the
 [](#E-xyLOGIX-Core-Debug-OutputLocationProvider-MuteConsoleChanged 'xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged')
 event
 when its value is updated.
-
-<a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-#cctor'></a>
-### #cctor() `method`
-
-##### Summary
-
-Empty, static constructor to prohibit direct allocation of this
-class.
-
-##### Parameters
-
-This method has no parameters.
 
 <a name='M-xyLOGIX-Core-Debug-OutputLocationProvider-AddLocation-xyLOGIX-Core-Debug-IOutputLocation-'></a>
 ### AddLocation(location) `method`
@@ -5750,6 +6072,28 @@ Exposes `static` methods and properties to assist with the
 operational
 flow of a Windows service.
 
+<a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [ServiceFlowHelper](#T-xyLOGIX-Core-Debug-ServiceFlowHelper 'xyLOGIX.Core.Debug.ServiceFlowHelper') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action-'></a>
 ### EmergencyStop(notificationAction) `method`
 
@@ -5825,6 +6169,28 @@ Sets elements of the log.
 Gets or sets a string that provides the name to use for the
 application's log file.
 
+<a name='M-xyLOGIX-Core-Debug-SetLog-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [SetLog](#T-xyLOGIX-Core-Debug-SetLog 'xyLOGIX.Core.Debug.SetLog') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='T-xyLOGIX-Core-Debug-Setup'></a>
 ## Setup `type`
 
@@ -5843,6 +6209,28 @@ Exposes `static` methods to perform setup tasks.
 
 Gets a reference to an instance of an object that implements the
 [IEventLogManager](#T-xyLOGIX-Core-Debug-IEventLogManager 'xyLOGIX.Core.Debug.IEventLogManager') interface.
+
+<a name='M-xyLOGIX-Core-Debug-Setup-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [Setup](#T-xyLOGIX-Core-Debug-Setup 'xyLOGIX.Core.Debug.Setup') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
 
 <a name='M-xyLOGIX-Core-Debug-Setup-EventLogging-System-String-'></a>
 ### EventLogging(applicationName) `method`
@@ -5940,19 +6328,6 @@ xyLOGIX.Core.Debug
 
 Provides information for `TextWritten` event handlers.
 
-<a name='M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor'></a>
-### #ctor() `constructor`
-
-##### Summary
-
-Initializes a new instance of
-[TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs') and returns a
-reference to it.
-
-##### Parameters
-
-This constructor has no parameters.
-
 <a name='M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#ctor-System-String-'></a>
 ### #ctor(text) `constructor`
 
@@ -5974,23 +6349,6 @@ reference to it.
 ##### Summary
 
 Gets a string containing the text to be written.
-
-<a name='M-xyLOGIX-Core-Debug-TextWrittenEventArgs-#cctor'></a>
-### #cctor() `method`
-
-##### Summary
-
-Initializes static data or performs actions that need to be performed once only
-for the [TextWrittenEventArgs](#T-xyLOGIX-Core-Debug-TextWrittenEventArgs 'xyLOGIX.Core.Debug.TextWrittenEventArgs') class.
-
-##### Parameters
-
-This method has no parameters.
-
-##### Remarks
-
-This constructor is called automatically prior to the first instance being
-created or before any static members are referenced.
 
 <a name='T-xyLOGIX-Core-Debug-TextWrittenEventHandler'></a>
 ## TextWrittenEventHandler `type`
@@ -6202,6 +6560,28 @@ xyLOGIX.Core.Debug
 
 Exposes static methods to validate information and settings.
 
+<a name='M-xyLOGIX-Core-Debug-Validate-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [Validate](#T-xyLOGIX-Core-Debug-Validate 'xyLOGIX.Core.Debug.Validate') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
 <a name='M-xyLOGIX-Core-Debug-Validate-LoggingInfrastructureType-xyLOGIX-Core-Debug-LoggingInfrastructureType-'></a>
 ### LoggingInfrastructureType(type) `method`
 
@@ -6233,19 +6613,6 @@ xyLOGIX.Core.Debug
 ##### Summary
 
 Provides information for `VerbosityChanged` event handlers.
-
-<a name='M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor'></a>
-### #ctor() `constructor`
-
-##### Summary
-
-Creates a new instance of
-[VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs') and returns a
-reference to it.
-
-##### Parameters
-
-This constructor has no parameters.
 
 <a name='M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#ctor-System-Int32,System-Int32-'></a>
 ### #ctor(oldValue,newValue) `constructor`
@@ -6282,23 +6649,6 @@ the [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.D
 
 Gets an [Int32](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int32 'System.Int32') value that is the former value
 of the [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity') property.
-
-<a name='M-xyLOGIX-Core-Debug-VerbosityChangedEventArgs-#cctor'></a>
-### #cctor() `method`
-
-##### Summary
-
-Initializes static data or performs actions that need to be performed once only
-for the [VerbosityChangedEventArgs](#T-xyLOGIX-Core-Debug-VerbosityChangedEventArgs 'xyLOGIX.Core.Debug.VerbosityChangedEventArgs') class.
-
-##### Parameters
-
-This method has no parameters.
-
-##### Remarks
-
-This constructor is called automatically prior to the first instance being
-created or before any static members are referenced.
 
 <a name='T-xyLOGIX-Core-Debug-VerbosityChangedEventHandler'></a>
 ## VerbosityChangedEventHandler `type`
