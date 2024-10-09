@@ -16,6 +16,7 @@ namespace xyLOGIX.Core.Debug
     /// method.
     /// </summary>
     [ExplicitlySynchronized]
+    [Log(AttributeExclude = true)]
     public class ObjectDumper
     {
         /// <summary>
@@ -37,20 +38,6 @@ namespace xyLOGIX.Core.Debug
         /// the logged data.
         /// </summary>
         private TextWriter _writer;
-
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.ObjectDumper" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static ObjectDumper() { }
 
         /// <summary>
         /// Constructs a new instance of

@@ -1,6 +1,7 @@
 using log4net.Layout;
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -37,6 +38,7 @@ namespace xyLOGIX.Core.Debug
         /// or <see langword="null" /> if an error occurred or if blank input was supplied
         /// for the <paramref name="conversionPattern" /> parameter.
         /// </returns>
+        [DebuggerStepThrough]
         public static PatternLayout ForConversionPattern(
             string conversionPattern
         )

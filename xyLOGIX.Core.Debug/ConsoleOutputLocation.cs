@@ -1,7 +1,7 @@
-using System.Diagnostics;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -22,7 +22,8 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of the
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
-        protected ConsoleOutputLocation() { }
+        protected ConsoleOutputLocation()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that

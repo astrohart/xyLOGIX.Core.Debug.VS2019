@@ -1,3 +1,4 @@
+using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
@@ -10,8 +11,23 @@ namespace xyLOGIX.Core.Debug
     /// operational
     /// flow of a Windows service.
     /// </summary>
+    [ExplicitlySynchronized]
     public static class ServiceFlowHelper
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.ServiceFlowHelper" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static ServiceFlowHelper() { }
+
         /// <summary> Raised when a start of the debugger is about to occur. </summary>
         [WeakEvent]
         public static event Action DebuggerStartPending;
@@ -28,7 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// Before calling this method, services should de-configure themselves
         /// to be automatically re-started by the operating system.
         /// </remarks>
-        [Yielder]
+        [Yielder, DebuggerStepThrough]
         public static void EmergencyStop(Action notificationAction = null)
         {
             // write the name of the current class and method we are now
@@ -110,7 +126,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
         /// event.
         /// </summary>
-        [Yielder]
+        [Yielder, DebuggerStepThrough]
         private static void OnDebuggerStartPending()
             => DebuggerStartPending?.Invoke();
     }

@@ -1,4 +1,5 @@
 using PostSharp.Patterns.Diagnostics;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -34,6 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// directs debugging output to the standard output of the application and/or a
         /// console window, if present.
         /// </returns>
+        [DebuggerStepThrough]
         public static IOutputLocation SoleInstance()
             => ConsoleOutputLocation.Instance;
     }

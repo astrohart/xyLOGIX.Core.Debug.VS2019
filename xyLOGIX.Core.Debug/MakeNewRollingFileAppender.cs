@@ -2,6 +2,7 @@ using log4net.Appender;
 using log4net.Layout;
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -12,6 +13,20 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true)]
     public static class MakeNewRollingFileAppender
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.MakeNewRollingFileAppender" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static MakeNewRollingFileAppender() { }
+
         /// <summary>
         /// Builder extension method that initializes the
         /// <see cref="P:log4net.Appender.RollingFileAppender.File" /> property.
@@ -37,8 +52,9 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="file" />, is passed a blank or <see langword="null" /> string
         /// for a value.
         /// </exception>
+        [DebuggerStepThrough]
         public static RollingFileAppender AndHavingLogFileName(
-            this RollingFileAppender self,
+            [NotLogged] this RollingFileAppender self,
             string file
         )
         {
@@ -92,8 +108,9 @@ namespace xyLOGIX.Core.Debug
         ///     <b>not</b> the total.
         ///     </para>
         /// </remarks>
+        [DebuggerStepThrough]
         public static RollingFileAppender AndMaximumNumberOfRollingBackups(
-            this RollingFileAppender self,
+            [NotLogged] this RollingFileAppender self,
             int maxSizeRollingBackups
         )
         {
@@ -129,7 +146,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         /// <remarks>
         ///     <para>
-        ///     By default file.log is always the current file.  Optionally
+        ///     By default, file.log is always the current file.  Optionally
         ///     file.log.yyyy-mm-dd for current formatted datePattern can by the currently
         ///     logging file (or file.log.curSizeRollBackup or even
         ///     file.log.yyyy-mm-dd.curSizeRollBackup).
@@ -139,8 +156,9 @@ namespace xyLOGIX.Core.Debug
         ///     much faster as the appender it won't have to rename all the backups!
         ///     </para>
         /// </remarks>
+        [DebuggerStepThrough]
         public static RollingFileAppender AndThatHasAStaticLogFileName(
-            this RollingFileAppender self,
+            [NotLogged] this RollingFileAppender self,
             bool staticLogFileName
         )
         {
@@ -167,6 +185,7 @@ namespace xyLOGIX.Core.Debug
         /// the specified rolling <paramref name="style" />.  Otherwise,
         /// <see langword="null" /> is returned.
         /// </returns>
+        [DebuggerStepThrough]
         public static RollingFileAppender ForRollingStyle(
             RollingFileAppender.RollingMode style
         )
@@ -193,8 +212,9 @@ namespace xyLOGIX.Core.Debug
         /// Thrown if the required
         /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
         /// </exception>
+        [DebuggerStepThrough]
         public static RollingFileAppender ThatShouldAppendToFile(
-            this RollingFileAppender self,
+            [NotLogged] this RollingFileAppender self,
             bool appendToFile
         )
         {
@@ -215,7 +235,7 @@ namespace xyLOGIX.Core.Debug
         /// <param name="maximumFileSize">
         /// (Required.) A <see cref="T:System.String" />
         /// that describes the maximum size that the output file is allowed to reach before
-        /// being rolled over to backup files.
+        /// being rolled over to back up files.
         /// </param>
         /// <returns>
         /// Reference to the same instance of the object that called this method,
@@ -246,8 +266,9 @@ namespace xyLOGIX.Core.Debug
         ///     <see cref="T:System.Int64" />.
         ///     </para>
         /// </remarks>
+        [DebuggerStepThrough]
         public static RollingFileAppender WithMaximumFileSizeOf(
-            this RollingFileAppender self,
+            [NotLogged] this RollingFileAppender self,
             string maximumFileSize
         )
         {
@@ -284,8 +305,9 @@ namespace xyLOGIX.Core.Debug
         /// required parameters, <paramref name="self" /> or <paramref name="layout" />,
         /// are passed a <see langword="null" /> value.
         /// </exception>
+        [DebuggerStepThrough]
         public static RollingFileAppender WithPatternLayout(
-            this RollingFileAppender self,
+            [NotLogged] this RollingFileAppender self,
             PatternLayout layout
         )
         {

@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Null;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -37,7 +37,11 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="M:xyLOGIX.Core.Debug.Has.WindowsGui" /> method is called more
         /// than once.
         /// </remarks>
-        private static bool? IsWindowsGUI { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        private static bool? IsWindowsGUI
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Determines whether the application is currently running in a console
@@ -64,6 +68,7 @@ namespace xyLOGIX.Core.Debug
         /// or WinForms; this method cannot detect native Win32 P/Invoke calls to create a
         /// main window).
         /// </remarks>
+        [DebuggerStepThrough]
         public static bool ConsoleWindow()
         {
             bool result;
@@ -93,6 +98,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:PostSharp.Patterns.Diagnostics.Backends.Null.NullLoggingBackend" />
         /// .
         /// </returns>
+        [DebuggerStepThrough]
         public static bool LoggingBeenSetUp()
         {
             var result = false;
@@ -138,6 +144,7 @@ namespace xyLOGIX.Core.Debug
         /// per the value of the <paramref name="useEntryAssembly" /> parameter's argument,
         /// references either WPF or WinForm system framework assemblies.
         /// </remarks>
+        [DebuggerStepThrough]
         public static bool WindowsGui(bool useEntryAssembly = false)
         {
             if (IsWindowsGUI.HasValue)

@@ -40,6 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public static string LogFilePath
         {
+            [DebuggerStepThrough]
             get
             {
                 var result = string.Empty;
@@ -70,7 +71,9 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.LogFileManager.InfrastructureType" /> property.
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
-            => GetLoggingInfrastructure.For(InfrastructureType);
+        {
+            [DebuggerStepThrough] get { return GetLoggingInfrastructure.For(InfrastructureType); }
+        }
 
         /// <summary> Initializes the application's logging subsystem. </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
@@ -125,6 +128,7 @@ namespace xyLOGIX.Core.Debug
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp, for example).
         /// </param>
+        [DebuggerStepThrough]
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
@@ -223,6 +227,7 @@ namespace xyLOGIX.Core.Debug
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp).
         /// </param>
+        [DebuggerStepThrough]
         public static void SetUpDebugUtils(
             bool muteDebugLevelIfReleaseMode,
             bool isLogging = true,

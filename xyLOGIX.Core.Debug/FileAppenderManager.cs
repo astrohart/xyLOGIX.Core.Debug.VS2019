@@ -1,5 +1,6 @@
 using log4net.Appender;
 using log4net.Repository;
+using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Linq;
 
@@ -11,6 +12,20 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public static class FileAppenderManager
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.FileAppenderManager" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static FileAppenderManager() { }
+
         /// <summary>
         /// Attempts to obtain a reference to an instance of
         /// <see cref="T:log4net.Appender.FileAppender" /> that is configured under a

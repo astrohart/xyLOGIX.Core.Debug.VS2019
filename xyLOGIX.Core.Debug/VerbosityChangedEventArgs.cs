@@ -1,33 +1,14 @@
-using System.Diagnostics;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>VerbosityChanged</c> event handlers. </summary>
-    [ExplicitlySynchronized]
+    [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class VerbosityChangedEventArgs : EventArgs
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.VerbosityChangedEventArgs" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static VerbosityChangedEventArgs() { }
-
-        /// <summary>
-        /// Creates a new instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.VerbosityChangedEventArgs" /> and returns a
-        /// reference to it.
-        /// </summary>
-        [Log(AttributeExclude = true)]
-        public VerbosityChangedEventArgs() { }
-
         /// <summary>
         /// Constructs a new instance of
         /// <see cref="T:xyLOGIX.Core.Debug.VerbosityChangedEventArgs" /> and returns a
@@ -43,7 +24,6 @@ namespace xyLOGIX.Core.Debug
         /// is the current value of the
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property.
         /// </param>
-        [Log(AttributeExclude = true)]
         public VerbosityChangedEventArgs(int oldValue, int newValue)
         {
             OldValue = oldValue;

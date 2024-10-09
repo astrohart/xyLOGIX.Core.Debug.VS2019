@@ -1,6 +1,7 @@
-using System.Diagnostics;
+using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -17,6 +18,7 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of the
         /// <see cref="T:System.Exception" /> that was logged.
         /// </param>
+        [Log(AttributeExclude = true)]
         public ExceptionLoggedEventArgs(Exception exception)
             => Exception = exception;
 

@@ -1,5 +1,6 @@
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -47,6 +48,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface and which
         /// corresponds to the value passed in the <paramref name="type" /> parameter.
         /// </exception>
+        [DebuggerStepThrough]
         public static ILoggingInfrastructure For(LoggingInfrastructureType type)
         {
             ILoggingInfrastructure result = default;

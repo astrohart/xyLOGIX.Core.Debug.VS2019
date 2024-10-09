@@ -1,4 +1,5 @@
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -8,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// Defines methods and properties to aid in controlling the flow of the
     /// program.
     /// </summary>
-    [DebuggerStepThrough]
+    [ExplicitlySynchronized]
     public static class ProgramFlowHelper
     {
         /// <summary>
@@ -23,6 +24,7 @@ namespace xyLOGIX.Core.Debug
         static ProgramFlowHelper() { }
 
         /// <summary> Brings the application to an immediate halt. </summary>
+        [DebuggerStepThrough]
         public static void EmergencyStop()
             => Environment.Exit(-1);
 
@@ -34,6 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Such calls should be commented out or deleted when no longer needed.
         /// </remarks>
+        [DebuggerStepThrough]
         public static void StartDebugger()
         {
             Debugger.Launch();

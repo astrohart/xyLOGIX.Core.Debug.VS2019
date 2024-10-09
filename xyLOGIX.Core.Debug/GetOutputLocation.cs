@@ -1,5 +1,6 @@
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -54,6 +55,7 @@ namespace xyLOGIX.Core.Debug
         /// to the specific enumeration value that was passed for the argument of the
         /// <paramref name="type" /> parameter, if it is not supported.
         /// </exception>
+        [DebuggerStepThrough]
         public static IOutputLocation OfType(OutputLocationType type)
         {
             IOutputLocation result;

@@ -1,10 +1,10 @@
-using System.Diagnostics;
 using PostSharp.Patterns.Collections;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace xyLOGIX.Core.Debug
@@ -20,17 +20,10 @@ namespace xyLOGIX.Core.Debug
         private bool _muteConsole;
 
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this
-        /// class.
+        /// Constructs a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationProvider" /> and returns a
+        /// reference to it.
         /// </summary>
-        [Log(AttributeExclude = true)]
-        static OutputLocationProvider() { }
-
-        /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
-        /// class.
-        /// </summary>
-        [Log(AttributeExclude = true)]
         protected OutputLocationProvider()
             => InitializeInternalOutputLocationList();
 
@@ -39,16 +32,20 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
         /// interface.
         /// </summary>
-        public static IOutputLocationProvider Instance { [DebuggerStepThrough] get; } =
-            new OutputLocationProvider();
+        public static IOutputLocationProvider Instance
+        {
+            [DebuggerStepThrough] get;
+        } = new OutputLocationProvider();
 
         /// <summary>
         /// Gets a reference to a collection, each element of which implements
         /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </summary>
         [Child]
-        private IList<IOutputLocation> InternalOutputLocationList { [DebuggerStepThrough] get; } =
-            new AdvisableCollection<IOutputLocation>();
+        private IList<IOutputLocation> InternalOutputLocationList
+        {
+            [DebuggerStepThrough] get;
+        } = new AdvisableCollection<IOutputLocation>();
 
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
@@ -63,7 +60,8 @@ namespace xyLOGIX.Core.Debug
         public bool MuteConsole
         {
             [DebuggerStepThrough] get => _muteConsole;
-            [DebuggerStepThrough] set
+            [DebuggerStepThrough]
+            set
             {
                 var changed = _muteConsole != value;
                 _muteConsole = value;

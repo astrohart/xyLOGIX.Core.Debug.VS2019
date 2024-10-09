@@ -1,4 +1,5 @@
 using PostSharp.Patterns.Diagnostics;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -31,6 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
         /// interface.
         /// </returns>
+        [DebuggerStepThrough]
         public static IOutputLocationProvider SoleInstance()
             => OutputLocationProvider.Instance;
     }

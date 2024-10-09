@@ -1,5 +1,6 @@
-using System.Diagnostics;
+using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -7,11 +8,27 @@ namespace xyLOGIX.Core.Debug
     public static class Setup
     {
         /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.Setup" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static Setup() { }
+
+        /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface.
         /// </summary>
-        private static IEventLogManager EventLogManager { [DebuggerStepThrough] get; } =
-            GetEventLogManager.SoleInstance();
+        private static IEventLogManager EventLogManager
+        {
+            [DebuggerStepThrough] get;
+        } = GetEventLogManager.SoleInstance();
 
         /// <summary>
         /// Sets up the Windows Event Log Application log quote to correspond
@@ -23,6 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// that provides a user-friendly version of the application's name for viewing in
         /// the Windows Event Log Viewer; leave blank to use the default value.
         /// </param>
+        [DebuggerStepThrough]
         public static void EventLogging(string applicationName = "")
         {
             try

@@ -50,7 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         public static LoggingBackend For(
             LoggingBackendType type,
-            ILoggerRepository relay = null
+            [NotLogged] ILoggerRepository relay = null
         )
         {
             LoggingBackend result = default;

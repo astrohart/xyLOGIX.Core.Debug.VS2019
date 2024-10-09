@@ -1,4 +1,5 @@
 using PostSharp.Patterns.Diagnostics;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -37,6 +38,7 @@ namespace xyLOGIX.Core.Debug
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
         /// </returns>
+        [DebuggerStepThrough]
         public static IOutputLocation SoleInstance()
             => TraceOutputLocation.Instance;
     }

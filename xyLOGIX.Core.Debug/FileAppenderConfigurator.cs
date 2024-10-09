@@ -1,4 +1,5 @@
 using log4net.Appender;
+using PostSharp.Patterns.Diagnostics;
 using System;
 
 namespace xyLOGIX.Core.Debug
@@ -6,6 +7,20 @@ namespace xyLOGIX.Core.Debug
     /// <summary> Provides methods for configurating log4net's FileAppender </summary>
     public static class FileAppenderConfigurator
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.FileAppenderConfigurator" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static FileAppenderConfigurator() { }
+
         /// <summary>
         /// Sets the option to get the minimal locking option set on the
         /// specified <paramref name="appender" />.

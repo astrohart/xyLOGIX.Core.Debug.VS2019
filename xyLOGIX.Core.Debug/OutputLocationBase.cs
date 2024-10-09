@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -12,10 +12,37 @@ namespace xyLOGIX.Core.Debug
     public abstract class OutputLocationBase : IOutputLocation
     {
         /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.OutputLocationBase" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static OutputLocationBase() { }
+
+        /// <summary>
+        /// Initializes a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationBase" /> and returns a reference
+        /// to it.
+        /// </summary>
+        /// <remarks>
+        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
+        /// due to the fact that this class is marked <see langword="abstract" />.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        protected OutputLocationBase() { }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
-        public bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public bool MuteConsole
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets one of the
