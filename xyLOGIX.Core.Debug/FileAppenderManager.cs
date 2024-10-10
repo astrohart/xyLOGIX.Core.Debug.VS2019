@@ -1,4 +1,4 @@
-using log4net.Appender;
+﻿using log4net.Appender;
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using System;

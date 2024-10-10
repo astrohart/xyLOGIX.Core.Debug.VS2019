@@ -1,4 +1,4 @@
-namespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Values that indicate the type of output location, such as the console

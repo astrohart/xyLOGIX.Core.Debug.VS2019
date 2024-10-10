@@ -1,4 +1,4 @@
-namespace xyLOGIX.Core.Debug
+﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a TextWritten event. </summary>
     /// <param name="e">
