@@ -260,8 +260,8 @@ namespace xyLOGIX.Core.Debug
             if (e == null) return string.Empty;
 
             return string.Format(
-                Resources.ExceptionMessageFormat, e.GetType(), e.Message,
-                e.StackTrace
+                Resources.ExceptionMessageFormat, e.GetType(),
+                e.Message.CollapseNewlinesToSpaces(), e.StackTrace
             );
         }
 

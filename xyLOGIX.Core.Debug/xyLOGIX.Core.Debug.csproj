@@ -163,6 +163,7 @@
     <Compile Include="OutputLocationProvider.cs" />
     <Compile Include="OutputLocationType.cs" />
     <Compile Include="OutputMultiplexer.cs" />
+    <Compile Include="SecretStringExtensions.cs" />
     <Compile Include="ServiceFlowHelper.cs" />
     <Compile Include="SetLog.cs" />
     <Compile Include="Setup.cs" />
