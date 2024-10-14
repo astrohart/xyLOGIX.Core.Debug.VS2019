@@ -324,6 +324,9 @@
   - [ExceptionMessageFormat](#P-xyLOGIX-Core-Debug-Properties-Resources-ExceptionMessageFormat 'xyLOGIX.Core.Debug.Properties.Resources.ExceptionMessageFormat')
   - [ResourceManager](#P-xyLOGIX-Core-Debug-Properties-Resources-ResourceManager 'xyLOGIX.Core.Debug.Properties.Resources.ResourceManager')
   - [TempExceptionFileMessage](#P-xyLOGIX-Core-Debug-Properties-Resources-TempExceptionFileMessage 'xyLOGIX.Core.Debug.Properties.Resources.TempExceptionFileMessage')
+- [SecretStringExtensions](#T-xyLOGIX-Core-Debug-SecretStringExtensions 'xyLOGIX.Core.Debug.SecretStringExtensions')
+  - [#cctor()](#M-xyLOGIX-Core-Debug-SecretStringExtensions-#cctor 'xyLOGIX.Core.Debug.SecretStringExtensions.#cctor')
+  - [CollapseNewlinesToSpaces(value)](#M-xyLOGIX-Core-Debug-SecretStringExtensions-CollapseNewlinesToSpaces-System-String- 'xyLOGIX.Core.Debug.SecretStringExtensions.CollapseNewlinesToSpaces(System.String)')
 - [ServiceFlowHelper](#T-xyLOGIX-Core-Debug-ServiceFlowHelper 'xyLOGIX.Core.Debug.ServiceFlowHelper')
   - [#cctor()](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-#cctor 'xyLOGIX.Core.Debug.ServiceFlowHelper.#cctor')
   - [EmergencyStop(notificationAction)](#M-xyLOGIX-Core-Debug-ServiceFlowHelper-EmergencyStop-System-Action- 'xyLOGIX.Core.Debug.ServiceFlowHelper.EmergencyStop(System.Action)')
@@ -6058,6 +6061,63 @@ Looks up a localized string similar to {0} at {1}: Exception caught: {2}
 ---
 
 .
+
+<a name='T-xyLOGIX-Core-Debug-SecretStringExtensions'></a>
+## SecretStringExtensions `type`
+
+##### Namespace
+
+xyLOGIX.Core.Debug
+
+##### Summary
+
+Exposes "secret" [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') extension methods to help the methods in this library only.
+
+<a name='M-xyLOGIX-Core-Debug-SecretStringExtensions-#cctor'></a>
+### #cctor() `method`
+
+##### Summary
+
+Initializes static data or performs actions that need to be performed once only
+for the [SecretStringExtensions](#T-xyLOGIX-Core-Debug-SecretStringExtensions 'xyLOGIX.Core.Debug.SecretStringExtensions') class.
+
+##### Parameters
+
+This method has no parameters.
+
+##### Remarks
+
+This constructor is called automatically prior to the first instance being
+created or before any static members are referenced.
+
+
+
+We've decorated this constructor with the `[Log(AttributeExclude = true)]`
+attribute in order to simplify the logging output.
+
+<a name='M-xyLOGIX-Core-Debug-SecretStringExtensions-CollapseNewlinesToSpaces-System-String-'></a>
+### CollapseNewlinesToSpaces(value) `method`
+
+##### Summary
+
+"Collapses" or "folds" the specified `value` so that all
+newlines are transformed to single whitespace characters.
+
+##### Returns
+
+A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') containing the value passed, but with
+all newlines transformed to single whitespace characters.
+
+
+
+Multiple newlines are removed.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') containing the
+value that is to be collapsed. |
 
 <a name='T-xyLOGIX-Core-Debug-ServiceFlowHelper'></a>
 ## ServiceFlowHelper `type`
