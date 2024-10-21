@@ -34,6 +34,7 @@
   - [Debug](#F-xyLOGIX-Core-Debug-DebugLevel-Debug 'xyLOGIX.Core.Debug.DebugLevel.Debug')
   - [Error](#F-xyLOGIX-Core-Debug-DebugLevel-Error 'xyLOGIX.Core.Debug.DebugLevel.Error')
   - [Info](#F-xyLOGIX-Core-Debug-DebugLevel-Info 'xyLOGIX.Core.Debug.DebugLevel.Info')
+  - [Output](#F-xyLOGIX-Core-Debug-DebugLevel-Output 'xyLOGIX.Core.Debug.DebugLevel.Output')
   - [Unknown](#F-xyLOGIX-Core-Debug-DebugLevel-Unknown 'xyLOGIX.Core.Debug.DebugLevel.Unknown')
   - [Warning](#F-xyLOGIX-Core-Debug-DebugLevel-Warning 'xyLOGIX.Core.Debug.DebugLevel.Warning')
 - [DebugOutputLocation](#T-xyLOGIX-Core-Debug-DebugOutputLocation 'xyLOGIX.Core.Debug.DebugOutputLocation')
@@ -908,6 +909,17 @@ The logging message is for error purposes only.
 ##### Summary
 
 The logging message is for informational purposes only.
+
+<a name='F-xyLOGIX-Core-Debug-DebugLevel-Output'></a>
+### Output `constants`
+
+##### Summary
+
+The logging message is intended to show the output of running a child process.
+
+##### Remarks
+
+This debug level is to be reserved.
 
 <a name='F-xyLOGIX-Core-Debug-DebugLevel-Unknown'></a>
 ### Unknown `constants`
