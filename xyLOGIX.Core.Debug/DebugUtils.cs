@@ -304,9 +304,18 @@ namespace xyLOGIX.Core.Debug
         /// Reference to the <see cref="T:System.Exception" /> to be
         /// logged.
         /// </param>
-        public static void LogException(Exception e)
+        /// <param name="launchDebugger">
+        /// (Optional.) Value indicating whether the launch and break the debugger (if one is attached) when this method is called.<para/>The default value of this parameter is <see langword="true" />.<para/><b>EXTREME CAUTION</b> It is advisable to explicitly set this parameter to <see langword="false" /> in most cases, especially when this method has the likelihood of getting called often.
+        /// </param>
+        public static void LogException(Exception e, bool launchDebugger = true)
         {
             if (e == null) return;
+
+            if (launchDebugger && Debugger.IsAttached)
+            {
+                Debugger.Launch();
+                Debugger.Break();
+            }
 
             if (e is TypeInitializationException)
                 e = e.InnerException;
