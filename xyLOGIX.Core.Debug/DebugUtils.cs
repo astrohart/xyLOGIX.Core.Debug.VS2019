@@ -279,12 +279,16 @@ namespace xyLOGIX.Core.Debug
             => WriteLine(DebugLevel.Error, FormatException(e));
 
         /// <summary>
-        /// Determines whether the debugger can be launched from the <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException"/> method.
+        /// Determines whether the debugger can be launched from the
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException" /> method.
         /// </summary>
         /// <param name="launchDebuggerConfigured"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        private static bool CanLaunchDebugger(bool launchDebuggerConfigured, Exception exception)
+        private static bool CanLaunchDebugger(
+            bool launchDebuggerConfigured,
+            Exception exception
+        )
         {
             var result = false;
 
@@ -297,10 +301,10 @@ namespace xyLOGIX.Core.Debug
                 // Screen out the most common and often-thrown exceptions (that are almost
                 // always caught)
 
-                if (exception.StackTrace.Contains("Does.FileExist")
-                    || exception.StackTrace.Contains("Does.DirectoryExist")
-                    || exception.StackTrace.Contains("Does.FolderExist")) return
-                    result;
+                if (exception.StackTrace.Contains("Does.FileExist") ||
+                    exception.StackTrace.Contains("Does.DirectoryExist") ||
+                    exception.StackTrace.Contains("Does.FolderExist"))
+                    return result;
 
                 result = !exception.IsAnyOf(
                     typeof(TypeInitializationException),
@@ -342,7 +346,10 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:System.IO.FileNotFoundException" />, which occur so frequently as
         /// to not be useful.
         /// </param>
-        public static void LogException(Exception exception, bool launchDebugger = true)
+        public static void LogException(
+            Exception exception,
+            bool launchDebugger = true
+        )
         {
             if (exception == null) return;
 
@@ -356,8 +363,8 @@ namespace xyLOGIX.Core.Debug
                 exception = exception.InnerException;
 
             var message = string.Format(
-                Resources.ExceptionMessageFormat, exception.GetType(), exception.Message,
-                exception.StackTrace
+                Resources.ExceptionMessageFormat, exception.GetType(),
+                exception.Message, exception.StackTrace
             );
 
             WriteLine(DebugLevel.Error, message);
