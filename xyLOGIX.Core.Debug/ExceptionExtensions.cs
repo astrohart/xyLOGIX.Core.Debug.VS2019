@@ -25,6 +25,25 @@ namespace xyLOGIX.Core.Debug
         [Log(AttributeExclude = true)]
         static ExceptionExtensions() { }
 
+        /// <summary>
+        /// Determines whether the <see cref="T:System.Type" /> of the specified
+        /// <paramref name="exception" /> matches any of the specified
+        /// <paramref name="types" />.
+        /// </summary>
+        /// <param name="exception">
+        /// (Required.) Reference to an instance of <see cref="T:System.Exception" /> that
+        /// is the exception whose type is to be checked.
+        /// </param>
+        /// <param name="types">
+        /// (Required.) One or more <see cref="T:System.Type" />
+        /// value(s) that are to be compared.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if at least one of the entry(ies) in the
+        /// <paramref name="types" /> array matches the type of the specified
+        /// <paramref name="exception" />; <see langword="false" /> otherwise.
+        /// </returns>
+        [Log(AttributeExclude = true)]
         public static bool IsAnyOf(
             this Exception exception,
             params Type[] types
