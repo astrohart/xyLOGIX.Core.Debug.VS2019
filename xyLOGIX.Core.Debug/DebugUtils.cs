@@ -562,6 +562,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="true" /> if the debugger is to be launched;
         /// <see langword="false" /> otherwise.
         /// </returns>
+        [Log(AttributeExclude = true)]
         private static bool CanLaunchDebugger(
             Exception exception,
             bool launchDebuggerConfigured
@@ -584,7 +585,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
 
                 result = !exception.IsAnyOf(
-                    typeof(TypeInitializationException)
+                    typeof(TypeInitializationException),
+                    typeof(TypeLoadException)
                 );
             }
             catch
