@@ -61,7 +61,7 @@
   - [Out](#P-xyLOGIX-Core-Debug-DebugUtils-Out 'xyLOGIX.Core.Debug.DebugUtils.Out')
   - [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DebugUtils-#cctor 'xyLOGIX.Core.Debug.DebugUtils.#cctor')
-  - [CanLaunchDebugger(launchDebuggerConfigured,exception)](#M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Boolean,System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.CanLaunchDebugger(System.Boolean,System.Exception)')
+  - [CanLaunchDebugger(exception,launchDebuggerConfigured)](#M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Exception,System-Boolean- 'xyLOGIX.Core.Debug.DebugUtils.CanLaunchDebugger(System.Exception,System.Boolean)')
   - [ClearTempExceptionLog()](#M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog 'xyLOGIX.Core.Debug.DebugUtils.ClearTempExceptionLog')
   - [DumpCollection(collection)](#M-xyLOGIX-Core-Debug-DebugUtils-DumpCollection-System-Collections-ICollection- 'xyLOGIX.Core.Debug.DebugUtils.DumpCollection(System.Collections.ICollection)')
   - [EchoCommandLinkText(commandLink)](#M-xyLOGIX-Core-Debug-DebugUtils-EchoCommandLinkText-System-Object- 'xyLOGIX.Core.Debug.DebugUtils.EchoCommandLinkText(System.Object)')
@@ -1231,23 +1231,28 @@ Initializes a new static instance of
 
 This method has no parameters.
 
-<a name='M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Boolean,System-Exception-'></a>
-### CanLaunchDebugger(launchDebuggerConfigured,exception) `method`
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Exception,System-Boolean-'></a>
+### CanLaunchDebugger(exception,launchDebuggerConfigured) `method`
 
 ##### Summary
 
-Determines whether the debugger can be launched from the [LogException](#M-xyLOGIX-Core-Debug-DebugUtils-LogException 'xyLOGIX.Core.Debug.DebugUtils.LogException') method.
+Determines whether the debugger can be launched from the
+[LogException](#M-xyLOGIX-Core-Debug-DebugUtils-LogException 'xyLOGIX.Core.Debug.DebugUtils.LogException') method.
 
 ##### Returns
 
-
+`true` if the debugger is to be launched;
+`false` otherwise.
 
 ##### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| launchDebuggerConfigured | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
-| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') |  |
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | (Required.) Reference to an instance of [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') that
+corresponds to the particular exception that has been caught. |
+| launchDebuggerConfigured | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | `true` if the user has
+specified that the debugger is to be launched when an exception is caught;
+`false` otherwise. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog'></a>
 ### ClearTempExceptionLog() `method`
