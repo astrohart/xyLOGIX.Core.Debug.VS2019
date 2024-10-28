@@ -41,30 +41,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Occurs whenever text has been emitted by the
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
-        /// </summary>
-        [WeakEvent]
-        public static event TextEmittedEventHandler TextEmitted;
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
-        /// </summary>
-        [WeakEvent]
-        public static event VerbosityChangedEventHandler VerbosityChanged;
-
-        /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
         /// logging. Leave blank to not send events to the Application event log.
         /// </summary>
         public static string ApplicationName
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -73,10 +56,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool ConsoleOnly
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -89,10 +70,8 @@ namespace xyLOGIX.Core.Debug
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -113,11 +92,16 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>
         public static bool IsLogging
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
+
+        /// <summary>
+        /// Gets a value that indicates whether PostSharp is in use as the
+        /// logging infrastructure.
+        /// </summary>
+        private static bool IsPostSharp
+            => InfrastructureType == LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Users should set this property to the path to the log file, if
@@ -125,19 +109,15 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static string LogFilePath
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
         public static bool MuteConsole
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -146,10 +126,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool MuteDebugLevelIfReleaseMode
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -158,18 +136,15 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static TextWriter Out
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
         public static int Verbosity
         {
-            [DebuggerStepThrough]
-            get => _verbosity;
+            [DebuggerStepThrough] get => _verbosity;
             [DebuggerStepThrough]
             set
             {
@@ -184,11 +159,19 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a value that indicates whether PostSharp is in use as the
-        /// logging infrastructure.
+        /// Occurs whenever text has been emitted by the
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
         /// </summary>
-        private static bool IsPostSharp
-            => InfrastructureType == LoggingInfrastructureType.PostSharp;
+        [WeakEvent]
+        public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
+        /// </summary>
+        [WeakEvent]
+        public static event VerbosityChangedEventHandler VerbosityChanged;
 
         /// <summary>
         /// Erases the file having the fully-qualified pathname specified by the value of
@@ -295,6 +278,28 @@ namespace xyLOGIX.Core.Debug
         public static void FormatExceptionAndWrite(Exception e)
             => WriteLine(DebugLevel.Error, FormatException(e));
 
+        private static bool CanLaunchDebugger(bool launchDebuggerConfigured, Exception exception)
+        {
+            var result = false;
+
+            try
+            {
+                if (!launchDebuggerConfigured) return result;
+                if (exception == null) return result;
+                if (!Debugger.IsAttached) return result;
+
+                result = !exception.IsAnyOf()
+            }
+            catch
+            {
+                //Ignored.
+
+                result = false;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Logs the complete information about an exception to the log, under
         /// the Error Level. Outputs the quote file and line number where the exception
@@ -305,13 +310,28 @@ namespace xyLOGIX.Core.Debug
         /// logged.
         /// </param>
         /// <param name="launchDebugger">
-        /// (Optional.) Value indicating whether the launch and break the debugger (if one is attached) when this method is called.<para/>The default value of this parameter is <see langword="true" />.<para/><b>EXTREME CAUTION</b> It is advisable to explicitly set this parameter to <see langword="false" /> in most cases, especially when this method has the likelihood of getting called often.
+        /// (Optional.) Value indicating whether the launch and break the debugger (if one
+        /// is attached) when this method is called.
+        /// <para />
+        /// The default value of this parameter is <see langword="true" />.
+        /// <para />
+        /// <b>EXTREME CAUTION</b> It is advisable to explicitly set this parameter to
+        /// <see langword="false" /> in most cases, especially when this method has the
+        /// likelihood of getting called often.
+        /// <para />
+        /// <b>NOTE:</b> The value of this parameter is ignored, and no launch of the
+        /// attached debugger occurs, when <paramref name="e" /> is
+        /// <see cref="T:System.TypeInitializationException" /> or
+        /// <see cref="T:System.IO.FileNotFoundException" />, which occur so frequently as
+        /// to not be useful.
         /// </param>
         public static void LogException(Exception e, bool launchDebugger = true)
         {
             if (e == null) return;
 
-            if (launchDebugger && Debugger.IsAttached)
+            if (!(e is TypeInitializationException) &&
+                !(e is FileNotFoundException) && launchDebugger &&
+                Debugger.IsAttached)
             {
                 Debugger.Launch();
                 Debugger.Break();

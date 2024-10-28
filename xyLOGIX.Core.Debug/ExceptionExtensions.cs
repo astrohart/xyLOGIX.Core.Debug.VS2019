@@ -25,6 +25,38 @@ namespace xyLOGIX.Core.Debug
         [Log(AttributeExclude = true)]
         static ExceptionExtensions() { }
 
+        public static bool IsAnyOf(
+            this Exception exception,
+            params Type[] types
+        )
+        {
+            var result = false;
+
+            try
+            {
+                if (exception == null) return result;
+                if (types == null) return result;
+                if (types.Length <= 0) return result;
+
+                foreach (var type in types)
+                {
+                    if (type == null) continue;
+                    if (exception.GetType() != type) continue;
+
+                    result = true;
+                    break;
+                }
+            }
+            catch
+            {
+                //Ignored.
+
+                result = false;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Iterates through the specified collection of
         /// <paramref name="exceptions" /> and logs each one, including its inner
