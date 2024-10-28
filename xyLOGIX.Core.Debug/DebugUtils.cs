@@ -322,7 +322,7 @@ namespace xyLOGIX.Core.Debug
         /// the Error Level. Outputs the quote file and line number where the exception
         /// occurred, as well as the message of the exception and its stack trace.
         /// </summary>
-        /// <param name="e">
+        /// <param name="exception">
         /// Reference to the <see cref="T:System.Exception" /> to be
         /// logged.
         /// </param>
@@ -337,38 +337,36 @@ namespace xyLOGIX.Core.Debug
         /// likelihood of getting called often.
         /// <para />
         /// <b>NOTE:</b> The value of this parameter is ignored, and no launch of the
-        /// attached debugger occurs, when <paramref name="e" /> is
+        /// attached debugger occurs, when <paramref name="exception" /> is
         /// <see cref="T:System.TypeInitializationException" /> or
         /// <see cref="T:System.IO.FileNotFoundException" />, which occur so frequently as
         /// to not be useful.
         /// </param>
-        public static void LogException(Exception e, bool launchDebugger = true)
+        public static void LogException(Exception exception, bool launchDebugger = true)
         {
-            if (e == null) return;
+            if (exception == null) return;
 
-            if (!(e is TypeInitializationException) &&
-                !(e is FileNotFoundException) && launchDebugger &&
-                Debugger.IsAttached)
+            if (CanLaunchDebugger(launchDebugger, exception))
             {
                 Debugger.Launch();
                 Debugger.Break();
             }
 
-            if (e is TypeInitializationException)
-                e = e.InnerException;
+            if (exception is TypeInitializationException)
+                exception = exception.InnerException;
 
             var message = string.Format(
-                Resources.ExceptionMessageFormat, e.GetType(), e.Message,
-                e.StackTrace
+                Resources.ExceptionMessageFormat, exception.GetType(), exception.Message,
+                exception.StackTrace
             );
 
             WriteLine(DebugLevel.Error, message);
 
-            if (e.InnerException == null ||
-                e is TypeInitializationException) return;
+            if (exception.InnerException == null ||
+                exception is TypeInitializationException) return;
 
             WriteLine(DebugLevel.Error, "---");
-            LogException(e.InnerException);
+            LogException(exception.InnerException);
         }
 
         /// <summary>
