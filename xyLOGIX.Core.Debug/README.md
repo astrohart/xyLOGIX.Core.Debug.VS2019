@@ -122,6 +122,7 @@
   - [Unknown](#F-xyLOGIX-Core-Debug-EventLogType-Unknown 'xyLOGIX.Core.Debug.EventLogType.Unknown')
 - [ExceptionExtensions](#T-xyLOGIX-Core-Debug-ExceptionExtensions 'xyLOGIX.Core.Debug.ExceptionExtensions')
   - [#cctor()](#M-xyLOGIX-Core-Debug-ExceptionExtensions-#cctor 'xyLOGIX.Core.Debug.ExceptionExtensions.#cctor')
+  - [IsAnyOf(exception,types)](#M-xyLOGIX-Core-Debug-ExceptionExtensions-IsAnyOf-System-Exception,System-Type[]- 'xyLOGIX.Core.Debug.ExceptionExtensions.IsAnyOf(System.Exception,System.Type[])')
   - [LogAllExceptions(exceptions)](#M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}- 'xyLOGIX.Core.Debug.ExceptionExtensions.LogAllExceptions(System.Collections.Generic.IEnumerable{System.Exception})')
 - [ExceptionLoggedEventArgs](#T-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs')
   - [#ctor(exception)](#M-xyLOGIX-Core-Debug-ExceptionLoggedEventArgs-#ctor-System-Exception- 'xyLOGIX.Core.Debug.ExceptionLoggedEventArgs.#ctor(System.Exception)')
@@ -1388,7 +1389,8 @@ occurred, as well as the message of the exception and its stack trace.
 | ---- | ---- | ----------- |
 | e | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be
 logged. |
-| launchDebugger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | (Optional.) Value indicating whether the launch and break the debugger (if one is attached) when this method is called.
+| launchDebugger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | (Optional.) Value indicating whether the launch and break the debugger (if one
+is attached) when this method is called.
 
 
 
@@ -1396,7 +1398,17 @@ The default value of this parameter is `true`.
 
 
 
-It is advisable to explicitly set this parameter to `false` in most cases, especially when this method has the likelihood of getting called often. |
+It is advisable to explicitly set this parameter to
+`false` in most cases, especially when this method has the
+likelihood of getting called often.
+
+
+
+The value of this parameter is ignored, and no launch of the
+attached debugger occurs, when `e` is
+[TypeInitializationException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.TypeInitializationException 'System.TypeInitializationException') or
+[FileNotFoundException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.FileNotFoundException 'System.IO.FileNotFoundException'), which occur so frequently as
+to not be useful. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs-'></a>
 ### OnTextEmitted(e) `method`
@@ -2424,6 +2436,30 @@ created or before any static members are referenced.
 
 We've decorated this constructor with the `[Log(AttributeExclude = true)]`
 attribute in order to simplify the logging output.
+
+<a name='M-xyLOGIX-Core-Debug-ExceptionExtensions-IsAnyOf-System-Exception,System-Type[]-'></a>
+### IsAnyOf(exception,types) `method`
+
+##### Summary
+
+Determines whether the [Type](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Type 'System.Type') of the specified
+`exception` matches any of the specified
+`types`.
+
+##### Returns
+
+`true` if at least one of the entry(ies) in the
+`types` array matches the type of the specified
+`exception`; `false` otherwise.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | (Required.) Reference to an instance of [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') that
+is the exception whose type is to be checked. |
+| types | [System.Type[]](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Type[] 'System.Type[]') | (Required.) One or more [Type](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Type 'System.Type')
+value(s) that are to be compared. |
 
 <a name='M-xyLOGIX-Core-Debug-ExceptionExtensions-LogAllExceptions-System-Collections-Generic-IEnumerable{System-Exception}-'></a>
 ### LogAllExceptions(exceptions) `method`
