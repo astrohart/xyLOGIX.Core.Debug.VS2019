@@ -278,6 +278,12 @@ namespace xyLOGIX.Core.Debug
         public static void FormatExceptionAndWrite(Exception e)
             => WriteLine(DebugLevel.Error, FormatException(e));
 
+        /// <summary>
+        /// Determines whether the debugger can be launched from the <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException"/> method.
+        /// </summary>
+        /// <param name="launchDebuggerConfigured"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         private static bool CanLaunchDebugger(bool launchDebuggerConfigured, Exception exception)
         {
             var result = false;
@@ -288,7 +294,18 @@ namespace xyLOGIX.Core.Debug
                 if (exception == null) return result;
                 if (!Debugger.IsAttached) return result;
 
-                result = !exception.IsAnyOf()
+                // Screen out the most common and often-thrown exceptions (that are almost
+                // always caught)
+
+                if (exception.StackTrace.Contains("Does.FileExist")
+                    || exception.StackTrace.Contains("Does.DirectoryExist")
+                    || exception.StackTrace.Contains("Does.FolderExist")) return
+                    result;
+
+                result = !exception.IsAnyOf(
+                    typeof(TypeInitializationException),
+                    typeof(FileNotFoundException)
+                );
             }
             catch
             {
