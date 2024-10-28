@@ -61,6 +61,7 @@
   - [Out](#P-xyLOGIX-Core-Debug-DebugUtils-Out 'xyLOGIX.Core.Debug.DebugUtils.Out')
   - [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DebugUtils-#cctor 'xyLOGIX.Core.Debug.DebugUtils.#cctor')
+  - [CanLaunchDebugger(launchDebuggerConfigured,exception)](#M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Boolean,System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.CanLaunchDebugger(System.Boolean,System.Exception)')
   - [ClearTempExceptionLog()](#M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog 'xyLOGIX.Core.Debug.DebugUtils.ClearTempExceptionLog')
   - [DumpCollection(collection)](#M-xyLOGIX-Core-Debug-DebugUtils-DumpCollection-System-Collections-ICollection- 'xyLOGIX.Core.Debug.DebugUtils.DumpCollection(System.Collections.ICollection)')
   - [EchoCommandLinkText(commandLink)](#M-xyLOGIX-Core-Debug-DebugUtils-EchoCommandLinkText-System-Object- 'xyLOGIX.Core.Debug.DebugUtils.EchoCommandLinkText(System.Object)')
@@ -68,7 +69,7 @@
   - [FormatExceptionAndWrite(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatExceptionAndWrite-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatExceptionAndWrite(System.Exception)')
   - [GenerateContentFromFormat(format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-GenerateContentFromFormat-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.GenerateContentFromFormat(System.String,System.Object[])')
   - [LogEachLineIfMultiline(content,logMethod,level)](#M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.LogEachLineIfMultiline(System.String,System.Action{xyLOGIX.Core.Debug.DebugLevel,System.String},xyLOGIX.Core.Debug.DebugLevel)')
-  - [LogException(e,launchDebugger)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Boolean- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Boolean)')
+  - [LogException(exception,launchDebugger)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Boolean- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Boolean)')
   - [OnTextEmitted(e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(xyLOGIX.Core.Debug.TextEmittedEventArgs)')
   - [OnVerbosityChanged()](#M-xyLOGIX-Core-Debug-DebugUtils-OnVerbosityChanged-xyLOGIX-Core-Debug-VerbosityChangedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnVerbosityChanged(xyLOGIX.Core.Debug.VerbosityChangedEventArgs)')
   - [Write(debugLevel,format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String,System.Object[])')
@@ -1230,6 +1231,24 @@ Initializes a new static instance of
 
 This method has no parameters.
 
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Boolean,System-Exception-'></a>
+### CanLaunchDebugger(launchDebuggerConfigured,exception) `method`
+
+##### Summary
+
+Determines whether the debugger can be launched from the [LogException](#M-xyLOGIX-Core-Debug-DebugUtils-LogException 'xyLOGIX.Core.Debug.DebugUtils.LogException') method.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| launchDebuggerConfigured | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') |  |
+
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog'></a>
 ### ClearTempExceptionLog() `method`
 
@@ -1375,7 +1394,7 @@ is to be executed for each line of content. |
 specifying the debugLevel of logging to utilize. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Boolean-'></a>
-### LogException(e,launchDebugger) `method`
+### LogException(exception,launchDebugger) `method`
 
 ##### Summary
 
@@ -1387,7 +1406,7 @@ occurred, as well as the message of the exception and its stack trace.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| e | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | Reference to the [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') to be
 logged. |
 | launchDebugger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | (Optional.) Value indicating whether the launch and break the debugger (if one
 is attached) when this method is called.
@@ -1405,7 +1424,7 @@ likelihood of getting called often.
 
 
 The value of this parameter is ignored, and no launch of the
-attached debugger occurs, when `e` is
+attached debugger occurs, when `exception` is
 [TypeInitializationException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.TypeInitializationException 'System.TypeInitializationException') or
 [FileNotFoundException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IO.FileNotFoundException 'System.IO.FileNotFoundException'), which occur so frequently as
 to not be useful. |
