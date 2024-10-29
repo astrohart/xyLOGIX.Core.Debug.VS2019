@@ -576,6 +576,12 @@ namespace xyLOGIX.Core.Debug
                 if (exception == null) return result;
                 if (!launchDebuggerConfigured) return result;
 
+                // Always launch the debugger if the message starts with
+                // 'Could not load file or assembly'
+                if (exception.Message.StartsWith(
+                        "Could not load file or assembly"
+                    )) return true;
+
                 // Screen out the most common and often-thrown exceptions (that are almost
                 // always caught)
 
