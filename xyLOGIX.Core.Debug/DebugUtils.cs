@@ -592,7 +592,9 @@ namespace xyLOGIX.Core.Debug
 
                 result = !exception.IsAnyOf(
                     typeof(TypeInitializationException),
-                    typeof(TypeLoadException)
+                    typeof(TypeLoadException),
+                    typeof(FileNotFoundException),
+                    typeof(DirectoryNotFoundException)
                 );
             }
             catch
