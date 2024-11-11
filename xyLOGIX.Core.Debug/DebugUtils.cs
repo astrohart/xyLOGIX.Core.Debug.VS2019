@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using xyLOGIX.Core.Debug.Properties;
 
 namespace xyLOGIX.Core.Debug
@@ -576,7 +577,7 @@ namespace xyLOGIX.Core.Debug
                 result = !exception.IsAnyOf(
                     typeof(TypeInitializationException),
                     typeof(TypeLoadException), typeof(FileNotFoundException),
-                    typeof(DirectoryNotFoundException)
+                    typeof(DirectoryNotFoundException), typeof(COMException)
                 );
             }
             catch
