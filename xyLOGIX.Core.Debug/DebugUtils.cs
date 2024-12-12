@@ -312,10 +312,7 @@ namespace xyLOGIX.Core.Debug
             if (exception == null) return;
 
             if (CanLaunchDebugger(exception, launchDebugger))
-            {
-                Debugger.Launch();
-                Debugger.Break();
-            }
+                ProgramFlowHelper.StartDebugger();
 
             if (exception is TypeInitializationException)
                 exception = exception.InnerException;
