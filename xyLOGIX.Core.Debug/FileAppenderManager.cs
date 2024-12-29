@@ -57,7 +57,7 @@ namespace xyLOGIX.Core.Debug
             if (root == null)
                 return null;
 
-            return root.Appenders.Count == 0
+            return root.Appenders.Count <= 0
                 ? null
                 : root.Appenders.OfType<FileAppender>()
                       .First(fa => fa.Name == name);
@@ -92,7 +92,7 @@ namespace xyLOGIX.Core.Debug
                 var root = LoggerManager.GetRootLogger(loggerRepository);
                 if (root == null) return result;
 
-                result = root.Appenders.Count == 0
+                result = root.Appenders.Count <= 0
                     ? default
                     : root.Appenders.OfType<FileAppender>()
                           .First();

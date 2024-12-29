@@ -46,7 +46,7 @@ namespace xyLOGIX.Core.Debug
         public static void Write(string format, params object[] arg)
         {
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             OutputLocationProvider.Write(format, arg);
@@ -74,7 +74,7 @@ namespace xyLOGIX.Core.Debug
         public static void WriteLine(string format, params object[] arg)
         {
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             OutputLocationProvider.WriteLine(format, arg);

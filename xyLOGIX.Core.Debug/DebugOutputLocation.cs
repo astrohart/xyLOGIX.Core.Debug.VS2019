@@ -85,7 +85,7 @@ namespace xyLOGIX.Core.Debug
             if (Debugger.IsAttached || Debugger.IsLogging()) return;
 
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             System.Diagnostics.Debug.Write(string.Format(format, arg));
@@ -130,7 +130,7 @@ namespace xyLOGIX.Core.Debug
             if (Debugger.IsAttached || Debugger.IsLogging()) return;
 
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             System.Diagnostics.Debug.WriteLine(format, arg);

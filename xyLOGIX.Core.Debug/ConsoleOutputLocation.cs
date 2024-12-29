@@ -81,7 +81,7 @@ namespace xyLOGIX.Core.Debug
         public override void Write(string format, params object[] arg)
         {
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             if (MuteConsole) return;
@@ -126,7 +126,7 @@ namespace xyLOGIX.Core.Debug
         public override void WriteLine(string format, params object[] arg)
         {
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             if (MuteConsole) return;

@@ -187,7 +187,7 @@ namespace xyLOGIX.Core.Debug
                 if (!InternalOutputLocationList.Any()) return;
 
                 if (string.IsNullOrWhiteSpace(format) &
-                    ((arg == null) | (arg.Length == 0)))
+                    ((arg == null) | (arg.Length <= 0)))
                     return;
 
                 foreach (var location in InternalOutputLocationList.Where(
@@ -254,7 +254,7 @@ namespace xyLOGIX.Core.Debug
                 if (!InternalOutputLocationList.Any()) return;
 
                 if (string.IsNullOrWhiteSpace(format) &
-                    ((arg == null) | (arg.Length == 0)))
+                    ((arg == null) | (arg.Length <= 0)))
                     return;
 
                 foreach (var location in InternalOutputLocationList.Where(

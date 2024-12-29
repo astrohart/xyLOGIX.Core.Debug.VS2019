@@ -207,7 +207,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public static void DumpCollection(ICollection collection)
         {
-            if (collection == null || collection.Count == 0) return;
+            if (collection == null || collection.Count <= 0) return;
 
             foreach (var element in collection)
             {

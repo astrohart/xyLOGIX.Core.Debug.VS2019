@@ -82,7 +82,7 @@ namespace xyLOGIX.Core.Debug
             if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             Trace.Write(string.Format(format, arg));
@@ -126,7 +126,7 @@ namespace xyLOGIX.Core.Debug
             if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
             if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length == 0)))
+                ((arg == null) | (arg.Length <= 0)))
                 return;
 
             Trace.WriteLine(string.Format(format, arg));
