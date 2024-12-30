@@ -1,4 +1,5 @@
 ﻿using log4net;
+using PostSharp.Patterns;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
@@ -553,6 +554,13 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                /*
+                 * ALWAYS stop for Assertion Exceptions.
+                 */
+
+                if (exception.IsAnyOf(typeof(AssertionFailedException)))
+                    return true;
+
                 if (!Debugger.IsAttached) return result;
                 if (exception == null) return result;
                 if (!launchDebuggerConfigured) return result;
