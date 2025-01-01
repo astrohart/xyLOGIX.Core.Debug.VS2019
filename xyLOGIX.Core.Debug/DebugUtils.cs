@@ -524,6 +524,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="debugLevel" /> parameter is not one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
+        [DebuggerStepThrough]
         public static void WriteLine(DebugLevel debugLevel, string content)
             => LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
 
@@ -629,6 +630,7 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" />
         /// specifying the debugLevel of logging to utilize.
         /// </param>
+        [DebuggerStepThrough]
         private static void LogEachLineIfMultiline(
             string content,
             Action<DebugLevel, string> logMethod,
