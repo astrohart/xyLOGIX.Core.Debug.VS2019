@@ -128,7 +128,6 @@ namespace xyLOGIX.Core.Debug
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp, for example).
         /// </param>
-        [DebuggerStepThrough]
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
