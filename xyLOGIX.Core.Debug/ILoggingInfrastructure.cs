@@ -15,7 +15,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
         /// of the log file of this application.
         /// </summary>
-        string LogFilePath { [DebuggerStepThrough] get; }
+        string LogFileName { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets the
@@ -27,10 +27,10 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFilePath" />
+        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFileName" />
         /// property has been updated.
         /// </summary>
-        event EventHandler LogFilePathChanged;
+        event EventHandler LogFileNameChanged;
 
         /// <summary> Deletes the log file, if it exists. </summary>
         /// <param name="logFileName">
@@ -51,7 +51,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         /// <remarks>
         /// This method is solely utilized in order to implement the
-        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFilePath" /> property.
+        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFileName" /> property.
         /// </remarks>
         string GetRootFileAppenderFileName();
 
@@ -65,7 +65,7 @@ namespace xyLOGIX.Core.Debug
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
-        /// <param name="configurationFilePathname">
+        /// <param name="configurationFileNamename">
         /// Specifies the path to the
         /// configuration file to be utilized for initializing log4net. If blank, the
         /// system attempts to utilize the default App.config file.
@@ -110,7 +110,7 @@ namespace xyLOGIX.Core.Debug
         void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFilePathname = "",
+            string configurationFileNamename = "",
             bool muteConsole = false,
             string logFileName = "",
             int verbosity = 1,

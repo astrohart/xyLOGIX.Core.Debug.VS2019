@@ -38,7 +38,7 @@ namespace xyLOGIX.Core.Debug
         /// been
         /// called.
         /// </remarks>
-        public static string LogFilePath
+        public static string LogFileName
         {
             [DebuggerStepThrough]
             get
@@ -85,7 +85,7 @@ namespace xyLOGIX.Core.Debug
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
-        /// <param name="configurationFilePathname">
+        /// <param name="configurationFileNamename">
         /// Specifies the path to the
         /// configuration file to be utilized for initializing log4net. If blank, the
         /// system attempts to utilize the default App.config file.
@@ -131,7 +131,7 @@ namespace xyLOGIX.Core.Debug
         public static void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFilePathname = "",
+            string configurationFileNamename = "",
             bool muteConsole = false,
             string logFileName = "",
             int verbosity = 1,
@@ -175,7 +175,7 @@ namespace xyLOGIX.Core.Debug
 
                 LoggingInfrastructure.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFilePathname, muteConsole, logFileName,
+                    configurationFileNamename, muteConsole, logFileName,
                     verbosity, applicationName
                 );
             }

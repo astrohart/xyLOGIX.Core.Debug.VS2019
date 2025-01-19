@@ -109,7 +109,7 @@ namespace xyLOGIX.Core.Debug
         /// Users should set this property to the path to the log file, if
         /// logging.
         /// </summary>
-        public static string LogFilePath
+        public static string LogFileName
         {
             [DebuggerStepThrough] get;
             [DebuggerStepThrough] set;

@@ -23,7 +23,7 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:System.String" /> that contains the fully-qualified pathname of
         /// the log file.
         /// </summary>
-        private string _logFilePath = "";
+        private string _logFileName = "";
 
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -52,7 +52,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
         /// of the log file of this application.
         /// </summary>
-        public virtual string LogFilePath
+        public virtual string LogFileName
         {
             get
             {
@@ -60,9 +60,9 @@ namespace xyLOGIX.Core.Debug
 
                 try
                 {
-                    return !string.IsNullOrWhiteSpace(_logFilePath)
-                        ? _logFilePath
-                        : _logFilePath = GetRootFileAppenderFileName();
+                    return !string.IsNullOrWhiteSpace(_logFileName)
+                        ? _logFileName
+                        : _logFileName = GetRootFileAppenderFileName();
                 }
                 catch (Exception ex)
                 {
@@ -77,9 +77,9 @@ namespace xyLOGIX.Core.Debug
             protected set
             {
                 var changed = !string.IsNullOrWhiteSpace(value) &&
-                              !value.Equals(_logFilePath);
-                _logFilePath = value;
-                if (changed) OnLogFilePathChanged();
+                              !value.Equals(_logFileName);
+                _logFileName = value;
+                if (changed) OnLogFileNameChanged();
             }
         }
 
@@ -103,7 +103,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         /// <remarks>
         /// This method is solely utilized in order to implement the
-        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFilePath" /> property.
+        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFileName" /> property.
         /// </remarks>
         public virtual string GetRootFileAppenderFileName()
             => FileAppenderManager.GetFirstAppender()
@@ -119,7 +119,7 @@ namespace xyLOGIX.Core.Debug
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
-        /// <param name="configurationFilePathname">
+        /// <param name="configurationFileNamename">
         /// Specifies the path to the
         /// configuration file to be utilized for initializing log4net. If blank, the
         /// system attempts to utilize the default App.config file.
@@ -164,7 +164,7 @@ namespace xyLOGIX.Core.Debug
         public virtual void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFilePathname = "",
+            string configurationFileNamename = "",
             bool muteConsole = false,
             string logFileName = "",
             int verbosity = 1,
@@ -186,27 +186,27 @@ namespace xyLOGIX.Core.Debug
                 // path indicated. If the configuration file pathname is blank
                 // and/or it does not exist at the path indicated, then call the
                 // version of XmlConfigurator.Configure that does not take any
-                // arguments. On the other hand, if the configurationFilePathname
+                // arguments. On the other hand, if the configurationFileNamename
                 // parameter is not blank, and it specifies a file that actually
                 // does exist at the specified path, then pass that path to the
                 // XmlConfigurator.Configure method.
-                if (string.IsNullOrWhiteSpace(configurationFilePathname) ||
-                    !File.Exists(configurationFilePathname))
+                if (string.IsNullOrWhiteSpace(configurationFileNamename) ||
+                    !File.Exists(configurationFileNamename))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
-                        $"DefaultLoggingInfrastructure.InitializeLogging: Could not locate the file having the path '{configurationFilePathname}'.  Setting up log4net with the default settings..."
+                        $"DefaultLoggingInfrastructure.InitializeLogging: Could not locate the file having the path '{configurationFileNamename}'.  Setting up log4net with the default settings..."
                     );
 
-                    // If the file specified by the configurationFilePathname does
+                    // If the file specified by the configurationFileNamename does
                     // not actually exist, the author of this software needs to know
                     // about it, so throw a FileNotFoundException
                     if (!string.IsNullOrWhiteSpace(
-                            configurationFilePathname
+                            configurationFileNamename
                         ) // only do this check for a non-blank file name.
-                        && !File.Exists(configurationFilePathname))
+                        && !File.Exists(configurationFileNamename))
                         throw new FileNotFoundException(
-                            $"The file '{configurationFilePathname}' was not found.\n\nThe application needs this file in order to continue."
+                            $"The file '{configurationFileNamename}' was not found.\n\nThe application needs this file in order to continue."
                         );
 
                     /*
@@ -220,12 +220,12 @@ namespace xyLOGIX.Core.Debug
                         XmlConfigurator.Configure(repository);
                 }
                 else if (!string.IsNullOrWhiteSpace(
-                             configurationFilePathname
-                         ) && File.Exists(configurationFilePathname))
+                             configurationFileNamename
+                         ) && File.Exists(configurationFileNamename))
                 {
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
-                        "*** INFO: Not only is the 'configurationFilePathname' parameter's argument not the blank string, but the file that it references has been found on the filesystem."
+                        "*** INFO: Not only is the 'configurationFileNamename' parameter's argument not the blank string, but the file that it references has been found on the filesystem."
                     );
 
                     /*
@@ -236,11 +236,11 @@ namespace xyLOGIX.Core.Debug
 
                     if (repository == null)
                         XmlConfigurator.Configure(
-                            new FileInfo(configurationFilePathname)
+                            new FileInfo(configurationFileNamename)
                         );
                     else
                         XmlConfigurator.Configure(
-                            repository, new FileInfo(configurationFilePathname)
+                            repository, new FileInfo(configurationFileNamename)
                         );
                 }
             }
@@ -334,7 +334,7 @@ namespace xyLOGIX.Core.Debug
                 muteDebugLevelIfReleaseMode;
             DebugUtils.MuteConsole = muteConsole;
             DebugUtils.InfrastructureType = Type;
-            DebugUtils.LogFilePath = LogFilePath;
+            DebugUtils.LogFileName = LogFileName;
 
             // do not print anything in this method if verbosity is set to
             // anything less than 2
@@ -373,10 +373,10 @@ namespace xyLOGIX.Core.Debug
                 $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.InfrastructureType = '{DebugUtils.InfrastructureType}'"
             );
 
-            // Dump the variable DebugUtils.LogFilePath to the log
+            // Dump the variable DebugUtils.LogFileName to the log
             DebugUtils.WriteLine(
                 DebugLevel.Debug,
-                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.LogFilePath = '{DebugUtils.LogFilePath}'"
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.LogFileName = '{DebugUtils.LogFileName}'"
             );
 
             // Dump the variable DebugUtils.Verbosity to the log
@@ -388,10 +388,10 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath" />
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" />
         /// property has been updated.
         /// </summary>
-        public event EventHandler LogFilePathChanged;
+        public event EventHandler LogFileNameChanged;
 
         /// <summary> Deletes the log file, if it exists. </summary>
         /// <param name="logFileName">
@@ -400,52 +400,52 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         public virtual void DeleteLogIfExists(string logFileName = "")
         {
-            // Dump the value of the property, LogFilePath, to the log
+            // Dump the value of the property, LogFileName, to the log
             DebugUtils.WriteLine(
                 DebugLevel.Debug,
-                $"DefaultLoggingInfrastructure.DeleteLogIfExists: LogFilePath = '{LogFilePath}'"
+                $"DefaultLoggingInfrastructure.DeleteLogIfExists: LogFileName = '{LogFileName}'"
             );
 
             if (!string.IsNullOrWhiteSpace(logFileName) &&
                 File.Exists(logFileName))
-                LogFilePath = logFileName;
+                LogFileName = logFileName;
 
             // write the name of the current class and method we are now
-            if (!File.Exists(LogFilePath))
+            if (!File.Exists(LogFileName))
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     "DefaultLoggingInfrastructure.DeleteLogIfExists: The log file '{0}' does not exist.  Nothing to do.",
-                    LogFilePath
+                    LogFileName
                 );
 
                 return;
             }
 
             if (!DebugFileAndFolderHelper.IsFolderWriteable(
-                    Path.GetDirectoryName(LogFilePath)
+                    Path.GetDirectoryName(LogFileName)
                 ))
 
                 // deleted sits in, then Heaven help us! However, the software
                 // should try to work at all costs, so this method should just
                 // silently fail in this case.
                 return;
-            File.Delete(LogFilePath);
+            File.Delete(LogFileName);
         }
 
         /// <summary>
         /// Raises the
         /// <see
-        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePathChanged" />
+        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileNameChanged" />
         /// event.
         /// </summary>
         /// <remarks>
         /// This method is called when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFilePath" />
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" />
         /// property is updated.
         /// </remarks>
-        protected virtual void OnLogFilePathChanged()
-            => LogFilePathChanged?.Invoke(this, EventArgs.Empty);
+        protected virtual void OnLogFileNameChanged()
+            => LogFileNameChanged?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Prepares the log file by ensuring that the containing folder is
@@ -472,7 +472,7 @@ namespace xyLOGIX.Core.Debug
             if (LoggingServices.DefaultBackend is ConsoleLoggingBackend)
                 return;
 
-            var logFileDirectoryPath = Path.GetDirectoryName(LogFilePath);
+            var logFileDirectoryPath = Path.GetDirectoryName(LogFileName);
             if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
             {
                 DebugUtils.WriteLine(

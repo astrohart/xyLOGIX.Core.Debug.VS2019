@@ -50,7 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         /// <remarks>
         /// This method is solely utilized in order to implement the
-        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFilePath" /> property.
+        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFileName" /> property.
         /// </remarks>
         public override string GetRootFileAppenderFileName()
             => FileAppenderManager.GetFirstAppender(_relay)
@@ -66,7 +66,7 @@ namespace xyLOGIX.Core.Debug
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
-        /// <param name="configurationFilePathname">
+        /// <param name="configurationFileNamename">
         /// Specifies the path to the
         /// configuration file to be utilized for initializing log4net. If blank, the
         /// system attempts to utilize the default App.config file.
@@ -111,7 +111,7 @@ namespace xyLOGIX.Core.Debug
         public override void InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFilePathname = "",
+            string configurationFileNamename = "",
             bool muteConsole = false,
             string logFileName = "",
             int verbosity = 1,
@@ -190,7 +190,7 @@ namespace xyLOGIX.Core.Debug
 
                 base.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFilePathname, muteConsole, logFileName,
+                    configurationFileNamename, muteConsole, logFileName,
                     verbosity, applicationName, _relay
                 );
 
