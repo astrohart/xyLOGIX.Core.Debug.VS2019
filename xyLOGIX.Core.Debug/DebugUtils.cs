@@ -556,6 +556,11 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 /*
+                 * Only launch the debugger if the application is already running in Debug mode.
+                 */
+                if (!Debugger.IsAttached) return result;
+
+                /*
                  * ALWAYS stop for Assertion Exceptions.
                  */
 
