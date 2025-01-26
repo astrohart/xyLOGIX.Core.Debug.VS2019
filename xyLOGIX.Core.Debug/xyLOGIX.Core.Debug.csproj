@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="Activate.cs" />
     <Compile Include="AppDomainFriendlyNames.cs" />
+    <Compile Include="CommandLineParameter.cs" />
     <Compile Include="Compute.cs" />
     <Compile Include="ConsoleOutputLocation.cs" />
     <Compile Include="DebugFileAndFolderHelper.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="ServiceFlowHelper.cs" />
     <Compile Include="SetLog.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Split.cs" />
     <Compile Include="TextEmittedEventArgs.cs" />
     <Compile Include="TextEmittedEventHandler.cs" />
     <Compile Include="TextWrittenEventArgs.cs" />
