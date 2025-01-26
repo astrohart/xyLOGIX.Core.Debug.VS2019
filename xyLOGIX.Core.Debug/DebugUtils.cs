@@ -189,6 +189,12 @@ namespace xyLOGIX.Core.Debug
             {
                 /*
                  * Only launch the debugger if the application is already running in Debug mode.
+                 *
+                 * NOTE: A program can be forced to disregard the fact of whether there is a debugger
+                 * attached, and still cause an abort, if the user passes the '--hoe' command-line
+                 * flag to the executable. This is useful for debugging purposes, as it allows the user
+                 * to see the exception message and stack trace in the console window, and then decide
+                 * whether to launch the debugger or not. 
                  */
                 if (!Split.CommandLine(Environment.CommandLine)
                           .Contains(CommandLineParameter.HaltOnException) &&
