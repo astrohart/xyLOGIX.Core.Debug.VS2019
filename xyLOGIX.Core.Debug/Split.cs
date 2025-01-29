@@ -83,11 +83,8 @@ namespace xyLOGIX.Core.Debug
 
                 result = args.ToArray();
             }
-            catch (Exception ex)
+            catch
             {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-
                 result = Array.Empty<string>();
             }
 
