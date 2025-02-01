@@ -42,7 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="pathname" /> was found on the file system and successfully
         /// deleted; <see langword="false" /> otherwise.
         /// </returns>
-        internal static bool FileIfExists(string pathname)
+        internal static bool FileIfExists([NotLogged] string pathname)
         {
             var result = false;
 
