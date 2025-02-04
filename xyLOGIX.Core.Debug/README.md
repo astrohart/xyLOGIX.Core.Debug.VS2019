@@ -74,6 +74,7 @@
   - [LogException(exception,launchDebugger)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Boolean- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Boolean)')
   - [OnTextEmitted(e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(xyLOGIX.Core.Debug.TextEmittedEventArgs)')
   - [OnVerbosityChanged()](#M-xyLOGIX-Core-Debug-DebugUtils-OnVerbosityChanged-xyLOGIX-Core-Debug-VerbosityChangedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnVerbosityChanged(xyLOGIX.Core.Debug.VerbosityChangedEventArgs)')
+  - [OutputExceptionLoggingMessage(exception,message)](#M-xyLOGIX-Core-Debug-DebugUtils-OutputExceptionLoggingMessage-System-Exception,System-String- 'xyLOGIX.Core.Debug.DebugUtils.OutputExceptionLoggingMessage(System.Exception,System.String)')
   - [Write(debugLevel,format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String,System.Object[])')
   - [Write(debugLevel,content)](#M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String- 'xyLOGIX.Core.Debug.DebugUtils.Write(xyLOGIX.Core.Debug.DebugLevel,System.String)')
   - [WriteCore(debugLevel,content)](#M-xyLOGIX-Core-Debug-DebugUtils-WriteCore-xyLOGIX-Core-Debug-DebugLevel,System-String- 'xyLOGIX.Core.Debug.DebugUtils.WriteCore(xyLOGIX.Core.Debug.DebugLevel,System.String)')
@@ -1495,6 +1496,25 @@ This method has no parameters.
 The [](#E-xyLOGIX-Core-Debug-DebugUtils-VerbosityChanged 'xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged') event
 is raised whenever the value of the
 [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity') property is updated.
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-OutputExceptionLoggingMessage-System-Exception,System-String-'></a>
+### OutputExceptionLoggingMessage(exception,message) `method`
+
+##### Summary
+
+Actually performs the work of logging the specified
+`exception` to the log, using the specified
+`message`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | (Required.) Reference to an instance of
+[Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') that identifies the exception that is being
+logged. |
+| message | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that
+contains a formatted message that is to be written to the log file. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-Write-xyLOGIX-Core-Debug-DebugLevel,System-String,System-Object[]-'></a>
 ### Write(debugLevel,format,args) `method`
