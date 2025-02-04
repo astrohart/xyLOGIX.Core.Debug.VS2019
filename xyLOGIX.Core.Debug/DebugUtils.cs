@@ -194,10 +194,10 @@ namespace xyLOGIX.Core.Debug
                  * attached, and still cause an abort, if the user passes the '--hoe' command-line
                  * flag to the executable. This is useful for debugging purposes, as it allows the user
                  * to see the exception message and stack trace in the console window, and then decide
-                 * whether to launch the debugger or not. 
+                 * whether to launch the debugger or not.
                  */
                 if (!Split.CommandLine(Environment.CommandLine)
-                          .Contains(CommandLineParameter.HaltOnException) &&
+                          .Contains(CommandLineParameter.HaltOnException) &
                     !Debugger.IsAttached) return result;
 
                 /*
@@ -443,9 +443,6 @@ namespace xyLOGIX.Core.Debug
         {
             if (exception == null) return;
 
-            if (CanLaunchDebugger(exception, launchDebugger))
-                ProgramFlowHelper.StartDebugger();
-
             if (exception is TypeInitializationException)
                 exception = exception.InnerException;
 
@@ -454,13 +451,16 @@ namespace xyLOGIX.Core.Debug
                 exception.Message, exception.StackTrace
             );
 
-            WriteLine(DebugLevel.Error, message);
+            OutputExceptionLoggingMessage(exception, message);
 
-            if (exception.InnerException == null ||
-                exception is TypeInitializationException) return;
+            /*
+             * Only launch the debugger if the required condition(s) are
+             * met and only after having written the detailed exception info
+             * to the log file.
+             */
 
-            WriteLine(DebugLevel.Error, "---");
-            LogException(exception.InnerException);
+            if (CanLaunchDebugger(exception, launchDebugger))
+                ProgramFlowHelper.StartDebugger();
         }
 
         /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
@@ -471,7 +471,7 @@ namespace xyLOGIX.Core.Debug
         /// event data.
         /// </param>
         [Yielder]
-        private static void OnTextEmitted(TextEmittedEventArgs e)
+        private static void OnTextEmitted([NotLogged] TextEmittedEventArgs e)
             => TextEmitted?.Invoke(e);
 
         /// <summary>
@@ -484,8 +484,38 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
         /// </remarks>
         [Yielder]
-        private static void OnVerbosityChanged(VerbosityChangedEventArgs e)
+        private static void OnVerbosityChanged(
+            [NotLogged] VerbosityChangedEventArgs e
+        )
             => VerbosityChanged?.Invoke(e);
+
+        /// <summary>
+        /// Actually performs the work of logging the specified
+        /// <paramref name="exception" /> to the log, using the specified
+        /// <paramref name="message" />.
+        /// </summary>
+        /// <param name="exception">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Exception" /> that identifies the exception that is being
+        /// logged.
+        /// </param>
+        /// <param name="message">
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains a formatted message that is to be written to the log file.
+        /// </param>
+        private static void OutputExceptionLoggingMessage(
+            [NotLogged] Exception exception,
+            [NotLogged] string message
+        )
+        {
+            WriteLine(DebugLevel.Error, message);
+
+            if (exception.InnerException == null ||
+                exception is TypeInitializationException) return;
+
+            WriteLine(DebugLevel.Error, "---");
+            LogException(exception.InnerException);
+        }
 
         /// <summary>
         /// Occurs whenever text has been emitted by the
