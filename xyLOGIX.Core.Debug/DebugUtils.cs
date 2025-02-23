@@ -43,13 +43,30 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Occurs whenever text has been emitted by the
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
+        /// </summary>
+        [WeakEvent]
+        public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
+        /// </summary>
+        [WeakEvent]
+        public static event VerbosityChangedEventHandler VerbosityChanged;
+
+        /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
         /// logging. Leave blank to not send events to the Application event log.
         /// </summary>
         public static string ApplicationName
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -58,8 +75,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool ConsoleOnly
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -72,8 +91,10 @@ namespace xyLOGIX.Core.Debug
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -94,16 +115,11 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>
         public static bool IsLogging
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
-
-        /// <summary>
-        /// Gets a value that indicates whether PostSharp is in use as the
-        /// logging infrastructure.
-        /// </summary>
-        private static bool IsPostSharp
-            => InfrastructureType == LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Users should set this property to the path to the log file, if
@@ -111,15 +127,19 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static string LogFileName
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
         public static bool MuteConsole
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -128,8 +148,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool MuteDebugLevelIfReleaseMode
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -138,15 +160,18 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static TextWriter Out
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
         public static int Verbosity
         {
-            [DebuggerStepThrough] get => _verbosity;
+            [DebuggerStepThrough]
+            get => _verbosity;
             [DebuggerStepThrough]
             set
             {
@@ -161,6 +186,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Gets a value that indicates whether PostSharp is in use as the
+        /// logging infrastructure.
+        /// </summary>
+        private static bool IsPostSharp
+            => InfrastructureType == LoggingInfrastructureType.PostSharp;
+
+        /// <summary>
         /// Determines whether the debugger can be launched from the
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException" /> method.
         /// </summary>
@@ -172,15 +204,17 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="true" /> if the user has
         /// specified that the debugger is to be launched when an exception is caught;
         /// <see langword="false" /> otherwise.
+        /// <para/>
+        /// The default value of this parameter is <see langword="true" />.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the debugger is to be launched;
         /// <see langword="false" /> otherwise.
         /// </returns>
         [Log(AttributeExclude = true)]
-        private static bool CanLaunchDebugger(
+        public static bool CanLaunchDebugger(
             Exception exception,
-            bool launchDebuggerConfigured
+            bool launchDebuggerConfigured = true
         )
         {
             var result = false;
@@ -346,71 +380,6 @@ namespace xyLOGIX.Core.Debug
         public static void FormatExceptionAndWrite(Exception e)
             => WriteLine(DebugLevel.Error, FormatException(e));
 
-        /// <summary> Helper method to, basically, carry out the formatting of a string. </summary>
-        /// <param name="format"> (Required.) String value to be formatted. </param>
-        /// <param name="args"> (Optional.) Array of format values. </param>
-        /// <returns>
-        /// The string content of <paramref name="format" />, processed using the
-        /// <see cref="T:System.String.Format" /> method.
-        /// </returns>
-        /// <remarks>
-        /// The string content of the <paramref name="format" /> parameter is
-        /// left untouched if there are no <paramref name="args" />.
-        /// </remarks>
-        private static string GenerateContentFromFormat(
-            string format,
-            params object[] args
-        )
-            => args.Any() ? string.Format(format, args) : format;
-
-        /// <summary>
-        /// Detects whether the <paramref name="content" /> is multiline. If so,
-        /// then each line of content is logged separately, using the
-        /// <paramref name="logMethod" /> supplied.
-        /// </summary>
-        /// <param name="content">
-        /// (Required. String containing the already-formatted
-        /// content to be logged.
-        /// </param>
-        /// <param name="logMethod">
-        /// (Required.) Delegate specifying the logging code that
-        /// is to be executed for each line of content.
-        /// </param>
-        /// <param name="level">
-        /// A <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" />
-        /// specifying the debugLevel of logging to utilize.
-        /// </param>
-        [DebuggerStepThrough]
-        private static void LogEachLineIfMultiline(
-            string content,
-            Action<DebugLevel, string> logMethod,
-            DebugLevel level = DebugLevel.Debug
-        )
-        {
-            // first, format the text with string.Format
-            if (string.IsNullOrWhiteSpace(content))
-
-                // stop if the format output is blank or null
-                return;
-            if (logMethod == null)
-                return;
-
-            if (!content.Contains(Environment.NewLine))
-            {
-                logMethod(level, content);
-                return;
-            }
-
-            var lines = content.Split(
-                new[] { Environment.NewLine }, StringSplitOptions.None
-            );
-            if (!lines.Any()) return;
-
-            // For each line, write it out at the debugLevel indicated, one by
-            // one. We do this by calling the delegate supplied to this method
-            foreach (var line in lines) logMethod(level, line);
-        }
-
         /// <summary>
         /// Logs the complete information about an exception to the log, under
         /// the Error Level. Outputs the quote file and line number where the exception
@@ -462,75 +431,6 @@ namespace xyLOGIX.Core.Debug
             if (CanLaunchDebugger(exception, launchDebugger))
                 ProgramFlowHelper.StartDebugger();
         }
-
-        /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
-        /// <param name="e">
-        /// (Required.) A
-        /// <see cref="T:xyLOGIX.Core.Debug.Events.TextEmittedEventArgs" /> that contains
-        /// the
-        /// event data.
-        /// </param>
-        [Yielder]
-        private static void OnTextEmitted([NotLogged] TextEmittedEventArgs e)
-            => TextEmitted?.Invoke(e);
-
-        /// <summary>
-        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" />
-        /// event.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" /> event
-        /// is raised whenever the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
-        /// </remarks>
-        [Yielder]
-        private static void OnVerbosityChanged(
-            [NotLogged] VerbosityChangedEventArgs e
-        )
-            => VerbosityChanged?.Invoke(e);
-
-        /// <summary>
-        /// Actually performs the work of logging the specified
-        /// <paramref name="exception" /> to the log, using the specified
-        /// <paramref name="message" />.
-        /// </summary>
-        /// <param name="exception">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Exception" /> that identifies the exception that is being
-        /// logged.
-        /// </param>
-        /// <param name="message">
-        /// (Required.) A <see cref="T:System.String" /> that
-        /// contains a formatted message that is to be written to the log file.
-        /// </param>
-        private static void OutputExceptionLoggingMessage(
-            [NotLogged] Exception exception,
-            [NotLogged] string message
-        )
-        {
-            WriteLine(DebugLevel.Error, message);
-
-            if (exception.InnerException == null ||
-                exception is TypeInitializationException) return;
-
-            WriteLine(DebugLevel.Error, "---");
-            LogException(exception.InnerException);
-        }
-
-        /// <summary>
-        /// Occurs whenever text has been emitted by the
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
-        /// </summary>
-        [WeakEvent]
-        public static event TextEmittedEventHandler TextEmitted;
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
-        /// </summary>
-        [WeakEvent]
-        public static event VerbosityChangedEventHandler VerbosityChanged;
 
         /// <summary>
         /// Writes the content in <paramref name="format" /> to the
@@ -612,88 +512,6 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         public static void Write(DebugLevel debugLevel, string content)
             => LogEachLineIfMultiline(content, WriteCore, debugLevel);
-
-        /// <summary>
-        /// Provides the implementation details of writing messages to the log.
-        /// No line terminator is added to the content written.
-        /// </summary>
-        /// <param name="debugLevel">
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that determine
-        /// what
-        /// logging debugLevel to utilize.
-        /// </param>
-        /// <param name="content">
-        /// (Required.) String containing the content to be written
-        /// to the log file.
-        /// </param>
-        /// <remarks>
-        /// If the string passed in <paramref name="content" /> is blank or
-        /// empty, then this method does nothing.
-        /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
-        /// </exception>
-        private static void WriteCore(DebugLevel debugLevel, string content)
-        {
-            // Do nothing if blank content provided.
-            if (string.IsNullOrWhiteSpace(content)) return;
-
-            try
-            {
-                if (Verbosity == 0) return;
-
-                if (!MuteConsole) Console.Write(content);
-
-                if (ConsoleOnly) return;
-
-                if (!IsLogging) return;
-
-                // If we are being called from LINQPad, then use Debug.WriteLine
-                if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
-                {
-                    Console.Write(content);
-                    return;
-                }
-
-                var currentMethod = MethodBase.GetCurrentMethod();
-                var logger = LogManager.GetLogger(currentMethod.DeclaringType);
-                switch (debugLevel)
-                {
-                    case DebugLevel.Error:
-                        logger.Error(content);
-                        EventLogManager.Instance.Error(content);
-                        break;
-
-                    case DebugLevel.Info:
-                        logger.Info(content);
-                        EventLogManager.Instance.Info(content);
-                        break;
-
-                    case DebugLevel.Warning:
-                        logger.Warn(content);
-                        EventLogManager.Instance.Warn(content);
-                        break;
-
-                    case DebugLevel.Debug:
-                        logger.Debug(content);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(debugLevel), debugLevel, null
-                        );
-                }
-
-                OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
-            }
-            catch (Exception)
-            {
-                //ignore
-            }
-        }
 
         /// <summary>
         /// Writes the content in <paramref name="format" /> to the
@@ -809,6 +627,207 @@ namespace xyLOGIX.Core.Debug
         [DebuggerStepThrough]
         public static void WriteLine(DebugLevel debugLevel, string content)
             => LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
+
+        /// <summary> Helper method to, basically, carry out the formatting of a string. </summary>
+        /// <param name="format"> (Required.) String value to be formatted. </param>
+        /// <param name="args"> (Optional.) Array of format values. </param>
+        /// <returns>
+        /// The string content of <paramref name="format" />, processed using the
+        /// <see cref="T:System.String.Format" /> method.
+        /// </returns>
+        /// <remarks>
+        /// The string content of the <paramref name="format" /> parameter is
+        /// left untouched if there are no <paramref name="args" />.
+        /// </remarks>
+        private static string GenerateContentFromFormat(
+            string format,
+            params object[] args
+        )
+            => args.Any() ? string.Format(format, args) : format;
+
+        /// <summary>
+        /// Detects whether the <paramref name="content" /> is multiline. If so,
+        /// then each line of content is logged separately, using the
+        /// <paramref name="logMethod" /> supplied.
+        /// </summary>
+        /// <param name="content">
+        /// (Required. String containing the already-formatted
+        /// content to be logged.
+        /// </param>
+        /// <param name="logMethod">
+        /// (Required.) Delegate specifying the logging code that
+        /// is to be executed for each line of content.
+        /// </param>
+        /// <param name="level">
+        /// A <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" />
+        /// specifying the debugLevel of logging to utilize.
+        /// </param>
+        [DebuggerStepThrough]
+        private static void LogEachLineIfMultiline(
+            string content,
+            Action<DebugLevel, string> logMethod,
+            DebugLevel level = DebugLevel.Debug
+        )
+        {
+            // first, format the text with string.Format
+            if (string.IsNullOrWhiteSpace(content))
+
+                // stop if the format output is blank or null
+                return;
+            if (logMethod == null)
+                return;
+
+            if (!content.Contains(Environment.NewLine))
+            {
+                logMethod(level, content);
+                return;
+            }
+
+            var lines = content.Split(
+                new[] { Environment.NewLine }, StringSplitOptions.None
+            );
+            if (!lines.Any()) return;
+
+            // For each line, write it out at the debugLevel indicated, one by
+            // one. We do this by calling the delegate supplied to this method
+            foreach (var line in lines) logMethod(level, line);
+        }
+
+        /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
+        /// <param name="e">
+        /// (Required.) A
+        /// <see cref="T:xyLOGIX.Core.Debug.Events.TextEmittedEventArgs" /> that contains
+        /// the
+        /// event data.
+        /// </param>
+        [Yielder]
+        private static void OnTextEmitted([NotLogged] TextEmittedEventArgs e)
+            => TextEmitted?.Invoke(e);
+
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" />
+        /// event.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="E:xyLOGIX.Core.Debug.DebugUtils.VerbosityChanged" /> event
+        /// is raised whenever the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
+        /// </remarks>
+        [Yielder]
+        private static void OnVerbosityChanged(
+            [NotLogged] VerbosityChangedEventArgs e
+        )
+            => VerbosityChanged?.Invoke(e);
+
+        /// <summary>
+        /// Actually performs the work of logging the specified
+        /// <paramref name="exception" /> to the log, using the specified
+        /// <paramref name="message" />.
+        /// </summary>
+        /// <param name="exception">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Exception" /> that identifies the exception that is being
+        /// logged.
+        /// </param>
+        /// <param name="message">
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains a formatted message that is to be written to the log file.
+        /// </param>
+        private static void OutputExceptionLoggingMessage(
+            [NotLogged] Exception exception,
+            [NotLogged] string message
+        )
+        {
+            WriteLine(DebugLevel.Error, message);
+
+            if (exception.InnerException == null ||
+                exception is TypeInitializationException) return;
+
+            WriteLine(DebugLevel.Error, "---");
+            LogException(exception.InnerException);
+        }
+
+        /// <summary>
+        /// Provides the implementation details of writing messages to the log.
+        /// No line terminator is added to the content written.
+        /// </summary>
+        /// <param name="debugLevel">
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that determine
+        /// what
+        /// logging debugLevel to utilize.
+        /// </param>
+        /// <param name="content">
+        /// (Required.) String containing the content to be written
+        /// to the log file.
+        /// </param>
+        /// <remarks>
+        /// If the string passed in <paramref name="content" /> is blank or
+        /// empty, then this method does nothing.
+        /// </remarks>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// Thrown if the
+        /// <paramref name="debugLevel" /> parameter is not one of the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
+        /// </exception>
+        private static void WriteCore(DebugLevel debugLevel, string content)
+        {
+            // Do nothing if blank content provided.
+            if (string.IsNullOrWhiteSpace(content)) return;
+
+            try
+            {
+                if (Verbosity == 0) return;
+
+                if (!MuteConsole) Console.Write(content);
+
+                if (ConsoleOnly) return;
+
+                if (!IsLogging) return;
+
+                // If we are being called from LINQPad, then use Debug.WriteLine
+                if ("LINQPad".Equals(AppDomain.CurrentDomain.FriendlyName))
+                {
+                    Console.Write(content);
+                    return;
+                }
+
+                var currentMethod = MethodBase.GetCurrentMethod();
+                var logger = LogManager.GetLogger(currentMethod.DeclaringType);
+                switch (debugLevel)
+                {
+                    case DebugLevel.Error:
+                        logger.Error(content);
+                        EventLogManager.Instance.Error(content);
+                        break;
+
+                    case DebugLevel.Info:
+                        logger.Info(content);
+                        EventLogManager.Instance.Info(content);
+                        break;
+
+                    case DebugLevel.Warning:
+                        logger.Warn(content);
+                        EventLogManager.Instance.Warn(content);
+                        break;
+
+                    case DebugLevel.Debug:
+                        logger.Debug(content);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(debugLevel), debugLevel, null
+                        );
+                }
+
+                OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+        }
 
         /// <summary>
         /// Provides the implementation details of writing messages to the log,
