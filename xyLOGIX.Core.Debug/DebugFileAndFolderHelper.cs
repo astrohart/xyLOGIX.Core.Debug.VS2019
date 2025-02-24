@@ -203,7 +203,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 // Get the access rules of the specified files (user groups and
-                // user names that have access to the file)
+                // usernames that have access to the file)
                 var rules = File.GetAccessControl(path)
                                 .GetAccessRules(
                                     true, true, typeof(SecurityIdentifier)
