@@ -1281,7 +1281,11 @@ Determines whether the debugger can be launched from the
 corresponds to the particular exception that has been caught. |
 | launchDebuggerConfigured | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') | `true` if the user has
 specified that the debugger is to be launched when an exception is caught;
-`false` otherwise. |
+`false` otherwise.
+
+
+
+The default value of this parameter is `true`. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog'></a>
 ### ClearTempExceptionLog() `method`
