@@ -254,6 +254,8 @@ namespace xyLOGIX.Core.Debug
                 // Screen out the most common and often-thrown exceptions (that are almost
                 // always caught)
 
+                if (exception.StackTrace == null) return true;
+
                 if (exception.StackTrace.Contains("Does.FileExist") ||
                     exception.StackTrace.Contains("Does.DirectoryExist") ||
                     exception.StackTrace.Contains("Does.FolderExist"))
