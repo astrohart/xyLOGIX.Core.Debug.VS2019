@@ -40,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </param>
         [Log(AttributeExclude = true)]
-        public MuteConsoleChangedEventArgs(bool newValue)
+        public MuteConsoleChangedEventArgs([NotLogged] bool newValue)
             => NewValue = newValue;
 
         /// <summary>
