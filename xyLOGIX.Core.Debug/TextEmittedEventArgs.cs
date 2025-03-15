@@ -1,14 +1,28 @@
-﻿using System.Diagnostics;
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>TextEmitted</c> event handlers. </summary>
-    [Log(AttributeExclude = true), ExplicitlySynchronized]
+    [ExplicitlySynchronized]
     public class TextEmittedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes static data or performs actions that need to be performed once only
+        /// for the <see cref="T:xyLOGIX.Core.Debug.TextEmittedEventArgs" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance being
+        /// created or before any static members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static TextEmittedEventArgs() { }
+
         /// <summary>
         /// Constructs a new instance of
         /// <see cref="T:xyLOGIX.Core.Debug.TextEmittedEventArgs" /> and returns a
@@ -22,7 +36,11 @@ namespace xyLOGIX.Core.Debug
         /// One of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
         /// enumeration values that indicates of what level of severity is the message.
         /// </param>
-        public TextEmittedEventArgs(string text, DebugLevel level)
+        [Log(AttributeExclude = true)]
+        public TextEmittedEventArgs(
+            [NotLogged] string text,
+            [NotLogged] DebugLevel level
+        )
         {
             Text = text;
             Level = level;
