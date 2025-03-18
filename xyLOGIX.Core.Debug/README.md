@@ -63,6 +63,8 @@
   - [Out](#P-xyLOGIX-Core-Debug-DebugUtils-Out 'xyLOGIX.Core.Debug.DebugUtils.Out')
   - [Verbosity](#P-xyLOGIX-Core-Debug-DebugUtils-Verbosity 'xyLOGIX.Core.Debug.DebugUtils.Verbosity')
   - [#cctor()](#M-xyLOGIX-Core-Debug-DebugUtils-#cctor 'xyLOGIX.Core.Debug.DebugUtils.#cctor')
+  - [AppendText(text)](#M-xyLOGIX-Core-Debug-DebugUtils-AppendText-System-String- 'xyLOGIX.Core.Debug.DebugUtils.AppendText(System.String)')
+  - [AppendToLog(text)](#M-xyLOGIX-Core-Debug-DebugUtils-AppendToLog-System-String- 'xyLOGIX.Core.Debug.DebugUtils.AppendToLog(System.String)')
   - [CanLaunchDebugger(exception,launchDebuggerConfigured)](#M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Exception,System-Boolean- 'xyLOGIX.Core.Debug.DebugUtils.CanLaunchDebugger(System.Exception,System.Boolean)')
   - [ClearTempExceptionLog()](#M-xyLOGIX-Core-Debug-DebugUtils-ClearTempExceptionLog 'xyLOGIX.Core.Debug.DebugUtils.ClearTempExceptionLog')
   - [DumpCollection(collection)](#M-xyLOGIX-Core-Debug-DebugUtils-DumpCollection-System-Collections-ICollection- 'xyLOGIX.Core.Debug.DebugUtils.DumpCollection(System.Collections.ICollection)')
@@ -1263,6 +1265,40 @@ Initializes a new static instance of
 ##### Parameters
 
 This method has no parameters.
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-AppendText-System-String-'></a>
+### AppendText(text) `method`
+
+##### Summary
+
+Appends the specified `text` directly to the file whose
+fully-qualified pathname is stored in the value of the
+[LogFileName](#P-xyLOGIX-Core-Debug-DebugUtils-LogFileName 'xyLOGIX.Core.Debug.DebugUtils.LogFileName') property, if that
+file exists and is writeable.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| text | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') containing the
+content that is to be appended to the log file. |
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-AppendToLog-System-String-'></a>
+### AppendToLog(text) `method`
+
+##### Summary
+
+Appends the specified `text` directly to the file whose
+fully-qualified pathname is stored in the value of the
+[LogFileName](#P-xyLOGIX-Core-Debug-DebugUtils-LogFileName 'xyLOGIX.Core.Debug.DebugUtils.LogFileName') property, if that
+file exists and is writeable.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| text | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | (Required.) A [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') containing the
+content that is to be appended to the log file. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-CanLaunchDebugger-System-Exception,System-Boolean-'></a>
 ### CanLaunchDebugger(exception,launchDebuggerConfigured) `method`
