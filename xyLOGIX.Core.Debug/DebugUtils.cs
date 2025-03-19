@@ -197,6 +197,9 @@ namespace xyLOGIX.Core.Debug
 
                 File.AppendAllText(LogFileName, text);
 
+                if (!text.EndsWith(Environment.NewLine))
+                    File.AppendAllText(LogFileName, Environment.NewLine);
+
                 File.AppendAllText(LogFileName, $"### END RAW TEXT ###{Environment.NewLine}");
             }
             catch (Exception ex)
