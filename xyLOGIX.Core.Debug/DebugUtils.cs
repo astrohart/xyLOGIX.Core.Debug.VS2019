@@ -294,13 +294,17 @@ namespace xyLOGIX.Core.Debug
                     exception.StackTrace.Contains("Does.FolderExist"))
                     return result;
 
+                var exceptionTypeString = exception.GetType().ToString();
+
+                // Dump the variable exceptionTypeString to the console
+                System.Diagnostics.Debug.WriteLine($"[  DEBUG  ] DebugUtils.CanLaunchDebugger:  exceptionTypeString = '{exceptionTypeString}'");
+
                 result = !exception.IsAnyOf(
                     typeof(TypeInitializationException),
                     typeof(TypeLoadException), typeof(FileNotFoundException),
                     typeof(DirectoryNotFoundException), typeof(COMException)
-                ) && !ExcludedExceptionTypes.Contains(
-                    exception.GetType()
-                             .ToString()
+                ) & !ExcludedExceptionTypes.Contains(
+                    exceptionTypeString
                 );
             }
             catch
@@ -309,6 +313,9 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
+
+            // Dump the variable exceptionTypeString to the console
+            System.Diagnostics.Debug.WriteLine($"[  DEBUG  ]  DebugUtils.CanLaunchDebugger: result = {result}");
 
             return result;
         }
