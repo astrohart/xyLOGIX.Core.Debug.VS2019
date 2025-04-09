@@ -73,6 +73,7 @@
   - [FormatException(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatException-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatException(System.Exception)')
   - [FormatExceptionAndWrite(e)](#M-xyLOGIX-Core-Debug-DebugUtils-FormatExceptionAndWrite-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.FormatExceptionAndWrite(System.Exception)')
   - [GenerateContentFromFormat(format,args)](#M-xyLOGIX-Core-Debug-DebugUtils-GenerateContentFromFormat-System-String,System-Object[]- 'xyLOGIX.Core.Debug.DebugUtils.GenerateContentFromFormat(System.String,System.Object[])')
+  - [IsExceptionSuppresed(exception)](#M-xyLOGIX-Core-Debug-DebugUtils-IsExceptionSuppresed-System-Exception- 'xyLOGIX.Core.Debug.DebugUtils.IsExceptionSuppresed(System.Exception)')
   - [LogEachLineIfMultiline(content,logMethod,level)](#M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel- 'xyLOGIX.Core.Debug.DebugUtils.LogEachLineIfMultiline(System.String,System.Action{xyLOGIX.Core.Debug.DebugLevel,System.String},xyLOGIX.Core.Debug.DebugLevel)')
   - [LogException(exception,launchDebugger)](#M-xyLOGIX-Core-Debug-DebugUtils-LogException-System-Exception,System-Boolean- 'xyLOGIX.Core.Debug.DebugUtils.LogException(System.Exception,System.Boolean)')
   - [OnTextEmitted(e)](#M-xyLOGIX-Core-Debug-DebugUtils-OnTextEmitted-xyLOGIX-Core-Debug-TextEmittedEventArgs- 'xyLOGIX.Core.Debug.DebugUtils.OnTextEmitted(xyLOGIX.Core.Debug.TextEmittedEventArgs)')
@@ -1460,6 +1461,27 @@ The string content of `format`, processed using the
 
 The string content of the `format` parameter is
 left untouched if there are no `args`.
+
+<a name='M-xyLOGIX-Core-Debug-DebugUtils-IsExceptionSuppresed-System-Exception-'></a>
+### IsExceptionSuppresed(exception) `method`
+
+##### Summary
+
+Determines whether the exception passed in the `exception` is
+not to be used to jump into the JIT debugger.
+
+##### Returns
+
+`true` if debugging of the specified
+`exception` is to be suppressed; `false` to
+allow the JIT debugger to be launched.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| exception | [System.Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') | (Required.) Reference to an instance of [Exception](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Exception 'System.Exception') that
+refers to the exception object that is to be examined. |
 
 <a name='M-xyLOGIX-Core-Debug-DebugUtils-LogEachLineIfMultiline-System-String,System-Action{xyLOGIX-Core-Debug-DebugLevel,System-String},xyLOGIX-Core-Debug-DebugLevel-'></a>
 ### LogEachLineIfMultiline(content,logMethod,level) `method`
