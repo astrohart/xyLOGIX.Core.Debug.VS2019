@@ -280,7 +280,8 @@ namespace xyLOGIX.Core.Debug
 
                 // Always launch the debugger if the message starts with
                 // 'Could not load file or assembly'
-                if (exception.Message.StartsWith(
+                if (!IsExceptionSuppresed(exception) &&
+                    exception.Message.StartsWith(
                         "Could not load file or assembly"
                     )) return true;
 
@@ -294,20 +295,7 @@ namespace xyLOGIX.Core.Debug
                     exception.StackTrace.Contains("Does.FolderExist"))
                     return result;
 
-                ProgramFlowHelper.StartDebugger();
-
-                var exceptionTypeString = exception.GetType().ToString();
-
-                // Dump the variable exceptionTypeString to the console
-                System.Diagnostics.Debug.WriteLine($"[  DEBUG  ] DebugUtils.CanLaunchDebugger:  exceptionTypeString = '{exceptionTypeString}'");
-
-                result = !exception.IsAnyOf(
-                    typeof(TypeInitializationException),
-                    typeof(TypeLoadException), typeof(FileNotFoundException),
-                    typeof(DirectoryNotFoundException), typeof(COMException)
-                ) & !ExcludedExceptionTypes.Contains(
-                    exceptionTypeString
-                );
+                result = !IsExceptionSuppresed(exception);
             }
             catch
             {
@@ -315,9 +303,6 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
-
-            // Dump the variable exceptionTypeString to the console
-            System.Diagnostics.Debug.WriteLine($"[  DEBUG  ]  DebugUtils.CanLaunchDebugger: result = {result}");
 
             return result;
         }
@@ -443,6 +428,52 @@ namespace xyLOGIX.Core.Debug
             params object[] args
         )
             => args.Any() ? string.Format(format, args) : format;
+
+        /// <summary>
+        /// Determines whether the exception passed in the <paramref name="exception" /> is
+        /// not to be used to jump into the JIT debugger.
+        /// </summary>
+        /// <param name="exception">
+        /// (Required.) Reference to an instance of <see cref="T:System.Exception" /> that
+        /// refers to the exception object that is to be examined.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if debugging of the specified
+        /// <paramref name="exception" /> is to be suppressed; <see langword="false" /> to
+        /// allow the JIT debugger to be launched.
+        /// </returns>
+        private static bool IsExceptionSuppresed(
+            [NotLogged] Exception exception
+        )
+        {
+            var result = false;
+
+            try
+            {
+                if (exception == null) return true;
+
+                var exceptionTypeString = exception.GetType()
+                                                   .ToString();
+
+                if (string.IsNullOrWhiteSpace(exceptionTypeString))
+                    return result;
+
+                result = exception.IsAnyOf(
+                    typeof(TypeInitializationException),
+                    typeof(TypeLoadException), typeof(FileNotFoundException),
+                    typeof(DirectoryNotFoundException), typeof(COMException)
+                ) | ExcludedExceptionTypes.Contains(exceptionTypeString);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                LogException(ex);
+
+                result = true;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Detects whether the <paramref name="content" /> is multiline. If so,
