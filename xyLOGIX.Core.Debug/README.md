@@ -54,6 +54,7 @@
   - [ApplicationName](#P-xyLOGIX-Core-Debug-DebugUtils-ApplicationName 'xyLOGIX.Core.Debug.DebugUtils.ApplicationName')
   - [ConsoleOnly](#P-xyLOGIX-Core-Debug-DebugUtils-ConsoleOnly 'xyLOGIX.Core.Debug.DebugUtils.ConsoleOnly')
   - [ExceptionLogPathname](#P-xyLOGIX-Core-Debug-DebugUtils-ExceptionLogPathname 'xyLOGIX.Core.Debug.DebugUtils.ExceptionLogPathname')
+  - [ExcludedExceptionTypes](#P-xyLOGIX-Core-Debug-DebugUtils-ExcludedExceptionTypes 'xyLOGIX.Core.Debug.DebugUtils.ExcludedExceptionTypes')
   - [InfrastructureType](#P-xyLOGIX-Core-Debug-DebugUtils-InfrastructureType 'xyLOGIX.Core.Debug.DebugUtils.InfrastructureType')
   - [IsLogging](#P-xyLOGIX-Core-Debug-DebugUtils-IsLogging 'xyLOGIX.Core.Debug.DebugUtils.IsLogging')
   - [IsPostSharp](#P-xyLOGIX-Core-Debug-DebugUtils-IsPostSharp 'xyLOGIX.Core.Debug.DebugUtils.IsPostSharp')
@@ -1188,6 +1189,15 @@ object should only be written to the console as opposed to a log file.
 Gets a [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') that contains the pathname of a file to
 which error text is to be appended in the event where the `WriteLineCore`
 method catches an exception.
+
+<a name='P-xyLOGIX-Core-Debug-DebugUtils-ExcludedExceptionTypes'></a>
+### ExcludedExceptionTypes `property`
+
+##### Summary
+
+Gets a list of [String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') value(s), each of which is the
+fully-qualified type name of an exception, for which we will NOT force the user
+into the Visual Studio JIT debugger.
 
 <a name='P-xyLOGIX-Core-Debug-DebugUtils-InfrastructureType'></a>
 ### InfrastructureType `property`
