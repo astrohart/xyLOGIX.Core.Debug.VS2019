@@ -1,10 +1,12 @@
 ﻿using log4net;
 using PostSharp.Patterns;
+using PostSharp.Patterns.Collections;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -75,6 +77,16 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough] get;
             [DebuggerStepThrough] set;
         }
+
+        /// <summary>
+        /// Gets a list of <see cref="T:System.String" /> value(s), each of which is the
+        /// fully-qualified type name of an exception, for which we will NOT force the user
+        /// into the Visual Studio JIT debugger.
+        /// </summary>
+        public static IList<string> ExcludedExceptionTypes
+        {
+            [DebuggerStepThrough] get;
+        } = new AdvisableCollection<string>();
 
         /// <summary>
         /// Gets or sets the depth down the call stack from which Exception
@@ -193,14 +205,18 @@ namespace xyLOGIX.Core.Debug
                 if (!File.Exists(LogFileName)) return;
                 if (string.IsNullOrWhiteSpace(text)) return;
 
-                File.AppendAllText(LogFileName, $"### BEGIN RAW TEXT ###{Environment.NewLine}");
+                File.AppendAllText(
+                    LogFileName, $"### BEGIN RAW TEXT ###{Environment.NewLine}"
+                );
 
                 File.AppendAllText(LogFileName, text);
 
                 if (!text.EndsWith(Environment.NewLine))
                     File.AppendAllText(LogFileName, Environment.NewLine);
 
-                File.AppendAllText(LogFileName, $"### END RAW TEXT ###{Environment.NewLine}");
+                File.AppendAllText(
+                    LogFileName, $"### END RAW TEXT ###{Environment.NewLine}"
+                );
             }
             catch (Exception ex)
             {
@@ -282,6 +298,9 @@ namespace xyLOGIX.Core.Debug
                     typeof(TypeInitializationException),
                     typeof(TypeLoadException), typeof(FileNotFoundException),
                     typeof(DirectoryNotFoundException), typeof(COMException)
+                ) && !ExcludedExceptionTypes.Contains(
+                    exception.GetType()
+                             .ToString()
                 );
             }
             catch
