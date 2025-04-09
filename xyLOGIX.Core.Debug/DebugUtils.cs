@@ -294,6 +294,8 @@ namespace xyLOGIX.Core.Debug
                     exception.StackTrace.Contains("Does.FolderExist"))
                     return result;
 
+                ProgramFlowHelper.StartDebugger();
+
                 var exceptionTypeString = exception.GetType().ToString();
 
                 // Dump the variable exceptionTypeString to the console
