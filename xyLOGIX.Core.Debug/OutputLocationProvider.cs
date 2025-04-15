@@ -73,14 +73,6 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is
-        /// updated.
-        /// </summary>
-        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
-
-        /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
         /// internal list maintained by this object.
         /// </summary>
@@ -92,7 +84,7 @@ namespace xyLOGIX.Core.Debug
         /// If the specified <paramref name="location" /> has already been added,
         /// then this method does nothing.
         /// </remarks>
-        public void AddLocation(IOutputLocation location)
+        public void AddOutputLocation([NotLogged] IOutputLocation location)
         {
             try
             {
@@ -100,22 +92,20 @@ namespace xyLOGIX.Core.Debug
                 if (InternalOutputLocationList == null) return;
                 if (InternalOutputLocationList.Contains(location)) return;
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    $"OutputLocationProvider.AddLocation: Adding output location of type, '{location.Type}'..."
+                System.Diagnostics.Debug.WriteLine(
+                    $"OutputLocationProvider.AddOutputLocation: Adding output location of type, '{location.Type}'..."
                 );
 
                 InternalOutputLocationList.Add(location);
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    $"OutputLocationProvider.AddLocation: The output location of type, '{location.Type}', has been added."
+                System.Diagnostics.Debug.WriteLine(
+                    $"OutputLocationProvider.AddOutputLocation: The output location of type, '{location.Type}', has been added."
                 );
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
@@ -137,12 +127,21 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
+        /// updated.
+        /// </summary>
+        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
+
+        /// <summary>
         /// Writes the text representation of the specified object to the
         /// standard output stream.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        public void Write(object value)
+        [Log(AttributeExclude = true)]
+        public void Write([NotLogged] object value)
         {
             try
             {
@@ -152,7 +151,13 @@ namespace xyLOGIX.Core.Debug
                 foreach (var location in InternalOutputLocationList.Where(
                              l => l != null
                          ))
+                {
+                    if (MuteConsole &&
+                        OutputLocationType.Console.Equals(location.Type))
+                        continue;
+
                     location.Write(value);
+                }
             }
             catch (Exception ex)
             {
@@ -179,6 +184,7 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
+        [Log(AttributeExclude = true)]
         public void Write(string format, params object[] arg)
         {
             try
@@ -193,7 +199,13 @@ namespace xyLOGIX.Core.Debug
                 foreach (var location in InternalOutputLocationList.Where(
                              l => l != null
                          ))
+                {
+                    if (MuteConsole &&
+                        OutputLocationType.Console.Equals(location.Type))
+                        continue;
+
                     location.Write(format, arg);
+                }
             }
             catch (Exception ex)
             {
@@ -208,6 +220,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        [Log(AttributeExclude = true)]
         public void WriteLine(object value)
         {
             try
@@ -218,7 +231,13 @@ namespace xyLOGIX.Core.Debug
                 foreach (var location in InternalOutputLocationList.Where(
                              l => l != null
                          ))
+                {
+                    if (MuteConsole &&
+                        OutputLocationType.Console.Equals(location.Type))
+                        continue;
+
                     location.WriteLine(value);
+                }
             }
             catch (Exception ex)
             {
@@ -246,6 +265,7 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
+        [Log(AttributeExclude = true)]
         public void WriteLine(string format, params object[] arg)
         {
             try
@@ -260,7 +280,13 @@ namespace xyLOGIX.Core.Debug
                 foreach (var location in InternalOutputLocationList.Where(
                              l => l != null
                          ))
+                {
+                    if (MuteConsole &&
+                        OutputLocationType.Console.Equals(location.Type))
+                        continue;
+
                     location.WriteLine(format, arg);
+                }
             }
             catch (Exception ex)
             {
@@ -271,6 +297,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        [Log(AttributeExclude = true)]
         public void WriteLine()
         {
             try
@@ -281,7 +308,43 @@ namespace xyLOGIX.Core.Debug
                 foreach (var location in InternalOutputLocationList.Where(
                              l => l != null
                          ))
+                {
+                    if (MuteConsole &&
+                        OutputLocationType.Console.Equals(location.Type))
+                        continue;
+
                     location.WriteLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the
+        /// <see
+        ///     cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
+        /// to have default values.
+        /// </summary>
+        [EntryPoint]
+        private void InitializeInternalOutputLocationList()
+        {
+            try
+            {
+                if (InternalOutputLocationList == null) return;
+
+                AddOutputLocation(
+                    GetOutputLocation.OfType(OutputLocationType.Console)
+                );
+                AddOutputLocation(
+                    GetOutputLocation.OfType(OutputLocationType.Debug)
+                );
+                AddOutputLocation(
+                    GetOutputLocation.OfType(OutputLocationType.Trace)
+                );
             }
             catch (Exception ex)
             {
@@ -302,34 +365,8 @@ namespace xyLOGIX.Core.Debug
         /// the event data.
         /// </param>
         protected virtual void OnMuteConsoleChanged(
-            MuteConsoleChangedEventArgs e
+            [NotLogged] MuteConsoleChangedEventArgs e
         )
             => MuteConsoleChanged?.Invoke(this, e);
-
-        /// <summary>
-        /// Initializes the
-        /// <see
-        ///     cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
-        /// to have default values.
-        /// </summary>
-        [EntryPoint]
-        private void InitializeInternalOutputLocationList()
-        {
-            try
-            {
-                if (InternalOutputLocationList == null) return;
-
-                AddLocation(
-                    GetOutputLocation.OfType(OutputLocationType.Console)
-                );
-                AddLocation(GetOutputLocation.OfType(OutputLocationType.Debug));
-                AddLocation(GetOutputLocation.OfType(OutputLocationType.Trace));
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-            }
-        }
     }
 }
