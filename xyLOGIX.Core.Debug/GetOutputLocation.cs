@@ -58,7 +58,11 @@ namespace xyLOGIX.Core.Debug
         [DebuggerStepThrough]
         public static IOutputLocation OfType(OutputLocationType type)
         {
-            IOutputLocation result;
+            IOutputLocation result = default;
+
+            if (!Enum.IsDefined(typeof(OutputLocationType), type))
+                return result;
+            if (OutputLocationType.Unknown.Equals(type)) return result;
 
             switch (type)
             {
