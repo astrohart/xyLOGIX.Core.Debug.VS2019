@@ -2,6 +2,7 @@
 using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -35,7 +36,34 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         public static Hierarchy GetHierarchyRepository()
-            => LogManager.GetRepository() as Hierarchy;
+        {
+            Hierarchy result = default;
+
+            try
+            {
+                var targetType = typeof(LogFileManager);
+                if (targetType == null) return result;
+
+                var targetAssembly = targetType.Assembly;
+                if (targetAssembly == null) return result;
+
+                // Get the log4net repository
+                var repository = LogManager.GetRepository(targetAssembly);
+                if (repository == null) return result;
+
+                // Cast the repository to a Hierarchy object
+                result = repository as Hierarchy;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
 
         /// <summary> Wraps the <see cref="M:log4net.LogManager.GetRepository" /> method. </summary>
         /// <returns>
