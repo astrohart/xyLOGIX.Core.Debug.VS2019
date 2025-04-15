@@ -20,6 +20,8 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class DebugUtils
     {
+        private static bool _muteConsole;
+
         /// <summary> The verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
         private static int _verbosity = 1;
@@ -130,8 +132,9 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
         public static bool MuteConsole
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough] get => _muteConsole;
+            [DebuggerStepThrough]
+            set => OutputLocationProvider.MuteConsole = _muteConsole = value;
         }
 
         /// <summary>
@@ -153,6 +156,15 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough] get;
             [DebuggerStepThrough] set;
         }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
+        /// </summary>
+        private static IOutputLocationProvider OutputLocationProvider
+        {
+            [DebuggerStepThrough] get;
+        } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
@@ -945,7 +957,10 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="debugLevel" /> parameter is not one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
-        private static void WriteLineCore(DebugLevel debugLevel, string content)
+        private static void WriteLineCore(
+            [NotLogged] DebugLevel debugLevel,
+            [NotLogged] string content
+        )
         {
             // Do nothing if the content is blank or the empty string.
             if (string.IsNullOrWhiteSpace(content)) return;
@@ -961,15 +976,13 @@ namespace xyLOGIX.Core.Debug
             {
                 if (Verbosity == 0) return;
 
+                OutputLocationProvider.WriteLine(content);
+
                 // If we are being called from LINQPad, then use Debug.WriteLine
                 if (AppDomain.CurrentDomain.FriendlyName.Contains("LINQPad"))
                 {
-                    Console.WriteLine(content);
                     return;
                 }
-
-                if (!MuteConsole)
-                    Console.WriteLine(content);
 
                 if (ConsoleOnly) return;
 
