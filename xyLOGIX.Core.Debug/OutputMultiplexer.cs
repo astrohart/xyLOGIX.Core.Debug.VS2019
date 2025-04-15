@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -22,8 +22,10 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
         /// </summary>
-        private static IOutputLocationProvider OutputLocationProvider { [DebuggerStepThrough] get; } =
-            GetOutputLocationProvider.SoleInstance();
+        private static IOutputLocationProvider OutputLocationProvider
+        {
+            [DebuggerStepThrough] get;
+        } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to
