@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
+using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
@@ -39,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// If the specified <paramref name="location" /> has already been added,
         /// then this method does nothing.
         /// </remarks>
-        void AddLocation(IOutputLocation location);
+        void AddOutputLocation([NotLogged] IOutputLocation location);
 
         /// <summary> Clears the internal list of output locations. </summary>
         void Clear();
