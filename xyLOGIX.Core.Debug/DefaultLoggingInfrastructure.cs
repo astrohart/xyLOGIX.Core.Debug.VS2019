@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
-using log4net.Config;
+﻿using log4net.Config;
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using PostSharp.Patterns.Threading;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -49,6 +50,46 @@ namespace xyLOGIX.Core.Debug
         public DefaultLoggingInfrastructure() { }
 
         /// <summary>
+        /// Gets a value indicating whether the current application is a console
+        /// application.
+        /// </summary>
+        /// <remarks>
+        /// This property determines if the application has an associated console window by
+        /// invoking the <see cref="GetConsoleWindow" /> method. If the method returns a
+        /// non-zero
+        /// pointer, the application is considered a console application. If an exception
+        /// occurs
+        /// during this process, the exception is logged, and the property returns
+        /// <see langword="false" />.
+        /// </remarks>
+        /// <value>
+        /// <see langword="true" /> if the application is a console application; otherwise,
+        /// <see langword="false" />.
+        /// </value>
+        private bool IsConsoleApp
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                bool result;
+
+                try
+                {
+                    result = GetConsoleWindow() != IntPtr.Zero;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = false;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
         /// of the log file of this application.
         /// </summary>
@@ -88,8 +129,50 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
         /// that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public virtual LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
-            LoggingInfrastructureType.Default;
+        public virtual LoggingInfrastructureType Type
+        {
+            [DebuggerStepThrough] get;
+        } = LoggingInfrastructureType.Default;
+
+        /// <summary> Deletes the log file, if it exists. </summary>
+        /// <param name="logFileName">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a file to which the log is being written.
+        /// </param>
+        public virtual void DeleteLogIfExists(string logFileName = "")
+        {
+            // Dump the value of the property, LogFileName, to the log
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"DefaultLoggingInfrastructure.DeleteLogIfExists: LogFileName = '{LogFileName}'"
+            );
+
+            if (!string.IsNullOrWhiteSpace(logFileName) &&
+                File.Exists(logFileName))
+                LogFileName = logFileName;
+
+            // write the name of the current class and method we are now
+            if (!File.Exists(LogFileName))
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "DefaultLoggingInfrastructure.DeleteLogIfExists: The log file '{0}' does not exist.  Nothing to do.",
+                    LogFileName
+                );
+
+                return;
+            }
+
+            if (!DebugFileAndFolderHelper.IsFolderWriteable(
+                    Path.GetDirectoryName(LogFileName)
+                ))
+
+                // deleted sits in, then Heaven help us! However, the software
+                // should try to work at all costs, so this method should just
+                // silently fail in this case.
+                return;
+            File.Delete(LogFileName);
+        }
 
         /// <summary>
         /// Gets the value of the
@@ -286,6 +369,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" />
+        /// property has been updated.
+        /// </summary>
+        public event EventHandler LogFileNameChanged;
+
+        /// <summary>
         /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class to
         /// initialize its functionality.
         /// </summary>
@@ -335,6 +425,9 @@ namespace xyLOGIX.Core.Debug
             DebugUtils.MuteConsole = muteConsole;
             DebugUtils.InfrastructureType = Type;
             DebugUtils.LogFileName = LogFileName;
+
+            if (!AppDomain.CurrentDomain.FriendlyName.Contains("LINQPad"))
+            { }
 
             // do not print anything in this method if verbosity is set to
             // anything less than 2
@@ -387,51 +480,27 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" />
-        /// property has been updated.
+        /// Retrieves the handle to the console window used by the calling
+        /// process.
         /// </summary>
-        public event EventHandler LogFileNameChanged;
-
-        /// <summary> Deletes the log file, if it exists. </summary>
-        /// <param name="logFileName">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file to which the log is being written.
-        /// </param>
-        public virtual void DeleteLogIfExists(string logFileName = "")
-        {
-            // Dump the value of the property, LogFileName, to the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                $"DefaultLoggingInfrastructure.DeleteLogIfExists: LogFileName = '{LogFileName}'"
-            );
-
-            if (!string.IsNullOrWhiteSpace(logFileName) &&
-                File.Exists(logFileName))
-                LogFileName = logFileName;
-
-            // write the name of the current class and method we are now
-            if (!File.Exists(LogFileName))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: The log file '{0}' does not exist.  Nothing to do.",
-                    LogFileName
-                );
-
-                return;
-            }
-
-            if (!DebugFileAndFolderHelper.IsFolderWriteable(
-                    Path.GetDirectoryName(LogFileName)
-                ))
-
-                // deleted sits in, then Heaven help us! However, the software
-                // should try to work at all costs, so this method should just
-                // silently fail in this case.
-                return;
-            File.Delete(LogFileName);
-        }
+        /// <remarks>
+        /// If the calling process is not attached to a console, the return value
+        /// is <see cref="F:System.IntPtr.Zero" />.  This function is useful for
+        /// determining whether the current application is a console application and for
+        /// interacting with the console window, such as resizing or hiding it.
+        /// </remarks>
+        /// <returns>
+        /// A handle to the console window associated with the calling process, or
+        /// <see cref="F:System.IntPtr.Zero" /> if the process does not have a console
+        /// window.
+        /// </returns>
+        /// <seealso
+        ///     href="https://learn.microsoft.com/en-us/windows/console/getconsolewindow">
+        /// MSDN
+        /// Documentation for GetConsoleWindow
+        /// </seealso>
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
 
         /// <summary>
         /// Raises the
