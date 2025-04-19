@@ -976,7 +976,7 @@ namespace xyLOGIX.Core.Debug
             {
                 if (Verbosity == 0) return;
 
-                OutputLocationProvider.WriteLine(content);
+                //OutputLocationProvider.WriteLine(content);
 
                 // If we are being called from LINQPad, then use Debug.WriteLine
                 if (AppDomain.CurrentDomain.FriendlyName.Contains("LINQPad"))
