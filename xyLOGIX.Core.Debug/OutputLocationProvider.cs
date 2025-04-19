@@ -252,21 +252,21 @@ namespace xyLOGIX.Core.Debug
         /// the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
-        /// <param name="arg">
+        /// <param name="args">
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
         /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
+        /// <paramref name="args" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
         [Log(AttributeExclude = true)]
-        public void WriteLine(string format, params object[] arg)
+        public void WriteLine(string format, params object[] args)
         {
             try
             {
@@ -274,7 +274,7 @@ namespace xyLOGIX.Core.Debug
                 if (!InternalOutputLocationList.Any()) return;
 
                 if (string.IsNullOrWhiteSpace(format) &
-                    ((arg == null) | (arg.Length <= 0)))
+                    ((args == null) | (args.Length <= 0)))
                     return;
 
                 foreach (var location in InternalOutputLocationList.Where(
@@ -285,7 +285,7 @@ namespace xyLOGIX.Core.Debug
                         OutputLocationType.Console.Equals(location.Type))
                         continue;
 
-                    location.WriteLine(format, arg);
+                    location.WriteLine(format, args);
                 }
             }
             catch (Exception ex)

@@ -87,20 +87,20 @@ namespace xyLOGIX.Core.Debug
         /// the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
-        /// <param name="arg">
+        /// <param name="args">
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
         /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
+        /// <paramref name="args" /> is <see langword="null" />.
         /// </exception>
         /// <exception cref="T:System.FormatException">
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        void WriteLine(string format, params object[] arg);
+        void WriteLine(string format, params object[] args);
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>

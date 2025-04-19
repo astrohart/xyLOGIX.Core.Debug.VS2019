@@ -1,5 +1,6 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -16,12 +17,14 @@ namespace xyLOGIX.Core.Debug
         /// Empty, static constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
+        [Log(AttributeExclude = true)]
         static TraceOutputLocation() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
+        [Log(AttributeExclude = true)]
         protected TraceOutputLocation() { }
 
         /// <summary>
@@ -51,12 +54,20 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        public override void Write(object value)
+        public override void Write([NotLogged] object value)
         {
-            if (value == null) return;
-            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+            try
+            {
+                if (value == null) return;
+                if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
-            Trace.Write(value);
+                Trace.Write(value);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the trace output
+                Trace.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -77,15 +88,26 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        public override void Write(string format, params object[] arg)
+        public override void Write(
+            [NotLogged] string format,
+            [NotLogged] params object[] arg
+        )
         {
-            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+            try
+            {
+                if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
-            if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length <= 0)))
-                return;
+                if (string.IsNullOrWhiteSpace(format) &
+                    ((arg == null) | (arg.Length <= 0)))
+                    return;
 
-            Trace.Write(string.Format(format, arg));
+                Trace.Write(string.Format(format, arg));
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the trace output
+                Trace.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -94,12 +116,20 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        public override void WriteLine(object value)
+        public override void WriteLine([NotLogged] object value)
         {
-            if (value == null) return;
-            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+            try
+            {
+                if (value == null) return;
+                if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
-            Trace.WriteLine(value);
+                Trace.WriteLine(value);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the trace output
+                Trace.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -121,24 +151,43 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        public override void WriteLine(string format, params object[] arg)
+        public override void WriteLine(
+            [NotLogged] string format,
+            [NotLogged] params object[] arg
+        )
         {
-            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+            try
+            {
+                if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
-            if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length <= 0)))
-                return;
+                if (string.IsNullOrWhiteSpace(format) &
+                    ((arg == null) | (arg.Length <= 0)))
+                    return;
 
-            Trace.WriteLine(string.Format(format, arg));
+                Trace.WriteLine(string.Format(format, arg));
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the trace output
+                Trace.WriteLine(ex);
+            }
         }
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         public override void WriteLine()
         {
-            if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
+            try
+            {
+                if (!Debugger.IsAttached || !Debugger.IsLogging()) return;
 
-            Trace.WriteLine(string.Empty);
+                Trace.WriteLine(string.Empty);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the trace output
+                Trace.WriteLine(ex);
+            }
         }
     }
 }

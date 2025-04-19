@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
@@ -11,7 +12,11 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
-        bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        bool MuteConsole
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets one of the

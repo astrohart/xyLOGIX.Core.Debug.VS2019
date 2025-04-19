@@ -16,14 +16,15 @@ namespace xyLOGIX.Core.Debug
         /// Empty, static constructor to prohibit direct allocation of
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
+        [Log(AttributeExclude = true)]
         static ConsoleOutputLocation() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of the
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
-        protected ConsoleOutputLocation()
-        { }
+        [Log(AttributeExclude = true)]
+        protected ConsoleOutputLocation() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -51,13 +52,21 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        public override void Write(object value)
+        public override void Write([NotLogged] object value)
         {
-            if (value == null) return;
+            try
+            {
+                if (value == null) return;
 
-            if (MuteConsole) return;
+                if (MuteConsole) return;
 
-            Console.Write(value);
+                Console.Write(value);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the console
+                Console.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -78,15 +87,26 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        public override void Write(string format, params object[] arg)
+        public override void Write(
+            [NotLogged] string format,
+            [NotLogged] params object[] arg
+        )
         {
-            if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length <= 0)))
-                return;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(format) &
+                    ((arg == null) | (arg.Length <= 0)))
+                    return;
 
-            if (MuteConsole) return;
+                if (MuteConsole) return;
 
-            Console.Write(format, arg);
+                Console.Write(format, arg);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the console
+                Console.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -95,13 +115,21 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        public override void WriteLine(object value)
+        public override void WriteLine([NotLogged] object value)
         {
-            if (value == null) return;
+            try
+            {
+                if (value == null) return;
 
-            if (MuteConsole) return;
+                if (MuteConsole) return;
 
-            Console.WriteLine(value);
+                Console.WriteLine(value);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the console
+                Console.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -123,24 +151,43 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        public override void WriteLine(string format, params object[] arg)
+        public override void WriteLine(
+            [NotLogged] string format,
+            [NotLogged] params object[] arg
+        )
         {
-            if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length <= 0)))
-                return;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(format) &
+                    ((arg == null) | (arg.Length <= 0)))
+                    return;
 
-            if (MuteConsole) return;
+                if (MuteConsole) return;
 
-            Console.WriteLine(format, arg);
+                Console.WriteLine(format, arg);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the console
+                Console.WriteLine(ex);
+            }
         }
 
         /// <summary>Writes the current line terminator to the standard output stream.</summary>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         public override void WriteLine()
         {
-            if (MuteConsole) return;
+            try
+            {
+                if (MuteConsole) return;
 
-            Console.WriteLine();
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the console
+                Console.WriteLine(ex);
+            }
         }
     }
 }
