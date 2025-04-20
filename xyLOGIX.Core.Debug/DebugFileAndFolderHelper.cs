@@ -65,7 +65,7 @@ namespace xyLOGIX.Core.Debug
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
@@ -105,14 +105,12 @@ namespace xyLOGIX.Core.Debug
             {
                 Directory.CreateDirectory(directoryPath);
                 if (Directory.Exists(directoryPath))
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: We successfully created the new folder '{0}'.",
                         directoryPath
                     );
                 else
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Failed to create the folder '{0}'.",
                         directoryPath
                     );
@@ -145,8 +143,7 @@ namespace xyLOGIX.Core.Debug
                 if (!string.IsNullOrWhiteSpace(fileName) &&
                     File.Exists(fileName))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.InsistPathExists: The file '{0}' was found.",
                         fileName
                     );
@@ -194,8 +191,7 @@ namespace xyLOGIX.Core.Debug
                 // Check whether the file has the read-only attribute set.
                 if ((File.GetAttributes(path) & FileAttributes.ReadOnly) != 0)
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: The file '{0}' is not writeable.",
                         path
                     );
@@ -230,8 +226,7 @@ namespace xyLOGIX.Core.Debug
                                   FileSystemRights.WriteData
                          ))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: The file '{0}' is not writeable due to security settings.",
                         path
                     );
@@ -301,8 +296,7 @@ namespace xyLOGIX.Core.Debug
 
                 if (!Directory.Exists(pathname))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The system could not locate the folder having the path '{pathname}' on the filesystem.  This folder is required to exist in order for us to proceed."
                     );
                     return result;
@@ -321,8 +315,7 @@ namespace xyLOGIX.Core.Debug
                                             .Groups;
                 if (!groups.Any())
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The current user is not a member of any groups."
                     );
 
@@ -339,8 +332,7 @@ namespace xyLOGIX.Core.Debug
 
                 if (string.IsNullOrWhiteSpace(sidCurrentUser))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** Could not find the Security ID (SID) of the current user."
                     );
 
@@ -367,8 +359,7 @@ namespace xyLOGIX.Core.Debug
                                   FileSystemRights.WriteData
                          ))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: The folder '{0}' is not writeable due to security settings.",
                         pathname
                     );

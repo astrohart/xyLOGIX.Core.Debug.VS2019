@@ -78,8 +78,7 @@ namespace xyLOGIX.Core.Debug
                 if (repository == null)
                 {
                     // the parameter repository is required.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "Activate.LoggingForLogFileName: *** ERROR *** A null reference was passed for the 'repository' method parameter.  Stopping."
                     );
 
@@ -99,18 +98,15 @@ namespace xyLOGIX.Core.Debug
 
                 if (!(repository is Hierarchy hierarchy))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         $"Activate.LoggingForLogFileName: Actual type of the 'repository' object is: '{repository.GetType()}'."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         $"Activate.LoggingForLogFileName: Result = {result}"
                     );
 
@@ -146,13 +142,11 @@ namespace xyLOGIX.Core.Debug
 
                 if (result = hierarchy.Configured)
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         "Activate.LoggingForLogFileName: *** SUCCESS *** The logger is already configured.  Stopping..."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         $"Activate.LoggingForLogFileName: Result = {result}"
                     );
 
@@ -204,15 +198,14 @@ namespace xyLOGIX.Core.Debug
                 result = hierarchy.Configured;
 
                 if (result)
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         "Activate.LoggingForLogFileName: *** SUCCESS *** The logging infrastructure has been configured."
                     );
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = false;
             }

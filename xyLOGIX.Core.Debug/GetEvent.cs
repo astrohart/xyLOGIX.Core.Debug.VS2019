@@ -41,8 +41,7 @@ namespace xyLOGIX.Core.Debug
                     );
                 if (eventLoggingAssembly == null)
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** Could not obtain a reference to the .NET assembly that contains the application entry-point.  Falling back to the calling assembly..."
                     );
                     return result;
@@ -53,8 +52,7 @@ namespace xyLOGIX.Core.Debug
                 if (string.IsNullOrWhiteSpace(eventLoggingAssemblyPathname) ||
                     !File.Exists(eventLoggingAssemblyPathname))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "GetEvent.SourceName: The fully-qualified pathname of the entry-point assembly could not be determined, or a ile having that path could not be located on the filesystem."
                     );
                     return result;
@@ -67,7 +65,7 @@ namespace xyLOGIX.Core.Debug
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = string.Empty;
             }

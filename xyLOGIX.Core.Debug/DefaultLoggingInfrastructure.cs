@@ -108,7 +108,7 @@ namespace xyLOGIX.Core.Debug
                 catch (Exception ex)
                 {
                     // dump all the exception info to the log
-                    DebugUtils.LogException(ex);
+                    System.Diagnostics.Debug.WriteLine(ex);
 
                     result = string.Empty;
                 }
@@ -276,8 +276,7 @@ namespace xyLOGIX.Core.Debug
                 if (string.IsNullOrWhiteSpace(configurationFileNamename) ||
                     !File.Exists(configurationFileNamename))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         $"DefaultLoggingInfrastructure.InitializeLogging: Could not locate the file having the path '{configurationFileNamename}'.  Setting up log4net with the default settings..."
                     );
 
@@ -306,8 +305,7 @@ namespace xyLOGIX.Core.Debug
                              configurationFileNamename
                          ) && File.Exists(configurationFileNamename))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** INFO: Not only is the 'configurationFileNamename' parameter's argument not the blank string, but the file that it references has been found on the filesystem."
                     );
 
@@ -346,8 +344,7 @@ namespace xyLOGIX.Core.Debug
 
                 if (!Activate.LoggingForLogFileName(logFileName, repository))
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** Failed to set up logging for the log file name '{logFileName}'."
                     );
 

@@ -55,7 +55,7 @@ namespace xyLOGIX.Core.Debug
                 catch (Exception ex)
                 {
                     // dump all the exception info to the log
-                    DebugUtils.LogException(ex);
+                    System.Diagnostics.Debug.WriteLine(ex);
 
                     result = string.Empty;
                 }
@@ -147,8 +147,7 @@ namespace xyLOGIX.Core.Debug
                 if (!Validate.LoggingInfrastructureType(infrastructureType))
                     return;
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug,
+                System.Diagnostics.Debug.WriteLine(
                     $"LogFileManager.InitializeLogging: Setting infrastructure type to '{infrastructureType}'..."
                 );
 
@@ -161,15 +160,13 @@ namespace xyLOGIX.Core.Debug
 
                 if (LoggingInfrastructure == null)
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         $"LogFileManager.InitializeLogging: *** ERROR *** Unable to initializing the logging subsystem for the '{InfrastructureType}' logging infrastructure."
                     );
                     return;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug,
+                System.Diagnostics.Debug.WriteLine(
                     "LogFileManager.InitializeLogging: Proceeding to task the logging infrastructure to initialize itself..."
                 );
 
@@ -263,8 +260,7 @@ namespace xyLOGIX.Core.Debug
                 if (LoggingInfrastructure == null)
                 {
                     // the property LoggingInfrastructure is required.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "LogFileManager.SetUpDebugUtils: *** ERROR *** The 'LoggingInfrastructure' property has a null reference.  Stopping."
                     );
 
@@ -285,7 +281,7 @@ namespace xyLOGIX.Core.Debug
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using log4net.Repository;
+﻿using Debug = System.Diagnostics.Debug;
+using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using PostSharp.Patterns.Threading;
@@ -121,15 +122,13 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Checking whether logging has already been set up..."
                 );
 
                 if (Has.LoggingBeenSetUp())
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Info,
+                    System.Diagnostics.Debug.WriteLine(
                         $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the log file..."
                     );
                     
@@ -141,21 +140,18 @@ namespace xyLOGIX.Core.Debug
                     return;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Logging has NOT been set up yet.  Proceeding..."
                 );
                 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
                 );
 
                 _relay = Log4NetCollectingRepositorySelector
                     .RedirectLoggingToPostSharp();
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Checking whether the '_relay' field has a null reference for a value..."
                 );
 
@@ -164,13 +160,11 @@ namespace xyLOGIX.Core.Debug
                 if (_relay == null)
                 {
                     // the field '_relay' is required.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** ERROR: The '_relay' field has a null reference.  This field is required."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         "PostSharpLoggingInfrastructure.InitializeLogging: Done."
                     );
 
@@ -178,13 +172,11 @@ namespace xyLOGIX.Core.Debug
                     return;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "*** SUCCESS *** The '_relay' field has a valid object reference for its value."
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
                 );
 
@@ -194,13 +186,11 @@ namespace xyLOGIX.Core.Debug
                     verbosity, applicationName, _relay
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The base-class DefaultLoggingInfrastructure.InitializeLogging method appears to have succeeded.  Proceeding..."
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Configuring log4net logging backend..."
                 );
 
@@ -209,8 +199,7 @@ namespace xyLOGIX.Core.Debug
                     LoggingBackendType.Log4Net, _relay
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'backend', has a null reference for a value..."
                 );
 
@@ -218,8 +207,7 @@ namespace xyLOGIX.Core.Debug
                 if (backend == null)
                 {
                     // the variable backend is required to have a valid object reference.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "PostSharpLoggingInfrastructure.InitializeLogging: *** ERROR ***  The 'backend' variable has a null reference.  Stopping."
                     );
 
@@ -228,20 +216,17 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 // We can use the variable, backend, because it's not set to a null reference.
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'backend' variable has a valid object reference for its value."
                 );
                 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}.."
                 );
 
                 LoggingServices.DefaultBackend = backend;
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
                 );
 
@@ -255,7 +240,7 @@ namespace xyLOGIX.Core.Debug
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
     }
