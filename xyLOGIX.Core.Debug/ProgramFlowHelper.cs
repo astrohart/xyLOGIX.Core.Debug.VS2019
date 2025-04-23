@@ -37,6 +37,7 @@ namespace xyLOGIX.Core.Debug
         /// Such calls should be commented out or deleted when no longer needed.
         /// </remarks>
         [DebuggerStepThrough]
+        [Log(AttributeExclude = true)]
         public static void StartDebugger()
         {
             Debugger.Launch();
