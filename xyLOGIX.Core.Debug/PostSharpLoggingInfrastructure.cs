@@ -1,4 +1,5 @@
-﻿using Debug = System.Diagnostics.Debug;
+﻿using log4net.Config;
+using Debug = System.Diagnostics.Debug;
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
@@ -148,8 +149,12 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
                 );
 
+                ProgramFlowHelper.StartDebugger();
+
                 _relay = Log4NetCollectingRepositorySelector
                     .RedirectLoggingToPostSharp();
+                BasicConfigurator.Configure(_relay);
+                LoggingServices.DefaultBackend = new Log4NetLoggingBackend();
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Checking whether the '_relay' field has a null reference for a value..."
