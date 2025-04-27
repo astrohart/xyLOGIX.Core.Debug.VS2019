@@ -1,5 +1,4 @@
 ﻿using log4net.Config;
-using Debug = System.Diagnostics.Debug;
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
@@ -37,8 +36,10 @@ namespace xyLOGIX.Core.Debug
         /// that
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public override LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
-            LoggingInfrastructureType.PostSharp;
+        public override LoggingInfrastructureType Type
+        {
+            [DebuggerStepThrough] get;
+        } = LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Gets the value of the
@@ -124,17 +125,17 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Checking whether logging has already been set up..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether logging has already been set up..."
                 );
 
                 if (Has.LoggingBeenSetUp())
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the log file..."
+                        "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the log file..."
                     );
-                    
+
                     if (overwrite) DeleteLogIfExists(logFileName);
-                    
+
                     WriteTimestamp();
 
                     // done.
@@ -142,9 +143,9 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Logging has NOT been set up yet.  Proceeding..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Logging has NOT been set up yet.  Proceeding..."
                 );
-                
+
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
                 );
@@ -224,7 +225,7 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'backend' variable has a valid object reference for its value."
                 );
-                
+
                 System.Diagnostics.Debug.WriteLine(
                     $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}.."
                 );
@@ -239,7 +240,7 @@ namespace xyLOGIX.Core.Debug
 
                 if (overwrite)
                     DeleteLogIfExists();
-                
+
                 WriteTimestamp();
             }
             catch (Exception ex)
