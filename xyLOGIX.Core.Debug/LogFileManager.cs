@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -29,7 +29,11 @@ namespace xyLOGIX.Core.Debug
         /// represents the type of infrastructure currently in use by this
         /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" />.
         /// </summary>
-        public static LoggingInfrastructureType InfrastructureType { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        public static LoggingInfrastructureType InfrastructureType
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary> Gets the full path and filename to the log file for this application. </summary>
         /// <remarks>
@@ -72,7 +76,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
         {
-            [DebuggerStepThrough] get { return GetLoggingInfrastructure.For(InfrastructureType); }
+            [DebuggerStepThrough]
+            get => GetLoggingInfrastructure.For(InfrastructureType);
         }
 
         /// <summary> Initializes the application's logging subsystem. </summary>
@@ -143,7 +148,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 DebugUtils.ClearTempExceptionLog();
-                
+
                 if (!Validate.LoggingInfrastructureType(infrastructureType))
                     return;
 
