@@ -39,8 +39,10 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         private static bool? IsWindowsGUI
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -105,7 +107,39 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (LoggingServices.DefaultBackend == null) return result;
+                System.Diagnostics.Debug.WriteLine(
+                    "Has.LoggingBeenSetUp: *** FYI *** Attempting to determine whether logging has already been configured..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Has.LoggingBeenSetUp: Checking whether the property, 'LoggingServices.DefaultBackend', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'LoggingServices.DefaultBackend', has a null reference for a value.
+                // If that is the case, then we will write an error message to the log file, and then
+                // terminate the execution of this method, while returning the default return value.
+                if (LoggingServices.DefaultBackend == null)
+                {
+                    // The property, 'LoggingServices.DefaultBackend', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Has.LoggingBeenSetUp: *** ERROR *** The property, 'LoggingServices.DefaultBackend', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Has.LoggingBeenSetUp: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Has.LoggingBeenSetUp: *** SUCCESS *** The property, 'LoggingServices.DefaultBackend', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Determining whether the property, 'LoggingServices.DefaultBackend', is a NOT set to 'NullLoggingBackend'..."
+                );
 
                 result =
                     !(LoggingServices.DefaultBackend is NullLoggingBackend);
@@ -117,6 +151,10 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                DebugLevel.Debug, $"Has.LoggingBeenSetUp: Result = {result}"
+            );
 
             return result;
         }

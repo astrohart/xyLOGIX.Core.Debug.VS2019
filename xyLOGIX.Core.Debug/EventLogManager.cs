@@ -1,5 +1,6 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -126,40 +127,141 @@ namespace xyLOGIX.Core.Debug
         /// specifies the
         /// type of log to send events to.
         /// </param>
-        public void Initialize(string eventSourceName, EventLogType logType)
+        public void Initialize(
+            [NotLogged] string eventSourceName,
+            EventLogType logType
+        )
         {
-            // Check to see if the required parameter, eventSource, is blank,
-            // whitespace, or null. If it is any of these, send an error to the
-
-            // The 'eventSource' parameter must not be blank.
-            if (string.IsNullOrWhiteSpace(eventSourceName))
-
-                // stop.
-                return;
             if (logType == EventLogType.Unknown || logType == EventLogType.None)
                 return;
 
             try
             {
-                // If an event quote does not exist with the specified name,
-                // then create one.
+                System.Diagnostics.Debug.WriteLine(
+                    "EventLogManager.Initialize: Checking whether the value of the required method parameter, 'eventSourceName' parameter is null or consists solely of whitespace..."
+                );
+
+                if (string.IsNullOrWhiteSpace(eventSourceName))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "EventLogManager.Initialize: *** ERROR *** Null or blank value passed for the parameter, 'eventSourceName'.  Stopping..."
+                    );
+
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "EventLogManager.Initialize: *** SUCCESS *** The value of the required parameter, 'eventSourceName', is not blank.  Continuing..."
+                );
+
+                // Dump the argument of the parameter, 'logType', to the log
+                System.Diagnostics.Debug.WriteLine(
+                    $"EventLogManager.Initialize: logType = '{logType}'"
+                );
+
+                /*
+                 * For cybersecurity reasons, and to defeat reverse-engineering,
+                 * check the value of the 'logType' parameter to ensure that it
+                 * is not set to a value outside the set of valid values defined
+                 * by the xyLOGIX.Core.Debug.EventLogType
+                 * enumeration.
+                 *
+                 * In principle, since all C# enums devolve to integer values, a
+                 * hacker could insert a different value into the CPU register that the
+                 * 'logType' parameter is read from and thereby make this application
+                 * do something it's not intended to do.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"EventLogManager.Initialize: Checking whether the value of the 'logType' parameter, i.e., '{logType}', is within the defined value set of its enumerated data type..."
+                );
+
+                // Check whether the value of the 'logType' parameter is within the defined value set of its
+                // enumeration data type.  If this is not the case, then write an error message to the log
+                // file, and then terminate the execution of this method.
+                if (!Enum.IsDefined(typeof(EventLogType), logType))
+                {
+                    // The value of the 'logType' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The value of the 'logType' parameter, i.e., '{logType}', is NOT within the defined value set of its enumerated data type.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"EventLogManager.Initialize: *** SUCCESS *** The value of the 'logType' parameter, i.e., '{logType}', is within the defined value set of its enumerated data type.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "EventLogManager.Initialize: Checking whether neither the 'Unknown' nor 'None' value(s) have been specified for the 'logType' parameter..."
+                );
+
+                // Check whether neither the 'Unknown' nor 'None' value(s) have
+                // been specified for the argument of the 'logType' parameter.
+                // If this is NOT the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (EventLogType.Unknown.Equals(logType) ||
+                    EventLogType.None.Equals(logType))
+                {
+                    // The 'Unknown' value has been specified for the 'logType' parameter.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'Unknown' or 'None' value(s) have been specified for the 'logType' parameter.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "EventLogManager.Initialize: *** SUCCESS *** Neither the 'Unknown' nor 'None' value(s) have NOT been specified for the 'logType' parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** EventLogManager.Initialize: Checking whether the Event Log already has a source, '{eventSourceName}'..."
+                );
+
+                // Check to see whether the Event Log already has a source by the name of
+                // 'eventSourceName'.  If this is not the case, then write an error message
+                // to the Debug log and then terminate the execution of this method.
                 if (!EventLog.SourceExists(eventSourceName))
+                {
+                    // No Event Source having the name 'eventSourceName' is currently configured.  Attempt to create such a source.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** WARNING: No Event Source having the name '{eventSourceName}' is currently configured.  Attempting to create such a source..."
+                    );
+
                     EventLog.CreateEventSource(
                         eventSourceName, logType.ToString()
                     );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"EventLogManager.Initialize: *** SUCCESS *** The Event Source, '{eventSourceName}', has been successfully created.  Proceeding..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"EventLogManager.Initialize: *** SUCCESS *** The Event Log already has a source, '{eventSourceName}.  Proceeding..."
+                );
 
                 // Finally, save the event quote and type settings in the
                 // Source and Type properties.
                 Source = eventSourceName;
                 Type = logType;
             }
-            catch
+            catch (Exception ex)
             {
                 // If an exception was caught, de-initialize the member
                 // prevent this class from working in future calls.
 
                 Source = string.Empty;
                 Type = EventLogType.Unknown;
+
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
