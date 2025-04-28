@@ -130,12 +130,6 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough] set;
         }
 
-        public static Assembly LoggingAssembly
-        {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
-        } = Assembly.GetAssembly(typeof(DebugUtils));
-
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
         public static bool MuteConsole
         {
