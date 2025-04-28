@@ -51,42 +51,14 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Attempting to use the Assembly: {typeof(LogFileManager).Assembly}..."
                 );
 
-                var targetAssembly =
-                    Assembly.GetAssembly(typeof(LogFileManager));
-
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggerRepositoryManager.GetHierarchyRepository: Checking whether the variable, 'targetAssembly', has a null reference for a value..."
-                );
-
-                // Check to see if the variable, targetAssembly, is null.  If it is, send an error
-                // to the Debug output, and then terminate the execution of this method,
-                // returning the default return value.
-                if (targetAssembly == null)
-                {
-                    // the variable targetAssembly is required to have a valid object reference.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggerRepositoryManager.GetHierarchyRepository: *** ERROR ***  The variable, 'targetAssembly', has a null reference.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** LoggerRepositoryManager.GetHierarchyRepository: Result = {result}"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                // We can use the variable, targetAssembly, because it's not set to a null reference.
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggerRepositoryManager.GetHierarchyRepository: *** SUCCESS *** The variable, 'targetAssembly', has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Calling LogManager.GetRepository with the Assembly: {targetAssembly}..."
+                    $"*** FYI *** Calling LogManager.GetRepository with the Assembly: {Assembly.GetAssembly(typeof(LogFileManager))}..."
                 );
 
                 // Get the log4net repository
-                var repository = LogManager.GetRepository(targetAssembly);
+                var repository = LogManager.GetRepository(
+                    Assembly.GetAssembly(typeof(LogFileManager))
+                );
 
                 System.Diagnostics.Debug.WriteLine(
                     "LoggerRepositoryManager.GetHierarchyRepository: Checking whether the variable, 'repository', has a null reference for a value..."
@@ -116,11 +88,39 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to cast the repository to a Hierarchy object..."
+                    "*** LoggerRepositoryManager.GetHierarchyRepository: Checking whether the repository obtained is a Hierarchy..."
                 );
 
-                // Cast the repository to a Hierarchy object
-                result = repository as Hierarchy;
+                // Check to see whether the repository obtained is a Hierarchy.
+                // If this is not the case, then write an error message to the log file
+                // and then terminate the execution of this method.
+                if (!(repository is Hierarchy hierarchy))
+                {
+                    // The repository obtained is NOT a Hierarchy.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** WARNING *** The repository obtained from the Target Assembly is NOT a Hierarchy.  Attempting to use the default Logger Repository..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** Attempting to cast the default Logger Repository to a Hierarchy object..."
+                    );
+
+                    // try to cast the default repository as a Hierarchy object
+                    result = GetLoggerRepository() as Hierarchy;
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggerRepositoryManager.GetHierarchyRepository: *** SUCCESS *** The repository obtained is a Hierarchy.  Proceeding..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** Attempting to cast the repository to a Hierarchy object..."
+                    );
+
+                    // Cast the repository to a Hierarchy object
+                    result = hierarchy;
+                }
             }
             catch (Exception ex)
             {
