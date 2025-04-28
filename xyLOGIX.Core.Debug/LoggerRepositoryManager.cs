@@ -3,7 +3,7 @@ using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using System;
-using System.Diagnostics;
+using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -43,34 +43,136 @@ namespace xyLOGIX.Core.Debug
             {
                 ProgramFlowHelper.StartDebugger();
 
-                var targetAssembly = DebugUtils.LoggingAssembly;
-                if (targetAssembly == null) return result;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to obtain the Hierarchy Repository..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to use the Assembly: {typeof(LogFileManager).Assembly}..."
+                );
+
+                var targetAssembly =
+                    Assembly.GetAssembly(typeof(LogFileManager));
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggerRepositoryManager.GetHierarchyRepository: Checking whether the variable, 'targetAssembly', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, targetAssembly, is null.  If it is, send an error
+                // to the Debug output, and then terminate the execution of this method,
+                // returning the default return value.
+                if (targetAssembly == null)
+                {
+                    // the variable targetAssembly is required to have a valid object reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggerRepositoryManager.GetHierarchyRepository: *** ERROR ***  The variable, 'targetAssembly', has a null reference.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggerRepositoryManager.GetHierarchyRepository: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, targetAssembly, because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggerRepositoryManager.GetHierarchyRepository: *** SUCCESS *** The variable, 'targetAssembly', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Calling LogManager.GetRepository with the Assembly: {targetAssembly}..."
+                );
 
                 // Get the log4net repository
                 var repository = LogManager.GetRepository(targetAssembly);
-                if (repository == null) return result;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggerRepositoryManager.GetHierarchyRepository: Checking whether the variable, 'repository', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, repository, is null.  If it is, send an error
+                // to the Debug output, and then terminate the execution of this method,
+                // returning the default return value.
+                if (repository == null)
+                {
+                    // the variable repository is required to have a valid object reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggerRepositoryManager.GetHierarchyRepository: *** ERROR ***  The variable, 'repository', has a null reference.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggerRepositoryManager.GetHierarchyRepository: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, repository, because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggerRepositoryManager.GetHierarchyRepository: *** SUCCESS *** The variable, 'repository', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to cast the repository to a Hierarchy object..."
+                );
 
                 // Cast the repository to a Hierarchy object
                 result = repository as Hierarchy;
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
+                // dump all the exception info to the Debug output
                 System.Diagnostics.Debug.WriteLine(ex);
 
                 result = default;
             }
 
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? "*** SUCCESS *** Obtained a reference to a Hierarchy Repository.  Proceeding..."
+                    : "*** ERROR *** FAILED to obtain a reference to a Hierarchy Repository.  Stopping..."
+            );
+
             return result;
         }
 
-        /// <summary> Wraps the <see cref="M:log4net.LogManager.GetRepository" /> method. </summary>
+        /// <summary> Wraps the <see cref="log4net.LogManager.GetRepository" /> method. </summary>
         /// <returns>
-        /// Reference to an instance of an object that implements
-        /// <see cref="ILoggerRepository" /> , or null if such an object cannot be found.
+        /// Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface, or null if
+        /// such an object cannot be found.
         /// </returns>
-        [DebuggerStepThrough]
+        [return: NotLogged]
         public static ILoggerRepository GetLoggerRepository()
-            => LogManager.GetRepository();
+        {
+            ILoggerRepository result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggerRepositoryManager.GetLoggerRepository: *** FYI *** Attempting to obtain the default Logger Repository..."
+                );
+
+                result = LogManager.GetRepository();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? "*** SUCCESS *** Obtained a reference to the default Logger Repository.  Proceeding..."
+                    : "*** ERROR *** FAILED to obtain a reference to the default Logger Repository.  Stopping..."
+            );
+
+            return result;
+        }
     }
 }
