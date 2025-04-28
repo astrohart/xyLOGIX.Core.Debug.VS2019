@@ -30,6 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// Initializes a new static instance of
         /// <see cref="T:xyLOGIX.Core.Debug.DebugUtils" />.
         /// </summary>
+        [Log(AttributeExclude = true)]
         static DebugUtils()
         {
             // default ExceptionStackDepth is 1 for a Windows Forms app. Set to
@@ -101,8 +102,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            get;
-            internal set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] internal set;
         }
 
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>
@@ -128,6 +129,12 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough] get;
             [DebuggerStepThrough] set;
         }
+
+        public static Assembly LoggingAssembly
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        } = Assembly.GetAssembly(typeof(DebugUtils));
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
         public static bool MuteConsole

@@ -34,17 +34,16 @@ namespace xyLOGIX.Core.Debug
         /// derives from <see cref="T:log4net.Repository.Hierarchy" />, or null if no such
         /// object has been found.
         /// </returns>
-        [DebuggerStepThrough]
+        [return: NotLogged]
         public static Hierarchy GetHierarchyRepository()
         {
             Hierarchy result = default;
 
             try
             {
-                var targetType = typeof(LogFileManager);
-                if (targetType == null) return result;
+                ProgramFlowHelper.StartDebugger();
 
-                var targetAssembly = targetType.Assembly;
+                var targetAssembly = DebugUtils.LoggingAssembly;
                 if (targetAssembly == null) return result;
 
                 // Get the log4net repository
