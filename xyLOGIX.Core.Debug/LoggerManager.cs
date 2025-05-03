@@ -1,5 +1,4 @@
 ﻿using log4net.Repository;
-using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using Logger = log4net.Repository.Hierarchy.Logger;
@@ -32,75 +31,71 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="loggerRepository"> </param>
         /// <returns>
-        /// Reference to the default logger repository's root instance of
-        /// <see cref="T:log4net.Hierarchy.Repository.Logger" /> , or null if not found.
+        /// Reference to an instance of
+        /// <see cref="T:log4net.Repository.Hierarchy.Logger" /> that refers to the
+        /// <c>Root Logger</c> component that is to be used, if found; a
+        /// <see langword="null" /> reference is returned otherwise.
         /// </returns>
         public static Logger GetRootLogger(
             [NotLogged] ILoggerRepository loggerRepository = null
         )
         {
-            var result = LoggerRepositoryManager.GetHierarchyRepository()
-                                                .Root;
+            Logger result = default;
 
             try
             {
+                /*
+                 * If loggerRepository is not null, then we can use it to get the root logger.
+                 */
+
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggerManager.GetRootLogger: Checking whether the 'loggerRepository' method parameter has a null reference for a value..."
+                    "LoggerManager.GetRootLogger: *** INFO *** Attempting to get the default logger repository's root instance of log4net.Hierarchy.Repository.Logger... "
                 );
 
-                // Check to see if the required parameter, loggerRepository, is null. If it is, send an
-                // error to the log file and quit, returning the default return value of this
-                // method.
-                if (loggerRepository == null)
+                var hierarchyRepository =
+                    LoggerRepositoryManager.GetHierarchyRepository();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggerManager.GetRootLogger: Checking whether the variable, 'hierarchyRepository', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, hierarchyRepository, is null.  If it is, send an error
+                // to the log file, and then terminate the execution of this method,
+                // returning the default return value.
+                if (hierarchyRepository == null)
                 {
-                    // The parameter, 'loggerRepository', is required and is not supposed to have a NULL value.
+                    // the variable hierarchyRepository is required to have a valid object reference.
                     System.Diagnostics.Debug.WriteLine(
-                        "LoggerManager.GetRootLogger: *** ERROR *** A null reference was passed for the 'loggerRepository' method parameter.  Returning the Default Root Logger instead..."
+                        "LoggerManager.GetRootLogger: *** ERROR ***  The variable, 'hierarchyRepository', has a null reference.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggerManager.GetRootLogger: Result = {result}"
                     );
 
                     // stop.
                     return result;
                 }
 
+                // We can use the variable, hierarchyRepository, because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggerManager.GetRootLogger: *** SUCCESS *** We have been passed a valid object reference for the 'loggerRepository' method parameter.  Proceeding..."
+                    "LoggerManager.GetRootLogger: *** SUCCESS *** The variable, 'hierarchyRepository', has a valid object reference for its value.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine(
-                    "*** LoggerManager.GetRootLogger: Checking whether the provided Logger Repository is of type Hierarchy..."
-                );
-
-                // Check to see whether the Logger Repository is of type Hierarchy.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
-                if (!(loggerRepository is Hierarchy hierarchy))
-                {
-                    // The Logger Repository is NOT of type Hierarchy.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The Logger Repository is NOT of type Hierarchy.  Returning the Default Root Logger instead..."
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggerManager.GetRootLogger: *** SUCCESS *** The Logger Repository is of type Hierarchy.  Proceeding..."
-                );
-
-                result = hierarchy.Root;
+                result = hierarchyRepository.Root;
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                System.Diagnostics.Debug.WriteLine(ex);
+                DebugUtils.LogException(ex);
 
-                result = LoggerRepositoryManager.GetHierarchyRepository()
-                                                .Root;
+                result = default;
             }
 
             System.Diagnostics.Debug.WriteLine(
-                $"*** FYI *** Type of returned object is: '{result.GetType()}'."
+                result != null
+                    ? "*** SUCCESS *** Obtained a reference to the root Logger Repository.  Proceeding..."
+                    : "*** ERROR *** FAILED to obtain a reference to the root Logger Repository.  Stopping..."
             );
 
             return result;

@@ -1,5 +1,5 @@
-﻿using log4net.Config;
-using log4net.Repository;
+﻿using log4net.Repository;
+using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using PostSharp.Patterns.Threading;
@@ -176,6 +176,28 @@ namespace xyLOGIX.Core.Debug
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** SUCCESS *** The '_relay' field has a valid object reference for its value."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the 'relay' variable is a Hierarchy..."
+                );
+
+                // Check to see whether the 'relay' variable is a Hierarchy.
+                // If this is not the case, then write an error message to the log file
+                // and then terminate the execution of this method.
+                if (!(_relay is Hierarchy))
+                {
+                    // The 'relay` variable is NOT a hierarchy.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The 'relay` variable is NOT a hierarchy.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'relay' variable is a Hierarchy.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(

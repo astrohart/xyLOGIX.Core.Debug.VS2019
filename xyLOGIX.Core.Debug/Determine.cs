@@ -99,6 +99,22 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Attempts to determine which of the
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
+        /// value(s) most likely pertain to the situation at hand.
+        /// </summary>
+        /// <returns>
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
+        /// value(s) that most likely pertains to the situation at hand, or the
+        /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.Unknown" /> if
+        /// such a value cannot be ascertained.
+        /// </returns>
+        public static RootLoggerProvisioningStrategy
+            TheRootLoggerProvisioningStrategyToUse()
+            => RootLoggerProvisioningStrategy.Unknown;
+
+        /// <summary>
         /// Determines the proper
         /// <see cref="T:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType" /> enumeration
         /// value that is to be used to choose the XML-based logging subsystem
