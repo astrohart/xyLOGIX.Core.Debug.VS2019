@@ -1,6 +1,7 @@
 ﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 using Logger = log4net.Repository.Hierarchy.Logger;
 
 namespace xyLOGIX.Core.Debug
@@ -26,6 +27,18 @@ namespace xyLOGIX.Core.Debug
         static LoggerManager() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IRootLoggerProvisioningStrategyValidator" />
+        /// interface.
+        /// </summary>
+        private static IRootLoggerProvisioningStrategyValidator
+            RootLoggerProvisioningStrategyValidator
+        {
+            [DebuggerStepThrough] get;
+        } =
+            GetRootLoggerProvisioningStrategyValidator.SoleInstance();
+
+        /// <summary>
         /// Gets a reference to the default logger repository's root instance of
         /// <see cref="T:log4net.Hierarchy.Repository.Logger" />.
         /// </summary>
@@ -44,50 +57,74 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /*
-                 * If loggerRepository is not null, then we can use it to get the root logger.
-                 */
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggerManager.GetRootLogger: *** INFO *** Attempting to get the default logger repository's root instance of log4net.Hierarchy.Repository.Logger... "
-                );
-
-                var hierarchyRepository =
-                    LoggerRepositoryManager.GetHierarchyRepository();
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggerManager.GetRootLogger: Checking whether the variable, 'hierarchyRepository', has a null reference for a value..."
-                );
-
-                // Check to see if the variable, hierarchyRepository, is null.  If it is, send an error
-                // to the log file, and then terminate the execution of this method,
-                // returning the default return value.
-                if (hierarchyRepository == null)
-                {
-                    // the variable hierarchyRepository is required to have a valid object reference.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggerManager.GetRootLogger: *** ERROR ***  The variable, 'hierarchyRepository', has a null reference.  Stopping..."
+                var strategy =
+                    Determine.TheRootLoggerProvisioningStrategyToUse(
+                        loggerRepository
                     );
 
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** LoggerManager.GetRootLogger: Checking whether the Root Logger Provisioning Strategy, '{strategy}', is within the defined value set..."
+                );
+
+                // Check to see whether the Root Logger Provisioning Strategy is within the defined value set.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!RootLoggerProvisioningStrategyValidator.IsValid(strategy))
+                {
+                    // The Root Logger Provisioning Strategy is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** LoggerManager.GetRootLogger: Result = {result}"
+                        $"*** ERROR *** The Root Logger Provisioning Strategy, '{strategy}', is NOT within the defined value set.  Stopping..."
                     );
 
                     // stop.
                     return result;
                 }
 
-                // We can use the variable, hierarchyRepository, because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggerManager.GetRootLogger: *** SUCCESS *** The variable, 'hierarchyRepository', has a valid object reference for its value.  Proceeding..."
+                    $"LoggerManager.GetRootLogger: *** SUCCESS *** The Root Logger Provisioning Strategy, '{strategy}', is within the defined value set.  Proceeding..."
                 );
 
-                result = hierarchyRepository.Root;
+                // Get a reference to the appropriate Root Logger Provisioner.
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggerManager.GetRootLogger: Obtaining a reference to the Root Logger Provisioner for the Root Logger Provisioning Strategy, '{strategy}'..."
+                );
+
+                var rootLoggerProvisioner =
+                    GetRootLoggerProvisioner.For(strategy);
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "LoggerManager.GetRootLogger: Checking whether the variable, 'rootLoggerProvisioner', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, rootLoggerProvisioner, is null.  If it is, send an error
+                // to the log file, and then terminate the execution of this method,
+                // returning the default return value.
+                if (rootLoggerProvisioner == null)
+                {
+                    // the variable rootLoggerProvisioner is required to have a valid object reference.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "LoggerManager.GetRootLogger: *** ERROR ***  The variable, 'rootLoggerProvisioner', has a null reference.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, rootLoggerProvisioner, because it's not set to a null reference.
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "LoggerManager.GetRootLogger: *** SUCCESS *** The variable, 'rootLoggerProvisioner', has a valid object reference for its value.  Proceeding..."
+                );
+
+                result = rootLoggerProvisioner.Provision(loggerRepository);
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = default;
             }

@@ -41,8 +41,6 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                ProgramFlowHelper.StartDebugger();
-
                 System.Diagnostics.Debug.WriteLine(
                     "*** FYI *** Attempting to obtain the Hierarchy Repository..."
                 );

@@ -138,6 +138,8 @@
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="FileBasedXmlLoggingConfigurator.cs" />
     <Compile Include="FromConfigFileLoggingConfigurator.cs" />
+    <Compile Include="FromLogManagerRootLoggerProvisioner.cs" />
+    <Compile Include="FromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
     <Compile Include="GetAssembly.cs" />
     <Compile Include="GetConsoleOutputLocation.cs" />
     <Compile Include="GetDebugOutputLocation.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetFileBasedXmlLoggingConfigurator.cs" />
     <Compile Include="GetFromConfigFileLoggingConfigurator.cs" />
+    <Compile Include="GetFromLogManagerRootLoggerProvisioner.cs" />
+    <Compile Include="GetFromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
     <Compile Include="GetLog.cs" />
     <Compile Include="GetLoggingBackend.cs" />
     <Compile Include="GetLoggingConfigurator.cs" />
@@ -155,6 +159,7 @@
     <Compile Include="GetOutputLocationProvider.cs" />
     <Compile Include="GetPatternLayout.cs" />
     <Compile Include="GetProgrammaticLoggingConfigurator.cs" />
+    <Compile Include="GetRootLoggerProvisioner.cs" />
     <Compile Include="GetRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="GetTraceOutputLocation.cs" />
     <Compile Include="GetXmlLoggingConfigurator.cs" />
@@ -162,6 +167,7 @@
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="IEventLogManager.cs" />
+    <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="ILoggingConfigurator.cs" />
@@ -180,6 +186,7 @@
     <Compile Include="OutputLocationType.cs" />
     <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
+    <Compile Include="RootLoggerProvisionerBase.cs" />
     <Compile Include="RootLoggerProvisioningStrategy.cs" />
     <Compile Include="RootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="SecretStringExtensions.cs" />

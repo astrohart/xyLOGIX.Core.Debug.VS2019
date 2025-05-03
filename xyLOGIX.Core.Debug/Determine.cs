@@ -1,4 +1,6 @@
 ﻿using Alphaleonis.Win32.Filesystem;
+using log4net.Repository;
+using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
@@ -103,6 +105,14 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
         /// value(s) most likely pertain to the situation at hand.
         /// </summary>
+        /// <param name="loggerRepository">
+        /// (Optional.) Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
+        /// Can be set to a <see langword="null" /> reference.
+        /// <para />
+        /// The default value of this parameter is a <see langword="null" /> reference.
+        /// </param>
         /// <returns>
         /// One of the
         /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
@@ -111,8 +121,83 @@ namespace xyLOGIX.Core.Debug
         /// such a value cannot be ascertained.
         /// </returns>
         public static RootLoggerProvisioningStrategy
-            TheRootLoggerProvisioningStrategyToUse()
-            => RootLoggerProvisioningStrategy.Unknown;
+            TheRootLoggerProvisioningStrategyToUse(
+                ILoggerRepository loggerRepository = null
+            )
+        {
+            var result = RootLoggerProvisioningStrategy.FromLogManager;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheRootLoggerProvisioningStrategyToUse: Checking whether the required method parameter, 'loggerRepository', has a null reference for a value..."
+                );
+
+                // Check to see if the required method parameter, loggerRepository, is null. If it is, send an
+                // error to the log file and quit, returning the default return value of this
+                // method.
+                if (loggerRepository == null)
+                {
+                    // The parameter, 'loggerRepository', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheRootLoggerProvisioningStrategyToUse: *** ERROR *** A null reference was passed for the required method parameter, 'loggerRepository'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Determine.TheRootLoggerProvisioningStrategyToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheRootLoggerProvisioningStrategyToUse: *** SUCCESS *** We have been passed a valid object reference for the required method parameter, 'loggerRepository'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** Determine.TheRootLoggerProvisioningStrategyToUse: Checking whether the provided Logger Repository is a Hierarchy..."
+                );
+
+                // Check to see whether the provided Logger Repository is a Hierarchy.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!(loggerRepository is Hierarchy))
+                {
+                    // The provided Logger Repository is NOT a Hierarchy.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The provided Logger Repository is NOT a Hierarchy.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Determine.TheRootLoggerProvisioningStrategyToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheRootLoggerProvisioningStrategyToUse: *** SUCCESS *** The provided Logger Repository is a Hierarchy.  Proceeding..."
+                );
+
+                result = RootLoggerProvisioningStrategy
+                    .FromProvidedLoggingRepository;
+            }
+            catch (Exception ex)
+            {
+                // dump all exception info to the log.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = RootLoggerProvisioningStrategy.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TheRootLoggerProvisioningStrategyToUse: Result = '{result}'"
+            );
+
+            return result;
+        }
 
         /// <summary>
         /// Determines the proper

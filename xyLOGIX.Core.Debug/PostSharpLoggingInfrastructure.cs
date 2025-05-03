@@ -56,13 +56,100 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFileName" /> property.
         /// </remarks>
         public override string GetRootFileAppenderFileName()
-            => FileAppenderManager.GetFirstAppender(_relay)
-                                  ?.File;
+        {
+            var result = string.Empty;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the '_relay' field has a null reference for a value..."
+                );
+
+                // Check to see if the required field, _relay, is null. If it is, then send an
+                // error to the Debug output and then quit, returning the default value of the result
+                // variable.
+                if (_relay == null)
+                {
+                    // the field _relay is required.
+                    System.Diagnostics.Debug.WriteLine(
+                        "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: *** ERROR *** The '_relay' field has a null reference.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: *** SUCCESS *** The '_relay' field has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** The '_relay' field is of type '{_relay.GetType()}'."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Attempting to get the first File Appender from the relay..."
+                );
+
+                var firstAppender =
+                    FileAppenderManager.GetFirstAppender(_relay);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the variable, 'firstAppender', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, firstAppender, is null.  If it is, send an error
+                // to the Debug output and terminate the execution of this method, returning
+                // the default return value.
+                if (firstAppender == null)
+                {
+                    // the variable firstAppender is required to have a valid object reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: *** ERROR ***  The variable, 'firstAppender', has a null reference.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, firstAppender, because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: *** SUCCESS *** The variable, 'firstAppender', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Attempting to get the value of the File property from the first File Appender in the collection of configured Appender(s)..."
+                );
+
+                result = firstAppender.File;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = string.Empty;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Result = '{result}'"
+            );
+
+            return result;
+        }
 
         /// <summary> Initializes the application's logging subsystem. </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
-        /// out "DEBUG" messages to the log file when in the Release mode. Set to false if
+        /// out "DEBUG" messages to the Debug output when in the Release mode. Set to false if
         /// all messages should always be logged.
         /// </param>
         /// <param name="overwrite">
@@ -84,7 +171,7 @@ namespace xyLOGIX.Core.Debug
         /// (Optional.) If blank, then the
         /// <c>XMLConfigurator</c> object is used to configure logging.
         /// <para />
-        /// Else, specify here the path to the log file to be created.
+        /// Else, specify here the path to the Debug output to be created.
         /// </param>
         /// <param name="verbosity">
         /// (Optional.) An <see cref="T:System.Int32" /> whose
@@ -131,7 +218,7 @@ namespace xyLOGIX.Core.Debug
                 if (Has.LoggingBeenSetUp())
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the log file..."
+                        "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the Debug output..."
                     );
 
                     if (overwrite) DeleteLogIfExists(logFileName);
@@ -158,7 +245,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required field, '_relay', is null. If it is, send an
-                // error to the log file and quit.
+                // error to the Debug output and quit.
                 if (_relay == null)
                 {
                     // the field '_relay' is required.
@@ -183,7 +270,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see whether the 'relay' variable is a Hierarchy.
-                // If this is not the case, then write an error message to the log file
+                // If this is not the case, then write an error message to the Debug output
                 // and then terminate the execution of this method.
                 if (!(_relay is Hierarchy))
                 {
@@ -227,7 +314,7 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'backend', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, backend, is null. If it is, send an error to the log file and quit, returning from the method.
+                // Check to see if the variable, backend, is null. If it is, send an error to the Debug output and quit, returning from the method.
                 if (backend == null)
                 {
                     // the variable backend is required to have a valid object reference.
@@ -251,7 +338,7 @@ namespace xyLOGIX.Core.Debug
                 LoggingServices.DefaultBackend = backend;
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the Debug output..."
                 );
 
                 PrepareLogFile(_relay);
