@@ -46,16 +46,16 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Attempting to use the Assembly: {typeof(LogFileManager).Assembly}..."
+                    $"*** FYI *** Attempting to use the Assembly: {typeof(LoggingSubsystemManager).Assembly}..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Calling LogManager.GetRepository with the Assembly: {Assembly.GetAssembly(typeof(LogFileManager))}..."
+                    $"*** FYI *** Calling LogManager.GetRepository with the Assembly: {Assembly.GetAssembly(typeof(LoggingSubsystemManager))}..."
                 );
 
                 // Get the log4net repository
                 var repository = LogManager.GetRepository(
-                    Assembly.GetAssembly(typeof(LogFileManager))
+                    Assembly.GetAssembly(typeof(LoggingSubsystemManager))
                 );
 
                 System.Diagnostics.Debug.WriteLine(

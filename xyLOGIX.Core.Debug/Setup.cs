@@ -111,9 +111,12 @@ namespace xyLOGIX.Core.Debug
         /// that provides a user-friendly version of the application's name for viewing in
         /// the Windows Event Log Viewer; leave blank to use the default value.
         /// </param>
+        /// <returns><see langword="true" /> if the operation completed successfully; <see langword="false" /> otherwise.</returns>
         [DebuggerStepThrough]
-        public static void EventLogging(string applicationName = "")
+        public static bool EventLogging(string applicationName = "")
         {
+            var result = false;
+
             try
             {
                 System.Diagnostics.Debug.WriteLine(
@@ -146,12 +149,17 @@ namespace xyLOGIX.Core.Debug
                 // method.
                 if (string.IsNullOrWhiteSpace(DebugUtils.ApplicationName))
                 {
+                    // A blank value seems to have been passed for the 'DebugUtils.ApplicationName' property.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** A blank value seems to have been passed for the 'DebugUtils.ApplicationName' property. This property is required to have a non-blank value.  Stopping..."
                     );
 
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Setup.EventLogging: Result = {result}"
+                    );
+
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(

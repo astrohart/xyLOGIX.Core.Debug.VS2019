@@ -1,12 +1,13 @@
-﻿using System.Diagnostics;
-using log4net.Repository;
+﻿using log4net.Repository;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
     /// Defines the methods and properties of a custom object to which the
-    /// <see cref="T:xyLOGIX.Core.Debug.LogFileManager" /> delegates the implementation
+    /// <see cref="T:xyLOGIX.Core.Debug.LoggingSubsystemManager" /> delegates the
+    /// implementation
     /// of its properties and methods.
     /// </summary>
     public interface ILoggingInfrastructure
@@ -24,13 +25,6 @@ namespace xyLOGIX.Core.Debug
         /// corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         LoggingInfrastructureType Type { [DebuggerStepThrough] get; }
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFileName" />
-        /// property has been updated.
-        /// </summary>
-        event EventHandler LogFileNameChanged;
 
         /// <summary> Deletes the log file, if it exists. </summary>
         /// <param name="logFileName">
@@ -107,7 +101,11 @@ namespace xyLOGIX.Core.Debug
         /// interface. Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
-        void InitializeLogging(
+        /// <returns>
+        /// <see langword="true" /> if the logging subsystem initialization
+        /// process completed successfully; <see langword="false" /> otherwise.
+        /// </returns>
+        bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
             string configurationFileNamename = "",
@@ -117,6 +115,13 @@ namespace xyLOGIX.Core.Debug
             string applicationName = "",
             ILoggerRepository repository = null
         );
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFileName" />
+        /// property has been updated.
+        /// </summary>
+        event EventHandler LogFileNameChanged;
 
         /// <summary>
         /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to initialize

@@ -49,23 +49,49 @@ namespace xyLOGIX.Core.Debug
         /// corresponds to the value passed in the <paramref name="type" /> parameter.
         /// </exception>
         [DebuggerStepThrough]
-        public static ILoggingInfrastructure For(LoggingInfrastructureType type)
+        public static ILoggingInfrastructure OfType(
+            LoggingInfrastructureType type
+        )
         {
             ILoggingInfrastructure result = default;
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** GetLoggingInfrastructure.OfType: Checking whether the Logging Infrastructure Type value specified is valid..."
+                );
+
+                // Check to see whether the Logging Infrastructure Type value specified is valid.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
                 if (!Validate.LoggingInfrastructureType(type))
+                {
+                    // The Logging Infrastructure Type value specified is NOT valid.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The Logging Infrastructure Type value specified is NOT valid.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** GetLoggingInfrastructure.OfType: Result = {result}"
+                    );
+
+                    // stop.
                     return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetLoggingInfrastructure.OfType: *** SUCCESS *** The Logging Infrastructure Type value specified is valid.  Proceeding..."
+                );
 
                 switch (type)
                 {
                     case LoggingInfrastructureType.Default:
-                        result = new DefaultLoggingInfrastructure();
+                        result = GetDefaultLoggingInfrastructure.SoleInstance();
                         break;
 
                     case LoggingInfrastructureType.PostSharp:
-                        result = new PostSharpLoggingInfrastructure();
+                        result =
+                            GetPostSharpLoggingInfrastructure.SoleInstance();
                         break;
 
                     default:

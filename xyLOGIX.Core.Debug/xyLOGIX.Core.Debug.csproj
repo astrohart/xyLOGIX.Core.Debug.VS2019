@@ -143,6 +143,7 @@
     <Compile Include="GetAssembly.cs" />
     <Compile Include="GetConsoleOutputLocation.cs" />
     <Compile Include="GetDebugOutputLocation.cs" />
+    <Compile Include="GetDefaultLoggingInfrastructure.cs" />
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetFileBasedXmlLoggingConfigurator.cs" />
@@ -154,10 +155,12 @@
     <Compile Include="GetLoggingConfigurator.cs" />
     <Compile Include="GetLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
+    <Compile Include="GetLoggingInfrastructureTypeValidator.cs" />
     <Compile Include="GetNoFileXmlLoggingConfigurator.cs" />
     <Compile Include="GetOutputLocation.cs" />
     <Compile Include="GetOutputLocationProvider.cs" />
     <Compile Include="GetPatternLayout.cs" />
+    <Compile Include="GetPostSharpLoggingInfrastructure.cs" />
     <Compile Include="GetProgrammaticLoggingConfigurator.cs" />
     <Compile Include="GetRootLoggerProvisioner.cs" />
     <Compile Include="GetRootLoggerProvisioningStrategyValidator.cs" />
@@ -167,6 +170,7 @@
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="IEventLogManager.cs" />
+    <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
@@ -178,6 +182,8 @@
     <Compile Include="LoggingConfiguratorBase.cs" />
     <Compile Include="LoggingConfiguratorType.cs" />
     <Compile Include="LoggingConfiguratorTypeValidator.cs" />
+    <Compile Include="LoggingInfrastructureTypeValidator.cs" />
+    <Compile Include="MakeNewDefaultLoggingInfrastructure.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
@@ -211,7 +217,7 @@
     <Compile Include="ILoggingInfrastructure.cs" />
     <Compile Include="Initialize.cs" />
     <Compile Include="IsLog.cs" />
-    <Compile Include="LogFileManager.cs" />
+    <Compile Include="LoggingSubsystemManager.cs" />
     <Compile Include="LoggerManager.cs" />
     <Compile Include="LoggerRepositoryManager.cs" />
     <Compile Include="LoggingBackendType.cs" />

@@ -24,11 +24,27 @@ namespace xyLOGIX.Core.Debug
         private ILoggerRepository _relay;
 
         /// <summary>
-        /// Initializes a new instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure" /> and returns
-        /// a reference to it.
+        /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        public PostSharpLoggingInfrastructure() { }
+        [Log(AttributeExclude = true)]
+        static PostSharpLoggingInfrastructure() { }
+
+        /// <summary>
+        /// Empty, protected constructor to prohibit direct allocation of this class.
+        /// </summary>
+        [Log(AttributeExclude = true)]
+        protected PostSharpLoggingInfrastructure() { }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
+        /// infrastructure type value.
+        /// </summary>
+        public static ILoggingInfrastructure Instance
+        {
+            [DebuggerStepThrough] get;
+        } = new PostSharpLoggingInfrastructure();
 
         /// <summary>
         /// Gets the
@@ -149,7 +165,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary> Initializes the application's logging subsystem. </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
-        /// out "DEBUG" messages to the Debug output when in the Release mode. Set to false if
+        /// out "DEBUG" messages to the Debug output when in the Release mode. Set to false
+        /// if
         /// all messages should always be logged.
         /// </param>
         /// <param name="overwrite">
@@ -198,7 +215,11 @@ namespace xyLOGIX.Core.Debug
         /// interface. Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
-        public override void InitializeLogging(
+        /// <returns>
+        /// <see langword="true" /> if the logging subsystem initialization
+        /// process completed successfully; <see langword="false" /> otherwise.
+        /// </returns>
+        public override bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
             string configurationFileNamename = "",

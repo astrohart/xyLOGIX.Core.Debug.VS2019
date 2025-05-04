@@ -10,5 +10,5 @@ using System.Diagnostics.CodeAnalysis;
         "Style", "IDE0060:Remove unused parameter", Justification = "<Pending>",
         Scope = "member",
         Target =
-            "~M:xyLOGIX.Core.Debug.LogFileManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,Core.Debug.LoggingInfrastructureType)"
+            "~M:xyLOGIX.Core.Debug.LoggingSubsystemManager.InitializeLogging(System.Boolean,System.Boolean,System.String,System.Boolean,Core.Debug.LoggingInfrastructureType)"
     )]

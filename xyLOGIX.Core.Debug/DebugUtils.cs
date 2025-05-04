@@ -325,19 +325,100 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="P:xyLOGIX.Core.Debug.DebugUtils.ExceptionLogPathname" />
         /// property, if it is already present on the file system.
         /// </summary>
-        public static void ClearTempExceptionLog()
+        /// <returns>
+        /// <see langword="true" /> if the file having the fully-qualified
+        /// pathname specified by the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.ExceptionLogPathname" /> property
+        /// was successfully deleted; <see langword="false" /> otherwise.
+        /// </returns>
+        public static bool ClearTempExceptionLog()
         {
+            var result = false;
+
             try
             {
-                if (!File.Exists(ExceptionLogPathname)) return;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'ExceptionLogPathname', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'ExceptionLogPathname', appears to have a null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(ExceptionLogPathname))
+                {
+                    // The property, 'ExceptionLogPathname', appears to have a null or blank value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** The property, 'ExceptionLogPathname', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugUtils.ClearTempExceptionLog: Result = {true}"
+                    );
+
+                    // Stop.  Return TRUE though, because the property value being blank is equivalent
+                    // to the file having been successfully deleted.
+                    return true;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'ExceptionLogPathname', seems to have a non-blank value.  Proceeding..."
+                );
+
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.ClearTempExceptionLog *** INFO: Checking whether the file having pathname, '{ExceptionLogPathname}', exists on the file system..."
+                );
+
+                // Check whether a file having pathname, 'ExceptionLogPathname', exists on the file system.
+                // If it does not, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
+                if (!File.Exists(ExceptionLogPathname))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The system could not locate the file having pathname, '{ExceptionLogPathname}', on the file system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugUtils.ClearTempExceptionLog: Result = {true}"
+                    );
+
+                    // Stop.  Return TRUE though, because the file not existing is equivalent to it
+                    // being successfully deleted.
+                    return true;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.ClearTempExceptionLog *** SUCCESS *** The file having pathname, '{ExceptionLogPathname}', was found on the file system.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to delete the file, '{ExceptionLogPathname}'..."
+                );
 
                 File.Delete(ExceptionLogPathname);
+
+                System.Diagnostics.Debug.WriteLine(
+                    !File.Exists(ExceptionLogPathname)
+                        ? $"*** SUCCESS *** Deleted the file, '{ExceptionLogPathname}'.  Proceeding..."
+                        : $"*** ERROR *** FAILED to delete the file, '{ExceptionLogPathname}'.  Stopping..."
+                );
+
+                result = !File.Exists(ExceptionLogPathname);
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
-                LogException(ex);
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DebugUtils.ClearTempExceptionLog: Result = {result}"
+            );
+
+            return result;
         }
 
         /// <summary> Dumps a collection to the debug log. </summary>
@@ -531,7 +612,7 @@ namespace xyLOGIX.Core.Debug
             );
             if (!lines.Any()) return;
 
-            // For each line, write it out at the debugLevel indicated, one by
+            // For Each line, write it out at the debugLevel indicated, one by
             // one. We do this by calling the delegate supplied to this method
             foreach (var line in lines) logMethod(level, line);
         }

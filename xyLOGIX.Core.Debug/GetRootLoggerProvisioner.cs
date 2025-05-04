@@ -75,7 +75,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "*** GetRootLoggerProvisioner.For: Checking whether the provided Root Logger Provisioning Strategy is within the defined value set..."
+                    "*** GetRootLoggerProvisioner.OfType: Checking whether the provided Root Logger Provisioning Strategy is within the defined value set..."
                 );
 
                 // Check to see whether the provided Root Logger Provisioning Strategy is within the defined value set.
@@ -93,7 +93,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "GetRootLoggerProvisioner.For: *** SUCCESS *** The provided Root Logger Provisioning Strategy is within the defined value set.  Proceeding..."
+                    "GetRootLoggerProvisioner.OfType: *** SUCCESS *** The provided Root Logger Provisioning Strategy is within the defined value set.  Proceeding..."
                 );
 
                 switch (strategy)

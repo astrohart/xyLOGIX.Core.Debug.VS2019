@@ -127,16 +127,19 @@ namespace xyLOGIX.Core.Debug
         /// specifies the
         /// type of log to send events to.
         /// </param>
-        public void Initialize(
+        /// <returns><see langword="true" /> if the operation(s) completed successfully; <see langword="false" /> otherwise.</returns>
+        public bool Initialize(
             [NotLogged] string eventSourceName,
             EventLogType logType
         )
         {
-            if (logType == EventLogType.Unknown || logType == EventLogType.None)
-                return;
+            var result = false;
 
             try
             {
+                if (logType == EventLogType.Unknown || logType == EventLogType.None)
+                    return;
+
                 System.Diagnostics.Debug.WriteLine(
                     "EventLogManager.Initialize: Checking whether the value of the required method parameter, 'eventSourceName' parameter is null or consists solely of whitespace..."
                 );

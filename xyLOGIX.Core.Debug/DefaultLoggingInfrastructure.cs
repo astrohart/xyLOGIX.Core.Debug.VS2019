@@ -25,27 +25,27 @@ namespace xyLOGIX.Core.Debug
         private string _logFilePathnameToUse = "";
 
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure" /> class.
+        /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
         [Log(AttributeExclude = true)]
         static DefaultLoggingInfrastructure() { }
 
         /// <summary>
-        /// Initializes a new instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure" /> and returns a
-        /// reference to it.
+        /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        /// <remarks>
-        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
-        /// due to the fact that this class is marked <see langword="abstract" />.
-        /// </remarks>
         [Log(AttributeExclude = true)]
-        public DefaultLoggingInfrastructure() { }
+        protected DefaultLoggingInfrastructure() { }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.Default" /> logging
+        /// infrastructure type value.
+        /// </summary>
+        public static ILoggingInfrastructure Instance
+        {
+            [DebuggerStepThrough] get;
+        } = new DefaultLoggingInfrastructure();
 
         /// <summary>
         /// Gets a value indicating whether the current application is a console
@@ -167,8 +167,8 @@ namespace xyLOGIX.Core.Debug
                 if (!string.IsNullOrWhiteSpace(logFileName) &&
                     File.Exists(logFileName))
                     logFilePathnameToUse = LogFileName = logFileName;
-                else if (!string.IsNullOrWhiteSpace(LogFileName)
-                         && File.Exists(LogFileName))
+                else if (!string.IsNullOrWhiteSpace(LogFileName) &&
+                         File.Exists(LogFileName))
                     logFilePathnameToUse = LogFileName;
                 else
                     return;
@@ -211,7 +211,8 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.DeleteLogIfExists *** SUCCESS *** The file having pathname, '{logFilePathnameToUse}', was found on the file system.  Proceeding..."
                 );
 
-                var logFileDirectoryPath = Path.GetDirectoryName(logFilePathnameToUse);
+                var logFileDirectoryPath =
+                    Path.GetDirectoryName(logFilePathnameToUse);
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the variable, 'logFileDirectoryPath', has a null reference for a value, or is blank..."
@@ -426,7 +427,11 @@ namespace xyLOGIX.Core.Debug
         /// interface. Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
-        public virtual void InitializeLogging(
+        /// <returns>
+        /// <see langword="true" /> if the logging subsystem initialization
+        /// process completed successfully; <see langword="false" /> otherwise.
+        /// </returns>
+        public virtual bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
             string configurationFileName = "",
@@ -446,7 +451,9 @@ namespace xyLOGIX.Core.Debug
                 Setup.EventLogging(applicationName);
 
                 var configuratorType =
-                    Determine.LoggingConfiguratorTypeToUse(logFilePathnameToUse);
+                    Determine.LoggingConfiguratorTypeToUse(
+                        logFilePathnameToUse
+                    );
 
                 // Dump the variable type to the Debug output
                 System.Diagnostics.Debug.WriteLine(
@@ -508,8 +515,9 @@ namespace xyLOGIX.Core.Debug
                 // and then terminate the execution of this method.
                 if (!configurator.Configure(
                         muteDebugLevelIfReleaseMode, overwrite,
-                        configurationFileName, muteConsole, logFilePathnameToUse,
-                        verbosity, applicationName, repository
+                        configurationFileName, muteConsole,
+                        logFilePathnameToUse, verbosity, applicationName,
+                        repository
                     ))
                 {
                     // The logging subsystem could NOT be properly configured.  This is not desirable.
@@ -651,9 +659,9 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.MuteConsole = {DebugUtils.MuteConsole}"
                 );
 
-                // Dump the variable DebugUtils.InfrastructureType to the Debug output
+                // Dump the variable DebugUtils.Type to the Debug output
                 System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.InfrastructureType = '{DebugUtils.InfrastructureType}'"
+                    $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Type = '{DebugUtils.InfrastructureType}'"
                 );
 
                 // Dump the variable DebugUtils.LogFileName to the Debug output

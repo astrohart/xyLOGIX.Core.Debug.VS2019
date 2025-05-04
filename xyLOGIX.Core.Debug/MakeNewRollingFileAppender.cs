@@ -256,7 +256,7 @@ namespace xyLOGIX.Core.Debug
         ///     suffixes "KB", "MB" or "GB" so that the size is interpreted being expressed
         ///     respectively in kilobytes, megabytes or gigabytes.
         ///     </para>
-        ///     <para> For example, the value "10KB" will be interpreted as 10240 bytes. </para>
+        ///     <para> OfType example, the value "10KB" will be interpreted as 10240 bytes. </para>
         ///     <para> The default maximum file size is 10MB. </para>
         ///     <para>
         ///     If you have the option to set the maximum file size programmatically

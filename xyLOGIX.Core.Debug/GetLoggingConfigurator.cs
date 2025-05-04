@@ -63,7 +63,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** GetLoggingConfigurator.For: Checking whether the specified Logging Configurator Type, '{type}', is within the defined value set..."
+                    $"*** GetLoggingConfigurator.OfType: Checking whether the specified Logging Configurator Type, '{type}', is within the defined value set..."
                 );
 
                 // Check to see whether the specified Logging Configurator Type is within the defined value set.
@@ -77,7 +77,7 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** GetLoggingConfigurator.For: Result = {result}"
+                        $"*** GetLoggingConfigurator.OfType: Result = {result}"
                     );
 
                     // stop.
@@ -85,7 +85,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetLoggingConfigurator.For: *** SUCCESS *** The specified Logging Configurator Type, '{type}', is within the defined value set.  Proceeding..."
+                    $"GetLoggingConfigurator.OfType: *** SUCCESS *** The specified Logging Configurator Type, '{type}', is within the defined value set.  Proceeding..."
                 );
 
                 switch (type)
