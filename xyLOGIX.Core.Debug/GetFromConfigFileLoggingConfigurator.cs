@@ -48,7 +48,7 @@ namespace xyLOGIX.Core.Debug
             catch (Exception ex)
             {
                 // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = default;
             }
