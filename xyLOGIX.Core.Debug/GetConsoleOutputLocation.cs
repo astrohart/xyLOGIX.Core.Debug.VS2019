@@ -36,6 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// console window, if present.
         /// </returns>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static IOutputLocation SoleInstance()
             => ConsoleOutputLocation.Instance;
     }
