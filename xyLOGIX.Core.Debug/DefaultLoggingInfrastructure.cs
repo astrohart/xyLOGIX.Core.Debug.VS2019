@@ -442,13 +442,43 @@ namespace xyLOGIX.Core.Debug
             ILoggerRepository repository = null
         )
         {
+            var result = false;
+
             try
             {
                 System.Diagnostics.Debug.WriteLine(
                     $"DefaultLoggingInfrastructure.InitializeLogging: *** FYI *** Setting up an Event Source of the name '{applicationName}'..."
                 );
 
-                Setup.EventLogging(applicationName);
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the event log was configured properly..."
+                );
+
+                // Check to see whether the event log was configured properly.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!Setup.EventLogging(applicationName))
+                {
+                    // The event log could NOT be configured properly.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The event log could NOT be configured properly.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.InitializeLogging: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The event log was configured properly.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Determining the type of Logging Configurator that is to be utilized..."
+                );
 
                 var configuratorType =
                     Determine.LoggingConfiguratorTypeToUse(
@@ -474,44 +504,57 @@ namespace xyLOGIX.Core.Debug
                         $"*** ERROR: The configurator type, '{configuratorType}', is NOT within the defined value set.  Stopping..."
                     );
 
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.InitializeLogging: Result = {result}"
+                    );
+
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
                     $"DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The configurator type, '{configuratorType}', is within the defined value set.  Proceeding..."
                 );
 
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to get a reference to the logging configurator of type '{configuratorType}'..."
+                );
+
                 var configurator = GetLoggingConfigurator.For(configuratorType);
 
                 System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the variable 'configurator' has a null reference for a value..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'configurator', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, configurator, is null. If it is,
-                // send an error to the Debug output and quit, returning from the method.
+                // Check to see if the variable, 'configurator', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
                 if (configurator == null)
                 {
-                    // the variable configurator is required to have a valid object reference.
+                    // The variable, 'configurator', has a null reference for a value.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR ***  The 'configurator' variable has a null reference.  Stopping..."
+                        "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR ***  The variable, 'configurator', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.InitializeLogging: Result = {result}"
                     );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
-                // We can use the variable, configurator, because it's not set to a null reference.
+                // We can use the variable, 'configurator', because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'configurator' variable has a valid object reference for its value.  Proceeding..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The variable, 'configurator', has a valid object reference for its value.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** DefaultLoggingInfrastructure.InitializeLogging: Checking whether the logging subsystem got configured successfully..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the logging subsystem was configured properly..."
                 );
 
-                // Check to see whether the logging subsystem got configured successfully.
-                // If this is not the case, then write an error message to the Debug output
+                // Check to see whether the logging subsystem was configured properly.
+                // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
                 if (!configurator.Configure(
                         muteDebugLevelIfReleaseMode, overwrite,
@@ -520,17 +563,21 @@ namespace xyLOGIX.Core.Debug
                         repository
                     ))
                 {
-                    // The logging subsystem could NOT be properly configured.  This is not desirable.
+                    // The logging subsystem could NOT be configured properly.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The logging subsystem could NOT be properly configured.  Stopping..."
+                        "*** ERROR *** The logging subsystem could NOT be configured properly.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.InitializeLogging: Result = {result}"
                     );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The logging subsystem got configured successfully.  Proceeding..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The logging subsystem was configured properly.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
