@@ -24,6 +24,15 @@ namespace xyLOGIX.Core.Debug
         static GetOutputLocation() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationTypeValidator" /> interface.
+        /// </summary>
+        private static IOutputLocationTypeValidator OutputLocationTypeValidator
+        {
+            [DebuggerStepThrough] get;
+        } = GetOutputLocationTypeValidator.SoleInstance();
+
+        /// <summary>
         /// Obtains a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds
         /// to
@@ -60,29 +69,61 @@ namespace xyLOGIX.Core.Debug
         {
             IOutputLocation result = default;
 
-            if (!Enum.IsDefined(typeof(OutputLocationType), type))
-                return result;
-            if (OutputLocationType.Unknown.Equals(type)) return result;
-
-            switch (type)
+            try
             {
-                case OutputLocationType.Console:
-                    result = GetConsoleOutputLocation.SoleInstance();
-                    break;
+                System.Diagnostics.Debug.WriteLine(
+                    "GetOutputLocation.OfType: Checking whether the type of output location is within the defined value set..."
+                );
 
-                case OutputLocationType.Debug:
-                    result = GetDebugOutputLocation.SoleInstance();
-                    break;
-
-                case OutputLocationType.Trace:
-                    result = GetTraceOutputLocation.SoleInstance();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(
-                        nameof(type), type,
-                        $"The output location, '{type}', is not supported."
+                // Check to see whether the type of output location is within the defined value set.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (!OutputLocationTypeValidator.IsValid(type))
+                {
+                    // The type of output location specified was NOT within the defined value set.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The type of output location, '{type}', was NOT within the defined value set.  Stopping..."
                     );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** GetOutputLocation.OfType: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetOutputLocation.OfType: *** SUCCESS *** The type of output location is within the defined value set.  Proceeding..."
+                );
+
+                switch (type)
+                {
+                    case OutputLocationType.Console:
+                        result = GetConsoleOutputLocation.SoleInstance();
+                        break;
+
+                    case OutputLocationType.Debug:
+                        result = GetDebugOutputLocation.SoleInstance();
+                        break;
+
+                    case OutputLocationType.Trace:
+                        result = GetTraceOutputLocation.SoleInstance();
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(type), type,
+                            $"The specified type of output location, '{type}', is not supported."
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
             }
 
             return result;
