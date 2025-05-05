@@ -127,7 +127,10 @@ namespace xyLOGIX.Core.Debug
         /// specifies the
         /// type of log to send events to.
         /// </param>
-        /// <returns><see langword="true" /> if the operation(s) completed successfully; <see langword="false" /> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true" /> if the operation(s) completed successfully;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
         public bool Initialize(
             [NotLogged] string eventSourceName,
             EventLogType logType
@@ -137,24 +140,60 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (logType == EventLogType.Unknown || logType == EventLogType.None)
-                    return;
+                // Dump the argument of the parameter, eventSourceName, to the Debug output
+                System.Diagnostics.Debug.WriteLine($"EventLogManager.Initialize: eventSourceName = '{eventSourceName}'");
 
                 System.Diagnostics.Debug.WriteLine(
-                    "EventLogManager.Initialize: Checking whether the value of the required method parameter, 'eventSourceName' parameter is null or consists solely of whitespace..."
+                    "EventLogManager.Initialize *** INFO: Checking whether the value of the parameter, 'eventSourceName', is blank..."
                 );
 
+                // Check whether the value of the parameter, 'eventSourceName', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
                 if (string.IsNullOrWhiteSpace(eventSourceName))
                 {
+                    // The parameter, 'eventSourceName' was either passed a null value, or it is blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "EventLogManager.Initialize: *** ERROR *** Null or blank value passed for the parameter, 'eventSourceName'.  Stopping..."
+                        "EventLogManager.Initialize: *** ERROR *** The parameter, 'eventSourceName' was either passed a null value, or it is blank. Stopping..."
                     );
 
-                    return;
+                    System.Diagnostics.Debug.WriteLine(
+                        $"EventLogManager.Initialize: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "EventLogManager.Initialize: *** SUCCESS *** The value of the required parameter, 'eventSourceName', is not blank.  Continuing..."
+                    "*** SUCCESS *** The parameter 'eventSourceName' is not blank.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "EventLogManager.Initialize: Checking whether the 'logType' parameter is set to something OTHER THAN 'Unknown' or 'None'..."
+                );
+
+                // Check to see whether the 'logType' parameter is set to something OTHER THAN 'Unknown' or 'None'.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (logType == EventLogType.Unknown ||
+                    logType == EventLogType.None)
+                {
+                    // The 'logType' parameter is set to either 'Unknown' or 'None'.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'logType' parameter is set to either 'Unknown' or 'None'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** EventLogManager.Initialize: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "EventLogManager.Initialize: *** SUCCESS *** The 'logType' parameter is set to something OTHER THAN 'Unknown' or 'None'.  Proceeding..."
                 );
 
                 // Dump the argument of the parameter, 'logType', to the log
