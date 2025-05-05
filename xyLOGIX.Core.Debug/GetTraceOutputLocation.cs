@@ -39,6 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
         /// </returns>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static IOutputLocation SoleInstance()
             => TraceOutputLocation.Instance;
     }
