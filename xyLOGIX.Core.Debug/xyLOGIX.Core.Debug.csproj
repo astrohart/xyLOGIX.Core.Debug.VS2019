@@ -131,6 +131,7 @@
     <Compile Include="EmergencyStopPendingEventHandler.cs" />
     <Compile Include="EventLogManager.cs" />
     <Compile Include="EventLogType.cs" />
+    <Compile Include="EventLogTypeValidator.cs" />
     <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="ExceptionLoggedEventArgs.cs" />
     <Compile Include="ExceptionLoggedEventHandler.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="GetDefaultLoggingInfrastructure.cs" />
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
+    <Compile Include="GetEventLogTypeValidator.cs" />
     <Compile Include="GetFileBasedXmlLoggingConfigurator.cs" />
     <Compile Include="GetFromConfigFileLoggingConfigurator.cs" />
     <Compile Include="GetFromLogManagerRootLoggerProvisioner.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="GetNoFileXmlLoggingConfigurator.cs" />
     <Compile Include="GetOutputLocation.cs" />
     <Compile Include="GetOutputLocationProvider.cs" />
+    <Compile Include="GetOutputLocationTypeValidator.cs" />
     <Compile Include="GetPatternLayout.cs" />
     <Compile Include="GetPostSharpLoggingInfrastructure.cs" />
     <Compile Include="GetProgrammaticLoggingConfigurator.cs" />
@@ -170,7 +173,9 @@
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="IEventLogManager.cs" />
+    <Compile Include="IEventLogTypeValidator.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
+    <Compile Include="IOutputLocationTypeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
@@ -190,6 +195,7 @@
     <Compile Include="OutputLocationBase.cs" />
     <Compile Include="OutputLocationProvider.cs" />
     <Compile Include="OutputLocationType.cs" />
+    <Compile Include="OutputLocationTypeValidator.cs" />
     <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
     <Compile Include="RootLoggerProvisionerBase.cs" />
