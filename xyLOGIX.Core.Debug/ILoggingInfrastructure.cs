@@ -31,7 +31,12 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
         /// pathname of a file to which the log is being written.
         /// </param>
-        void DeleteLogIfExists(string logFileName = "");
+        /// <returns>
+        /// <see langword="true" /> if the existing log file was already gone from
+        /// the file system, or if it could be deleted successfully;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
+        bool DeleteLogIfExists(string logFileName = "");
 
         /// <summary>
         /// Gets the value of the
@@ -148,7 +153,7 @@ namespace xyLOGIX.Core.Debug
         /// If set to <see langword="true" />, suppresses all
         /// console output.
         /// </param>
-        void SetUpDebugUtils(
+        bool SetUpDebugUtils(
             bool muteDebugLevelIfReleaseMode,
             bool isLogging = true,
             bool consoleOnly = false,

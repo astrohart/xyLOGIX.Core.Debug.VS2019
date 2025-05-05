@@ -141,164 +141,6 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough] get;
         } = LoggingInfrastructureType.Default;
 
-        /// <summary> Deletes the log file, if it exists. </summary>
-        /// <param name="logFileName">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file to which the log is being written.
-        /// </param>
-        public virtual void DeleteLogIfExists(
-            [NotLogged] string logFileName = ""
-        )
-        {
-            try
-            {
-                var logFilePathnameToUse = string.Empty;
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** FYI *** Attempting to delete the log file, '{logFilePathnameToUse}', if it exists..."
-                );
-
-                /*
-                 * Determine the fully-qualified pathname of the log file that is to be deleted.
-                 *
-                 * If we are unable to do that, then simply give up.
-                 */
-
-                if (!string.IsNullOrWhiteSpace(logFileName) &&
-                    File.Exists(logFileName))
-                    logFilePathnameToUse = LogFileName = logFileName;
-                else if (!string.IsNullOrWhiteSpace(LogFileName) &&
-                         File.Exists(LogFileName))
-                    logFilePathnameToUse = LogFileName;
-                else
-                    return;
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the value of the required method parameter, 'logFilePathnameToUse' parameter is null or consists solely of whitespace..."
-                );
-
-                if (string.IsNullOrWhiteSpace(logFilePathnameToUse))
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        "DefaultLoggingInfrastructure.DeleteLogIfExists: *** ERROR *** Null or blank value passed for the parameter, 'logFilePathnameToUse'.  Stopping..."
-                    );
-
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** The value of the required parameter, 'logFilePathnameToUse', is not blank.  Continuing..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** INFO: Checking whether the file having pathname, '{logFilePathnameToUse}', exists on the file system..."
-                );
-
-                // Check whether a file having pathname, 'logFilePathnameToUse', exists on the file system.
-                // If it does not, then write an error message to the Debug output, and then terminate
-                // the execution of this method.
-                if (!File.Exists(logFilePathnameToUse))
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** ERROR *** The system could not locate the file having pathname, '{logFilePathnameToUse}', on the file system.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** SUCCESS *** The file having pathname, '{logFilePathnameToUse}', was found on the file system.  Proceeding..."
-                );
-
-                var logFileDirectoryPath =
-                    Path.GetDirectoryName(logFilePathnameToUse);
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the variable, 'logFileDirectoryPath', has a null reference for a value, or is blank..."
-                );
-
-                // Check to see if the required variable, 'logFileDirectoryPath', is null or blank. If it is, 
-                // then send an  error to the Debug output and then terminate the execution of this
-                // method.
-                if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
-                {
-                    // the variable logFileDirectoryPath is required.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DefaultLoggingInfrastructure.DeleteLogIfExists: *** ERROR *** The variable, 'logFileDirectoryPath', has a null reference or is blank.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** {logFileDirectoryPath.Length} B of data appear to be present in the variable, 'logFileDirectoryPath'.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** INFO: Checking whether the folder with path, '{logFileDirectoryPath}', exists on the file system..."
-                );
-
-                // Check whether a folder having the path, 'logFileDirectoryPath', exists on the file system.
-                // If it does not, then write an error message to the Debug output, and then terminate
-                // the execution of this method.
-                if (!Directory.Exists(logFileDirectoryPath))
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** ERROR *** The system could not locate the folder having the path, '{logFileDirectoryPath}', on the file system.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** The folder with path, '{logFileDirectoryPath}', was found on the file system.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"*** DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the folder, '{logFileDirectoryPath}', is writeable..."
-                );
-
-                // Check to see whether the folder having the pathname, 'logFileDirectoryPath', is writeable.
-                // If this is not the case, then write an error message to the Debug output
-                // and then terminate the execution of this method.
-                if (!DebugFileAndFolderHelper.IsFolderWriteable(
-                        logFileDirectoryPath
-                    ))
-                {
-                    // The folder having the pathname, 'logFileDirectoryPath', is NOT writeable.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** ERROR: The folder, '{logFileDirectoryPath}', is NOT writeable.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** The folder, '{logFileDirectoryPath}', is writeable.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** DELETING the file, '{logFilePathnameToUse}'..."
-                );
-
-                File.Delete(logFilePathnameToUse);
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-
-            // Dump the value of the property, LogFileName, to the Debug output
-            System.Diagnostics.Debug.WriteLine(
-                $"DefaultLoggingInfrastructure.DeleteLogIfExists: LogFileName = '{LogFileName}'"
-            );
-        }
-
         /// <summary>
         /// Gets the value of the
         /// <see cref="P:log4net.Appender.FileAppender.File" /> property from the first
@@ -422,10 +264,13 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object
-        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
-        /// interface. Supply a value for this parameter if your infrastructure is not
-        /// utilizing the default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default <c>HierarchyRepository</c>.
+        /// <para />
+        /// The default value of this parameter is a <see langword="null" /> reference.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem initialization
@@ -584,36 +429,53 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Initializing the settings of the DebugUtils class..."
                 );
 
-                SetUpDebugUtils(
-                    muteDebugLevelIfReleaseMode, true, false, verbosity,
-                    muteConsole
-                );
-
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Checking whether we're using PostSharp..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the debug utilities object could be properly configured..."
                 );
 
-                if (Type != LoggingInfrastructureType.PostSharp)
+                // Check to see whether the debug utilities object could be properly configured.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!SetUpDebugUtils(
+                        muteDebugLevelIfReleaseMode, true, false, verbosity,
+                        muteConsole
+                    ))
                 {
+                    // The debug utilities object was NOT properly configured.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** FYI *** We're not using PostSharp.  Preparing the log file..."
+                        "*** ERROR *** The debug utilities object was NOT properly configured.  Stopping..."
                     );
 
-                    PrepareLogFile(repository);
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.InitializeLogging: Result = {result}"
+                    );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** We're using PostSharp.  Proceeding..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The debug utilities object was properly configured.  Proceeding..."
                 );
+
+                /*
+                 * NOTE: DO NOT call OnLoggingInitializationFinished from here.  ALWAYS
+                 * call such a method in the OVERRIDES of this method, ONLY.
+                 */
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output
                 System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DefaultLoggingInfrastructure.InitializeLogging: Result = {result}"
+            );
+
+            return result;
         }
 
         /// <summary>
@@ -657,7 +519,12 @@ namespace xyLOGIX.Core.Debug
         /// If set to <see langword="true" />, suppresses all
         /// console output.
         /// </param>
-        public virtual void SetUpDebugUtils(
+        /// <returns>
+        /// <see langword="true" /> if the
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class could be configured
+        /// properly; <see langword="false" /> otherwise.
+        /// </returns>
+        public virtual bool SetUpDebugUtils(
             bool muteDebugLevelIfReleaseMode,
             bool isLogging = true,
             bool consoleOnly = false,
@@ -665,6 +532,8 @@ namespace xyLOGIX.Core.Debug
             bool muteConsole = false
         )
         {
+            var result = false;
+
             try
             {
                 DebugUtils.IsLogging = isLogging;
@@ -682,7 +551,9 @@ namespace xyLOGIX.Core.Debug
                 // do not print anything in this method if verbosity is set to
                 // anything less than 2
                 if (DebugUtils.Verbosity < 2)
-                    return;
+                {
+                    return true;
+                }
 
                 // dump the properties of DebugUtils to the Debug output
 
@@ -720,12 +591,256 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(
                     $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Verbosity = {DebugUtils.Verbosity}"
                 );
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output
                 System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DefaultLoggingInfrastructure.SetUpDebugUtils: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary> Deletes the log file, if it exists. </summary>
+        /// <param name="logFileName">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a file to which the log is being written.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the existing log file was already gone from
+        /// the file system, or if it could be deleted successfully;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
+        public virtual bool DeleteLogIfExists(
+            [NotLogged] string logFileName = ""
+        )
+        {
+            var result = false;
+
+            try
+            {
+                var logFilePathnameToUse = string.Empty;
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to determine the correct fully-qualified pathname to use for the existing log file (if any)..."
+                );
+
+                /*
+                 * Determine the fully-qualified pathname of the log file that is to be deleted.
+                 *
+                 * If we are unable to do that, then simply give up.
+                 */
+
+                if (!string.IsNullOrWhiteSpace(logFileName) &&
+                    File.Exists(logFileName))
+                {
+                    System.Diagnostics.Debug.WriteLine($"*** FYI *** The value, '{logFileName}', passed for the parameter, 'logFileName', was not blank and it listed the fully-qualified pathname of an existing log file.  Using it...");
+
+                    logFilePathnameToUse = LogFileName = logFileName;
+                }
+                else if (!string.IsNullOrWhiteSpace(LogFileName) &&
+                         File.Exists(LogFileName))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** FYI *** The 'logFileName' parameter was blank, but not the 'LogFileName' property, and the value of that property is the fully-qualified pathname of an existing log file.  Using it..."
+                    );
+
+                    logFilePathnameToUse = LogFileName;
+                }
+                else
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        $"*** ERROR *** Could not determine the correct value to use for the fully-qualified pathname of the existing log file (if any).  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: logFilePathnameToUse = '{logFilePathnameToUse}'"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the variable, 'logFilePathnameToUse', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'logFilePathnameToUse', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(logFilePathnameToUse))
+                {
+                    // The variable, 'logFilePathnameToUse', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DefaultLoggingInfrastructure.DeleteLogIfExists: *** ERROR *** The variable, 'logFilePathnameToUse', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** {logFilePathnameToUse.Length} B of data appear to be present in the variable, 'logFilePathnameToUse'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** INFO: Checking whether the file having pathname, '{logFilePathnameToUse}', exists on the file system..."
+                );
+
+                // Check whether a file having pathname, 'logFilePathnameToUse', exists on the file system.
+                // If it does not, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
+                if (!File.Exists(logFilePathnameToUse))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The system could not locate the file having pathname, '{logFilePathnameToUse}', on the file system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** SUCCESS *** The file having pathname, '{logFilePathnameToUse}', was found on the file system.  Proceeding..."
+                );
+
+                var logFileDirectoryPath =
+                    Path.GetDirectoryName(logFilePathnameToUse);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the variable, 'logFileDirectoryPath', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'logFileDirectoryPath', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
+                {
+                    // The variable, 'logFileDirectoryPath', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DefaultLoggingInfrastructure.DeleteLogIfExists: *** ERROR *** The variable, 'logFileDirectoryPath', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** {logFileDirectoryPath.Length} B of data appear to be present in the variable, 'logFileDirectoryPath'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** INFO: Checking whether the folder having pathname, '{logFileDirectoryPath}', exists on the folder system..."
+                );
+
+                // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the folder system.
+                // If it does not, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
+                if (!Directory.Exists(logFileDirectoryPath))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The system could not locate the folder having pathname, '{logFileDirectoryPath}', on the folder system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists *** SUCCESS *** The folder having pathname, '{logFileDirectoryPath}', was found on the folder system.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: Checking whether the folder, '{logFileDirectoryPath}', is writeable by the current user..."
+                );
+
+                // Check to see whether the folder is writeable by the current user.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!DebugFileAndFolderHelper.IsFolderWriteable(logFileDirectoryPath))
+                {
+                    // The folder is NOT writeable by the current user.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The folder, '{logFileDirectoryPath}', is NOT writeable by the current user.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.DeleteLogIfExists: *** SUCCESS *** The folder, '{logFileDirectoryPath}', is writeable by the current user.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** DELETING the file, '{logFilePathnameToUse}'..."
+                );
+
+                File.Delete(logFilePathnameToUse);
+
+                System.Diagnostics.Debug.WriteLine(
+                    !File.Exists(logFileDirectoryPath)
+                        ? $"*** SUCCESS *** DELETED the file, '{logFilePathnameToUse}'.  Proceeding..."
+                        : $"*** ERROR *** FAILED to delete the file, '{logFilePathnameToUse}'.  Stopping..."
+                );
+
+                /*
+                 * Returning TRUE, for success, means that the file was deleted.
+                 */
+
+                result = !File.Exists(logFilePathnameToUse);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine($"DefaultLoggingInfrastructure.DeleteLogIfExists: Result = {result}");
+
+            return result;
         }
 
         /// <summary>
@@ -751,6 +866,8 @@ namespace xyLOGIX.Core.Debug
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
 
+        public event EventHandler LoggingInitializationFinished;
+
         /// <summary>
         /// Raises the
         /// <see
@@ -766,6 +883,90 @@ namespace xyLOGIX.Core.Debug
             => LogFileNameChanged?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
+        /// Raises the
+        /// <see
+        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LoggingInitializationFinished" />
+        /// event.
+        /// </summary>
+        /// <param name="repository">
+        /// (Optional.) Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default <c>HierarchyRepository</c>.
+        /// <para />
+        /// The default value of this parameter is a <see langword="null" /> reference.
+        /// </param>
+        protected virtual bool OnLoggingInitializationFinished(
+            bool overwrite = true,
+            ILoggerRepository repository = null
+        )
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Checking whether we're using PostSharp..."
+                );
+
+                if (!Type.Equals(LoggingInfrastructureType.PostSharp))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** We're not using PostSharp.  Preparing the log file..."
+                    );
+
+                    result = PrepareLogFile(repository);
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** Raising the 'LoggingInitializationFinished' event..."
+                    );
+
+                    LoggingInitializationFinished?.Invoke(
+                        this, EventArgs.Empty
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.OnLoggingInitializationFinished: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** We're using PostSharp.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Raising the 'LoggingInitializationFinished' event..."
+                );
+
+                LoggingInitializationFinished?.Invoke(this, EventArgs.Empty);
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DefaultLoggingInfrastructure.OnLoggingInitializationFinished: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
         /// Prepares the log file by ensuring that the containing folder is
         /// writeable by the current user and by then, if specified to overwrite, deleting
         /// the current log file.
@@ -776,10 +977,16 @@ namespace xyLOGIX.Core.Debug
         /// interface. Supply a value for this parameter if your infrastructure is not
         /// utilizing the default HierarchicalRepository.
         /// </param>
-        protected virtual void PrepareLogFile(
+        /// <returns>
+        /// <see langword="true" /> if the log file has been prepared
+        /// successfully; <see langword="false" /> otherwise.
+        /// </returns>
+        protected virtual bool PrepareLogFile(
             [NotLogged] ILoggerRepository repository
         )
         {
+            var result = false;
+
             try
             {
                 /*
@@ -788,21 +995,103 @@ namespace xyLOGIX.Core.Debug
                  * session, with the same app.
                  *
                  * Therefore, if we are logging to the console only, then there is nothing for
-                 * us to do here.
+                 * us to do here -- but return TRUE all the same, to indicate success.
                  */
 
-                if (LoggingServices.DefaultBackend is ConsoleLoggingBackend)
-                    return;
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the logging backend is NOT the console..."
+                );
 
-                var logFileDirectoryPath = Path.GetDirectoryName(LogFileName);
-                if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
+                // Check to see whether the logging backend is NOT the console.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (LoggingServices.DefaultBackend is ConsoleLoggingBackend)
                 {
+                    // The logging backend is the console.  There is nothing to do.
                     System.Diagnostics.Debug.WriteLine(
-                        "DefaultLoggingInfrastructure.PrepareLogFile: Unable to determine the path to the log file's containing folder."
+                        "*** FYI *** The logging backend is the console.  There is nothing to do.  Stopping..."
                     );
-                    return;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.PrepareLogFile: Result = {true}"
+                    );
+
+                    // stop.
+                    return true;
                 }
 
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The logging backend is NOT the console.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'LogFileName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'LogFileName', appears to have a null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(LogFileName))
+                {
+                    // The property, 'LogFileName', appears to have a null or blank value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'LogFileName', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'LogFileName', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to obtain the fully-qualified pathname of the folder that is meant to hold the log file(s)..."
+                );
+
+                var logFileDirectoryPath = Path.GetDirectoryName(LogFileName);
+
+                // Dump the value of the variable, logFileDirectoryPath, to the Debug output
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: logFileDirectoryPath = '{logFileDirectoryPath}'"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'logFileDirectoryPath', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'logFileDirectoryPath', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
+                {
+                    // The variable, 'logFileDirectoryPath', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The variable, 'logFileDirectoryPath', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** {logFileDirectoryPath.Length} B of data appear to be present in the variable, 'logFileDirectoryPath'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Determining the fully-qualified pathname of the parent folder of that which is destined to hold the log file..."
+                );
 
                 var logFileDirectoryParent =
                     Path.GetDirectoryName(logFileDirectoryPath);
@@ -812,18 +1101,44 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.PrepareLogFile: logFileDirectoryParent = '{logFileDirectoryParent}'"
                 );
 
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'logFileDirectoryParent', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'logFileDirectoryParent', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
                 if (string.IsNullOrWhiteSpace(logFileDirectoryParent))
                 {
+                    // The variable, 'logFileDirectoryParent', has a null reference for a value, or is blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "DefaultLoggingInfrastructure.PrepareLogFile: The 'logFileDirectoryParent' variable is blank."
+                        "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The variable, 'logFileDirectoryParent', has a null reference for a value, or is blank.  Stopping..."
                     );
-                    return;
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
                 }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** {logFileDirectoryParent.Length} B of data appear to be present in the variable, 'logFileDirectoryParent'.  Proceeding..."
+                );
 
                 System.Diagnostics.Debug.WriteLine(
                     $"DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the folder '{logFileDirectoryParent}' exists..."
                 );
 
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.PrepareLogFile *** INFO: Checking whether the folder having pathname, '{logFileDirectoryParent}', exists on the file system..."
+                );
+
+                // Check whether a folder having pathname, 'logFileDirectoryParent', exists on the file system.
+                // If it does not, then write an error message to the log file, and then terminate
+                // the execution of this method, returning the default return value.
                 if (!Directory.Exists(logFileDirectoryParent))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -832,47 +1147,154 @@ namespace xyLOGIX.Core.Debug
 
                     Directory.CreateDirectory(logFileDirectoryParent);
 
-                    DebugUtils.WriteLine(
-                        Directory.Exists(logFileDirectoryParent)
-                            ? DebugLevel.Info
-                            : DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         Directory.Exists(logFileDirectoryParent)
                             ? $"*** SUCCESS *** Created the folder, '{logFileDirectoryParent}', on the file system.  Proceeding..."
                             : $"*** ERROR *** FAILED to create the folder, '{logFileDirectoryParent}', on the file system.  Stopping..."
                     );
 
-                    if (!Directory.Exists(logFileDirectoryParent)) return;
+                    // Check whether a folder having pathname, 'logFileDirectoryParent', exists on the file system.
+                    // If it does not, then terminate the execution of this method, returning the default return
+                    // value.
+                    if (!Directory.Exists(logFileDirectoryParent))
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            $"*** DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+                        );
+
+                        // stop.
+                        return result;
+                    }
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** SUCCESS *** The folder, '{logFileDirectoryParent}', exists."
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The folder having pathname, '{logFileDirectoryParent}', was found on the file system.  Proceeding..."
                 );
 
-                // Check if the user has write access to the parent folder of the
-                // log file; if not, then throw UnauthorizedAccessException
+                System.Diagnostics.Debug.WriteLine(
+                    $@"*** FYI *** Checking whether the current user, '{Environment.UserDomainName}\{Environment.UserName}', has write privileges to the folder, '{logFileDirectoryParent}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $@"DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the user, '{Environment.UserDomainName}\{Environment.UserName}', has write privileges to the folder, '{logFileDirectoryParent}'..."
+                );
+
+                // Check to see whether the user has write access to the folder,
+                // 'logFileDirectoryParent'.  If this is not the case, then write
+                // an error message to the Debug output, and then throw
+                // UnauthorizedAccessException.
                 if (!DebugFileAndFolderHelper.IsFolderWriteable(
                         logFileDirectoryParent
                     ))
                 {
+                    // The current user does NOT have write access to the folder.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $@"*** ERROR *** The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'.  Stopping..."
+                    );
+
                     throw new UnauthorizedAccessException(
-                        $@"DefaultLoggingInfrastructure.InitializeLogging: The user, '{Environment.UserDomainName}\{Environment.UserName}', does not have write-level access to the folder, '{logFileDirectoryParent}'."
+                        $@"The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'."
                     );
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"DefaultLoggingInfrastructure.PrepareLogFile: Ensuring that the folder '{logFileDirectoryPath}' exists..."
+                    $@"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The user, '{Environment.UserDomainName}\{Environment.UserName}' has write access to the folder.  Proceeding..."
+                );
+
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.PrepareLogFile *** INFO: Checking whether the folder having pathname, '{logFileDirectoryPath}', exists on the file system..."
+                );
+
+                // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the file system.
+                // If it does not, then write an error message to the log file, and then attempt to create it.
+                // After we attempt to create it, we will check again whether it exists.
+                if (!Directory.Exists(logFileDirectoryPath))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The system could not locate the folder having pathname, '{logFileDirectoryPath}', on the file system.  Creating it..."
+                    );
+
+                    Directory.CreateDirectory(logFileDirectoryPath);
+
+                    System.Diagnostics.Debug.WriteLine(
+                        Directory.Exists(logFileDirectoryPath)
+                            ? $"*** SUCCESS *** Created the folder, '{logFileDirectoryPath}', on the file system.  Proceeding..."
+                            : $"*** ERROR *** FAILED to create the folder, '{logFileDirectoryPath}', on the file system.  Stopping..."
+                    );
+
+                    // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the file system.
+                    // If it does not, then terminate the execution of this method, returning the default return
+                    // value.
+                    if (!Directory.Exists(logFileDirectoryPath))
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            $"*** DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+                        );
+
+                        // stop.
+                        return result;
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The folder having pathname, '{logFileDirectoryPath}', was found on the file system.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to get a reference to the first FileAppender configured..."
+                );
+
+                var firstAppender =
+                    FileAppenderManager.GetFirstAppender(repository);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'firstAppender', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'firstAppender', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (firstAppender == null)
+                {
+                    // The variable, 'firstAppender', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR ***  The variable, 'firstAppender', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'firstAppender', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The variable, 'firstAppender', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to set minimal locking for the FileAppender, '{firstAppender.Name}'..."
                 );
 
                 // minimize locking issues
-                FileAppenderConfigurator.SetMinimalLock(
-                    FileAppenderManager.GetFirstAppender(repository)
-                );
+                result = FileAppenderConfigurator.SetMinimalLock(firstAppender);
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output
                 System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DefaultLoggingInfrastructure.PrepareLogFile: Result = {result}"
+            );
+
+            return result;
         }
 
         /// <summary> Writes a date and time stamp to the top of the log file. </summary>

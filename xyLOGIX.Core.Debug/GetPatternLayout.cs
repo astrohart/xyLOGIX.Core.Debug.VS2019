@@ -43,25 +43,69 @@ namespace xyLOGIX.Core.Debug
             string conversionPattern
         )
         {
-            PatternLayout layout;
+            PatternLayout result = default;
 
             try
             {
-                layout = new PatternLayout
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to create a new PatternLayout instance with the conversion pattern, '{conversionPattern}'..."
+                );
+
+                var newPatternLayout =
+                    MakeNewPatternLayout.HavingConversionPattern(
+                        conversionPattern
+                    );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetPatternLayout.ForConversionPattern: Checking whether the variable, 'newPatternLayout', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'newPatternLayout', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (newPatternLayout == null)
                 {
-                    ConversionPattern = conversionPattern
-                };
-                layout.ActivateOptions();
+                    // The variable, 'newPatternLayout', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "GetPatternLayout.ForConversionPattern: *** ERROR ***  The variable, 'newPatternLayout', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** GetPatternLayout.ForConversionPattern: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'newPatternLayout', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "GetPatternLayout.ForConversionPattern: *** SUCCESS *** The variable, 'newPatternLayout', has a valid object reference for its value.  Proceeding..."
+                );
+
+                newPatternLayout.ActivateOptions();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetPatternLayout.ForConversionPattern: *** SUCCESS *** The options for the new PatternLayout instance have been activated.  Proceeding..."
+                );
+
+                result = newPatternLayout;
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the log
                 System.Diagnostics.Debug.WriteLine(ex);
 
-                layout = default;
+                result = default;
             }
 
-            return layout;
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to a newly-activated PatternLayout having the conversion pattern, '{conversionPattern}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to a newly-activated PatternLayout having the conversion pattern, '{conversionPattern}'.  Stopping..."
+            );
+
+            return result;
         }
     }
 }

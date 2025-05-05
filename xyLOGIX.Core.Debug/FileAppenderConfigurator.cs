@@ -29,18 +29,84 @@ namespace xyLOGIX.Core.Debug
         /// Reference to an instance of an object of type
         /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if the instance of the object
-        /// referenced by <paramref name="appender" /> is <see langword="null" />.
-        /// </exception>
-        public static void SetMinimalLock(FileAppender appender)
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed as the argument of
+        /// the <paramref name="appender" /> parameter, then this method does nothing, but
+        /// does return <see langword="false" />.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if locking was configured properly for the
+        /// specified file <paramref name="appender" />; <see langword="false" />
+        /// otherwise.
+        /// </returns>
+        public static bool SetMinimalLock(FileAppender appender)
         {
-            if (appender == null)
-                throw new ArgumentNullException(nameof(appender));
+            var result = false;
 
-            appender.ImmediateFlush = true;
-            appender.LockingModel = new FileAppender.MinimalLock();
-            appender.ActivateOptions();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to set minimal lock on appender: {appender.Name}"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "FileAppenderConfigurator.SetMinimalLock: Checking whether the 'appender' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, appender, is null. If it is, send an 
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (appender == null)
+                {
+                    // The parameter, 'appender', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "FileAppenderConfigurator.SetMinimalLock: *** ERROR *** A null reference was passed for the 'appender' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** FileAppenderConfigurator.SetMinimalLock: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "FileAppenderConfigurator.SetMinimalLock: *** SUCCESS *** We have been passed a valid object reference for the 'appender' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Configuring the appender '{appender.Name}' to use the minimal lock option..."
+                );
+
+                appender.ImmediateFlush = true;
+                appender.LockingModel = new FileAppender.MinimalLock();
+                appender.ActivateOptions();
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"FileAppenderConfigurator.SetMinimalLock: *** SUCCESS *** The appender '{appender.Name}' has been configured to use the minimal lock option."
+                );
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"FileAppenderConfigurator.SetMinimalLock: Result = {result}"
+            );
+
+            return result;
         }
     }
 }

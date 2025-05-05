@@ -43,7 +43,10 @@ namespace xyLOGIX.Core.Debug
         /// interface that plays the role of the <c>Hierarchy</c> object that is configured
         /// for logging.
         /// </param>
-        /// <returns></returns>
+        /// <returns>
+        /// <see langword="true" /> if the operation(s) completed successfully;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
         public static bool LoggingForLogFileName(
             string logFileName,
             ILoggerRepository repository
@@ -58,7 +61,31 @@ namespace xyLOGIX.Core.Debug
                     $"Activate.LoggingForLogFileName: logFileName = '{logFileName}'"
                 );
 
-                if (string.IsNullOrWhiteSpace(logFileName)) return result;
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'logFileName', is blank.
+                // If this is so, then emit an error message to the Debug output, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(logFileName))
+                {
+                    // The parameter, 'logFileName' was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Activate.LoggingForLogFileName: *** ERROR *** The parameter, 'logFileName' was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter 'logFileName' is not blank.  Proceeding..."
+                );
 
                 // Dump the parameter, 'repository', to the log.
                 System.Diagnostics.Debug.WriteLine(
@@ -69,14 +96,18 @@ namespace xyLOGIX.Core.Debug
                     "Activate.LoggingForLogFileName: Checking whether the 'repository' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, repository, is null. If it is, send an
-                // error to the log file and quit, returning the default return value of this
-                // method.
+                // Check to see if the required parameter, repository, is null. If it is, send an 
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
                 if (repository == null)
                 {
-                    // the parameter, repository, is required.
+                    // The parameter, 'repository', is required and is not supposed to have a NULL value.
                     System.Diagnostics.Debug.WriteLine(
-                        "Activate.LoggingForLogFileName: *** ERROR *** A null reference was passed for the 'repository' method parameter.  Stopping."
+                        "Activate.LoggingForLogFileName: *** ERROR *** A null reference was passed for the 'repository' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Activate.LoggingForLogFileName: Result = {result}"
                     );
 
                     // stop.
@@ -84,17 +115,17 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Activate.LoggingForLogFileName: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter."
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'..."
+                    "Activate.LoggingForLogFileName: Checking whether the 'repository' parameter is convertible to the type, 'log4net.Repository.Hierarchy.Hierarchy'..."
                 );
 
                 if (!(repository is Hierarchy hierarchy))
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The 'repository' parameter is not of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
+                        "*** ERROR *** The 'repository' parameter is not convertible to the type, 'log4net.Repository.Hierarchy.Hierarchy'.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -109,7 +140,34 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is of the type 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The 'repository' parameter is convertible to the type, 'log4net.Repository.Hierarchy.Hierarchy'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: Checking whether the variable, 'hierarchy', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'hierarchy', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (hierarchy == null)
+                {
+                    // The variable, 'hierarchy', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Activate.LoggingForLogFileName: *** ERROR ***  The variable, 'hierarchy', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'hierarchy', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The variable, 'hierarchy', has a valid object reference for its value.  Proceeding..."
                 );
 
                 /*
@@ -132,17 +190,23 @@ namespace xyLOGIX.Core.Debug
                     $"Activate.LoggingForLogFileName: hierarchy.Configured = {hierarchy.Configured}"
                 );
 
+                // Check whether the logger is already configured.  If this is not
+                // the case, then we can proceed with the configuration code below.
+                // Otherwise, inform the developer that logging is currently configured,
+                // and then terminate the execution of this method, returning TRUE, which
+                // indicates success.
                 if (result = hierarchy.Configured)
                 {
+                    // The logger is already configured.  Therefore, there is nothing more to be done.
                     System.Diagnostics.Debug.WriteLine(
                         "Activate.LoggingForLogFileName: *** SUCCESS *** The logger is already configured.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"Activate.LoggingForLogFileName: Result = {result}"
+                        $"Activate.LoggingForLogFileName: Result = {true}"
                     );
 
-                    return result;
+                    return true;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
@@ -162,35 +226,167 @@ namespace xyLOGIX.Core.Debug
                     GetPatternLayout.ForConversionPattern(
                         "%date %-5level - %message%newline"
                     );
-                if (patternLayout == null) return result;
 
-                var roller = MakeNewRollingFileAppender
-                             .ForRollingStyle(
-                                 RollingFileAppender.RollingMode.Size
-                             )
-                             .AndHavingLogFileName(logFileName)
-                             .WithPatternLayout(patternLayout)
-                             .AndMaximumNumberOfRollingBackups(10)
-                             .WithMaximumFileSizeOf("1GB")
-                             .ThatShouldAppendToFile(true)
-                             .AndThatHasAStaticLogFileName(true);
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: Checking whether the variable, 'patternLayout', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'patternLayout', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (patternLayout == null)
+                {
+                    // The variable, 'patternLayout', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Activate.LoggingForLogFileName: *** ERROR ***  The variable, 'patternLayout', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'patternLayout', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The variable, 'patternLayout', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Setting up a new RollingFileAppender..."
+                );
+
+                var roller =
+                    MakeNewRollingFileAppender.ForRollingStyle(
+                        RollingFileAppender.RollingMode.Size
+                    );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: Checking whether the variable, 'roller', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'roller', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (roller == null)
+                {
+                    // The variable, 'roller', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Activate.LoggingForLogFileName: *** ERROR ***  The variable, 'roller', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'roller', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The variable, 'roller', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Continuing to set up the RollingFileAppender..."
+                );
+
+                roller = roller.SetLogFileNameTo(logFileName)
+                               .WithPatternLayout(patternLayout)
+                               .AndMaximumNumberOfRollingBackups(10)
+                               .WithMaximumFileSizeOf("1GB")
+                               .ThatShouldAppendToFile(true)
+                               .AndThatHasAStaticLogFileName(true);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: Checking whether the variable, 'roller', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'roller', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (roller == null)
+                {
+                    // The variable, 'roller', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Activate.LoggingForLogFileName: *** ERROR ***  The variable, 'roller', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'roller', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The variable, 'roller', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Activating the RollingFileAppender..."
+                );
 
                 roller.ActivateOptions();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: Checking whether the property, 'hierarchy.Root', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'hierarchy.Root', has a null reference for a value. 
+                // If that is the case, then we will write an error message to the Debug output, and then
+                // terminate the execution of this method, while returning the default return value.
+                if (hierarchy.Root == null)
+                {
+                    // The property, 'hierarchy.Root', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Activate.LoggingForLogFileName: *** ERROR *** The property, 'hierarchy.Root', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Activate.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The property, 'hierarchy.Root', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Adding the new RollingFileAppender to the hierarchy..."
+                );
+
                 hierarchy.Root.AddAppender(roller);
 
-                var memory = new MemoryAppender();
-                memory.ActivateOptions();
-                hierarchy.Root.AddAppender(memory);
+                System.Diagnostics.Debug.WriteLine(
+                    "Activate.LoggingForLogFileName: *** SUCCESS *** The new RollingFileAppender has been added to the hierarchy.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Setting the level of the RootLogger to 'ALL'..."
+                );
 
                 hierarchy.Root.Level = Level.All;
-                hierarchy.Configured = true;
 
-                result = hierarchy.Configured;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Marking the Hierarchy as configured..."
+                );
 
-                if (result)
-                    System.Diagnostics.Debug.WriteLine(
-                        "Activate.LoggingForLogFileName: *** SUCCESS *** The logging infrastructure has been configured."
-                    );
+                result = hierarchy.Configured = true;
+
+                System.Diagnostics.Debug.WriteLine(
+                    result
+                        ? "*** SUCCESS *** The logging subsystem has been configured.  Proceeding..."
+                        : "*** ERROR *** FAILED to configure the logging subsystem.  Stopping..."
+                );
             }
             catch (Exception ex)
             {

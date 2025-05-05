@@ -28,6 +28,15 @@ namespace xyLOGIX.Core.Debug
         static MakeNewRollingFileAppender() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingModeValidator" /> interface.
+        /// </summary>
+        private static IRollingModeValidator RollingModeValidator
+        {
+            [DebuggerStepThrough] get;
+        } = GetRollingModeValidator.SoleInstance();
+
+        /// <summary>
         /// Builder extension method that initializes the
         /// <see cref="P:log4net.Appender.RollingFileAppender.File" /> property.
         /// </summary>
@@ -53,7 +62,7 @@ namespace xyLOGIX.Core.Debug
         /// for a value.
         /// </exception>
         [DebuggerStepThrough]
-        public static RollingFileAppender AndHavingLogFileName(
+        public static RollingFileAppender SetLogFileNameTo(
             [NotLogged] this RollingFileAppender self,
             string file
         )
@@ -171,9 +180,9 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Creates a new instance of
         /// <see cref="T:log4net.Appender.RollingFileAppender" /> and initializes it with
-        /// the specified rolling <paramref name="style" />.
+        /// the specified rolling <paramref name="rollingStyle" />.
         /// </summary>
-        /// <param name="style">
+        /// <param name="rollingStyle">
         /// (Required.) One or a combination of the
         /// <see cref="T:log4net.Appender.RollingFileAppender.RollingMode" /> enumeration
         /// values that specifies how the log file should be rolled when it gets too big
@@ -182,14 +191,64 @@ namespace xyLOGIX.Core.Debug
         /// <returns>
         /// If successful, a new instance of
         /// <see cref="T:log4net.Appender.RollingFileAppender" /> and initializes it with
-        /// the specified rolling <paramref name="style" />.  Otherwise,
+        /// the specified rolling <paramref name="rollingStyle" />.  Otherwise,
         /// <see langword="null" /> is returned.
         /// </returns>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static RollingFileAppender ForRollingStyle(
-            RollingFileAppender.RollingMode style
+            RollingFileAppender.RollingMode rollingStyle
         )
-            => new RollingFileAppender { RollingStyle = style };
+        {
+            RollingFileAppender result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"MakeNewRollingFileAppender.ForRollingStyle: Checking whether the specified rolling style, '{rollingStyle}', is valid..."
+                );
+
+                // Check to see whether the specified rolling style, is valid.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!RollingModeValidator.IsValid(rollingStyle))
+                {
+                    // The specified rolling style is NOT valid.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The specified rolling style, '{rollingStyle}', is NOT valid.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** MakeNewRollingFileAppender.ForRollingStyle: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"MakeNewRollingFileAppender.ForRollingStyle: *** SUCCESS *** The specified rolling style, '{rollingStyle}', is valid.  Proceeding..."
+                );
+
+                result =
+                    new RollingFileAppender { RollingStyle = rollingStyle };
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to a new Rolling File Appender having rolling style, '{rollingStyle}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to a new Rolling File Appender having rolling style, '{rollingStyle}'.  Stopping..."
+            );
+
+            return result;
+        }
 
         /// <summary>
         /// Builder extension method that initializes the

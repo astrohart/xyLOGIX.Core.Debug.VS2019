@@ -1,8 +1,7 @@
 ﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
-using PostSharp.Patterns.Diagnostics.Backends.Console;
-using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -25,6 +24,15 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         [Log(AttributeExclude = true)]
         static GetLoggingBackend() { }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingBackendTypeValidator" /> interface.
+        /// </summary>
+        private static ILoggingBackendTypeValidator LoggingBackendTypeValidator
+        {
+            [DebuggerStepThrough] get;
+        } = GetLoggingBackendTypeValidator.SoleInstance();
 
         /// <summary>
         /// Obtains a reference to a new instance of the
@@ -55,21 +63,85 @@ namespace xyLOGIX.Core.Debug
         {
             LoggingBackend result = default;
 
-            if (type == LoggingBackendType.Log4Net && relay == null)
-                throw new InvalidOperationException(
-                    "A value must be passed for the 'relay' parameter when using the LoggingBackendType.Log4Net backend."
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "GetLoggingBackend.For: Checking whether the type of logging backend requested is within the defined value set..."
                 );
 
-            switch (type)
-            {
-                case LoggingBackendType.Console:
-                    result = new ConsoleLoggingBackend();
-                    break;
+                // Check to see whether the type of logging backend requested is within the defined value set.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!LoggingBackendTypeValidator.IsValid(type))
+                {
+                    // The type of logging backend requested is NOT within the defined value set.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The type of logging backend requested is NOT within the defined value set.  Stopping..."
+                    );
 
-                case LoggingBackendType.Log4Net:
-                    result = new Log4NetLoggingBackend(relay);
-                    break;
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetLoggingBackend.For: *** SUCCESS *** The type of logging backend requested is within the defined value set.  Proceeding..."
+                );
+
+                /*
+                 * If log4net is the requested backend, the 'relay'
+                 * parameter must be non-NULL.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetLoggingBackend.For: Checking whether the log4net backend is requested, but a null reference has been passed for the 'relay' parameter..."
+                );
+
+                // Check to see whether the log4net backend is requested, but a null reference has been passed for the 'relay' parameter.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (type == LoggingBackendType.Log4Net && relay == null)
+                {
+                    // The log4net backend is requested, but a  null reference has been passed for the value of the 'relay' parameter.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The log4net backend is requested, but a null reference has been passed for the value of the 'relay' parameter.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetLoggingBackend.For: *** SUCCESS *** Either log4net backend is NOT requested, OR it is, AND a valid object reference has been passed for the 'relay' parameter.  Proceeding..."
+                );
+
+                switch (type)
+                {
+                    case LoggingBackendType.Console:
+                        result = MakeNewConsoleLoggingBackend.FromScratch();
+                        break;
+                    case LoggingBackendType.Log4Net:
+                        result = MakeNewLog4NetLoggingBackend.ForRelay(relay);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(type), type,
+                            $"The requested type of logging backend, '{type}', is not supported at this time."
+                        );
+                }
             }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the desired logging backend, which is of type, '{type}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to a '{type}' logging backend.  Stopping..."
+            );
 
             return result;
         }

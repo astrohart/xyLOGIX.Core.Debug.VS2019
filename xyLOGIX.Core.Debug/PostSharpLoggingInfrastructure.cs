@@ -230,92 +230,135 @@ namespace xyLOGIX.Core.Debug
             ILoggerRepository repository = null
         )
         {
+            var result = false;
+
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether logging has already been set up..."
+                    "*** FYI *** Attempting to configure the logging subsystem for use with PostSharp..."
                 );
 
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the logging subsystem has NOT been configured yet..."
+                );
+
+                // Check to see whether the logging subsystem has NOT been configured yet.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
                 if (Has.LoggingBeenSetUp())
                 {
+                    // The logging subsystem has been configured.  There is nothing left to do.
                     System.Diagnostics.Debug.WriteLine(
-                        "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Logging has already been set up.  Preparing the Debug output..."
+                        "*** FYI *** The logging subsystem has already been configured.  There is nothing left to do.  Stopping..."
                     );
 
-                    if (overwrite) DeleteLogIfExists(logFileName);
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.InitializeLogging: Result = {true}"
+                    );
 
-                    WriteTimestamp();
-
-                    // done.
-                    return;
+                    // stop.
+                    return true;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: Logging has NOT been set up yet.  Proceeding..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The logging subsystem has NOT been configured yet.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: Configuring the log relay for PostSharp..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Attempting to obtain the log relay for PostSharp..."
                 );
 
                 _relay = Log4NetCollectingRepositorySelector
                     .RedirectLoggingToPostSharp();
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** INFO: Checking whether the '_relay' field has a null reference for a value..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Retrieved the relay from PostSharp.  Analyzing it..."
                 );
 
-                // Check to see if the required field, '_relay', is null. If it is, send an
-                // error to the Debug output and quit.
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the '_relay' field has a null reference for a value..."
+                );
+
+                // Check to see if the required field, _relay, is null. If it is, then send an 
+                // error to the log file and then quit, returning the default value of the result
+                // variable.
                 if (_relay == null)
                 {
-                    // the field '_relay' is required.
+                    // the field _relay is required.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The '_relay' field has a null reference.  This field is required."
+                        "PostSharpLoggingInfrastructure.InitializeLogging: *** ERROR *** The '_relay' field has a null reference.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        "PostSharpLoggingInfrastructure.InitializeLogging: Done."
+                        $"*** PostSharpLoggingInfrastructure.InitializeLogging: Result = {result}"
                     );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The '_relay' field has a valid object reference for its value."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The '_relay' field has a valid object reference for its value.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the 'relay' variable is a Hierarchy..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the relay is convertible to Hierarchy..."
                 );
 
-                // Check to see whether the 'relay' variable is a Hierarchy.
-                // If this is not the case, then write an error message to the Debug output
+                // Check to see whether the relay is convertible to Hierarchy.
+                // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
                 if (!(_relay is Hierarchy))
                 {
-                    // The 'relay` variable is NOT a hierarchy.  This is not desirable.
+                    // The relay obtained is NOT convertible to Hierarchy.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The 'relay` variable is NOT a hierarchy.  Stopping..."
+                        "*** ERROR *** The relay obtained is NOT convertible to Hierarchy.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.InitializeLogging: Result = {result}"
                     );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'relay' variable is a Hierarchy.  Proceeding..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The relay is convertible to Hierarchy.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
                 );
 
-                base.InitializeLogging(
-                    muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFileNamename, muteConsole, logFileName,
-                    verbosity, applicationName, _relay
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the base-class version of this method succeeded..."
+                );
+
+                // Check to see whether the base-class version of this method succeeded.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!base.InitializeLogging(
+                        muteDebugLevelIfReleaseMode, overwrite,
+                        configurationFileNamename, muteConsole, logFileName,
+                        verbosity, applicationName, _relay
+                    ))
+                {
+                    // The base-class version of this method failed to execute.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The base-class version of this method failed to execute.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.InitializeLogging: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The base-class version of this method succeeded.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -335,45 +378,197 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'backend', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, backend, is null. If it is, send an error to the Debug output and quit, returning from the method.
+                // Check to see if the variable, 'backend', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
                 if (backend == null)
                 {
-                    // the variable backend is required to have a valid object reference.
+                    // The variable, 'backend', has a null reference for a value.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "PostSharpLoggingInfrastructure.InitializeLogging: *** ERROR ***  The 'backend' variable has a null reference.  Stopping."
+                        "PostSharpLoggingInfrastructure.InitializeLogging: *** ERROR ***  The variable, 'backend', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.InitializeLogging: Result = {result}"
                     );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
-                // We can use the variable, backend, because it's not set to a null reference.
+                // We can use the variable, 'backend', because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The 'backend' variable has a valid object reference for its value."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The variable, 'backend', has a valid object reference for its value.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"PostSharpLoggingInfrastructure.InitializeLogging: Setting LoggingServices.DefaultBackend = {backend}.."
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: Type of LoggingServices.DefaultBackend = {backend.GetType()}.."
                 );
 
                 LoggingServices.DefaultBackend = backend;
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the Debug output..."
+                    $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The backend of type, '{backend.GetType()}', has been set as the default backend.  Proceeding..."
                 );
 
-                PrepareLogFile(_relay);
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Letting interested party(ies) know that the initialization of the logging subsystem has completed..."
+                );
 
-                if (overwrite)
-                    DeleteLogIfExists();
-
-                WriteTimestamp();
+                result = OnLoggingInitializationFinished(overwrite, repository);
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the log
                 System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"PostSharpLoggingInfrastructure.InitializeLogging: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Raises the
+        /// <see
+        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LoggingInitializationFinished" />
+        /// event.
+        /// </summary>
+        /// <param name="repository">
+        /// (Optional.) Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default <c>HierarchyRepository</c>.
+        /// <para />
+        /// The default value of this parameter is a <see langword="null" /> reference.
+        /// </param>
+        protected override bool OnLoggingInitializationFinished(
+            bool overwrite = true,
+            ILoggerRepository repository = null
+        )
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Preparing the log file..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the '_relay' field has a null reference for a value..."
+                );
+
+                // Check to see if the required field, _relay, is null. If it is, then send an 
+                // error to the log file and then quit, returning the default value of the result
+                // variable.
+                if (_relay == null)
+                {
+                    // the field _relay is required.
+                    System.Diagnostics.Debug.WriteLine(
+                        "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** ERROR *** The '_relay' field has a null reference.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** SUCCESS *** The '_relay' field has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the log file was prepared properly..."
+                );
+
+                // Check to see whether the log file was prepared properly.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!PrepareLogFile(_relay))
+                {
+                    // The log file was prepared properly.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The log file was prepared properly.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** SUCCESS *** The log file was prepared properly.  Proceeding..."
+                );
+
+                // Dump the variable overwrite to the Debug output
+                System.Diagnostics.Debug.WriteLine(
+                    $"PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: overwrite = {overwrite}"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the existing log file is to be appended..."
+                );
+
+                // Check to see whether the existing log file is to be appended.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (overwrite)
+                {
+                    // The existing log file is to be overwritten.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The existing log file is to be overwritten.  Attempting to delete it, if it exists..."
+                    );
+
+                    result = DeleteLogIfExists();
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Result = {true}"
+                    );
+
+                    // stop.
+                    return true;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** SUCCESS *** The existing log file is to be appended.  Proceeding..."
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Result = {result}"
+            );
+
+            return result;
+
+            System.Diagnostics.Debug.WriteLine(
+                "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
+            );
+
+            PrepareLogFile(_relay);
+
+            if (overwrite)
+                DeleteLogIfExists();
+
+            WriteTimestamp();
         }
     }
 }

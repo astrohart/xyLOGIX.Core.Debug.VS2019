@@ -154,6 +154,7 @@
     <Compile Include="GetFromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
     <Compile Include="GetLog.cs" />
     <Compile Include="GetLoggingBackend.cs" />
+    <Compile Include="GetLoggingBackendTypeValidator.cs" />
     <Compile Include="GetLoggingConfigurator.cs" />
     <Compile Include="GetLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="GetPatternLayout.cs" />
     <Compile Include="GetPostSharpLoggingInfrastructure.cs" />
     <Compile Include="GetProgrammaticLoggingConfigurator.cs" />
+    <Compile Include="GetRollingModeValidator.cs" />
     <Compile Include="GetRootLoggerProvisioner.cs" />
     <Compile Include="GetRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="GetTraceOutputLocation.cs" />
@@ -174,8 +176,10 @@
     <Compile Include="Has.cs" />
     <Compile Include="IEventLogManager.cs" />
     <Compile Include="IEventLogTypeValidator.cs" />
+    <Compile Include="ILoggingBackendTypeValidator.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
+    <Compile Include="IRollingModeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
@@ -184,11 +188,15 @@
     <Compile Include="IOutputLocation.cs" />
     <Compile Include="IOutputLocationProvider.cs" />
     <Compile Include="IXmlLoggingConfigurator.cs" />
+    <Compile Include="LoggingBackendTypeValidator.cs" />
     <Compile Include="LoggingConfiguratorBase.cs" />
     <Compile Include="LoggingConfiguratorType.cs" />
     <Compile Include="LoggingConfiguratorTypeValidator.cs" />
     <Compile Include="LoggingInfrastructureTypeValidator.cs" />
+    <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewDefaultLoggingInfrastructure.cs" />
+    <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
+    <Compile Include="MakeNewPatternLayout.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
@@ -198,6 +206,7 @@
     <Compile Include="OutputLocationTypeValidator.cs" />
     <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
+    <Compile Include="RollingModeValidator.cs" />
     <Compile Include="RootLoggerProvisionerBase.cs" />
     <Compile Include="RootLoggerProvisioningStrategy.cs" />
     <Compile Include="RootLoggerProvisioningStrategyValidator.cs" />

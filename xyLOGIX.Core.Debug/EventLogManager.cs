@@ -29,6 +29,15 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IEventLogTypeValidator" /> interface.
+        /// </summary>
+        private static IEventLogTypeValidator EventLogTypeValidator
+        {
+            [DebuggerStepThrough] get;
+        } = GetEventLogTypeValidator.SoleInstance();
+
+        /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface
         /// that
@@ -42,8 +51,30 @@ namespace xyLOGIX.Core.Debug
         /// initialized.
         /// </summary>
         public bool IsInitialized
-            => !string.IsNullOrWhiteSpace(Source) &&
-               Type != EventLogType.None && Type != EventLogType.Unknown;
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = false;
+
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(Source)) return result;
+
+                    result = !EventLogType.None.Equals(Type) &&
+                             !EventLogType.Unknown.Equals(Type);
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = false;
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the quote of events. Typically, this is the name of the
@@ -81,16 +112,26 @@ namespace xyLOGIX.Core.Debug
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content"> String specifying the content of the event log message. </param>
-        public void Error(string content)
+        public void Error([NotLogged] string content)
         {
-            if (string.IsNullOrWhiteSpace(Source) ||
-                Type == EventLogType.None || Type == EventLogType.Unknown)
-                return;
+            try
+            {
+                /*
+                 * NOTE: Since it is expected that the implementation of this
+                 * method is fairly straightforward, we will not be using the
+                 * logging infrastructure to log the progress of this method.
+                 */
 
-            if (string.IsNullOrWhiteSpace(content))
-                return;
+                if (string.IsNullOrWhiteSpace(content)) return;
+                if (!IsInitialized) return;
 
-            EventLog.WriteEntry(Source, content, EventLogEntryType.Error);
+                EventLog.WriteEntry(Source, content, EventLogEntryType.Error);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -104,16 +145,28 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) String specifying the content of the event
         /// log message.
         /// </param>
-        public void Info(string content)
+        public void Info([NotLogged] string content)
         {
-            if (string.IsNullOrWhiteSpace(Source) ||
-                Type == EventLogType.None || Type == EventLogType.Unknown)
-                return;
+            try
+            {
+                /*
+                 * NOTE: Since it is expected that the implementation of this
+                 * method is fairly straightforward, we will not be using the
+                 * logging infrastructure to log the progress of this method.
+                 */
 
-            if (string.IsNullOrWhiteSpace(content))
-                return;
+                if (string.IsNullOrWhiteSpace(content)) return;
+                if (!IsInitialized) return;
 
-            EventLog.WriteEntry(Source, content, EventLogEntryType.Information);
+                EventLog.WriteEntry(
+                    Source, content, EventLogEntryType.Information
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary> Initializes event logging for your application. </summary>
@@ -141,7 +194,9 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 // Dump the argument of the parameter, eventSourceName, to the Debug output
-                System.Diagnostics.Debug.WriteLine($"EventLogManager.Initialize: eventSourceName = '{eventSourceName}'");
+                System.Diagnostics.Debug.WriteLine(
+                    $"EventLogManager.Initialize: eventSourceName = '{eventSourceName}'"
+                );
 
                 System.Diagnostics.Debug.WriteLine(
                     "EventLogManager.Initialize *** INFO: Checking whether the value of the parameter, 'eventSourceName', is blank..."
@@ -169,19 +224,23 @@ namespace xyLOGIX.Core.Debug
                     "*** SUCCESS *** The parameter 'eventSourceName' is not blank.  Proceeding..."
                 );
 
+                // Dump the argument of the parameter, 'logType', to the log
                 System.Diagnostics.Debug.WriteLine(
-                    "EventLogManager.Initialize: Checking whether the 'logType' parameter is set to something OTHER THAN 'Unknown' or 'None'..."
+                    $"EventLogManager.Initialize: logType = '{logType}'"
                 );
 
-                // Check to see whether the 'logType' parameter is set to something OTHER THAN 'Unknown' or 'None'.
-                // If this is not the case, then write an error message to the Debug output,
+                System.Diagnostics.Debug.WriteLine(
+                    $"EventLogManager.Initialize: Checking whether the type of event log, '{logType}', is within the defined value set..."
+                );
+
+                // Check to see whether the type of event log is within the defined value set.
+                // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
-                if (logType == EventLogType.Unknown ||
-                    logType == EventLogType.None)
+                if (!EventLogTypeValidator.IsValid(logType))
                 {
-                    // The 'logType' parameter is set to either 'Unknown' or 'None'.  This is not desirable.
+                    // The type of event log is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The 'logType' parameter is set to either 'Unknown' or 'None'.  Stopping..."
+                        $"*** ERROR *** The type of event log, '{logType}', is NOT within the defined value set.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -193,72 +252,9 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "EventLogManager.Initialize: *** SUCCESS *** The 'logType' parameter is set to something OTHER THAN 'Unknown' or 'None'.  Proceeding..."
+                    $"EventLogManager.Initialize: *** SUCCESS *** The type of event log, '{logType}', is within the defined value set.  Proceeding..."
                 );
 
-                // Dump the argument of the parameter, 'logType', to the log
-                System.Diagnostics.Debug.WriteLine(
-                    $"EventLogManager.Initialize: logType = '{logType}'"
-                );
-
-                /*
-                 * For cybersecurity reasons, and to defeat reverse-engineering,
-                 * check the value of the 'logType' parameter to ensure that it
-                 * is not set to a value outside the set of valid values defined
-                 * by the xyLOGIX.Core.Debug.EventLogType
-                 * enumeration.
-                 *
-                 * In principle, since all C# enums devolve to integer values, a
-                 * hacker could insert a different value into the CPU register that the
-                 * 'logType' parameter is read from and thereby make this application
-                 * do something it's not intended to do.
-                 */
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"EventLogManager.Initialize: Checking whether the value of the 'logType' parameter, i.e., '{logType}', is within the defined value set of its enumerated data type..."
-                );
-
-                // Check whether the value of the 'logType' parameter is within the defined value set of its
-                // enumeration data type.  If this is not the case, then write an error message to the log
-                // file, and then terminate the execution of this method.
-                if (!Enum.IsDefined(typeof(EventLogType), logType))
-                {
-                    // The value of the 'logType' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** ERROR *** The value of the 'logType' parameter, i.e., '{logType}', is NOT within the defined value set of its enumerated data type.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"EventLogManager.Initialize: *** SUCCESS *** The value of the 'logType' parameter, i.e., '{logType}', is within the defined value set of its enumerated data type.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "EventLogManager.Initialize: Checking whether neither the 'Unknown' nor 'None' value(s) have been specified for the 'logType' parameter..."
-                );
-
-                // Check whether neither the 'Unknown' nor 'None' value(s) have
-                // been specified for the argument of the 'logType' parameter.
-                // If this is NOT the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
-                if (EventLogType.Unknown.Equals(logType) ||
-                    EventLogType.None.Equals(logType))
-                {
-                    // The 'Unknown' value has been specified for the 'logType' parameter.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The 'Unknown' or 'None' value(s) have been specified for the 'logType' parameter.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "EventLogManager.Initialize: *** SUCCESS *** Neither the 'Unknown' nor 'None' value(s) have NOT been specified for the 'logType' parameter.  Proceeding..."
-                );
 
                 System.Diagnostics.Debug.WriteLine(
                     $"*** EventLogManager.Initialize: Checking whether the Event Log already has a source, '{eventSourceName}'..."
@@ -283,7 +279,7 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // stop.
-                    return;
+                    return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
@@ -294,6 +290,13 @@ namespace xyLOGIX.Core.Debug
                 // Source and Type properties.
                 Source = eventSourceName;
                 Type = logType;
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
             }
             catch (Exception ex)
             {
@@ -304,7 +307,15 @@ namespace xyLOGIX.Core.Debug
                 Type = EventLogType.Unknown;
 
                 System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"EventLogManager.Initialize: Result = {result}"
+            );
+
+            return result;
         }
 
         /// <summary>
@@ -315,16 +326,26 @@ namespace xyLOGIX.Core.Debug
         /// the logging message is specified by the <paramref name="content" /> parameter.
         /// </summary>
         /// <param name="content"> String specifying the content of the event log message. </param>
-        public void Warn(string content)
+        public void Warn([NotLogged] string content)
         {
-            if (string.IsNullOrWhiteSpace(Source) ||
-                Type == EventLogType.None || Type == EventLogType.Unknown)
-                return;
+            try
+            {
+                /*
+                 * NOTE: Since it is expected that the implementation of this
+                 * method is fairly straightforward, we will not be using the
+                 * logging infrastructure to log the progress of this method.
+                 */
 
-            if (string.IsNullOrWhiteSpace(content))
-                return;
+                if (string.IsNullOrWhiteSpace(content)) return;
+                if (!IsInitialized) return;
 
-            EventLog.WriteEntry(Source, content, EventLogEntryType.Warning);
+                EventLog.WriteEntry(Source, content, EventLogEntryType.Warning);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
     }
 }

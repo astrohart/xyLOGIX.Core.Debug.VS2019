@@ -187,8 +187,12 @@ namespace xyLOGIX.Core.Debug
                     "ProgrammaticLoggingConfigurator.Configure: Attempting to activate logging..."
                 );
 
+                // Make an attempt to activate logging.  If this fails, then emit an error message
+                // to the Debug output, and then terminate the execution of this method, returning
+                // the current value of the 'result' variable.
                 if (!Activate.LoggingForLogFileName(logFileName, repository))
                 {
+                    // Failed to set up logging for the file having the path specified in the 'logFileName' parameter.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** Failed to set up logging for the log file name '{logFileName}'."
                     );
