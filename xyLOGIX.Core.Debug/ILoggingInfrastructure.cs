@@ -26,18 +26,6 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         LoggingInfrastructureType Type { [DebuggerStepThrough] get; }
 
-        /// <summary> Deletes the log file, if it exists. </summary>
-        /// <param name="logFileName">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file to which the log is being written.
-        /// </param>
-        /// <returns>
-        /// <see langword="true" /> if the existing log file was already gone from
-        /// the file system, or if it could be deleted successfully;
-        /// <see langword="false" /> otherwise.
-        /// </returns>
-        bool DeleteLogIfExists(string logFileName = "");
-
         /// <summary>
         /// Gets the value of the
         /// <see cref="P:log4net.Appender.FileAppender.File" /> property from the first
