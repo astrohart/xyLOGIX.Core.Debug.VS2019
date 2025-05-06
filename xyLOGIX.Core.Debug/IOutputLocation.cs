@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -32,8 +33,13 @@ namespace xyLOGIX.Core.Debug
         /// standard output stream.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        void Write(object value);
+        /// <remarks>
+        /// This method does nothing if the specified <paramref name="value" /> is
+        /// a <see langword="null" /> reference, or if the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
+        /// set to <see langword="true" />.
+        /// </remarks>
+        void Write([NotLogged] object value);
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to
@@ -60,7 +66,12 @@ namespace xyLOGIX.Core.Debug
         /// the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// This method does nothing if the specified <paramref name="value" /> is
+        /// a <see langword="null" /> reference, or if the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
+        /// set to <see langword="true" />.
+        /// </remarks>
         void WriteLine(object value);
 
         /// <summary>
