@@ -64,7 +64,6 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
         /// set to <see langword="true" />.
         /// </remarks>
-        [Log(AttributeExclude = true)]
         public abstract void Write([NotLogged] object value);
 
         /// <summary>
