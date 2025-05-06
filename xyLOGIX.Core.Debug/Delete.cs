@@ -134,13 +134,53 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         internal static void LogFile(string pathname)
         {
-            if (string.IsNullOrWhiteSpace(pathname))
-                return;
-
             try
             {
-                if (File.Exists(pathname))
-                    File.Delete(pathname);
+                System.Diagnostics.Debug.WriteLine(
+                    "Delete.LogFile: Checking whether the value of the required method parameter, 'pathname' parameter is null or consists solely of whitespace..."
+                );
+
+                if (string.IsNullOrWhiteSpace(pathname))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "Delete.LogFile: *** ERROR *** Null or blank value passed for the parameter, 'pathname'.  Stopping..."
+                    );
+
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Delete.LogFile: *** SUCCESS *** The value of the required parameter, 'pathname', is not blank.  Continuing..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Delete.LogFile *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
+                );
+
+                // Check whether a file having pathname, 'pathname', exists on the file system.
+                // If it does not, then write an FYI message to the Debug output, and then
+                // terminate the execution of this method.
+                if (!File.Exists(pathname))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** FYI *** The system could not locate the file having pathname, '{pathname}', on the file system.  There is nothing to do.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Delete.LogFile *** SUCCESS *** The file having pathname, '{pathname}', was found on the file system.  Attempting to delete it..."
+                );
+
+                File.Delete(pathname);
+
+                System.Diagnostics.Debug.WriteLine(
+                    !File.Exists(pathname)
+                        ? $"*** SUCCESS *** Deleted the file having the pathname, '{pathname}', from the file system.  Proceeding..."
+                        : $"*** ERROR *** FAILED to delete the file having the pathname, '{pathname}', from the file system.  Stopping..."
+                );
             }
             catch (Exception ex)
             {
