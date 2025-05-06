@@ -631,7 +631,7 @@ This method has no parameters.
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -651,7 +651,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -677,7 +677,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -697,7 +697,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -723,7 +723,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -1040,7 +1040,7 @@ This method has no parameters.
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -1060,7 +1060,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -1086,7 +1086,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -1106,7 +1106,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -1132,7 +1132,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -4041,7 +4041,7 @@ location.
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -4061,7 +4061,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -4087,7 +4087,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -4107,7 +4107,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -4133,7 +4133,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -4209,7 +4209,7 @@ This method has no parameters.
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -4229,7 +4229,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -4255,7 +4255,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -4275,7 +4275,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -4301,7 +4301,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -5561,7 +5561,7 @@ created or before any static members are referenced.
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -5581,7 +5581,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -5607,7 +5607,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -5627,7 +5627,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -5653,7 +5653,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -5797,7 +5797,7 @@ the event data. |
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -5817,7 +5817,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -5843,7 +5843,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -5863,7 +5863,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -5889,7 +5889,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -5985,7 +5985,7 @@ Gets a reference to an instance of an object that implements the
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -6011,7 +6011,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -6037,7 +6037,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
@@ -6055,7 +6055,7 @@ This method has no parameters.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -6882,7 +6882,7 @@ This method has no parameters.
 ##### Summary
 
 Writes the text representation of the specified object to the
-standard output stream.
+output location.
 
 ##### Parameters
 
@@ -6902,7 +6902,7 @@ standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects to
-the standard output stream using the specified format information.
+the output location using the specified format information.
 
 ##### Parameters
 
@@ -6928,7 +6928,7 @@ the standard output stream using the specified format information.
 ##### Summary
 
 Writes the text representation of the specified object, followed by
-the current line terminator, to the standard output stream.
+the current line terminator, to the output location.
 
 ##### Parameters
 
@@ -6948,7 +6948,7 @@ the current line terminator, to the standard output stream.
 ##### Summary
 
 Writes the text representation of the specified array of objects,
-followed by the current line terminator, to the standard output stream using
+followed by the current line terminator, to the output location using
 the specified format information.
 
 ##### Parameters
@@ -6974,7 +6974,7 @@ the specified format information.
 
 ##### Summary
 
-Writes the current line terminator to the standard output stream.
+Writes the current line terminator to the output location.
 
 ##### Parameters
 
