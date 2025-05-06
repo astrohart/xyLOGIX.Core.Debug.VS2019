@@ -30,7 +30,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified object to the
-        /// standard output stream.
+        /// output location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
@@ -43,27 +43,29 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to
-        /// the standard output stream using the specified format information.
+        /// the output location using the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="T:System.FormatException">
-        /// The format specification in
-        /// <paramref name="format" /> is invalid.
-        /// </exception>
-        void Write(string format, params object[] arg);
+        /// <remarks>
+        /// This method takes no action if a <see langword="null" />, blank, or empty
+        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// <paramref name="format" /> parameter.
+        /// <para />
+        /// This method will not work if the <paramref name="format" /> parameter has
+        /// format argument(s) in it, but the <paramref name="arg" /> array is a
+        /// <see langword="null" /> reference, contains a mismatching number of element(s),
+        /// or if it contains element(s) whose value(s) do not match the format
+        /// specifier(s) in the <paramref name="format" /> parameter.
+        /// </remarks>
+        void Write([NotLogged] string format, [NotLogged] params object[] arg);
 
         /// <summary>
         /// Writes the text representation of the specified object, followed by
-        /// the current line terminator, to the standard output stream.
+        /// the current line terminator, to the output location.
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
@@ -72,11 +74,11 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
         /// set to <see langword="true" />.
         /// </remarks>
-        void WriteLine(object value);
+        void WriteLine([NotLogged] object value);
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the standard output stream using
+        /// followed by the current line terminator, to the output location using
         /// the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
@@ -84,19 +86,25 @@ namespace xyLOGIX.Core.Debug
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="T:System.FormatException">
-        /// The format specification in
-        /// <paramref name="format" /> is invalid.
-        /// </exception>
-        void WriteLine(string format, params object[] arg);
+        /// <remarks>
+        /// This method takes no action if a <see langword="null" />, blank, or empty
+        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// <paramref name="format" /> parameter.
+        /// <para />
+        /// This method will not work if the <paramref name="format" /> parameter has
+        /// format argument(s) in it, but the <paramref name="arg" /> array is a
+        /// <see langword="null" /> reference, contains a mismatching number of element(s),
+        /// or if it contains element(s) whose value(s) do not match the format
+        /// specifier(s) in the <paramref name="format" /> parameter.
+        /// </remarks>
+        void WriteLine([NotLogged] string format, [NotLogged] params object[] arg);
 
-        /// <summary>Writes the current line terminator to the standard output stream.</summary>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <summary>Writes the current line terminator to the output location.</summary>
+        /// <remarks>
+        /// This method takes no action if the
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
+        /// set to <see langword="true" />.
+        /// </remarks>
         void WriteLine();
     }
 }
