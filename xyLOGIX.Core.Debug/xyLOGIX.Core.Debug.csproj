@@ -128,6 +128,8 @@
     <Compile Include="DefaultLoggingInfrastructure.cs" />
     <Compile Include="Delete.cs" />
     <Compile Include="Determine.cs" />
+    <Compile Include="DirectoryWriteabilityStatus.cs" />
+    <Compile Include="DirectoryWriteabilityStatusValidator.cs" />
     <Compile Include="EmergencyStopPendingEventHandler.cs" />
     <Compile Include="EventLogManager.cs" />
     <Compile Include="EventLogType.cs" />
@@ -138,6 +140,8 @@
     <Compile Include="FileAppenderConfigurator.cs" />
     <Compile Include="FileAppenderManager.cs" />
     <Compile Include="FileBasedXmlLoggingConfigurator.cs" />
+    <Compile Include="FileWriteabilityStatus.cs" />
+    <Compile Include="FileWriteabilityStatusValidator.cs" />
     <Compile Include="FromConfigFileLoggingConfigurator.cs" />
     <Compile Include="FromLogManagerRootLoggerProvisioner.cs" />
     <Compile Include="FromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
@@ -145,10 +149,12 @@
     <Compile Include="GetConsoleOutputLocation.cs" />
     <Compile Include="GetDebugOutputLocation.cs" />
     <Compile Include="GetDefaultLoggingInfrastructure.cs" />
+    <Compile Include="GetDirectoryWriteabilityStatusValidator.cs" />
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetEventLogTypeValidator.cs" />
     <Compile Include="GetFileBasedXmlLoggingConfigurator.cs" />
+    <Compile Include="GetFileWriteabilityStatusValidator.cs" />
     <Compile Include="GetFromConfigFileLoggingConfigurator.cs" />
     <Compile Include="GetFromLogManagerRootLoggerProvisioner.cs" />
     <Compile Include="GetFromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
@@ -174,8 +180,10 @@
     <Compile Include="GetXmlLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
+    <Compile Include="IDirectoryWriteabilityStatusValidator.cs" />
     <Compile Include="IEventLogManager.cs" />
     <Compile Include="IEventLogTypeValidator.cs" />
+    <Compile Include="IFileWriteabilityResultValidator.cs" />
     <Compile Include="ILoggingBackendTypeValidator.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
