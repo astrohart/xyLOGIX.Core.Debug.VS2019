@@ -6315,7 +6315,7 @@ Returns the cached ResourceManager instance used by this class.
 ##### Summary
 
 Looks up a localized string similar to {0} at {1}: Exception caught: {2}
-	{3}
+  {3}
 
 ---
 
