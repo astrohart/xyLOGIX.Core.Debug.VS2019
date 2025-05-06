@@ -5,7 +5,7 @@ using System.IO;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Methods to delete files and folders. </summary>
-    internal static class Delete
+    public static class Delete
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -43,7 +43,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="pathname" /> was found on the file system and successfully
         /// deleted; <see langword="false" /> otherwise.
         /// </returns>
-        internal static bool FileIfExists([NotLogged] string pathname)
+        public static bool FileIfExists([NotLogged] string pathname)
         {
             var result = false;
 
@@ -132,7 +132,7 @@ namespace xyLOGIX.Core.Debug
         /// This method also takes no action if the file having the specified
         /// <paramref name="pathname" /> does not already exist on the file system.
         /// </remarks>
-        internal static void LogFile(string pathname)
+        public static void LogFile(string pathname)
         {
             try
             {
