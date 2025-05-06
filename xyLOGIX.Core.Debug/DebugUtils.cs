@@ -20,6 +20,9 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class DebugUtils
     {
+        /// <summary>
+        /// Value indicating whether no output should be sent to the console.
+        /// </summary>
         private static bool _muteConsole;
 
         /// <summary> The verbosity level. </summary>
@@ -978,7 +981,10 @@ namespace xyLOGIX.Core.Debug
         /// debugLevel is
         /// to be utilized for each line.
         /// </remarks>
-        public static void WriteLine([NotLogged] string format, params object[] args)
+        public static void WriteLine(
+            [NotLogged] string format,
+            params object[] args
+        )
         {
             if (string.IsNullOrWhiteSpace(format))
 
