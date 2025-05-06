@@ -42,9 +42,17 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         public static void Dump([NotLogged] this object element)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            ObjectDumper.Write(element);
+            try
+            {
+                if (element == null) return;
+
+                ObjectDumper.Write(element);
+            }
+            catch (Exception ex)
+            {
+                 // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -59,24 +67,20 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Integer value specifying the depth to which
         /// the object should be dumped.
         /// </param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required
-        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
-        /// value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="depth" /> parameter is less than zero.
-        /// </exception>
-        public static void Dump(this object element, int depth)
+        public static void Dump([NotLogged] this object element, int depth)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(depth), Resources.Error_DepthMustBeNonNegative
-                );
-            ObjectDumper.Write(element, depth);
+            try
+            {
+                if (element == null) return;
+                if (depth < 0) return;
+
+                ObjectDumper.Write(element, depth);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -95,25 +99,21 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of
         /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the either of the
-        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
-        /// are passed a <see langword="null" /> value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="depth" /> parameter is less than zero.
-        /// </exception>
         public static void Dump(this object element, int depth, TextWriter log)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(depth), Resources.Error_DepthMustBeNonNegative
-                );
-            if (log == null) throw new ArgumentNullException(nameof(log));
-            ObjectDumper.Write(element, depth, log);
+            try
+            {
+                if (element == null) return;
+                if (depth < 0) return;
+                if (log == null) return;
+
+                ObjectDumper.Write(element, depth, log);
+            }
+            catch (Exception ex)
+            {
+                 // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -132,9 +132,17 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         public static void DumpLines(this object element)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            ObjectDumper.WriteLine(element);
+            try
+            {
+                if (element == null) return;
+
+                ObjectDumper.WriteLine(element);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -187,7 +195,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
         /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the either of the
+        /// Thrown if either of the
         /// required parameters, <paramref name="element" /> or <paramref name="log" />,
         /// are passed a <see langword="null" /> value.
         /// </exception>
