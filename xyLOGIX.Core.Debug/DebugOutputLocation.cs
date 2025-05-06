@@ -53,14 +53,21 @@ namespace xyLOGIX.Core.Debug
         /// output location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// If a debugger is not attached, or if logging is not enabled on the
+        /// attached debugger, then this method does nothing.
+        /// <para />
+        /// This method also will not work if a <see langword="null" /> reference is passed
+        /// for <paramref name="value" />.
+        /// </remarks>
         public override void Write([NotLogged] object value)
         {
             try
             {
-                if (value == null) return;
+                if (!Debugger.IsAttached) return;
+                if (!Debugger.IsLogging()) return;
 
-                if (Debugger.IsAttached || Debugger.IsLogging()) return;
+                if (value == null) return;
 
                 System.Diagnostics.Debug.Write(value);
             }
@@ -80,15 +87,10 @@ namespace xyLOGIX.Core.Debug
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="T:System.FormatException">
-        /// The format specification in
-        /// <paramref name="format" /> is invalid.
-        /// </exception>
+        /// <remarks>
+        /// If <paramref name="format" /> is blank, or if a debugger is not
+        /// attached and is not configured for logging, then this method does nothing.
+        /// </remarks>
         public override void Write(
             [NotLogged] string format,
             [NotLogged] params object[] arg
@@ -96,11 +98,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                if (Debugger.IsAttached || Debugger.IsLogging()) return;
+                if (!Debugger.IsAttached) return;
+                if (!Debugger.IsLogging()) return;
 
-                if (string.IsNullOrWhiteSpace(format) &
-                    ((arg == null) | (arg.Length <= 0)))
-                    return;
+                if (string.IsNullOrWhiteSpace(format)) return;
 
                 System.Diagnostics.Debug.Write(string.Format(format, arg));
             }
@@ -116,14 +117,21 @@ namespace xyLOGIX.Core.Debug
         /// the current line terminator, to the output location.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// If a debugger is not attached, or if logging is not enabled on the
+        /// attached debugger, then this method does nothing.
+        /// <para />
+        /// This method also will not work if a <see langword="null" /> reference is passed
+        /// for <paramref name="value" />.
+        /// </remarks>
         public override void WriteLine([NotLogged] object value)
         {
             try
             {
-                if (value == null) return;
+                if (!Debugger.IsAttached) return;
+                if (!Debugger.IsLogging()) return;
 
-                if (Debugger.IsAttached || Debugger.IsLogging()) return;
+                if (value == null) return;
 
                 System.Diagnostics.Debug.WriteLine(value);
             }
@@ -144,25 +152,21 @@ namespace xyLOGIX.Core.Debug
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="T:System.FormatException">
-        /// The format specification in
-        /// <paramref name="format" /> is invalid.
-        /// </exception>
-        public override void WriteLine([NotLogged] string format, [NotLogged]
-            params object[] arg)
+        /// <remarks>
+        /// If <paramref name="format" /> is blank, or if a debugger is not
+        /// attached and is not configured for logging, then this method does nothing.
+        /// </remarks>
+        public override void WriteLine(
+            [NotLogged] string format,
+            [NotLogged] params object[] arg
+        )
         {
             try
             {
-                if (Debugger.IsAttached || Debugger.IsLogging()) return;
+                if (!Debugger.IsAttached) return;
+                if (!Debugger.IsLogging()) return;
 
-                if (string.IsNullOrWhiteSpace(format) &
-                    ((arg == null) | (arg.Length <= 0)))
-                    return;
+                if (string.IsNullOrWhiteSpace(format)) return;
 
                 System.Diagnostics.Debug.WriteLine(format, arg);
             }
@@ -174,12 +178,16 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>Writes the current line terminator to the output location.</summary>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// If a debugger is not attached, or if logging is not enabled on the
+        /// attached debugger, then this method does nothing.
+        /// </remarks>
         public override void WriteLine()
         {
             try
             {
-                if (Debugger.IsAttached || Debugger.IsLogging()) return;
+                if (!Debugger.IsAttached) return;
+                if (!Debugger.IsLogging()) return;
 
                 System.Diagnostics.Debug.WriteLine(string.Empty);
             }
