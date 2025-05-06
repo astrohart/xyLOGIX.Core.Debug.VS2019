@@ -528,10 +528,16 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The existing log file is to be overwritten.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The existing log file is to be overwritten.  Attempting to delete it, if it exists..."
+                        "*** FYI *** The existing log file is to be overwritten.  Attempting to delete it, if it exists..."
                     );
 
-                    result = DeleteLogIfExists();
+                    Delete.LogFile(LogFileName);
+
+                    /*
+                     * Be sure to write the timestamp to a new log file before we finish.
+                     */
+
+                    WriteTimestamp();
 
                     System.Diagnostics.Debug.WriteLine(
                         $"*** PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Result = {true}"
@@ -541,9 +547,23 @@ namespace xyLOGIX.Core.Debug
                     return true;
                 }
 
+                /*
+                 * If we are still here, then the caller wishes us to append to
+                 * an existing log file, not delete the existing one and start
+                 * anew.
+                 */
+
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** SUCCESS *** The existing log file is to be appended.  Proceeding..."
+                    "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** The existing log file is to be appended.  Proceeding..."
                 );
+
+                /*
+                 * Write a line with the current date and time, to the log file.
+                 *
+                 * This will begin a new section.
+                 */
+
+                WriteTimestamp();
             }
             catch (Exception ex)
             {
@@ -558,17 +578,6 @@ namespace xyLOGIX.Core.Debug
             );
 
             return result;
-
-            System.Diagnostics.Debug.WriteLine(
-                "PostSharpLoggingInfrastructure.InitializeLogging: Preparing the log file..."
-            );
-
-            PrepareLogFile(_relay);
-
-            if (overwrite)
-                DeleteLogIfExists();
-
-            WriteTimestamp();
         }
     }
 }
