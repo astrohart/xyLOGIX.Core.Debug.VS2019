@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.IO;
 using xyLOGIX.Core.Debug.Properties;
@@ -9,6 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// Methods to send objects to the log by calling an extension method
     /// called 'Dump', like in LINQpad.
     /// </summary>
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class DebuggerDump
     {
         /// <summary>
@@ -38,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// parameter, <paramref name="element" />, is passed a <see langword="null" />
         /// value.
         /// </exception>
-        public static void Dump(this object element)
+        public static void Dump([NotLogged] this object element)
         {
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
