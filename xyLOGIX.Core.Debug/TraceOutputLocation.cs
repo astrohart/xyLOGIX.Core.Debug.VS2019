@@ -50,7 +50,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified object to the
-        /// standard output stream.
+        /// output location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
@@ -72,7 +72,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to
-        /// the standard output stream using the specified format information.
+        /// the output location using the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
@@ -112,7 +112,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified object, followed by
-        /// the current line terminator, to the standard output stream.
+        /// the current line terminator, to the output location.
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
@@ -134,7 +134,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the standard output stream using
+        /// followed by the current line terminator, to the output location using
         /// the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
@@ -173,7 +173,7 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>Writes the current line terminator to the standard output stream.</summary>
+        /// <summary>Writes the current line terminator to the output location.</summary>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         public override void WriteLine()
         {
