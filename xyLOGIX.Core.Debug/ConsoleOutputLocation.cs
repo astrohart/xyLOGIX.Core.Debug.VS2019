@@ -29,9 +29,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
-        /// that
-        /// directs debugging output to the standard output of the application and/or a
-        /// console window, if present.
+        /// that directs debugging output to the standard output of the application and/or
+        /// a console window, if present.
         /// </summary>
         public static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new ConsoleOutputLocation();
@@ -51,7 +50,13 @@ namespace xyLOGIX.Core.Debug
         /// standard output stream.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// This method does nothing if the specified <paramref name="value" /> is
+        /// a <see langword="null" /> reference, or if the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
+        /// set to <see langword="true" />.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
         public override void Write([NotLogged] object value)
         {
             try
@@ -64,8 +69,8 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the console
-                Console.WriteLine(ex);
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
@@ -114,7 +119,12 @@ namespace xyLOGIX.Core.Debug
         /// the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// This method does nothing if the specified <paramref name="value" /> is
+        /// a <see langword="null" /> reference, or if the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
+        /// set to <see langword="true" />.
+        /// </remarks>
         public override void WriteLine([NotLogged] object value)
         {
             try
