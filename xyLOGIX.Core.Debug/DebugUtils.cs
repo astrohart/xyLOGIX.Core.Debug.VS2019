@@ -978,7 +978,7 @@ namespace xyLOGIX.Core.Debug
         /// debugLevel is
         /// to be utilized for each line.
         /// </remarks>
-        public static void WriteLine(string format, params object[] args)
+        public static void WriteLine([NotLogged] string format, params object[] args)
         {
             if (string.IsNullOrWhiteSpace(format))
 
