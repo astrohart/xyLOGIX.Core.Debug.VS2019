@@ -2,7 +2,6 @@
 using PostSharp.Patterns.Threading;
 using System;
 using System.IO;
-using xyLOGIX.Core.Debug.Properties;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -35,11 +34,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the object whose contents are
         /// to be dumped.
         /// </param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required
-        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
-        /// value.
-        /// </exception>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed for
+        /// <paramref name="element" />, then this method does nothing.
+        /// </remarks>
         public static void Dump([NotLogged] this object element)
         {
             try
@@ -50,7 +48,7 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                 // dump all the exception info to the Debug output.
+                // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
             }
         }
@@ -67,6 +65,11 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Integer value specifying the depth to which
         /// the object should be dumped.
         /// </param>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed for
+        /// <paramref name="element" />, or if <paramref name="depth" /> is negative, then
+        /// this method does nothing.
+        /// </remarks>
         public static void Dump([NotLogged] this object element, int depth)
         {
             try
@@ -99,6 +102,11 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of
         /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed for either
+        /// <paramref name="element" /> or <paramref name="log" />, or if
+        /// <paramref name="depth" />  is negative, then this method does nothing.
+        /// </remarks>
         public static void Dump(this object element, int depth, TextWriter log)
         {
             try
@@ -111,7 +119,7 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                 // dump all the exception info to the Debug output.
+                // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
             }
         }
@@ -125,11 +133,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the object whose contents are
         /// to be dumped.
         /// </param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required
-        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
-        /// value.
-        /// </exception>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed for
+        /// <paramref name="element" />, then this method does nothing.
+        /// </remarks>
         public static void DumpLines(this object element)
         {
             try
@@ -158,24 +165,33 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Integer value specifying the depth to which
         /// the object should be dumped.
         /// </param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required
-        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
-        /// value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="depth" /> parameter is less than zero.
-        /// </exception>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed for
+        /// <paramref name="element" />, or if <paramref name="depth" /> is negative, then
+        /// this method does nothing.
+        /// </remarks>
         public static void DumpLines(this object element, int depth)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(depth), Resources.Error_DepthMustBeNonNegative
-                );
-            ObjectDumper.WriteLine(element, depth);
+            try
+            {
+                try
+                {
+                    if (element == null) return;
+                    if (depth < 0) return;
+
+                    ObjectDumper.WriteLine(element, depth);
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -194,29 +210,30 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of
         /// <see cref="T:System.IO.TextWriter" /> that is open on the target log file.
         /// </param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if either of the
-        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
-        /// are passed a <see langword="null" /> value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="depth" /> parameter is less than zero.
-        /// </exception>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed for either
+        /// <paramref name="element" /> or <paramref name="log" />, or if
+        /// <paramref name="depth" />  is negative, then this method does nothing.
+        /// </remarks>
         public static void DumpLines(
             this object element,
             int depth,
             TextWriter log
         )
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(depth), Resources.Error_DepthMustBeNonNegative
-                );
-            if (log == null) throw new ArgumentNullException(nameof(log));
-            ObjectDumper.WriteLine(element, depth, log);
+            try
+            {
+                if (element == null) return;
+                if (depth < 0) return;
+                if (log == null) return;
+
+                ObjectDumper.WriteLine(element, depth, log);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
     }
 }
