@@ -29,7 +29,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects to
-        /// the standard output stream using the specified format information.
+        /// the output location using the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
@@ -45,7 +45,7 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        public static void Write(string format, params object[] arg)
+        public static void Write([NotLogged] string format, params object[] arg)
         {
             if (string.IsNullOrWhiteSpace(format) &
                 ((arg == null) | (arg.Length <= 0)))
@@ -56,7 +56,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the standard output stream using
+        /// followed by the current line terminator, to the output location using
         /// the specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
@@ -73,7 +73,7 @@ namespace xyLOGIX.Core.Debug
         /// The format specification in
         /// <paramref name="format" /> is invalid.
         /// </exception>
-        public static void WriteLine(string format, params object[] arg)
+        public static void WriteLine([NotLogged] string format, params object[] arg)
         {
             if (string.IsNullOrWhiteSpace(format) &
                 ((arg == null) | (arg.Length <= 0)))
@@ -82,18 +82,18 @@ namespace xyLOGIX.Core.Debug
             OutputLocationProvider.WriteLine(format, arg);
         }
 
-        /// <summary>Writes the current line terminator to the standard output stream.</summary>
+        /// <summary>Writes the current line terminator to the output location.</summary>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         public static void WriteLine()
             => OutputLocationProvider.WriteLine();
 
         /// <summary>
         /// Writes the text representation of the specified object, followed by
-        /// the current line terminator, to the standard output stream.
+        /// the current line terminator, to the output location.
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        public static void WriteLine(object value)
+        public static void WriteLine([NotLogged] object value)
             => OutputLocationProvider.WriteLine(value);
     }
 }
