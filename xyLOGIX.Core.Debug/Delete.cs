@@ -34,7 +34,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:System.String.Empty" /> value, or <see langword="null" />, then
         /// this method returns <see langword="false" />.
         /// <para />
-        /// This method also returns <see langword="false" /> if the file having the specified
+        /// This method also returns <see langword="false" /> if the file having the
+        /// specified
         /// <paramref name="pathname" /> does not already exist on the file system.
         /// </remarks>
         /// <returns>
@@ -49,7 +50,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"Delete.FileIfExists *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
+                    "Delete.FileIfExists *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
                 // Check whether the value of the parameter, 'pathname', is blank.
@@ -71,7 +72,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** SUCCESS *** The parameter, 'pathname', is not blank.  Proceeding..."
+                    "*** SUCCESS *** The parameter, 'pathname', is not blank.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
