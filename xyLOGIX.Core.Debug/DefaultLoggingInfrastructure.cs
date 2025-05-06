@@ -208,8 +208,7 @@ namespace xyLOGIX.Core.Debug
                 result = string.Empty;
             }
 
-            DebugUtils.WriteLine(
-                DebugLevel.Debug,
+            System.Diagnostics.Debug.WriteLine(
                 $"DefaultLoggingInfrastructure.GetRootFileAppenderFileName: Result = '{result}'"
             );
 
@@ -662,8 +661,7 @@ namespace xyLOGIX.Core.Debug
                 }
                 else
                 {
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** Could not determine the correct value to use for the fully-qualified pathname of the existing log file (if any).  Stopping..."
                     );
 
@@ -1302,6 +1300,15 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
+                /*
+                 * NOTE: For the vast majority of this file, we are using
+                 * System.Diagnostics.Debug.WriteLine to send logging messages.
+                 *
+                 * However, this method is supposed to touch the log file (except
+                 * for when an exception is caught), so we are supposed to call
+                 * DebugUtils.WriteLine here.
+                 */
+
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     $"*** LOG STARTED ON {DateTime.Now.ToLongDateString()} at {DateTime.Now.ToLongTimeString()}"
