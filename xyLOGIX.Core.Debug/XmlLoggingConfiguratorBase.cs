@@ -1,4 +1,5 @@
 ﻿using log4net.Repository;
+using PostSharp.Patterns.Diagnostics;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -56,8 +57,8 @@ namespace xyLOGIX.Core.Debug
         /// method will fail.
         /// </remarks>
         public abstract bool Configure(
-            ILoggerRepository repository,
-            string configurationFileName = ""
+            [NotLogged] ILoggerRepository repository,
+            [NotLogged] string configurationFileName = ""
         );
     }
 }
