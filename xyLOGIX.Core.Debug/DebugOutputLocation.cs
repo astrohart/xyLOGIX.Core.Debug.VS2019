@@ -54,11 +54,11 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
+        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
+        /// <para/>
         /// If a debugger is not attached, or if logging is not enabled on the
         /// attached debugger, then this method does nothing.
-        /// <para />
-        /// This method also will not work if a <see langword="null" /> reference is passed
-        /// for <paramref name="value" />.
         /// </remarks>
         public override void Write([NotLogged] object value)
         {
@@ -67,7 +67,9 @@ namespace xyLOGIX.Core.Debug
                 if (!Debugger.IsAttached) return;
                 if (!Debugger.IsLogging()) return;
 
-                if (value == null) return;
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 System.Diagnostics.Debug.Write(value);
             }
@@ -118,11 +120,11 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
+        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
+        /// <para/>
         /// If a debugger is not attached, or if logging is not enabled on the
         /// attached debugger, then this method does nothing.
-        /// <para />
-        /// This method also will not work if a <see langword="null" /> reference is passed
-        /// for <paramref name="value" />.
         /// </remarks>
         public override void WriteLine([NotLogged] object value)
         {
@@ -131,7 +133,9 @@ namespace xyLOGIX.Core.Debug
                 if (!Debugger.IsAttached) return;
                 if (!Debugger.IsLogging()) return;
 
-                if (value == null) return;
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(value);
             }
