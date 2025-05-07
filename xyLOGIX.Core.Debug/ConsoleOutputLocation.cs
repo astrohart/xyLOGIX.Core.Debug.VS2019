@@ -51,18 +51,17 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
-        /// This method does nothing if the specified <paramref name="value" /> is
-        /// a <see langword="null" /> reference, or if the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
-        /// set to <see langword="true" />.
+        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
+        /// <para />
+        /// This method does nothing if the value of the
+        /// <see cref="P:MuteConsole" /> property is set to <see langword="true" />.
         /// </remarks>
         [Log(AttributeExclude = true)]
         public override void Write([NotLogged] object value)
         {
             try
             {
-                if (value == null) return;
-
                 if (MuteConsole) return;
 
                 Console.Write(value);
@@ -120,8 +119,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
-        /// This method does nothing if the specified <paramref name="value" /> is
-        /// a <see langword="null" /> reference, or if the value of the
+        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
+        /// <para />
+        /// This method takes no action if the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
         /// set to <see langword="true" />.
         /// </remarks>
@@ -129,8 +130,6 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                if (value == null) return;
-
                 if (MuteConsole) return;
 
                 Console.WriteLine(value);
@@ -162,6 +161,10 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" /> reference, contains a mismatching number of element(s),
         /// or if it contains element(s) whose value(s) do not match the format
         /// specifier(s) in the <paramref name="format" /> parameter.
+        /// <para />
+        /// This method will not execute if the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
+        /// set to <see langword="true" />.
         /// </remarks>
         public override void WriteLine(
             [NotLogged] string format,
@@ -185,7 +188,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>Writes the current line terminator to the output location.</summary>
         /// <remarks>
-        /// This method takes no action if the
+        /// This method will not execute if the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
         /// set to <see langword="true" />.
         /// </remarks>
