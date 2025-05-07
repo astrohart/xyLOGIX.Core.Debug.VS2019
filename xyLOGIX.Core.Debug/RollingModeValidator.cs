@@ -99,8 +99,6 @@ namespace xyLOGIX.Core.Debug
                     $"RollingModeValidator.IsValid: *** SUCCESS *** The value of the 'mode' parameter, i.e., '{mode}', is within the defined value set of its enumerated data type.  Proceeding..."
                 );
 
-                // TODO: Add any additional validation logic here
-
                 /*
                  * If we made it here, then assume that the input data is valid.
                  */
