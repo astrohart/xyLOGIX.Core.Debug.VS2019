@@ -81,6 +81,15 @@ namespace xyLOGIX.Core.Debug
             get => GetLoggingInfrastructure.OfType(InfrastructureType);
         }
 
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructureTypeValidator" />
+        /// interface.
+        /// </summary>
+        private static ILoggingInfrastructureTypeValidator
+            LoggingInfrastructureTypeValidator { [DebuggerStepThrough] get; } =
+            GetLoggingInfrastructureTypeValidator.SoleInstance();
+
         /// <summary> Initializes the application's logging subsystem. </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
@@ -313,8 +322,12 @@ namespace xyLOGIX.Core.Debug
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp).
         /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the operation(s) completed successfully;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
         [DebuggerStepThrough]
-        public static void SetUpDebugUtils(
+        public static bool SetUpDebugUtils(
             bool muteDebugLevelIfReleaseMode,
             bool isLogging = true,
             bool consoleOnly = false,
@@ -324,24 +337,41 @@ namespace xyLOGIX.Core.Debug
                 LoggingInfrastructureType.Default
         )
         {
+            var result = false;
+
             try
             {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "LoggingSubsystemManager.SetUpDebugUtils: Validating infrastructure type..."
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.SetUpDebugUtils: Checking whether the Logging Infrastructure Type, '{infrastructureType}', is within the defined value set..."
                 );
 
-                if (LoggingInfrastructureType.Unknown.Equals(
+                // Check to see whether the specified Logging Infrastructure Type is within the defined value set.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!LoggingInfrastructureTypeValidator.IsValid(
                         infrastructureType
-                    )) return;
-                if (!Enum.IsDefined(
-                        typeof(LoggingInfrastructureType), infrastructureType
-                    )) return;
+                    ))
+                {
+                    // The specified Logging Infrastructure Type is NOT within the defined value set.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The Logging Infrastructure Type, '{infrastructureType}', is NOT within the defined value set.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.SetUpDebugUtils: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.SetUpDebugUtils: *** SUCCESS *** The Logging Infrastructure Type, '{infrastructureType}', is within the defined value set.  Proceeding..."
+                );
 
                 InfrastructureType = infrastructureType;
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "*** LoggingSubsystemManager.SetUpDebugUtils: Checking whether the 'LoggingInfrastructure' property has a null reference for a value..."
                 );
 
@@ -354,16 +384,19 @@ namespace xyLOGIX.Core.Debug
                         "LoggingSubsystemManager.SetUpDebugUtils: *** ERROR *** The 'LoggingInfrastructure' property has a null reference.  Stopping."
                     );
 
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.SetUpDebugUtils: Result = {result}"
+                    );
+
                     // stop.
-                    return;
+                    return result;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "LoggingSubsystemManager.SetUpDebugUtils: *** SUCCESS *** The 'LoggingInfrastructure' property has a valid object reference for its value."
                 );
 
-                LoggingInfrastructure.SetUpDebugUtils(
+                result = LoggingInfrastructure.SetUpDebugUtils(
                     muteDebugLevelIfReleaseMode, isLogging, consoleOnly,
                     verbosity, muteConsole
                 );
@@ -372,7 +405,13 @@ namespace xyLOGIX.Core.Debug
             {
                 // dump all the exception info to the log
                 System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine($"LoggingSubsystemManager.SetUpDebugUtils: Result = {result}");
+
+            return result;
         }
     }
 }
