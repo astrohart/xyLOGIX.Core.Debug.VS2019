@@ -29,6 +29,26 @@ namespace xyLOGIX.Core.Debug
         static DebugFileAndFolderHelper() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IDirectoryWriteabilityStatusValidator" />
+        /// interface.
+        /// </summary>
+        private static IDirectoryWriteabilityStatusValidator
+            DirectoryWriteabilityStatusValidator
+        {
+            [DebuggerStepThrough] get;
+        } =
+            GetDirectoryWriteabilityStatusValidator.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IFileWriteabilityStatusValidator" /> interface.
+        /// </summary>
+        private static IFileWriteabilityStatusValidator
+            FileWriteabilityStatusValidator { [DebuggerStepThrough] get; } =
+            GetFileWriteabilityStatusValidator.SoleInstance();
+
+        /// <summary>
         /// Gets a <see cref="T:System.String" /> that contains the fully-qualified
         /// username of the currently-logged-in OS user.
         /// </summary>
@@ -55,28 +75,6 @@ namespace xyLOGIX.Core.Debug
                 return result;
             }
         }
-
-        /// <summary>
-        /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IDirectoryWriteabilityStatusValidator" />
-        /// interface.
-        /// </summary>
-        private static IDirectoryWriteabilityStatusValidator
-            DirectoryWriteabilityStatusValidator
-        {
-            [DebuggerStepThrough]
-            get;
-        } =
-            GetDirectoryWriteabilityStatusValidator.SoleInstance();
-
-        /// <summary>
-        /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IFileWriteabilityStatusValidator" /> interface.
-        /// </summary>
-        private static IFileWriteabilityStatusValidator
-            FileWriteabilityStatusValidator
-        { [DebuggerStepThrough] get; } =
-            GetFileWriteabilityStatusValidator.SoleInstance();
 
         /// <summary>
         /// Attempts to clear the files and folders from the user's temporary
@@ -202,6 +200,497 @@ namespace xyLOGIX.Core.Debug
                 // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
             }
+        }
+
+        /// <summary>
+        /// Determines whether a folder having the <c>FileSystemAccessRule</c>,
+        /// <paramref name="r" />, is NOT writeable by the user having the SID specified in
+        /// <paramref name="sidCurrentUser" />, who is a member of the specified
+        /// <paramref name="groups" />.
+        /// </summary>
+        /// <param name="r">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> that is a
+        /// rule that is to be checked.
+        /// </param>
+        /// <param name="groups">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> that
+        /// identifies the group(s) of which the user is a member.
+        /// </param>
+        /// <param name="sidCurrentUser">
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the SID of the currently-logged-in user.
+        /// </param>
+        /// <returns>
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus" /> enumeration
+        /// value(s) that indicates the results of the determination, or
+        /// <see cref="F:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus.NoDetermination" />
+        /// if the <c>Directory Writeability Status</c> value could not be ascertained from
+        /// the information available.
+        /// </returns>
+        private static DirectoryWriteabilityStatus
+            DetermineDirectoryWriteabilityStatus(
+                FileSystemAccessRule r,
+                IdentityReferenceCollection groups,
+                string sidCurrentUser
+            )
+        {
+            var result = DirectoryWriteabilityStatus.NoDetermination;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'r' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, r, is null. If it is, send an
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (r == null)
+                {
+                    // The parameter, 'r', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** A null reference was passed for the 'r' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'r' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'groups' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, groups, is null. If it is, send an
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (groups == null)
+                {
+                    // The parameter, 'groups', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** A null reference was passed for the 'groups' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'groups' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'groups' collection contains greater than zero elements..."
+                );
+
+                // Check to see whether the 'groups' collection contains greater than zero
+                // elements.  Otherwise, write an error message to the log system, return the default
+                // return value, and then terminate the execution of this method.
+                if (groups.Count <= 0)
+                {
+                    // The 'groups' collection contains zero elements.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'groups' collection contains zero elements.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** {groups.Count} element(s) were found in the 'groups' collection.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus *** INFO: Checking whether the value of the parameter, 'sidCurrentUser', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'sidCurrentUser', is blank.
+                // If this is so, then emit an error message to the Debug output, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(sidCurrentUser))
+                {
+                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** The parameter, 'sidCurrentUser', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter, 'sidCurrentUser', is not blank.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
+                // If that is the case, then we will write an error message to the Debug output, and then
+                // terminate the execution of this method, while returning the default return value.
+                if (r.IdentityReference == null)
+                {
+                    // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** The property, 'r.IdentityReference', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the current user is a member of any of the group(s)..."
+                );
+
+                // Check to see whether the current user is a member of any of the group(s).
+                // If this is not the case, then write an error message to the log system,
+                // and then terminate the execution of this method.
+                if (!groups.Contains(r.IdentityReference))
+                {
+                    // The current user is NOT a member of ANY of the group(s).  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The current user is NOT a member of ANY of the group(s).  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** The current user is a member of any of the group(s).  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity..."
+                );
+
+                // Check to see whether the current user SID is equal to that of the current Windows identity.
+                // If this is not the case, then write an error message to the log system,
+                // and then terminate the execution of this method.
+                if (!sidCurrentUser.Equals(r.IdentityReference.Value))
+                {
+                    // The current user SID is NOT equal to that of the current Windows identity.  This means the system is writeable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** SUCCESS *** The current user SID, '{sidCurrentUser}', is NOT equal to that of the current Windows identity.  This means the system is writeable."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** FYI *** The current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Determining whether the user has 'Write Data' privileges on the current system..."
+                );
+
+                result =
+                    AccessControlType.Allow.Equals(r.AccessControlType) &
+                    ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
+                        ? DirectoryWriteabilityStatus.Writeable
+                        : DirectoryWriteabilityStatus.NotWriteable;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = DirectoryWriteabilityStatus.NoDetermination;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether a file system entry having the <c>FileSystemAccessRule</c>,
+        /// <paramref name="r" />, is NOT writeable by the user having the SID specified in
+        /// <paramref name="sidCurrentUser" />, who is a member of the specified
+        /// <paramref name="groups" />.
+        /// </summary>
+        /// <param name="r">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> that is a
+        /// rule that is to be checked.
+        /// </param>
+        /// <param name="groups">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> that
+        /// identifies the group(s) of which the user is a member.
+        /// </param>
+        /// <param name="sidCurrentUser">
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the SID of the currently-logged-in user.
+        /// </param>
+        /// <returns>
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration
+        /// value(s) that indicates the results of the determination, or
+        /// <see cref="F:xyLOGIX.Core.Debug.FileWriteabilityStatus.NoDetermination" />
+        /// if the <c>File Writeability Status</c> value could not be ascertained from
+        /// the information available.
+        /// </returns>
+        private static FileWriteabilityStatus DetermineFileWriteabilityStatus(
+            FileSystemAccessRule r,
+            IdentityReferenceCollection groups,
+            string sidCurrentUser
+        )
+        {
+            var result = FileWriteabilityStatus.NoDetermination;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'r' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, r, is null. If it is, send an
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (r == null)
+                {
+                    // The parameter, 'r', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** A null reference was passed for the 'r' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'r' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'groups' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, groups, is null. If it is, send an
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (groups == null)
+                {
+                    // The parameter, 'groups', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** A null reference was passed for the 'groups' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'groups' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'groups' collection contains greater than zero elements..."
+                );
+
+                // Check to see whether the 'groups' collection contains greater than zero
+                // elements.  Otherwise, write an error message to the log file, return the default
+                // return value, and then terminate the execution of this method.
+                if (groups.Count <= 0)
+                {
+                    // The 'groups' collection contains zero elements.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'groups' collection contains zero elements.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** {groups.Count} element(s) were found in the 'groups' collection.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus *** INFO: Checking whether the value of the parameter, 'sidCurrentUser', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'sidCurrentUser', is blank.
+                // If this is so, then emit an error message to the Debug output, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(sidCurrentUser))
+                {
+                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** The parameter, 'sidCurrentUser', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter, 'sidCurrentUser', is not blank.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
+                // If that is the case, then we will write an error message to the Debug output, and then
+                // terminate the execution of this method, while returning the default return value.
+                if (r.IdentityReference == null)
+                {
+                    // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** The property, 'r.IdentityReference', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the current user is a member of any of the group(s)..."
+                );
+
+                // Check to see whether the current user is a member of any of the group(s).
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!groups.Contains(r.IdentityReference))
+                {
+                    // The current user is NOT a member of ANY of the group(s).  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The current user is NOT a member of ANY of the group(s).  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** The current user is a member of any of the group(s).  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity..."
+                );
+
+                // Check to see whether the current user SID is equal to that of the current Windows identity.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!sidCurrentUser.Equals(r.IdentityReference.Value))
+                {
+                    // The current user SID is NOT equal to that of the current Windows identity.  This means the file is writeable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** SUCCESS *** The current user SID, '{sidCurrentUser}', is NOT equal to that of the current Windows identity.  This means the file is writeable."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** FYI *** The current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Determining whether the user has 'Write Data' privileges on the current file..."
+                );
+
+                result =
+                    AccessControlType.Allow.Equals(r.AccessControlType) &
+                    ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
+                        ? FileWriteabilityStatus.Writeable
+                        : FileWriteabilityStatus.NotWriteable;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = FileWriteabilityStatus.NoDetermination;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+            );
+
+            return result;
         }
 
         /// <summary>
@@ -853,8 +1342,7 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            DebugUtils.WriteLine(
-                result ? DebugLevel.Info : DebugLevel.Error,
+            System.Diagnostics.Debug.WriteLine(
                 result
                     ? $"*** SUCCESS *** The file, '{pathname}', is writeable by the user, '{FullyQualifiedUserName}'.  Proceeding..."
                     : $"*** ERROR *** FAILED to verify that the file, '{pathname}', is writeable by the user, '{FullyQualifiedUserName}'.  Stopping..."
@@ -1431,8 +1919,7 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            DebugUtils.WriteLine(
-                result ? DebugLevel.Info : DebugLevel.Error,
+            System.Diagnostics.Debug.WriteLine(
                 result
                     ? $"*** SUCCESS *** The folder, '{pathname}', is writeable by the user, '{FullyQualifiedUserName}'.  Proceeding..."
                     : $"*** ERROR *** FAILED to verify that the folder, '{pathname}', is writeable by the user, '{FullyQualifiedUserName}'.  Stopping..."
@@ -1463,519 +1950,60 @@ namespace xyLOGIX.Core.Debug
         public static bool IsValidPath(string fullyQualifiedPath)
         {
             var result = false;
-            if (string.IsNullOrWhiteSpace(fullyQualifiedPath))
-            {
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
-                    "DebugFileAndFolderHelper.IsValidPath: Blank value passed for the 'fullyQualifiedPath' parameter. This parameter is required."
-                );
-                return result;
-            }
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugFileAndFolderHelper.IsValidPath *** INFO: Checking whether the value of the parameter, 'fullyQualifiedPath', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'fullyQualifiedPath', is blank.
+                // If this is so, then emit an error message to the Debug output, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(fullyQualifiedPath))
+                {
+                    // The parameter, 'fullyQualifiedPath', was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugFileAndFolderHelper.IsValidPath: *** ERROR *** The parameter, 'fullyQualifiedPath', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.IsValidPath: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter, 'fullyQualifiedPath', is not blank.  Proceeding..."
+                );
+
+                /*
+                 * Attempt to call the Path.GetFullPath method on the input.  If no
+                 * Exception(s) are caught, then we can return TRUE (for success) meaning
+                 * that the path provided is a valid one.
+                 */
+
                 _ = Path.GetFullPath(fullyQualifiedPath);
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
 
                 result = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Do not care what exception got thrown here. It's enough, for
-                // now, to know that if that is the case, then the path
-                // specified is not valid.
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = false;
             }
 
-            return result;
-        }
-
-        /// <summary>
-        /// Determines whether a folder having the <c>FileSystemAccessRule</c>,
-        /// <paramref name="r" />, is NOT writeable by the user having the SID specified in
-        /// <paramref name="sidCurrentUser" />, who is a member of the specified
-        /// <paramref name="groups" />.
-        /// </summary>
-        /// <param name="r">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> that is a
-        /// rule that is to be checked.
-        /// </param>
-        /// <param name="groups">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> that
-        /// identifies the group(s) of which the user is a member.
-        /// </param>
-        /// <param name="sidCurrentUser">
-        /// (Required.) A <see cref="T:System.String" /> that
-        /// contains the SID of the currently-logged-in user.
-        /// </param>
-        /// <returns>
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus" /> enumeration
-        /// value(s) that indicates the results of the determination, or
-        /// <see cref="F:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus.NoDetermination" />
-        /// if the <c>Directory Writeability Status</c> value could not be ascertained from
-        /// the information available.
-        /// </returns>
-        private static DirectoryWriteabilityStatus
-            DetermineDirectoryWriteabilityStatus(
-                FileSystemAccessRule r,
-                IdentityReferenceCollection groups,
-                string sidCurrentUser
-            )
-        {
-            var result = DirectoryWriteabilityStatus.NoDetermination;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'r' method parameter has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, r, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
-                if (r == null)
-                {
-                    // The parameter, 'r', is required and is not supposed to have a NULL value.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** A null reference was passed for the 'r' method parameter.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'r' method parameter.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'groups' method parameter has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, groups, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
-                if (groups == null)
-                {
-                    // The parameter, 'groups', is required and is not supposed to have a NULL value.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** A null reference was passed for the 'groups' method parameter.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'groups' method parameter.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'groups' collection contains greater than zero elements..."
-                );
-
-                // Check to see whether the 'groups' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the log system, return the default
-                // return value, and then terminate the execution of this method.
-                if (groups.Count <= 0)
-                {
-                    // The 'groups' collection contains zero elements.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The 'groups' collection contains zero elements.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = {result}"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** {groups.Count} element(s) were found in the 'groups' collection.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus *** INFO: Checking whether the value of the parameter, 'sidCurrentUser', is blank..."
-                );
-
-                // Check whether the value of the parameter, 'sidCurrentUser', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
-                if (string.IsNullOrWhiteSpace(sidCurrentUser))
-                {
-                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is blank.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** The parameter, 'sidCurrentUser', was either passed a null value, or it is blank. Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = {result}"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The parameter, 'sidCurrentUser', is not blank.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
-                );
-
-                // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
-                if (r.IdentityReference == null)
-                {
-                    // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** The property, 'r.IdentityReference', has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the current user is a member of any of the group(s)..."
-                );
-
-                // Check to see whether the current user is a member of any of the group(s).
-                // If this is not the case, then write an error message to the log system,
-                // and then terminate the execution of this method.
-                if (!groups.Contains(r.IdentityReference))
-                {
-                    // The current user is NOT a member of ANY of the group(s).  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The current user is NOT a member of ANY of the group(s).  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** SUCCESS *** The current user is a member of any of the group(s).  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity..."
-                );
-
-                // Check to see whether the current user SID is equal to that of the current Windows identity.
-                // If this is not the case, then write an error message to the log system,
-                // and then terminate the execution of this method.
-                if (!sidCurrentUser.Equals(r.IdentityReference.Value))
-                {
-                    // The current user SID is NOT equal to that of the current Windows identity.  This means the system is writeable.
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** SUCCESS *** The current user SID, '{sidCurrentUser}', is NOT equal to that of the current Windows identity.  This means the system is writeable."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** FYI *** The current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Determining whether the user has 'Write Data' privileges on the current system..."
-                );
-
-                result =
-                    AccessControlType.Allow.Equals(r.AccessControlType) &
-                    ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
-                        ? DirectoryWriteabilityStatus.Writeable
-                        : DirectoryWriteabilityStatus.NotWriteable;
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = DirectoryWriteabilityStatus.NoDetermination;
-            }
-
             System.Diagnostics.Debug.WriteLine(
-                $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Result = '{result}'"
-            );
-
-            return result;
-        }
-
-        /// <summary>
-        /// Determines whether a file system entry having the <c>FileSystemAccessRule</c>,
-        /// <paramref name="r" />, is NOT writeable by the user having the SID specified in
-        /// <paramref name="sidCurrentUser" />, who is a member of the specified
-        /// <paramref name="groups" />.
-        /// </summary>
-        /// <param name="r">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> that is a
-        /// rule that is to be checked.
-        /// </param>
-        /// <param name="groups">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> that
-        /// identifies the group(s) of which the user is a member.
-        /// </param>
-        /// <param name="sidCurrentUser">
-        /// (Required.) A <see cref="T:System.String" /> that
-        /// contains the SID of the currently-logged-in user.
-        /// </param>
-        /// <returns>
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration
-        /// value(s) that indicates the results of the determination, or
-        /// <see cref="F:xyLOGIX.Core.Debug.FileWriteabilityStatus.NoDetermination" />
-        /// if the <c>File Writeability Status</c> value could not be ascertained from
-        /// the information available.
-        /// </returns>
-        private static FileWriteabilityStatus DetermineFileWriteabilityStatus(
-            FileSystemAccessRule r,
-            IdentityReferenceCollection groups,
-            string sidCurrentUser
-        )
-        {
-            var result = FileWriteabilityStatus.NoDetermination;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'r' method parameter has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, r, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
-                if (r == null)
-                {
-                    // The parameter, 'r', is required and is not supposed to have a NULL value.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** A null reference was passed for the 'r' method parameter.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'r' method parameter.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'groups' method parameter has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, groups, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
-                if (groups == null)
-                {
-                    // The parameter, 'groups', is required and is not supposed to have a NULL value.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** A null reference was passed for the 'groups' method parameter.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** We have been passed a valid object reference for the 'groups' method parameter.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'groups' collection contains greater than zero elements..."
-                );
-
-                // Check to see whether the 'groups' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the log file, return the default
-                // return value, and then terminate the execution of this method.
-                if (groups.Count <= 0)
-                {
-                    // The 'groups' collection contains zero elements.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The 'groups' collection contains zero elements.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = {result}"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** {groups.Count} element(s) were found in the 'groups' collection.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus *** INFO: Checking whether the value of the parameter, 'sidCurrentUser', is blank..."
-                );
-
-                // Check whether the value of the parameter, 'sidCurrentUser', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
-                if (string.IsNullOrWhiteSpace(sidCurrentUser))
-                {
-                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is blank.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** The parameter, 'sidCurrentUser', was either passed a null value, or it is blank. Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = {result}"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The parameter, 'sidCurrentUser', is not blank.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
-                );
-
-                // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
-                if (r.IdentityReference == null)
-                {
-                    // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** The property, 'r.IdentityReference', has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the current user is a member of any of the group(s)..."
-                );
-
-                // Check to see whether the current user is a member of any of the group(s).
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
-                if (!groups.Contains(r.IdentityReference))
-                {
-                    // The current user is NOT a member of ANY of the group(s).  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The current user is NOT a member of ANY of the group(s).  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** SUCCESS *** The current user is a member of any of the group(s).  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity..."
-                );
-
-                // Check to see whether the current user SID is equal to that of the current Windows identity.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
-                if (!sidCurrentUser.Equals(r.IdentityReference.Value))
-                {
-                    // The current user SID is NOT equal to that of the current Windows identity.  This means the file is writeable.
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** SUCCESS *** The current user SID, '{sidCurrentUser}', is NOT equal to that of the current Windows identity.  This means the file is writeable."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** FYI *** The current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Determining whether the user has 'Write Data' privileges on the current file..."
-                );
-
-                result =
-                    AccessControlType.Allow.Equals(r.AccessControlType) &
-                    ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
-                        ? FileWriteabilityStatus.Writeable
-                        : FileWriteabilityStatus.NotWriteable;
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = FileWriteabilityStatus.NoDetermination;
-            }
-
-            System.Diagnostics.Debug.WriteLine(
-                $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Result = '{result}'"
+                $"DebugFileAndFolderHelper.IsValidPath: Result = {result}"
             );
 
             return result;
