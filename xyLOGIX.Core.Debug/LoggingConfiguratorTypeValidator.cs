@@ -55,8 +55,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 // Dump the argument of the parameter, 'type', to the log
-                DebugUtils.WriteLine(
-                    DebugLevel.Debug,
+                System.Diagnostics.Debug.WriteLine(
                     $"LoggingConfiguratorTypeValidator.IsValid: type = '{type}'"
                 );
 
@@ -73,8 +72,7 @@ namespace xyLOGIX.Core.Debug
                  * do something it's not intended to do.
                  */
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     $"LoggingConfiguratorTypeValidator.IsValid: Checking whether the value of the 'type' parameter, i.e., '{type}', is within the defined value set of its enumerated data type..."
                 );
 
@@ -85,13 +83,11 @@ namespace xyLOGIX.Core.Debug
                 if (!Enum.IsDefined(typeof(LoggingConfiguratorType), type))
                 {
                     // The value of the 'type' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The value of the 'type' parameter, i.e., '{type}', is NOT within the defined value set of its enumerated data type.  Stopping..."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         $"LoggingConfiguratorTypeValidator.IsValid: Result = {result}"
                     );
 
@@ -99,13 +95,11 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     $"LoggingConfiguratorTypeValidator.IsValid: *** SUCCESS *** The value of the 'type' parameter, i.e., '{type}', is within the defined value set of its enumerated data type.  Proceeding..."
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "LoggingConfiguratorTypeValidator.IsValid: Checking whether the 'Unknown' value has NOT been specified for the 'type' parameter..."
                 );
 
@@ -115,13 +109,11 @@ namespace xyLOGIX.Core.Debug
                 if (LoggingConfiguratorType.Unknown.Equals(type))
                 {
                     // The 'Unknown' value has been specified for the 'type' parameter.  This is not desirable.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The 'Unknown' value has been specified for the 'type' parameter.  Stopping..."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         $"LoggingConfiguratorTypeValidator.IsValid: Result = {result}"
                     );
 
@@ -129,8 +121,7 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "LoggingConfiguratorTypeValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'type' parameter.  Proceeding..."
                 );
 
@@ -142,8 +133,8 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = false;
             }
