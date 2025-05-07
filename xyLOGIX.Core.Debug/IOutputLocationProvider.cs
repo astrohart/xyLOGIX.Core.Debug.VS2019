@@ -1,5 +1,6 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using System.Diagnostics;
+
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
@@ -8,6 +9,16 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public interface IOutputLocationProvider
     {
+        /// <summary>
+        /// Gets a value indicating whether greater than zero output location(s) are
+        /// currently configured.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if greater than zero output location(s) are
+        /// currently configured; <see langword="false" /> otherwise.
+        /// </returns>
+        bool HasLocations { [DebuggerStepThrough] get; }
+
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
@@ -18,15 +29,24 @@ namespace xyLOGIX.Core.Debug
         /// event
         /// when its value is updated.
         /// </remarks>
-        bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+        bool MuteConsole
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is
-        /// updated.
+        /// Gets the count of <c>Output Location</c>(s) that are currently defined.
         /// </summary>
-        event MuteConsoleChangedEventHandler MuteConsoleChanged;
+        /// <remarks>
+        /// If an exception is caught during the execution of the getter of this
+        /// property, then the property evaluates to zero.
+        /// </remarks>
+        /// <returns>
+        /// An <see cref="T:System.Int32" /> value that is set to the count of
+        /// <c>Output Location</c>(s) that are currently defined.
+        /// </returns>
+        int LocationCount { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
@@ -44,6 +64,14 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary> Clears the public list of output locations. </summary>
         void Clear();
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
+        /// updated.
+        /// </summary>
+        event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
         /// Writes the text representation of the specified object to the
