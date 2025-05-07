@@ -206,7 +206,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** The logging infrastructure has been configured."
+                    "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** The logging subsystem has been configured programmatically."
                 );
 
                 /*
