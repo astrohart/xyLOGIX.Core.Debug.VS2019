@@ -160,18 +160,84 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                if (location == null) return;
-                if (InternalOutputLocationList == null) return;
-                if (InternalOutputLocationList.Contains(location)) return;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** There is a request to add an Output Location."
+                );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"OutputLocationProvider.AddOutputLocation: Adding output location of type, '{location.Type}'..."
+                    "OutputLocationProvider.AddOutputLocation: Checking whether the 'location' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, location, is null. If it is, send an 
+                // error to the log file and quit, returning from this method.
+                if (location == null)
+                {
+                    // The parameter, 'location', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "OutputLocationProvider.AddOutputLocation: *** *ERROR *** A null reference was passed for the 'location' method parameter.  Stopping."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.AddOutputLocation: *** SUCCESS *** We have been passed a valid object reference for the 'location' method parameter."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.AddOutputLocation: Checking whether the property, 'InternalOutputLocationList', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'InternalOutputLocationList', has a null reference for a value. 
+                // If that is the case, then we will write an error message to the log file, and then
+                // terminate the execution of this method.
+                if (InternalOutputLocationList == null)
+                {
+                    // The property, 'InternalOutputLocationList', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "OutputLocationProvider.AddOutputLocation: *** ERROR *** The property, 'InternalOutputLocationList', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.AddOutputLocation: *** SUCCESS *** The property, 'InternalOutputLocationList', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** OutputLocationProvider.AddOutputLocation: Checking whether the Output Location specified is already a member of the internal collection..."
+                );
+
+                // Check to see whether the Output Location specified
+                // is already a member of the internal collection.
+                // Otherwise, write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (InternalOutputLocationList.Contains(location))
+                {
+                    // The Output Location specified is already a member of the internal collection.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The Output Location specified is already a member of the internal collection.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.AddOutputLocation: *** SUCCESS *** The Output Location specified is NOT already a member of the internal collection.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Adding output location of type, '{location.Type}', to the internal collection..."
                 );
 
                 InternalOutputLocationList.Add(location);
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"OutputLocationProvider.AddOutputLocation: The output location of type, '{location.Type}', has been added."
+                    $"OutputLocationProvider.AddOutputLocation: *** SUCCESS *** The output location of type, '{location.Type}', has been added."
                 );
             }
             catch (Exception ex)
@@ -186,8 +252,54 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                if (InternalOutputLocationList == null) return;
-                if (!InternalOutputLocationList.Any()) return;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to clear the internal collection..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.Clear: Checking whether the property, 'InternalOutputLocationList', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'InternalOutputLocationList', has a null reference for a
+                // value. If that is the case, then we will write an error message to the Debug
+                // output, and then terminate the execution of this method.
+                if (InternalOutputLocationList == null)
+                {
+                    // The property, 'InternalOutputLocationList', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "OutputLocationProvider.Clear: *** ERROR *** The property, 'InternalOutputLocationList', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.Clear: *** SUCCESS *** The property, 'InternalOutputLocationList', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.Clear *** INFO: Checking whether the 'InternalOutputLocationList' list has greater than zero elements..."
+                );
+
+                // Check if the list, 'InternalOutputLocationList', has greater than zero elements.  If this is not
+                // the case, then write an error message to the log file, and then terminate the execution
+                // of this method.
+                if (InternalOutputLocationList.ToArray()
+                                              .Length <= 0)
+                {
+                    // The list, 'InternalOutputLocationList', has zero elements, but we can't proceed if this is so.
+                    System.Diagnostics.Debug.WriteLine(
+                        "OutputLocationProvider.Clear *** ERROR *** The list, 'InternalOutputLocationList', has zero elements.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"OutputLocationProvider.Clear *** SUCCESS *** {InternalOutputLocationList.ToArray().Length} element(s) were found in the 'InternalOutputLocationList' list.  Clearing it..."
+                );
 
                 InternalOutputLocationList.Clear();
             }
@@ -196,6 +308,12 @@ namespace xyLOGIX.Core.Debug
                 // dump all the exception info to the log
                 System.Diagnostics.Debug.WriteLine(ex);
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                !HasLocations
+                    ? "*** SUCCESS *** Cleared all Output Location(s) from the internal collection.  Proceeding..."
+                    : "*** ERROR *** FAILED to clear all output location(s) from the internal collection.  Stopping..."
+            );
         }
 
         /// <summary>
@@ -211,14 +329,23 @@ namespace xyLOGIX.Core.Debug
         /// output location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// If the internal collection has zero <c>Output Location</c>(s)
+        /// configured, then this method takes no action.
+        /// </remarks>
         [Log(AttributeExclude = true)]
         public void Write([NotLogged] object value)
         {
             try
             {
+                /*
+                 * NOTE: We should refrain from doing any logging during the
+                 * execution of this method.
+                 */
+
                 if (InternalOutputLocationList == null) return;
-                if (!InternalOutputLocationList.Any()) return;
+                if (!HasLocations) return;
+
 
                 foreach (var location in InternalOutputLocationList.Where(l
                              => l != null
