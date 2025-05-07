@@ -1,4 +1,6 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>VerbosityChanged</c> event. </summary>
     /// <param name="e">
@@ -11,6 +13,6 @@
     /// handle the <c>VerbosityChanged</c> event.
     /// </remarks>
     public delegate void VerbosityChangedEventHandler(
-        VerbosityChangedEventArgs e
+        [NotLogged] VerbosityChangedEventArgs e
     );
 }
