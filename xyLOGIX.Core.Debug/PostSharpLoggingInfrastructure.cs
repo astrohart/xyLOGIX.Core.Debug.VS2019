@@ -222,12 +222,12 @@ namespace xyLOGIX.Core.Debug
         public override bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFileNamename = "",
+            [NotLogged] string configurationFileNamename = "",
             bool muteConsole = false,
-            string logFileName = "",
+            [NotLogged] string logFileName = "",
             int verbosity = 1,
-            string applicationName = "",
-            ILoggerRepository repository = null
+            [NotLogged] string applicationName = "",
+            [NotLogged] ILoggerRepository repository = null
         )
         {
             var result = false;
