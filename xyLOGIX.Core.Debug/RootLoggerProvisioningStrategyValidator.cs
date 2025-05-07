@@ -91,8 +91,7 @@ namespace xyLOGIX.Core.Debug
                         $"*** ERROR *** The value of the 'strategy' parameter, i.e., '{strategy}', is NOT within the defined value set of its enumerated data type.  Stopping..."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug,
+                    System.Diagnostics.Debug.WriteLine(
                         $"RootLoggerProvisioningStrategyValidator.IsValid: Result = {result}"
                     );
 
