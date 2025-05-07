@@ -37,13 +37,37 @@ namespace xyLOGIX.Core.Debug
         /// Multiple newlines are removed.
         /// </returns>
         [Log(AttributeExclude = true)]
-        public static string CollapseNewlinesToSpaces(this string value)
+        public static string CollapseNewlinesToSpaces([NotLogged] this string value)
         {
             var result = string.Empty;
 
             try
             {
-                if (string.IsNullOrWhiteSpace(value)) return value;
+                System.Diagnostics.Debug.WriteLine(
+                    $"SecretStringExtensions.CollapseNewlinesToSpaces *** INFO: Checking whether the value of the parameter, 'value', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'value', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    // The parameter, 'value' was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "SecretStringExtensions.CollapseNewlinesToSpaces: The parameter, 'value' was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"SecretStringExtensions.CollapseNewlinesToSpaces: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** SUCCESS *** The parameter 'value' is not blank.  Proceeding..."
+                );
 
                 result = value.Trim()
                               .Replace("\r\n", "\n")
