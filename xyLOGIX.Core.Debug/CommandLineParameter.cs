@@ -5,7 +5,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Values for command-line parameters.
     /// </summary>
-    internal static class CommandLineParameter
+    public static class CommandLineParameter
     {
         /// <summary>
         /// A <see cref="T:System.String" /> that contains the text of the
@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
         /// call the <see cref="M:xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger" />
         /// method when an exception is thrown.
         /// </summary>
-        internal const string HaltOnException = "--hoe";
+        public const string HaltOnException = "--hoe";
 
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only

@@ -74,7 +74,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
-        /// internal list maintained by this object.
+        /// public list maintained by this object.
         /// </summary>
         /// <param name="location">
         /// (Required.) Reference to an instance of an object that
@@ -109,7 +109,7 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary> Clears the internal list of output locations. </summary>
+        /// <summary> Clears the public list of output locations. </summary>
         public void Clear()
         {
             try

@@ -22,21 +22,21 @@ namespace xyLOGIX.Core.Debug.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("xyLOGIX.Core.Debug.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The &apos;depth&apos; parameter must be zero or greater..
         /// </summary>
-        internal static string Error_DepthMustBeNonNegative {
+        public static string Error_DepthMustBeNonNegative {
             get {
                 return ResourceManager.GetString("Error_DepthMustBeNonNegative", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Unable to determine the path to the log file&apos;s containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file..
         /// </summary>
-        internal static string Error_UnableFindAppConfigEntries {
+        public static string Error_UnableFindAppConfigEntries {
             get {
                 return ResourceManager.GetString("Error_UnableFindAppConfigEntries", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         ///   Looks up a localized string similar to {0}: {1}
         ///	{2}.
         /// </summary>
-        internal static string ExceptionMessageFormat {
+        public static string ExceptionMessageFormat {
             get {
                 return ResourceManager.GetString("ExceptionMessageFormat", resourceCulture);
             }
@@ -96,7 +96,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         ///
         ///.
         /// </summary>
-        internal static string TempExceptionFileMessage {
+        public static string TempExceptionFileMessage {
             get {
                 return ResourceManager.GetString("TempExceptionFileMessage", resourceCulture);
             }

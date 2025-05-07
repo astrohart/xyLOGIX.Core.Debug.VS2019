@@ -7,7 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Exposes static methods to validate information and settings.
     /// </summary>
-    internal static class Validate
+    public static class Validate
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only

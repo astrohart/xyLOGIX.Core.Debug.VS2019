@@ -6,7 +6,7 @@ namespace xyLOGIX.Core.Debug
     /// Exposes <see langword="static" /> methods for performing mathematical
     /// computations.
     /// </summary>
-    internal static class Compute
+    public static class Compute
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// otherwise, if the specified <paramref name="value" /> is zero or greater, then
         /// the method is the identity map.
         /// </returns>
-        internal static int ZeroFloor(int value)
+        public static int ZeroFloor(int value)
             => value < 0 ? 0 : value;
     }
 }

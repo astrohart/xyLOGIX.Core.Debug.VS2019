@@ -6,7 +6,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Exposes "secret" <see cref="T:System.String" /> extension methods to help the methods in this library only.
     /// </summary>
-    internal static class SecretStringExtensions
+    public static class SecretStringExtensions
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -37,7 +37,7 @@ namespace xyLOGIX.Core.Debug
         /// Multiple newlines are removed.
         /// </returns>
         [Log(AttributeExclude = true)]
-        internal static string CollapseNewlinesToSpaces(this string value)
+        public static string CollapseNewlinesToSpaces(this string value)
         {
             var result = string.Empty;
 

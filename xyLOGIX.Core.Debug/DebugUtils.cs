@@ -106,7 +106,7 @@ namespace xyLOGIX.Core.Debug
         public static LoggingInfrastructureType InfrastructureType
         {
             [DebuggerStepThrough] get;
-            [DebuggerStepThrough] internal set;
+            [DebuggerStepThrough] public set;
         }
 
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>

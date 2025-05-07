@@ -30,7 +30,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
-        /// internal list maintained by this object.
+        /// public list maintained by this object.
         /// </summary>
         /// <param name="location">
         /// (Required.) Reference to an instance of an object that
@@ -42,7 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         void AddOutputLocation([NotLogged] IOutputLocation location);
 
-        /// <summary> Clears the internal list of output locations. </summary>
+        /// <summary> Clears the public list of output locations. </summary>
         void Clear();
 
         /// <summary>

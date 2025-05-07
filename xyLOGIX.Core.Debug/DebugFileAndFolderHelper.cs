@@ -32,7 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a <see cref="T:System.String" /> that contains the fully-qualified
         /// username of the currently-logged-in OS user.
         /// </summary>
-        internal static string FullyQualifiedUserName
+        public static string FullyQualifiedUserName
         {
             [DebuggerStepThrough]
             get
