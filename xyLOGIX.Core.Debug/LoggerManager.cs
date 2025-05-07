@@ -93,8 +93,7 @@ namespace xyLOGIX.Core.Debug
                 var rootLoggerProvisioner =
                     GetRootLoggerProvisioner.For(strategy);
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "LoggerManager.GetRootLogger: Checking whether the variable, 'rootLoggerProvisioner', has a null reference for a value..."
                 );
 
@@ -104,8 +103,7 @@ namespace xyLOGIX.Core.Debug
                 if (rootLoggerProvisioner == null)
                 {
                     // the variable rootLoggerProvisioner is required to have a valid object reference.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
+                    System.Diagnostics.Debug.WriteLine(
                         "LoggerManager.GetRootLogger: *** ERROR ***  The variable, 'rootLoggerProvisioner', has a null reference.  Stopping..."
                     );
 
@@ -114,8 +112,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 // We can use the variable, rootLoggerProvisioner, because it's not set to a null reference.
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "LoggerManager.GetRootLogger: *** SUCCESS *** The variable, 'rootLoggerProvisioner', has a valid object reference for its value.  Proceeding..."
                 );
 
