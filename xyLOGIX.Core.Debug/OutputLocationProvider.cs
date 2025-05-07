@@ -28,6 +28,41 @@ namespace xyLOGIX.Core.Debug
             => InitializeInternalOutputLocationList();
 
         /// <summary>
+        /// Gets a value indicating whether greater than zero output location(s) are
+        /// currently configured.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if greater than zero output location(s) are
+        /// currently configured; <see langword="false" /> otherwise.
+        /// </returns>
+        public bool HasLocations
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = false;
+
+                try
+                {
+                    if (InternalOutputLocationList == null) return result;
+
+                    result = InternalOutputLocationList.ToArray()
+                        .Length > 0;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+
+                    result = false;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
         /// interface.
@@ -46,6 +81,43 @@ namespace xyLOGIX.Core.Debug
         {
             [DebuggerStepThrough] get;
         } = new AdvisableCollection<IOutputLocation>();
+
+        /// <summary>
+        /// Gets the count of <c>Output Location</c>(s) that are currently defined.
+        /// </summary>
+        /// <remarks>
+        /// If an exception is caught during the execution of the getter of this
+        /// property, then the property evaluates to zero.
+        /// </remarks>
+        /// <returns>
+        /// An <see cref="T:System.Int32" /> value that is set to the count of
+        /// <c>Output Location</c>(s) that are currently defined.
+        /// </returns>
+        public int LocationCount
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = 0;
+
+                try
+                {
+                    if (InternalOutputLocationList == null) return result;
+
+                    result = InternalOutputLocationList.ToArray()
+                        .Length;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
@@ -148,8 +220,8 @@ namespace xyLOGIX.Core.Debug
                 if (InternalOutputLocationList == null) return;
                 if (!InternalOutputLocationList.Any()) return;
 
-                foreach (var location in InternalOutputLocationList.Where(
-                             l => l != null
+                foreach (var location in InternalOutputLocationList.Where(l
+                             => l != null
                          ))
                 {
                     if (MuteConsole &&
@@ -196,8 +268,8 @@ namespace xyLOGIX.Core.Debug
                     ((arg == null) | (arg.Length <= 0)))
                     return;
 
-                foreach (var location in InternalOutputLocationList.Where(
-                             l => l != null
+                foreach (var location in InternalOutputLocationList.Where(l
+                             => l != null
                          ))
                 {
                     if (MuteConsole &&
@@ -228,8 +300,8 @@ namespace xyLOGIX.Core.Debug
                 if (InternalOutputLocationList == null) return;
                 if (!InternalOutputLocationList.Any()) return;
 
-                foreach (var location in InternalOutputLocationList.Where(
-                             l => l != null
+                foreach (var location in InternalOutputLocationList.Where(l
+                             => l != null
                          ))
                 {
                     if (MuteConsole &&
@@ -277,8 +349,8 @@ namespace xyLOGIX.Core.Debug
                     ((args == null) | (args.Length <= 0)))
                     return;
 
-                foreach (var location in InternalOutputLocationList.Where(
-                             l => l != null
+                foreach (var location in InternalOutputLocationList.Where(l
+                             => l != null
                          ))
                 {
                     if (MuteConsole &&
@@ -305,8 +377,8 @@ namespace xyLOGIX.Core.Debug
                 if (InternalOutputLocationList == null) return;
                 if (!InternalOutputLocationList.Any()) return;
 
-                foreach (var location in InternalOutputLocationList.Where(
-                             l => l != null
+                foreach (var location in InternalOutputLocationList.Where(l
+                             => l != null
                          ))
                 {
                     if (MuteConsole &&
