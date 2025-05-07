@@ -45,7 +45,7 @@ namespace xyLOGIX.Core.Debug
         /// to be automatically re-started by the operating system.
         /// </remarks>
         [Yielder, DebuggerStepThrough]
-        public static void EmergencyStop(Action notificationAction = null)
+        public static void EmergencyStop([NotLogged] Action notificationAction = null)
         {
             try
             {
