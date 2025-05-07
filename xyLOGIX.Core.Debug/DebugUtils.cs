@@ -296,7 +296,7 @@ namespace xyLOGIX.Core.Debug
 
                 // Always launch the debugger if the message starts with
                 // 'Could not load file or assembly'
-                if (!IsExceptionSuppresed(exception) &&
+                if (!IsExceptionSuppressed(exception) &&
                     exception.Message.StartsWith(
                         "Could not load file or assembly"
                     )) return true;
@@ -311,7 +311,7 @@ namespace xyLOGIX.Core.Debug
                     exception.StackTrace.Contains("Does.FolderExist"))
                     return result;
 
-                result = !IsExceptionSuppresed(exception);
+                result = !IsExceptionSuppressed(exception);
             }
             catch
             {
@@ -486,14 +486,98 @@ namespace xyLOGIX.Core.Debug
         /// If a <see langword="null" /> reference is passed for
         /// <paramref name="e" />, then this method returns the empty string.
         /// </remarks>
-        public static string FormatException(Exception e)
+        [DebuggerStepThrough]
+        [return: NotLogged]
+        public static string FormatException([NotLogged] Exception e)
         {
-            if (e == null) return string.Empty;
+            var result = string.Empty;
 
-            return string.Format(
-                Resources.ExceptionMessageFormat, e.GetType(),
-                e.Message.CollapseNewlinesToSpaces(), e.StackTrace
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.FormatException: Checking whether the required method parameter, 'e', has a null reference for a value..."
+                );
+
+                // Check to see if the required method parameter, e, is null. If it is, send an 
+                // error to the log file and quit, returning the default return value of this
+                // method.
+                if (e == null)
+                {
+                    // The parameter, 'e', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.FormatException: *** ERROR *** A null reference was passed for the required method parameter, 'e'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugUtils.FormatException: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.FormatException: *** SUCCESS *** We have been passed a valid object reference for the required method parameter, 'e'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Collapsing the exception message to one line..."
+                );
+
+                var collapsedExceptionMessage =
+                    e.Message.CollapseNewlinesToSpaces();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.FormatException: Checking whether the variable, 'collapsedExceptionMessage', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'collapsedExceptionMessage', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(collapsedExceptionMessage))
+                {
+                    // The variable, 'collapsedExceptionMessage', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.FormatException: *** ERROR *** The variable, 'collapsedExceptionMessage', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugUtils.FormatException: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.FormatException: *** SUCCESS *** {collapsedExceptionMessage.Length} B of data appear to be present in the variable, 'collapsedExceptionMessage'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Formatting the exception message..."
+                );
+
+                result = string.Format(
+                    Resources.ExceptionMessageFormat, e.GetType(),
+                    collapsedExceptionMessage, e.StackTrace
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = string.Empty;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                !string.IsNullOrWhiteSpace(result)
+                    ? $"*** SUCCESS *** {result.Length} B of data are present in the variable, 'result'.  Proceeding..."
+                    : "*** ERROR *** Zero byte(s) of data, or only whitespace, is present in the variable, 'result'.  This is not desirable.  Stopping..."
             );
+
+            return result;
         }
 
         /// <summary>
@@ -506,8 +590,73 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:System.Exception" /> whose information is to be
         /// dumped.
         /// </param>
-        public static void FormatExceptionAndWrite(Exception e)
-            => WriteLine(DebugLevel.Error, FormatException(e));
+        [DebuggerStepThrough]
+        public static void FormatExceptionAndWrite([NotLogged] Exception e)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.FormatExceptionAndWrite: Checking whether the 'e' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, e, is null. If it is, send an 
+                // error to the log file and quit, returning from this method.
+                if (e == null)
+                {
+                    // The parameter, 'e', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.FormatExceptionAndWrite: *** *ERROR *** A null reference was passed for the 'e' method parameter.  Stopping."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.FormatExceptionAndWrite: *** SUCCESS *** We have been passed a valid object reference for the 'e' method parameter."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Formatting the diagnostic message for the exception..."
+                );
+
+                var formattedExceptionMessage = FormatException(e);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.FormatExceptionAndWrite: Checking whether the variable, 'formattedExceptionMessage', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'formattedExceptionMessage', is null or blank. If it is, 
+                // then send an  error to the log file and then terminate the execution of this
+                // method.
+                if (string.IsNullOrWhiteSpace(formattedExceptionMessage))
+                {
+                    // The variable, formattedExceptionMessage, has a null reference for its value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.FormatExceptionAndWrite: *** ERROR *** The variable, 'formattedExceptionMessage', has a null reference for its value, or it is blank.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.FormatExceptionAndWrite: *** SUCCESS *** {formattedExceptionMessage.Length} B of data appear to be present in the variable, 'formattedExceptionMessage'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Writing the formatted exception message to the log..."
+                );
+
+
+                WriteLine(DebugLevel.Error, formattedExceptionMessage);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
 
         /// <summary> Helper method to, basically, carry out the formatting of a string. </summary>
         /// <param name="format"> (Required.) String value to be formatted. </param>
@@ -524,7 +673,32 @@ namespace xyLOGIX.Core.Debug
             string format,
             params object[] args
         )
-            => args.Any() ? string.Format(format, args) : format;
+        {
+            var result = format;
+
+            try
+            {
+                /*
+                 * It is NOT desirable to do logging of any kind during the
+                 * execution of this particular method.
+                 */
+
+                if (string.IsNullOrWhiteSpace(format)) return string.Empty;
+                if (args == null) return result;
+                if (args.Length <= 0) return result;
+
+                result = string.Format(format, args);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = string.Empty;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Determines whether the exception passed in the <paramref name="exception" /> is
@@ -539,7 +713,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="exception" /> is to be suppressed; <see langword="false" /> to
         /// allow the JIT debugger to be launched.
         /// </returns>
-        private static bool IsExceptionSuppresed(
+        private static bool IsExceptionSuppressed(
             [NotLogged] Exception exception
         )
         {
@@ -547,13 +721,73 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (exception == null) return true;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Checking whether the specified exception is suppressed..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.IsExceptionSuppressed: Checking whether the 'exception' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, exception, is null. If it is, send an 
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (exception == null)
+                {
+                    // The parameter, 'exception', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.IsExceptionSuppressed: *** ERROR *** A null reference was passed for the 'exception' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** DebugUtils.IsExceptionSuppressed: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.IsExceptionSuppressed: *** SUCCESS *** We have been passed a valid object reference for the 'exception' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Obtaining the exception-type string..."
+                );
 
                 var exceptionTypeString = exception.GetType()
                                                    .ToString();
 
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.IsExceptionSuppressed: Checking whether the variable, 'exceptionTypeString', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'exceptionTypeString', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
                 if (string.IsNullOrWhiteSpace(exceptionTypeString))
+                {
+                    // The variable, 'exceptionTypeString', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.IsExceptionSuppressed: *** ERROR *** The variable, 'exceptionTypeString', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugUtils.IsExceptionSuppressed: Result = {result}"
+                    );
+
+                    // stop.
                     return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.IsExceptionSuppressed: *** SUCCESS *** {exceptionTypeString.Length} B of data appear to be present in the variable, 'exceptionTypeString'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Checking whether the exception of type, '{exceptionTypeString}', is in the list of excluded exception types..."
+                );
 
                 result = exception.IsAnyOf(
                     typeof(TypeInitializationException),
@@ -563,11 +797,15 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
-                LogException(ex);
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = true;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"DebugUtils.IsExceptionSuppressed: Result = {result}"
+            );
 
             return result;
         }
@@ -596,28 +834,40 @@ namespace xyLOGIX.Core.Debug
             DebugLevel level = DebugLevel.Debug
         )
         {
-            // first, format the text with string.Format
-            if (string.IsNullOrWhiteSpace(content))
-
-                // stop if the format output is blank or null
-                return;
-            if (logMethod == null)
-                return;
-
-            if (!content.Contains(Environment.NewLine))
+            try
             {
-                logMethod(level, content);
-                return;
+                /*
+                 * It is NOT desirable to do any kind of logging while running this method.
+                 */
+
+                // first, format the text with string.Format
+                if (string.IsNullOrWhiteSpace(content))
+
+                    // stop if the format output is blank or null
+                    return;
+                if (logMethod == null)
+                    return;
+
+                if (!content.Contains(Environment.NewLine))
+                {
+                    logMethod(level, content);
+                    return;
+                }
+
+                var lines = content.Split(
+                    new[] { Environment.NewLine }, StringSplitOptions.None
+                );
+                if (!lines.Any()) return;
+
+                // For Each line, write it out at the debugLevel indicated, one by
+                // one. We do this by calling the delegate supplied to this method
+                foreach (var line in lines) logMethod(level, line);
             }
-
-            var lines = content.Split(
-                new[] { Environment.NewLine }, StringSplitOptions.None
-            );
-            if (!lines.Any()) return;
-
-            // For Each line, write it out at the debugLevel indicated, one by
-            // one. We do this by calling the delegate supplied to this method
-            foreach (var line in lines) logMethod(level, line);
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -650,26 +900,34 @@ namespace xyLOGIX.Core.Debug
             bool launchDebugger = true
         )
         {
-            if (exception == null) return;
+            try
+            {
+                if (exception == null) return;
 
-            if (exception is TypeInitializationException)
-                exception = exception.InnerException;
+                if (exception is TypeInitializationException)
+                    exception = exception.InnerException;
 
-            var message = string.Format(
-                Resources.ExceptionMessageFormat, exception.GetType(),
-                exception.Message, exception.StackTrace
-            );
+                var message = string.Format(
+                    Resources.ExceptionMessageFormat, exception.GetType(),
+                    exception.Message, exception.StackTrace
+                );
 
-            OutputExceptionLoggingMessage(exception, message);
+                OutputExceptionLoggingMessage(exception, message);
 
-            /*
-             * Only launch the debugger if the required condition(s) are
-             * met and only after having written the detailed exception info
-             * to the log file.
-             */
+                /*
+                 * Only launch the debugger if the required condition(s) are
+                 * met and only after having written the detailed exception info
+                 * to the log file.
+                 */
 
-            if (CanLaunchDebugger(exception, launchDebugger))
-                ProgramFlowHelper.StartDebugger();
+                if (CanLaunchDebugger(exception, launchDebugger))
+                    ProgramFlowHelper.StartDebugger();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
@@ -717,13 +975,21 @@ namespace xyLOGIX.Core.Debug
             [NotLogged] string message
         )
         {
-            WriteLine(DebugLevel.Error, message);
+            try
+            {
+                WriteLine(DebugLevel.Error, message);
 
-            if (exception.InnerException == null ||
-                exception is TypeInitializationException) return;
+                if (exception.InnerException == null ||
+                    exception is TypeInitializationException) return;
 
-            WriteLine(DebugLevel.Error, "---");
-            LogException(exception.InnerException);
+                WriteLine(DebugLevel.Error, "---");
+                LogException(exception.InnerException);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -777,23 +1043,33 @@ namespace xyLOGIX.Core.Debug
             params object[] args
         )
         {
-            if (string.IsNullOrWhiteSpace(format))
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
 
-                // cannot do anything with a blank entry.
-                return;
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(format)) return;
 
 #if !DEBUG
-            /* If this software is currently running in Release mode, then do not output ANY lines of text
+                /* If this software is currently running in Release mode, then do not output ANY lines of text
              * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
              * parameter is set to DebugLevel.Debug, simply stop executing this method. */
 
-            if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
-                return;
+                if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
+                    return;
 #endif
 
-            LogEachLineIfMultiline(
-                GenerateContentFromFormat(format, args), WriteCore, debugLevel
-            );
+                LogEachLineIfMultiline(
+                    GenerateContentFromFormat(format, args), WriteCore,
+                    debugLevel
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -805,7 +1081,7 @@ namespace xyLOGIX.Core.Debug
         /// One of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
         /// which
-        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content should be written.
         /// </param>
         /// <param name="content"> (Required.) string containing the content to be written. </param>
         /// <remarks>
@@ -813,14 +1089,34 @@ namespace xyLOGIX.Core.Debug
         /// this method does nothing. This method's behavior is identical to that of
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteCore" />, except that a newline
         /// character is appended to the end of the content.
+        /// <para />
+        /// This method does nothing if the value specified for the
+        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
+        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
+        /// the <paramref name="debugLevel" /> parameter.
         /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
-        /// </exception>
-        public static void Write(DebugLevel debugLevel, string content)
-            => LogEachLineIfMultiline(content, WriteCore, debugLevel);
+        public static void Write(
+            DebugLevel debugLevel,
+            [NotLogged] string content
+        )
+        {
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(content)) return;
+
+                LogEachLineIfMultiline(content, WriteCore, debugLevel);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
 
         /// <summary>
         /// Provides the implementation details of writing messages to the log.
@@ -845,13 +1141,19 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="debugLevel" /> parameter is not one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
         /// </exception>
-        private static void WriteCore(DebugLevel debugLevel, string content)
+        private static void WriteCore(
+            DebugLevel debugLevel,
+            [NotLogged] string content
+        )
         {
-            // Do nothing if blank content provided.
-            if (string.IsNullOrWhiteSpace(content)) return;
-
             try
             {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(content)) return;
+
                 if (Verbosity == 0) return;
 
                 if (!MuteConsole) Console.Write(content);
@@ -869,6 +1171,12 @@ namespace xyLOGIX.Core.Debug
 
                 var currentMethod = MethodBase.GetCurrentMethod();
                 var logger = LogManager.GetLogger(currentMethod.DeclaringType);
+                if (logger == null)
+                    throw new ArgumentNullException(
+                        nameof(logger),
+                        "No logger is available for the current method."
+                    );
+
                 switch (debugLevel)
                 {
                     case DebugLevel.Error:
@@ -892,15 +1200,17 @@ namespace xyLOGIX.Core.Debug
 
                     default:
                         throw new ArgumentOutOfRangeException(
-                            nameof(debugLevel), debugLevel, null
+                            nameof(debugLevel), debugLevel,
+                            $"*** ERROR *** No logger is available for the debug level, '{debugLevel}'.  Stopping..."
                         );
                 }
 
                 OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //ignore
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
@@ -940,23 +1250,34 @@ namespace xyLOGIX.Core.Debug
             params object[] args
         )
         {
-            if (string.IsNullOrWhiteSpace(format))
+            try
+            {
+                if (string.IsNullOrWhiteSpace(format))
 
-                // cannot do anything with a blank entry.
-                return;
+                    // cannot do anything with a blank entry.
+                    return;
 
 #if !DEBUG
-            /* If this software is currently running in Release mode, then do not output ANY lines of text
+                /* If this software is currently running in Release mode, then do not output ANY lines of text
              * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
              * parameter is set to DebugLevel.Debug, simply stop executing this method. */
 
-            if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
-                return;
+                if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
+                    return;
 #endif
 
-            LogEachLineIfMultiline(
-                GenerateContentFromFormat(format, args), WriteLine, debugLevel
-            );
+                var generatedContent = GenerateContentFromFormat(format, args);
+
+                if (string.IsNullOrWhiteSpace(generatedContent))
+                    return;
+
+                LogEachLineIfMultiline(generatedContent, WriteLine, debugLevel);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -986,14 +1307,24 @@ namespace xyLOGIX.Core.Debug
             params object[] args
         )
         {
-            if (string.IsNullOrWhiteSpace(format))
+            try
+            {
+                if (string.IsNullOrWhiteSpace(format))
 
-                // cannot do anything with a blank entry.
-                return;
+                    // cannot do anything with a blank entry.
+                    return;
 
-            LogEachLineIfMultiline(
-                GenerateContentFromFormat(format, args), WriteLine
-            );
+                var generatedContent = GenerateContentFromFormat(format, args);
+
+                if (string.IsNullOrWhiteSpace(generatedContent)) return;
+
+                LogEachLineIfMultiline(generatedContent, WriteLine);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -1020,7 +1351,23 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         public static void WriteLine(DebugLevel debugLevel, string content)
-            => LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
+        {
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(content)) return;
+
+                LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
 
         /// <summary>
         /// Provides the implementation details of writing messages to the log,
