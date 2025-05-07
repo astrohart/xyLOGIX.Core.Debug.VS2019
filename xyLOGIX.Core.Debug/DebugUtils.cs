@@ -840,11 +840,11 @@ namespace xyLOGIX.Core.Debug
                  * It is NOT desirable to do any kind of logging while running this method.
                  */
 
-                // first, format the text with string.Format
+                // first, format the text with string.Format.  If the supplied content
+                // is blank, then stop, since we have nothing to work with.
                 if (string.IsNullOrWhiteSpace(content))
-
-                    // stop if the format output is blank or null
                     return;
+
                 if (logMethod == null)
                     return;
 
@@ -1081,7 +1081,8 @@ namespace xyLOGIX.Core.Debug
         /// One of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
         /// which
-        /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content should be written.
+        /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content
+        /// should be written.
         /// </param>
         /// <param name="content"> (Required.) string containing the content to be written. </param>
         /// <remarks>
@@ -1133,14 +1134,23 @@ namespace xyLOGIX.Core.Debug
         /// to the log file.
         /// </param>
         /// <remarks>
-        /// If the string passed in <paramref name="content" /> is blank or
-        /// empty, then this method does nothing.
+        /// If the <paramref name="content" /> parameter is a blank or empty
+        /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
+        /// defined, then this method assumes that the application was built in Release
+        /// mode. If this is so, then the method checks the value of the
+        /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
+        /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
+        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
+        /// this
+        /// method does nothing. This method adds a newline character after writing its
+        /// content to the log.
+        /// <para />
+        /// If the value of the <paramref name="debugLevel" /> parameter is not within the
+        /// defined value set of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
+        /// enumeration, or if it is set to
+        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" />, then this method,
+        /// likewise, also takes no action.
         /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
-        /// </exception>
         private static void WriteCore(
             DebugLevel debugLevel,
             [NotLogged] string content
@@ -1252,9 +1262,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(format))
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
 
-                    // cannot do anything with a blank entry.
+                if (string.IsNullOrWhiteSpace(format))
                     return;
 
 #if !DEBUG
@@ -1297,6 +1308,11 @@ namespace xyLOGIX.Core.Debug
         /// included in the <paramref name="format" /> and written to the log.
         /// </param>
         /// <remarks>
+        /// If the value of the <paramref name="format" /> parameter is
+        /// <see langword="null" />, a blank string, a <see cref="T:System.String" /> that
+        /// contains only whitespace, or the <see cref="F:System.String.Empty" /> value,
+        /// then this method does nothing.
+        /// <para />
         /// This overload specifies that the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> logging
         /// debugLevel is
@@ -1309,9 +1325,8 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
+                // Do not continue if the content that is to be formatted is not provided.
                 if (string.IsNullOrWhiteSpace(format))
-
-                    // cannot do anything with a blank entry.
                     return;
 
                 var generatedContent = GenerateContentFromFormat(format, args);
@@ -1343,12 +1358,13 @@ namespace xyLOGIX.Core.Debug
         /// this method does nothing. This method's behavior is identical to that of
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteCore" />, except that a newline
         /// character is appended to the end of the content.
+        /// <para />
+        /// This method does nothing if the value specified for the
+        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
+        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
+        /// the <paramref name="debugLevel" /> parameter.
         /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
-        /// </exception>
         [DebuggerStepThrough]
         public static void WriteLine(DebugLevel debugLevel, string content)
         {
@@ -1384,31 +1400,36 @@ namespace xyLOGIX.Core.Debug
         /// to the log file.
         /// </param>
         /// <remarks>
-        /// If the string passed in <paramref name="content" /> is blank or
-        /// empty, then this method does nothing.
+        /// This method will not do anything if the <paramref name="content" /> is
+        /// <see langword="null" />, blank, or the <see cref="F:System.String.Empty" />
+        /// value.
+        /// <para />
+        /// This method does nothing if the value specified for the
+        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
+        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
+        /// the <paramref name="debugLevel" /> parameter.
         /// </remarks>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="debugLevel" /> parameter is not one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values.
-        /// </exception>
         private static void WriteLineCore(
             [NotLogged] DebugLevel debugLevel,
             [NotLogged] string content
         )
         {
-            // Do nothing if the content is blank or the empty string.
-            if (string.IsNullOrWhiteSpace(content)) return;
-
-            /* Do not proceed any further if PostSharp logging infrastructure is being
-               utilized and the content to be log contains the word In or Done. These
-               logging lines are typically made during method entry or exit, which is
-               something that PostSharp handles for us. */
-            if ((IsPostSharp && content.Contains("In ")) ||
-                content.Contains("Done.")) return;
-
             try
             {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if the content is blank or the empty string.
+                if (string.IsNullOrWhiteSpace(content)) return;
+
+                /* Do not proceed any further if PostSharp logging infrastructure is being
+                   utilized and the content to be logged contains the word In or Done. These
+                   logging lines are typically made during method entry or exit, which is
+                   something that PostSharp handles for us. */
+                if ((IsPostSharp && content.Contains("In ")) ||
+                    content.Contains("Done.")) return;
+
                 if (Verbosity == 0) return;
 
                 //OutputLocationProvider.WriteLine(content);
