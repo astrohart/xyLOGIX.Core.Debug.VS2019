@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -36,22 +37,28 @@ namespace xyLOGIX.Core.Debug
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="T:System.FormatException">
-        /// The format specification in
-        /// <paramref name="format" /> is invalid.
-        /// </exception>
+        /// <remarks>
+        /// If the value of the <paramref name="format" /> parameter is blank,
+        /// <see langword="null" />, or the <see cref="F:System.String.Empty" /> value,
+        /// then this method does nothing.
+        /// <para />
+        /// This method also takes no action if there are zero <c>Output Location</c>(s)
+        /// defined.
+        /// </remarks>
         public static void Write([NotLogged] string format, params object[] arg)
         {
-            if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length <= 0)))
-                return;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(format)) return;
+                if (!OutputLocationProvider.HasLocations) return;
 
-            OutputLocationProvider.Write(format, arg);
+                OutputLocationProvider.Write(format, arg);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -64,36 +71,79 @@ namespace xyLOGIX.Core.Debug
         /// An array of objects to write using
         /// <paramref name="format" /> .
         /// </param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// <paramref name="format" /> or
-        /// <paramref name="arg" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="T:System.FormatException">
-        /// The format specification in
-        /// <paramref name="format" /> is invalid.
-        /// </exception>
-        public static void WriteLine([NotLogged] string format, params object[] arg)
+        /// <remarks>
+        /// If the value of the <paramref name="format" /> parameter is blank,
+        /// <see langword="null" />, or the <see cref="F:System.String.Empty" /> value,
+        /// then this method does nothing.
+        /// <para />
+        /// This method also takes no action if there are zero <c>Output Location</c>(s)
+        /// defined.
+        /// </remarks>
+        public static void WriteLine(
+            [NotLogged] string format,
+            params object[] arg
+        )
         {
-            if (string.IsNullOrWhiteSpace(format) &
-                ((arg == null) | (arg.Length <= 0)))
-                return;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(format)) return;
+                if (!OutputLocationProvider.HasLocations) return;
 
-            OutputLocationProvider.WriteLine(format, arg);
+                OutputLocationProvider.WriteLine(format, arg);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>Writes the current line terminator to the output location.</summary>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// This method takes no action if there are zero <c>Output Location</c>
+        /// (s) currently defined.
+        /// </remarks>
         public static void WriteLine()
-            => OutputLocationProvider.WriteLine();
+        {
+            try
+            {
+                if (!OutputLocationProvider.HasLocations) return;
+
+                OutputLocationProvider.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
 
         /// <summary>
         /// Writes the text representation of the specified object, followed by
         /// the current line terminator, to the output location.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
+        /// <remarks>
+        /// If a <see langword="null" /> reference is passed as the argument of
+        /// the <paramref name="value" /> parameter, then this method takes no action.
+        /// <para />
+        /// This method also will not work if there are zero <c>Output Location</c>(s)
+        /// defined.
+        /// </remarks>
         public static void WriteLine([NotLogged] object value)
-            => OutputLocationProvider.WriteLine(value);
+        {
+            try
+            {
+                if (value == null) return;
+                if (!OutputLocationProvider.HasLocations) return;
+
+                OutputLocationProvider.WriteLine(value);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
     }
 }
