@@ -47,22 +47,39 @@ namespace xyLOGIX.Core.Debug
         [Yielder, DebuggerStepThrough]
         public static void EmergencyStop(Action notificationAction = null)
         {
-            // write the name of the current class and method we are now
-            // entering, into the log
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "In ServiceFlowHelper.EmergencyStop"
-            );
+            try
+            {
+                // write the name of the current class and method we are now
+                // entering, into the log
+                System.Diagnostics.Debug.WriteLine(
+                    "In ServiceFlowHelper.EmergencyStop"
+                );
 
-            notificationAction?.Invoke();
+                notificationAction?.Invoke();
 
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "ServiceFlowHelper.EmergencyStop: Done."
-            );
+                System.Diagnostics.Debug.WriteLine(
+                    "ServiceFlowHelper.EmergencyStop: Done."
+                );
 
-            DebugUtils.WriteLine(DebugLevel.Error, "*** EMERGENCY STOP ***");
+                System.Diagnostics.Debug.WriteLine("*** EMERGENCY STOP ***");
 
-            Environment.Exit(-1);
+                Environment.Exit(-1);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
+
+        /// <summary>
+        /// Raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
+        /// event.
+        /// </summary>
+        [Yielder, DebuggerStepThrough]
+        private static void OnDebuggerStartPending()
+            => DebuggerStartPending?.Invoke();
 
         /// <summary> Call this method to invoke the just-in-time debugger. </summary>
         /// <remarks>
@@ -81,8 +98,7 @@ namespace xyLOGIX.Core.Debug
              * this method should be called instead.
              */
 
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
+            System.Diagnostics.Debug.WriteLine(
                 "*** ServiceFlowHelper.StartDebugger: Checking whether the 'Environment.UserInteractive' Boolean expression evaluates to FALSE..."
             );
 
@@ -90,8 +106,7 @@ namespace xyLOGIX.Core.Debug
             if (Environment.UserInteractive)
             {
                 // the Boolean expression, Environment.UserInteractive, evaluated to TRUE.  This is not desirable.
-                DebugUtils.WriteLine(
-                    DebugLevel.Error,
+                System.Diagnostics.Debug.WriteLine(
                     "*** ERROR: The Boolean expression, 'Environment.UserInteractive, evaluated to TRUE.  Calling the ProgramFlowHelper class' equivalent of this method..."
                 );
 
@@ -101,33 +116,22 @@ namespace xyLOGIX.Core.Debug
                 return;
             }
 
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
+            System.Diagnostics.Debug.WriteLine(
                 "ServiceFlowHelper.StartDebugger: *** SUCCESS *** The Boolean expression, 'Environment.UserInteractive', evaluated to FALSE.  Proceeding..."
             );
 
             OnDebuggerStartPending();
 
-            DebugUtils.WriteLine(
-                DebugLevel.Info,
+            System.Diagnostics.Debug.WriteLine(
                 "ServiceFlowHelper.StartDebugger: Invoking debugger..."
             );
 
             Debugger.Launch();
             Debugger.Break();
 
-            DebugUtils.WriteLine(
-                DebugLevel.Debug, "ServiceFlowHelper.StartDebugger: Done."
+            System.Diagnostics.Debug.WriteLine(
+                "ServiceFlowHelper.StartDebugger: Done."
             );
         }
-
-        /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.ServiceFlowHelper.DebuggerStartPending" />
-        /// event.
-        /// </summary>
-        [Yielder, DebuggerStepThrough]
-        private static void OnDebuggerStartPending()
-            => DebuggerStartPending?.Invoke();
     }
 }
