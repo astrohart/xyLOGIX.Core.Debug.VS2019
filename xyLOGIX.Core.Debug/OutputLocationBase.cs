@@ -57,12 +57,10 @@ namespace xyLOGIX.Core.Debug
         /// Writes the text representation of the specified object to the
         /// output location.
         /// </summary>
-        /// <param name="value">The value to write, or <see langword="null" />.</param>
+        /// <param name="value">The value to write, or a <see langword="null" /> reference.</param>
         /// <remarks>
-        /// This method does nothing if the specified <paramref name="value" /> is
-        /// a <see langword="null" /> reference, or if the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
-        /// set to <see langword="true" />.
+        /// It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
         /// </remarks>
         public abstract void Write([NotLogged] object value);
 
