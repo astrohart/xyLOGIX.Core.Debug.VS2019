@@ -51,63 +51,57 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     $"*** FYI *** Attempting to obtain a FileAppender by name: '{name}'..."
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "FileAppenderManager.GetAppenderByName *** INFO: Checking whether the value of the parameter, 'name', is blank..."
                 );
 
                 // Check whether the value of the parameter, 'name', is blank.
-                // If this is so, then emit an error message to the log file, and
+                // If this is so, then emit an error message to the Debug output, and
                 // then terminate the execution of this method.
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    // The parameter, 'name' was either passed a null value, or it is blank.  This is not desirable.
-                    DebugUtils.WriteLine(
-                        DebugLevel.Error,
-                        "FileAppenderManager.GetAppenderByName: The parameter, 'name' was either passed a null value, or it is blank. Stopping..."
+                    // The parameter, 'name', was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "FileAppenderManager.GetAppenderByName: *** ERROR *** The parameter, 'name', was either passed a null value, or it is blank. Stopping..."
                     );
 
                     // stop.
                     return result;
                 }
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    "*** SUCCESS *** The parameter 'name' is not blank.  Proceeding..."
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter, 'name', is not blank.  Proceeding..."
                 );
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "*** FYI *** Attempting to obtain a reference to the Root Logger..."
                 );
 
                 var root = LoggerManager.GetRootLogger();
 
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
+                System.Diagnostics.Debug.WriteLine(
                     "FileAppenderManager.GetAppenderByName: Checking whether the variable, 'root', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, root, is null.  If it is, send an error
-                // to the log file, and then terminate the execution of this method,
-                // returning the default return value.
+                // Check to see if the variable, 'root', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
                 if (root == null)
                 {
-                    // the variable root is required to have a valid object reference.
+                    // The variable, 'root', has a null reference for a value.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "FileAppenderManager.GetAppenderByName: *** ERROR ***  The variable, 'root', has a null reference.  Stopping..."
+                        "FileAppenderManager.GetAppenderByName: *** ERROR ***  The variable, 'root', has a null reference for a value.  Stopping..."
                     );
 
                     // stop.
                     return result;
                 }
 
-                // We can use the variable, root, because it's not set to a null reference.
+                // We can use the variable, 'root', because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
                     "FileAppenderManager.GetAppenderByName: *** SUCCESS *** The variable, 'root', has a valid object reference for its value.  Proceeding..."
                 );
