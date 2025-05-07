@@ -1,4 +1,6 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a TextWritten event. </summary>
     /// <param name="e">
@@ -13,5 +15,6 @@
     /// file, or other base, as a means of allowing more than one part of a
     /// software system to participate in the output of text.
     /// </remarks>
-    public delegate void TextWrittenEventHandler(TextWrittenEventArgs e);
+    public delegate void TextWrittenEventHandler(
+        [NotLogged] TextWrittenEventArgs e);
 }
