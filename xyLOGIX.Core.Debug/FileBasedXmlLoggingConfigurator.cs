@@ -24,8 +24,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected FileBasedXmlLoggingConfigurator()
-        { }
+        protected FileBasedXmlLoggingConfigurator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -35,8 +34,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static IXmlLoggingConfigurator Instance
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = new FileBasedXmlLoggingConfigurator();
 
         /// <summary>
@@ -46,8 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public override XmlLoggingConfiguratorType Type
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = XmlLoggingConfiguratorType.FileBased;
 
         /// <summary>
@@ -87,8 +84,8 @@ namespace xyLOGIX.Core.Debug
         /// method will fail.
         /// </remarks>
         public override bool Configure(
-            ILoggerRepository repository,
-            string configurationFileName = ""
+            [NotLogged] ILoggerRepository repository,
+            [NotLogged] string configurationFileName = ""
         )
         {
             var result = false;
