@@ -52,17 +52,15 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
-        /// If a <see langword="null" /> reference is supplied as the argument of
-        /// the <paramref name="value" /> parameter, then this method does nothing.
-        /// <para />
+        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
+        /// <para/>
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
         public override void Write([NotLogged] object value)
         {
             try
             {
-                if (value == null) return;
-
                 /*
                  * This particular Output Listener is designed to output messages
                  * only in Release mode.
@@ -70,6 +68,10 @@ namespace xyLOGIX.Core.Debug
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
+
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 Trace.Write(value);
             }
@@ -128,9 +130,9 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
-        /// If a <see langword="null" /> reference is supplied as the argument of
-        /// the <paramref name="value" /> parameter, then this method does nothing.
-        /// <para />
+        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
+        /// parameter to be a <see langword="null" /> reference.
+        /// <para/>
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
         public override void WriteLine([NotLogged] object value)
@@ -145,7 +147,9 @@ namespace xyLOGIX.Core.Debug
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
 
-                if (value == null) return;
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 Trace.WriteLine(value);
             }
