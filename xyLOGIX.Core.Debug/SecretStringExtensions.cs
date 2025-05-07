@@ -4,7 +4,8 @@ using System;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes "secret" <see cref="T:System.String" /> extension methods to help the methods in this library only.
+    /// Exposes "secret" <see cref="T:System.String" /> extension methods to help the
+    /// methods in this library only.
     /// </summary>
     public static class SecretStringExtensions
     {
@@ -37,14 +38,17 @@ namespace xyLOGIX.Core.Debug
         /// Multiple newlines are removed.
         /// </returns>
         [Log(AttributeExclude = true)]
-        public static string CollapseNewlinesToSpaces([NotLogged] this string value)
+        [return: NotLogged]
+        public static string CollapseNewlinesToSpaces(
+            [NotLogged] this string value
+        )
         {
             var result = string.Empty;
 
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"SecretStringExtensions.CollapseNewlinesToSpaces *** INFO: Checking whether the value of the parameter, 'value', is blank..."
+                    "SecretStringExtensions.CollapseNewlinesToSpaces *** INFO: Checking whether the value of the parameter, 'value', is blank..."
                 );
 
                 // Check whether the value of the parameter, 'value', is blank.
@@ -66,7 +70,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** SUCCESS *** The parameter 'value' is not blank.  Proceeding..."
+                    "*** SUCCESS *** The parameter 'value' is not blank.  Proceeding..."
                 );
 
                 result = value.Trim()
