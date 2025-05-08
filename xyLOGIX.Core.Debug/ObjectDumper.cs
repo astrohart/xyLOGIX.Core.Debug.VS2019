@@ -15,19 +15,18 @@ namespace xyLOGIX.Core.Debug
     /// of objects to the log file. Works in a way very similar to LINQPad's Dump()
     /// method.
     /// </summary>
-    [ExplicitlySynchronized]
-    [Log(AttributeExclude = true)]
+    [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class ObjectDumper
     {
+        /// <summary> Integer specifying the current position in the output stream. </summary>
+        private int _currentStreamPosition;
+
         /// <summary>
         /// Integer specifying the depth (inheritance levels) to which to dump
         /// object data.
         /// </summary>
         /// <remarks> Must be zero or greater. </remarks>
         private readonly int _depth;
-
-        /// <summary> Integer specifying the current position in the output stream. </summary>
-        private int _currentStreamPosition;
 
         /// <summary> Integer specifying the indentation level of the logged data. </summary>
         /// <remarks> Must be 1 or greater. </remarks>
@@ -60,6 +59,18 @@ namespace xyLOGIX.Core.Debug
             _depth = depth;
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" />
+        /// event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
+        /// that contains the event data.
+        /// </param>
+        [Yielder]
+        protected static void OnTextWritten(TextWrittenEventArgs e)
+            => TextWritten?.Invoke(e);
+
         /// <summary> Occurs when text is written to an output stream. </summary>
         public static event TextWrittenEventHandler TextWritten;
 
@@ -79,23 +90,26 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// By default, this overload of the method sends the dump output to the
         /// <see cref="T:System.Console.Out" /> stream.
+        /// <para />
+        /// This method does nothing if either a <see langword="null" /> reference is
+        /// passed as the argument of the <paramref name="element" /> parameter, or if the
+        /// value of the <paramref name="depth" /> parameter is less than zero.
         /// </remarks>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required
-        /// parameter, <paramref name="element" />, is passed a <see langword="null" />
-        /// value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="depth" /> parameter is not zero or greater.
-        /// </exception>
         public static void Write(object element, int depth = 0)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(nameof(depth));
-            Write(element, depth, Console.Out);
+            try
+            {
+                // TODO: Add the code that may potentially throw an exception here
+                if (element == null) return;
+                if (depth < 0) return;
+
+                Write(element, depth, Console.Out);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -120,26 +134,84 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// By default, this overload of the method sends the dump output to the
         /// <see cref="T:System.Console.Out" /> stream.
+        /// <para />
+        /// If a <see langword="null" /> reference is passed as the argument of the
+        /// <paramref name="element" /> parameter, or if the <paramref name="depth" />
+        /// parameter is less than zero, then this method does nothing.
         /// </remarks>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if either of the
-        /// required parameters, <paramref name="element" /> or <paramref name="log" />,
-        /// are passed a <see langword="null" /> value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        /// Thrown if the
-        /// <paramref name="depth" /> parameter is not zero or greater.
-        /// </exception>
         public static void Write(object element, int depth, TextWriter log)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(nameof(depth));
-            if (log == null) throw new ArgumentNullException(nameof(log));
+            try
+            {
+                // TODO: Add the code that may potentially throw an exception here
+                if (element == null) return;
+                if (depth < 0) return;
 
-            var dumper = new ObjectDumper(depth) { _writer = log };
-            dumper.WriteObject(null, element);
+                var logToUtilize = log;
+
+                if (log == null)
+                {
+                    logToUtilize = Console.Out;
+                }
+
+                var dumper = new ObjectDumper(depth) { _writer = logToUtilize };
+                dumper.WriteObject(null, element);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes the content in the string, <paramref name="s" />, to the
+        /// <see cref="T:System.IO.TextWriter" /> wrapped by this object.
+        /// </summary>
+        /// <param name="s"> (Required.) String containing the content to be written. </param>
+        /// <remarks>
+        /// This method does nothing if <paramref name="s" /> is a blank string.
+        /// <para />
+        /// </remarks>
+        private void Write(string s)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(s))
+                    return;
+
+                _writer.Write(s);
+                OnTextWritten(new TextWrittenEventArgs(s));
+                _currentStreamPosition += s.Length;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes an indent -- a 4 space tab -- to the
+        /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
+        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
+        /// level
+        /// given by the value of the
+        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
+        /// </summary>
+        private void WriteIndent()
+        {
+            if (_indentLevel < 0)
+                throw new ArgumentOutOfRangeException(
+                    nameof(_indentLevel),
+                    "Value of the indent level must be zero or greater."
+                );
+
+            for (var i = 0; i < _indentLevel; i++)
+            {
+                _writer.Write("   ");
+                OnTextWritten(new TextWrittenEventArgs("    "));
+            }
         }
 
         /// <summary>
@@ -218,57 +290,6 @@ namespace xyLOGIX.Core.Debug
             if (log == null) throw new ArgumentNullException(nameof(log));
             var dumper = new ObjectDumper(depth) { _writer = log };
             dumper.WriteObjectToLines(null, element);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" />
-        /// event.
-        /// </summary>
-        /// <param name="e">
-        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
-        /// that contains the event data.
-        /// </param>
-        [Yielder]
-        protected static void OnTextWritten(TextWrittenEventArgs e)
-            => TextWritten?.Invoke(e);
-
-        /// <summary>
-        /// Writes the content in the string, <paramref name="s" />, to the
-        /// <see cref="T:System.IO.TextWriter" /> wrapped by this object.
-        /// </summary>
-        /// <param name="s"> (Required.) String containing the content to be written. </param>
-        /// <remarks> This method does nothing if <paramref name="s" /> is a blank string. </remarks>
-        private void Write(string s)
-        {
-            if (string.IsNullOrWhiteSpace(s))
-                return;
-
-            _writer.Write(s);
-            OnTextWritten(new TextWrittenEventArgs(s));
-            _currentStreamPosition += s.Length;
-        }
-
-        /// <summary>
-        /// Writes an indent -- a 4 space tab -- to the
-        /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
-        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
-        /// level
-        /// given by the value of the
-        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
-        /// </summary>
-        private void WriteIndent()
-        {
-            if (_indentLevel < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(_indentLevel),
-                    "Value of the indent level must be zero or greater."
-                );
-
-            for (var i = 0; i < _indentLevel; i++)
-            {
-                _writer.Write("   ");
-                OnTextWritten(new TextWrittenEventArgs("    "));
-            }
         }
 
         /// <summary>
