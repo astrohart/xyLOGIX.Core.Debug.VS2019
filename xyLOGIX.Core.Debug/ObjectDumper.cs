@@ -242,11 +242,19 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         public static void WriteLine(object element, int depth = 0)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-            if (depth < 0)
-                throw new ArgumentOutOfRangeException(nameof(depth));
-            WriteLine(element, depth, Console.Out);
+            try
+            {
+                // TODO: Add the code that may potentially throw an exception here
+                if (element == null) return;
+                if (depth < 0) return;
+
+                WriteLine(element, depth, Console.Out);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
