@@ -28,25 +28,6 @@ namespace xyLOGIX.Core.Debug
             => InitializeInternalOutputLocationList();
 
         /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is
-        /// updated.
-        /// </summary>
-        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
-
-        /// <summary>
-        /// Gets a reference to the one and only instance of the object that
-        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
-        /// interface.
-        /// </summary>
-        public static IOutputLocationProvider Instance
-        {
-            [DebuggerStepThrough]
-            get;
-        } = new OutputLocationProvider();
-
-        /// <summary>
         /// Gets a value indicating whether greater than zero output location(s) are
         /// currently configured.
         /// </summary>
@@ -79,6 +60,26 @@ namespace xyLOGIX.Core.Debug
                 return result;
             }
         }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
+        /// interface.
+        /// </summary>
+        public static IOutputLocationProvider Instance
+        {
+            [DebuggerStepThrough] get;
+        } = new OutputLocationProvider();
+
+        /// <summary>
+        /// Gets a reference to a collection, each element of which implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// </summary>
+        [Child]
+        private IList<IOutputLocation> InternalOutputLocationList
+        {
+            [DebuggerStepThrough] get;
+        } = new AdvisableCollection<IOutputLocation>();
 
         /// <summary>
         /// Gets the count of <c>Output Location</c>(s) that are currently defined.
@@ -129,8 +130,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public bool MuteConsole
         {
-            [DebuggerStepThrough]
-            get => _muteConsole;
+            [DebuggerStepThrough] get => _muteConsole;
             [DebuggerStepThrough]
             set
             {
@@ -142,17 +142,6 @@ namespace xyLOGIX.Core.Debug
                     );
             }
         }
-
-        /// <summary>
-        /// Gets a reference to a collection, each element of which implements
-        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
-        /// </summary>
-        [Child]
-        private IList<IOutputLocation> InternalOutputLocationList
-        {
-            [DebuggerStepThrough]
-            get;
-        } = new AdvisableCollection<IOutputLocation>();
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
@@ -325,6 +314,14 @@ namespace xyLOGIX.Core.Debug
                     : "*** ERROR *** FAILED to clear all output location(s) from the internal collection.  Stopping..."
             );
         }
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
+        /// property is
+        /// updated.
+        /// </summary>
+        public event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
         /// Writes the text representation of the specified object to the
@@ -544,22 +541,6 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Raises the
-        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
-        /// event.
-        /// </summary>
-        /// <param name="e">
-        /// A
-        /// <see cref="T:xyLOGIX.Core.Debug.Events.MuteConsoleChangedEventArgs" /> that
-        /// contains
-        /// the event data.
-        /// </param>
-        protected virtual void OnMuteConsoleChanged(
-            [NotLogged] MuteConsoleChangedEventArgs e
-        )
-            => MuteConsoleChanged?.Invoke(this, e);
-
-        /// <summary>
         /// Initializes the
         /// <see
         ///     cref="P:xyLOGIX.Core.Debug.OutputLocationProvider.InternalOutputLocationList" />
@@ -571,12 +552,15 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Initializing the output location(s)..."
+                    "*** FYI *** Initializing the output location(s)..."
                 );
 
-                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to obtain a reference to the Console output location...");
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to obtain a reference to the Console output location..."
+                );
 
-                var consoleOutputLocation = GetOutputLocation.OfType(OutputLocationType.Console);
+                var consoleOutputLocation =
+                    GetOutputLocation.OfType(OutputLocationType.Console);
 
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: Checking whether the variable 'consoleOutputLocation' has a null reference for a value..."
@@ -599,18 +583,85 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: *** SUCCESS *** The 'consoleOutputLocation' variable has a valid object reference for its value.  Proceeding..."
                 );
-                
-                AddOutputLocation(
-                    consoleOutputLocation
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Adding the Console Output Location to the internal collection..."
                 );
 
-                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to obtain a reference to the Debug output location...");
+                AddOutputLocation(consoleOutputLocation);
 
-                AddOutputLocation(
-                    GetOutputLocation.OfType(OutputLocationType.Debug)
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to obtain a reference to the Debug output location..."
                 );
-                AddOutputLocation(
-                    GetOutputLocation.OfType(OutputLocationType.Trace)
+
+                var debugOutputLocation =
+                    GetOutputLocation.OfType(OutputLocationType.Debug);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.InitializeInternalOutputLocationList: Checking whether the variable 'debugOutputLocation' has a null reference for a value..."
+                );
+
+                // Check to see if the variable, debugOutputLocation, is null. If it is, send an error to the
+                // Debug output and quit, returning from the method.
+                if (debugOutputLocation == null)
+                {
+                    // the variable debugOutputLocation is required to have a valid object reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "OutputLocationProvider.InitializeInternalOutputLocationList: *** ERROR ***  The 'debugOutputLocation' variable has a null reference.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                // We can use the variable, debugOutputLocation, because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.InitializeInternalOutputLocationList: *** SUCCESS *** The 'debugOutputLocation' variable has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Adding the Debug Output Location to the internal collection..."
+                );
+
+                AddOutputLocation(debugOutputLocation);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to obtain a reference to the Trace output location..."
+                );
+
+                var traceOutputLocation =
+                    GetOutputLocation.OfType(OutputLocationType.Trace);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.InitializeInternalOutputLocationList: Checking whether the variable 'traceOutputLocation' has a null reference for a value..."
+                );
+
+                // Check to see if the variable, traceOutputLocation, is null. If it is, send an error to the
+                // Debug output and quit, returning from the method.
+                if (traceOutputLocation == null)
+                {
+                    // the variable traceOutputLocation is required to have a valid object reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "OutputLocationProvider.InitializeInternalOutputLocationList: *** ERROR ***  The 'traceOutputLocation' variable has a null reference.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                // We can use the variable, traceOutputLocation, because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "OutputLocationProvider.InitializeInternalOutputLocationList: *** SUCCESS *** The 'traceOutputLocation' variable has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Adding the Trace Output Location to the internal collection..."
+                );
+
+                AddOutputLocation(traceOutputLocation);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** DONE adding the Output Location(s) to the internal collection."
                 );
             }
             catch (Exception ex)
@@ -619,5 +670,21 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(ex);
             }
         }
+
+        /// <summary>
+        /// Raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
+        /// event.
+        /// </summary>
+        /// <param name="e">
+        /// A
+        /// <see cref="T:xyLOGIX.Core.Debug.Events.MuteConsoleChangedEventArgs" /> that
+        /// contains
+        /// the event data.
+        /// </param>
+        protected virtual void OnMuteConsoleChanged(
+            [NotLogged] MuteConsoleChangedEventArgs e
+        )
+            => MuteConsoleChanged?.Invoke(this, e);
     }
 }
