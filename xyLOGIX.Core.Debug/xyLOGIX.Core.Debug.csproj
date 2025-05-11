@@ -201,7 +201,6 @@
     <Compile Include="LoggingConfiguratorTypeValidator.cs" />
     <Compile Include="LoggingInfrastructureTypeValidator.cs" />
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
-    <Compile Include="MakeNewDefaultLoggingInfrastructure.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
