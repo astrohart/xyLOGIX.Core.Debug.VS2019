@@ -1,4 +1,6 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+
+namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>MuteConsoleChanged</c> event. </summary>
     /// <param name="sender">
@@ -16,6 +18,6 @@
     /// </remarks>
     public delegate void MuteConsoleChangedEventHandler(
         object sender,
-        MuteConsoleChangedEventArgs e
+        [NotLogged] MuteConsoleChangedEventArgs e
     );
 }
