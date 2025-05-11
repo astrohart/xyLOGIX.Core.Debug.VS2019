@@ -31,7 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingBackendTypeValidator LoggingBackendTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingBackendTypeValidator.SoleInstance();
 
         /// <summary>
@@ -117,11 +118,21 @@ namespace xyLOGIX.Core.Debug
                 switch (type)
                 {
                     case LoggingBackendType.Console:
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** FYI *** Creating a new Console Logging Backend..."
+                        );
+
                         result = MakeNewConsoleLoggingBackend.FromScratch();
                         break;
+
                     case LoggingBackendType.Log4Net:
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** FYI *** Making a new Log4Net Logging Backend..."
+                        );
+
                         result = MakeNewLog4NetLoggingBackend.ForRelay(relay);
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(
                             nameof(type), type,
@@ -131,8 +142,7 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = default;
             }
