@@ -697,7 +697,6 @@ namespace xyLOGIX.Core.Debug
         /// contains
         /// the event data.
         /// </param>
-        [Yielder]
         protected virtual void OnMuteConsoleChanged(
             [NotLogged] MuteConsoleChangedEventArgs e
         )
