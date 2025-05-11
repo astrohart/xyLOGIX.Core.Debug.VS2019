@@ -1,6 +1,4 @@
-﻿//Copyright (C) Microsoft Corporation.  All rights reserved.
-
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
@@ -11,22 +9,22 @@ using System.Reflection;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Object that is responsible for writing out the string representation
-    /// of objects to the log file. Works in a way very similar to LINQPad's Dump()
-    /// method.
+    /// Object that is responsible for writing out the
+    /// <see cref="T:System.String" /> representation of objects to the log file. Works
+    /// in a way very similar to LINQPad's Dump() method.
     /// </summary>
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class ObjectDumper
     {
+        /// <summary> Integer specifying the current position in the output stream. </summary>
+        private int _currentStreamPosition;
+
         /// <summary>
         /// Integer specifying the depth (inheritance levels) to which to dump
         /// object data.
         /// </summary>
         /// <remarks> Must be zero or greater. </remarks>
         private readonly int _depth;
-
-        /// <summary> Integer specifying the current position in the output stream. </summary>
-        private int _currentStreamPosition;
 
         /// <summary> Integer specifying the indentation level of the logged data. </summary>
         /// <remarks> Must be 1 or greater. </remarks>
@@ -59,6 +57,19 @@ namespace xyLOGIX.Core.Debug
             _depth = depth;
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" />
+        /// event.
+        /// </summary>
+        /// <param name="e">
+        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
+        /// that contains the event data.
+        /// </param>
+        [Yielder]
+        protected static void OnTextWritten(
+            [NotLogged] TextWrittenEventArgs e)
+            => TextWritten?.Invoke(e);
+
         /// <summary> Occurs when text is written to an output stream. </summary>
         public static event TextWrittenEventHandler TextWritten;
 
@@ -83,10 +94,15 @@ namespace xyLOGIX.Core.Debug
         /// passed as the argument of the <paramref name="element" /> parameter, or if the
         /// value of the <paramref name="depth" /> parameter is less than zero.
         /// </remarks>
-        public static void Write(object element, int depth = 0)
+        public static void Write([NotLogged] object element, int depth = 0)
         {
             try
             {
+                /*
+                 * Because these methods are, themselves, called to write logging,
+                 * do not add logging and/or trace statement(s) here.
+                 */
+
                 if (element == null) return;
                 if (depth < 0) return;
 
@@ -151,6 +167,57 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Writes the content in the string, <paramref name="s" />, to the
+        /// <see cref="T:System.IO.TextWriter" /> wrapped by this object.
+        /// </summary>
+        /// <param name="s"> (Required.) String containing the content to be written. </param>
+        /// <remarks>
+        /// This method does nothing if <paramref name="s" /> is a blank string.
+        /// <para />
+        /// </remarks>
+        private void Write(string s)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(s))
+                    return;
+                if (_writer == null) return;
+
+                _writer.Write(s);
+                OnTextWritten(new TextWrittenEventArgs(s));
+                _currentStreamPosition += s.Length;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes an indent -- a 4 space tab -- to the
+        /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
+        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
+        /// level
+        /// given by the value of the
+        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
+        /// </summary>
+        private void WriteIndent()
+        {
+            if (_indentLevel < 0)
+                throw new ArgumentOutOfRangeException(
+                    nameof(_indentLevel),
+                    "Value of the indent level must be zero or greater."
+                );
+
+            for (var i = 0; i < _indentLevel; i++)
+            {
+                _writer.Write("   ");
+                OnTextWritten(new TextWrittenEventArgs("    "));
+            }
+        }
+
+        /// <summary>
         /// Writes an object, a reference to which is specified by the
         /// <paramref name="element" /> parameter, to the log, to the number of inheritance
         /// levels specified by <paramref name="depth" />, followed by a newline character.
@@ -171,7 +238,7 @@ namespace xyLOGIX.Core.Debug
         /// passed as the argument of the <paramref name="element" /> parameter, or if the
         /// value of the <paramref name="depth" /> parameter is less than zero.
         /// </remarks>
-        public static void WriteLine(object element, int depth = 0)
+        public static void WriteLine([NotLogged] object element, int depth = 0)
         {
             try
             {
@@ -218,7 +285,9 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="element" /> parameter, or if the <paramref name="depth" />
         /// parameter is less than zero, then this method does nothing.
         /// </remarks>
-        public static void WriteLine(object element, int depth, TextWriter log)
+        public static void WriteLine(
+            [NotLogged] object element, int depth,
+            [NotLogged] TextWriter log)
         {
             try
             {
@@ -239,68 +308,6 @@ namespace xyLOGIX.Core.Debug
             {
                 // dump all the exception info to the Debug output
                 System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" />
-        /// event.
-        /// </summary>
-        /// <param name="e">
-        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
-        /// that contains the event data.
-        /// </param>
-        [Yielder]
-        protected static void OnTextWritten(TextWrittenEventArgs e)
-            => TextWritten?.Invoke(e);
-
-        /// <summary>
-        /// Writes the content in the string, <paramref name="s" />, to the
-        /// <see cref="T:System.IO.TextWriter" /> wrapped by this object.
-        /// </summary>
-        /// <param name="s"> (Required.) String containing the content to be written. </param>
-        /// <remarks>
-        /// This method does nothing if <paramref name="s" /> is a blank string.
-        /// <para />
-        /// </remarks>
-        private void Write(string s)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(s))
-                    return;
-
-                _writer.Write(s);
-                OnTextWritten(new TextWrittenEventArgs(s));
-                _currentStreamPosition += s.Length;
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Writes an indent -- a 4 space tab -- to the
-        /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
-        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
-        /// level
-        /// given by the value of the
-        /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
-        /// </summary>
-        private void WriteIndent()
-        {
-            if (_indentLevel < 0)
-                throw new ArgumentOutOfRangeException(
-                    nameof(_indentLevel),
-                    "Value of the indent level must be zero or greater."
-                );
-
-            for (var i = 0; i < _indentLevel; i++)
-            {
-                _writer.Write("   ");
-                OnTextWritten(new TextWrittenEventArgs("    "));
             }
         }
 
@@ -344,7 +351,7 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the instance of the object to
         /// be dumped to the output stream.
         /// </param>
-        private void WriteObject(string prefix, object element)
+        private void WriteObject(string prefix, [NotLogged] object element)
         {
             try
             {
@@ -458,7 +465,7 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the instance of the object to
         /// be dumped to the output stream.
         /// </param>
-        private void WriteObjectToLines(string prefix, object element)
+        private void WriteObjectToLines(string prefix, [NotLogged] object element)
         {
             try
             {
