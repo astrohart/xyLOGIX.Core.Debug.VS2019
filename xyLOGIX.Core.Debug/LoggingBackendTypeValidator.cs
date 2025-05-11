@@ -42,6 +42,18 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> values that is to be
         /// examined.
         /// </param>
+        /// <remarks>
+        /// Besides the usual checks to see whether the value of the
+        /// <paramref name="type" /> parameter is within the defined value set of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration, or to make
+        /// sure that the value of the <paramref name="type" /> parameter is not set to
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingBackendType.Unknown" />, this method
+        /// also ensures that the value of the <paramref name="type" /> parameter can only
+        /// ever be set to either
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingBackendType.Console" /> or
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingBackendType.Log4Net" />, which are the
+        /// only currently-supported value(s).
+        /// </remarks>
         /// <returns>
         /// <see langword="true" /> if the logging backend
         /// <paramref name="type" /> falls within the defined value set;
