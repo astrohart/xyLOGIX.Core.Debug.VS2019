@@ -38,47 +38,6 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Builder extension method that initializes the
-        /// <see cref="P:log4net.Appender.RollingFileAppender.File" /> property.
-        /// </summary>
-        /// <param name="self">
-        /// (Required.) Reference to an instance of an object that
-        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
-        /// </param>
-        /// <param name="file">
-        /// (Required.) A <see cref="T:System.String" /> containing the
-        /// fully-qualified pathname of where logging entries will be written.
-        /// </param>
-        /// <returns>
-        /// Reference to the same instance of the object that called this method,
-        /// for fluent use.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// Thrown if the required
-        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
-        /// </exception>
-        /// <exception cref="T:System.ArgumentException">
-        /// Thrown if the required parameter,
-        /// <paramref name="file" />, is passed a blank or <see langword="null" /> string
-        /// for a value.
-        /// </exception>
-        [DebuggerStepThrough]
-        public static RollingFileAppender SetLogFileNameTo(
-            [NotLogged] this RollingFileAppender self,
-            string file
-        )
-        {
-            if (self == null) throw new ArgumentNullException(nameof(self));
-            if (string.IsNullOrWhiteSpace(file))
-                throw new ArgumentException(
-                    "Value cannot be null or whitespace.", nameof(file)
-                );
-
-            self.File = file;
-            return self;
-        }
-
-        /// <summary>
-        /// Builder extension method that initializes the
         /// <see cref="P:log4net.Appender.RollingFileAppender.MaxSizeRollBackups" />
         /// property.
         /// </summary>
@@ -230,6 +189,10 @@ namespace xyLOGIX.Core.Debug
                     $"MakeNewRollingFileAppender.ForRollingStyle: *** SUCCESS *** The specified rolling style, '{rollingStyle}', is valid.  Proceeding..."
                 );
 
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Making a new Rolling File Appender having the '{rollingStyle}' rolling style..."
+                );
+
                 result =
                     new RollingFileAppender { RollingStyle = rollingStyle };
             }
@@ -248,6 +211,47 @@ namespace xyLOGIX.Core.Debug
             );
 
             return result;
+        }
+
+        /// <summary>
+        /// Builder extension method that initializes the
+        /// <see cref="P:log4net.Appender.RollingFileAppender.File" /> property.
+        /// </summary>
+        /// <param name="self">
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
+        /// </param>
+        /// <param name="file">
+        /// (Required.) A <see cref="T:System.String" /> containing the
+        /// fully-qualified pathname of where logging entries will be written.
+        /// </param>
+        /// <returns>
+        /// Reference to the same instance of the object that called this method,
+        /// for fluent use.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if the required
+        /// parameter, <paramref name="self" />, is passed a <see langword="null" /> value.
+        /// </exception>
+        /// <exception cref="T:System.ArgumentException">
+        /// Thrown if the required parameter,
+        /// <paramref name="file" />, is passed a blank or <see langword="null" /> string
+        /// for a value.
+        /// </exception>
+        [DebuggerStepThrough]
+        public static RollingFileAppender SetLogFileNameTo(
+            [NotLogged] this RollingFileAppender self,
+            string file
+        )
+        {
+            if (self == null) throw new ArgumentNullException(nameof(self));
+            if (string.IsNullOrWhiteSpace(file))
+                throw new ArgumentException(
+                    "Value cannot be null or whitespace.", nameof(file)
+                );
+
+            self.File = file;
+            return self;
         }
 
         /// <summary>
