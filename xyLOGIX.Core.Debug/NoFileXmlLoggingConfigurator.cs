@@ -2,6 +2,7 @@
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 
@@ -23,7 +24,8 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected NoFileXmlLoggingConfigurator() { }
+        protected NoFileXmlLoggingConfigurator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -33,7 +35,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static IXmlLoggingConfigurator Instance
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = new NoFileXmlLoggingConfigurator();
 
         /// <summary>
@@ -43,7 +46,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public override XmlLoggingConfiguratorType Type
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = XmlLoggingConfiguratorType.NoFile;
 
         /// <summary>
@@ -148,22 +152,85 @@ namespace xyLOGIX.Core.Debug
                  * set up logging with the passed ILoggerRepository.
                  */
 
+                ICollection loggers = default;
+
                 if (repository == null)
                 {
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** The Logger Repository parameter is null.  Proceeding..."
+                    );
+
                     System.Diagnostics.Debug.WriteLine(
                         "*** FYI *** Attempting to call XmlConfigurator.Configure() with no parameters..."
                     );
 
-                    XmlConfigurator.Configure();
+                    loggers = XmlConfigurator.Configure();
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** The Logger Repository parameter is NOT null.  Proceeding..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
                         "*** FYI *** Attempting to call XmlConfigurator.Configure() with the passed ILoggerRepository parameter..."
                     );
 
-                    XmlConfigurator.Configure(repository);
+                    loggers = XmlConfigurator.Configure(repository);
                 }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "NoFileXmlLoggingConfigurator.Configure: Checking whether the variable, 'loggers', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'loggers', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (loggers == null)
+                {
+                    // The variable, 'loggers', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "NoFileXmlLoggingConfigurator.Configure: *** ERROR ***  The variable, 'loggers', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** NoFileXmlLoggingConfigurator.Configure: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'loggers', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "NoFileXmlLoggingConfigurator.Configure: *** SUCCESS *** The variable, 'loggers', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** NoFileXmlLoggingConfigurator.Configure: Checking whether the 'loggers' collection contains greater than zero elements..."
+                );
+
+                // Check to see whether the 'loggers' collection contains greater than
+                // zero elements.  Otherwise, write an error message to the Debug output, return
+                // the default return value, and then terminate the execution of this method.
+                if (loggers.Count <= 0)
+                {
+                    // The 'loggers' collection contains zero elements.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'loggers' collection contains zero elements.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"NoFileXmlLoggingConfigurator.Configure: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"NoFileXmlLoggingConfigurator.Configure: *** SUCCESS *** {loggers.Count} element(s) were found in the 'loggers' collection.  Proceeding..."
+                );
 
                 /*
                  * If we made it this far with no Exception(s) getting caught, then
