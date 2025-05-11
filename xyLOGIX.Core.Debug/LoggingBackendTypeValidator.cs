@@ -124,6 +124,33 @@ namespace xyLOGIX.Core.Debug
                     "LoggingBackendTypeValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'type' parameter.  Proceeding..."
                 );
 
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingBackendTypeValidator.IsValid: Checking whether the logging backend type is either 'Console' or 'Log4Net'..."
+                );
+
+                // Check to see whether the logging backend type is either 'Console' or 'Log4Net'.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (!LoggingBackendType.Console.Equals(type) &&
+                    !LoggingBackendType.Log4Net.Equals(type))
+                {
+                    // The logging backend type is neither 'Console' NOR 'Log4Net'.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The logging backend type is neither 'Console' NOR 'Log4Net'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingBackendTypeValidator.IsValid: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingBackendTypeValidator.IsValid: *** SUCCESS *** The logging backend type is either 'Console' or 'Log4Net'.  Proceeding..."
+                );
+
                 /*
                  * If we made it here, then assume that the input data is valid.
                  */
@@ -138,7 +165,9 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            System.Diagnostics.Debug.WriteLine($"LoggingBackendTypeValidator.IsValid: Result = {result}");
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingBackendTypeValidator.IsValid: Result = {result}"
+            );
 
             return result;
         }
