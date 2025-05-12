@@ -278,8 +278,12 @@ namespace xyLOGIX.Core.Debug
                         $"EventLogManager.Initialize: *** SUCCESS *** The Event Source, '{eventSourceName}', has been successfully created.  Proceeding..."
                     );
 
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug, $"EventLogManager.Initialize: Result = {true}"
+                    );
+
                     // stop.
-                    return result;
+                    return true;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
