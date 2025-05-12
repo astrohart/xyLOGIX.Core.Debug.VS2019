@@ -893,6 +893,9 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                // Dump the argument of the parameter, pathname, to the Debug output
+                System.Diagnostics.Debug.WriteLine($"DebugFileAndFolderHelper.IsFileWriteable: pathname = '{pathname}'");
+
                 System.Diagnostics.Debug.WriteLine(
                     "DebugFileAndFolderHelper.IsFileWriteable *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
@@ -1469,6 +1472,9 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                // Dump the argument of the parameter, pathname, to the Debug output
+                System.Diagnostics.Debug.WriteLine($"DebugFileAndFolderHelper.IsFolderWriteable: pathname = '{pathname}'");
+
                 System.Diagnostics.Debug.WriteLine(
                     "DebugFileAndFolderHelper.IsFolderWriteable *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
