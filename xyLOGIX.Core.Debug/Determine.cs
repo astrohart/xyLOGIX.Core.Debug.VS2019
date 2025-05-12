@@ -56,6 +56,8 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to determine which type of logging configurator to use...");
+
                 System.Diagnostics.Debug.WriteLine(
                     "Determine.LoggingConfiguratorTypeToUse *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
                 );
