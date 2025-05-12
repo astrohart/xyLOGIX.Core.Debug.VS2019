@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -38,6 +39,22 @@ namespace xyLOGIX.Core.Debug
         [DebuggerStepThrough]
         [return: NotLogged]
         public static IOutputLocation SoleInstance()
-            => ConsoleOutputLocation.Instance;
+        {
+            IOutputLocation result;
+
+            try
+            {
+                result = ConsoleOutputLocation.Instance;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
     }
 }
