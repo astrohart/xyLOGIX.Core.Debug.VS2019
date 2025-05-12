@@ -98,7 +98,7 @@ namespace xyLOGIX.Core.Debug
                     default:
                         throw new ArgumentOutOfRangeException(
                             nameof(type), type,
-                            $"A Logging Infrastructure object is not implemented for the infrastructure type, '{type}'."
+                            $"GetLoggingInfrastructure.OfType: A Logging Infrastructure object is not implemented for the infrastructure type, '{type}'."
                         );
                 }
             }
