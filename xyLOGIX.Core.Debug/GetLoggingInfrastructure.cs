@@ -112,8 +112,8 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 result != null
-                    ? $"*** SUCCESS *** Obtained a reference to the logging infrastructure object of type, '{type}'..  Proceeding..."
-                    : $"*** ERROR *** FAILED to obtain a reference to the logging infrastructure object of type, '{type}'..  Stopping..."
+                    ? $"GetLoggingInfrastructure.OfType: *** SUCCESS *** Obtained a reference to the logging infrastructure object of type, '{type}'..  Proceeding..."
+                    : $"GetLoggingInfrastructure.OfType: *** ERROR *** FAILED to obtain a reference to the logging infrastructure object of type, '{type}'..  Stopping..."
             );
 
             return result;
