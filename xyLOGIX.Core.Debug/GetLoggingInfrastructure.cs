@@ -49,6 +49,7 @@ namespace xyLOGIX.Core.Debug
         /// corresponds to the value passed in the <paramref name="type" /> parameter.
         /// </exception>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static ILoggingInfrastructure OfType(
             LoggingInfrastructureType type
         )
@@ -108,6 +109,12 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the logging infrastructure object of type, '{type}'..  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the logging infrastructure object of type, '{type}'..  Stopping..."
+            );
 
             return result;
         }
