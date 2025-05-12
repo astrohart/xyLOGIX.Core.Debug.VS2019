@@ -123,13 +123,17 @@ namespace xyLOGIX.Core.Debug
                  */
 
                 System.Diagnostics.Debug.WriteLine(
-                    "ProgrammaticLoggingConfigurator.Configure: Checking whether the value of the required method parameter, 'logFileName' parameter is null or consists solely of whitespace..."
+                    $"ProgrammaticLoggingConfigurator.Configure *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
                 );
 
+                // Check whether the value of the parameter, 'logFileName', is blank.
+                // If this is so, then emit an error message to the Debug output, and
+                // then terminate the execution of this method.
                 if (string.IsNullOrWhiteSpace(logFileName))
                 {
+                    // The parameter, 'logFileName', was either passed a null value, or it is blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "ProgrammaticLoggingConfigurator.Configure: *** ERROR *** Null or blank value passed for the parameter, 'logFileName'.  Stopping..."
+                        "ProgrammaticLoggingConfigurator.Configure: *** ERROR *** The parameter, 'logFileName', was either passed a null value, or it is blank. Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -141,7 +145,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** The value of the required parameter, 'logFileName', is not blank.  Continuing..."
+                    $"*** SUCCESS *** The parameter, 'logFileName', is not blank.  Proceeding..."
                 );
 
                 /*
