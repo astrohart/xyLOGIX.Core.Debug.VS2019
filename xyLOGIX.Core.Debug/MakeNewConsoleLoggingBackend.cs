@@ -1,5 +1,7 @@
 ﻿using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
+using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -37,7 +39,25 @@ namespace xyLOGIX.Core.Debug
         ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Console.ConsoleLoggingBackend" />
         /// .
         /// </returns>
+        [DebuggerStepThrough]
+        [return: NotLogged]
         public static ConsoleLoggingBackend FromScratch()
-            => new ConsoleLoggingBackend();
+        {
+            PostSharp.Patterns.Diagnostics.Backends.Console.ConsoleLoggingBackend result = default;
+
+            try
+            {
+                result = new ConsoleLoggingBackend();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
     }
 }
