@@ -122,6 +122,7 @@
     <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="DebuggerDump.cs" />
     <Compile Include="DebugLevel.cs" />
+    <Compile Include="DebugLevelValidator.cs" />
     <Compile Include="DebugOutputLocation.cs" />
     <Compile Include="DebugUtils.cs" />
     <Compile Include="DefaultLoggingInfrastructure.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="FromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
     <Compile Include="GetAssembly.cs" />
     <Compile Include="GetConsoleOutputLocation.cs" />
+    <Compile Include="GetDebugLevelValidator.cs" />
     <Compile Include="GetDebugOutputLocation.cs" />
     <Compile Include="GetDefaultLoggingInfrastructure.cs" />
     <Compile Include="GetDirectoryWriteabilityStatusValidator.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="GetXmlLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
+    <Compile Include="IDebugLevelValidator.cs" />
     <Compile Include="IDirectoryWriteabilityStatusValidator.cs" />
     <Compile Include="IEventLogManager.cs" />
     <Compile Include="IEventLogTypeValidator.cs" />
