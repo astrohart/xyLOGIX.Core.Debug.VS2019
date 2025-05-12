@@ -31,7 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static IXmlLoggingConfiguratorTypeValidator
-            XmlLoggingConfiguratorTypeValidator { [DebuggerStepThrough] get; } =
+            XmlLoggingConfiguratorTypeValidator
+        { [DebuggerStepThrough] get; } =
             GetXmlLoggingConfiguratorTypeValidator.SoleInstance();
 
         /// <summary>
@@ -63,8 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// corresponds to the specific enumeration value that was passed for the argument
         /// of the <paramref name="type" /> parameter, if it is not supported.
         /// </exception>
-        [return: NotLogged]
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static IXmlLoggingConfigurator For(
             XmlLoggingConfiguratorType type
         )
@@ -101,9 +102,11 @@ namespace xyLOGIX.Core.Debug
                         result =
                             GetFileBasedXmlLoggingConfigurator.SoleInstance();
                         break;
+
                     case XmlLoggingConfiguratorType.NoFile:
                         result = GetNoFileXmlLoggingConfigurator.SoleInstance();
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(
                             nameof(type), type,
@@ -118,6 +121,12 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the XML Logging Configurator of type, '{type}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the XML Logging Configurator of type, '{type}'.  Stopping..."
+            );
 
             return result;
         }
