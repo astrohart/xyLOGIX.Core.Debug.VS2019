@@ -58,7 +58,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** Validate.LoggingInfrastructureType: Checking whether the specified Logging Infrastructure Type value is within the defined value set..."
+                    $"*** Validate.LoggingInfrastructureType: Checking whether the specified Logging Infrastructure Type value, '{type}', is within the defined value set..."
                 );
 
                 // Check to see whether the specified Logging Infrastructure Type value is
@@ -69,7 +69,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The specified Logging Infrastructure Type value is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The specified Logging Infrastructure Type value is NOT within the defined value set.  Stopping..."
+                        $"*** ERROR *** The specified Logging Infrastructure Type value, '{type}', is NOT within the defined value set.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -81,7 +81,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Validate.LoggingInfrastructureType: *** SUCCESS *** The specified Logging Infrastructure Type value is within the defined value set.  Proceeding..."
+                    $"Validate.LoggingInfrastructureType: *** SUCCESS *** The specified Logging Infrastructure Type value, '{type}', is within the defined value set.  Proceeding..."
                 );
 
                 /*
