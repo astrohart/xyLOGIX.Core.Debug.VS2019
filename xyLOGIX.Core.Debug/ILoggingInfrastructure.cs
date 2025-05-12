@@ -148,5 +148,10 @@ namespace xyLOGIX.Core.Debug
             int verbosity = 1,
             bool muteConsole = false
         );
+
+        /// <summary>
+        /// Occurs when the initialization of the logging subsystem has been completed.
+        /// </summary>
+        event EventHandler LoggingInitializationFinished;
     }
 }
