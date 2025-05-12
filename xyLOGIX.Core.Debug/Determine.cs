@@ -131,6 +131,8 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to determine which Root Logger Provisioning Strategy to use...");
+
                 System.Diagnostics.Debug.WriteLine(
                     "Determine.TheRootLoggerProvisioningStrategyToUse: Checking whether the required method parameter, 'loggerRepository', has a null reference for a value..."
                 );
