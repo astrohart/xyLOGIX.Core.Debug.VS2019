@@ -49,30 +49,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Occurs whenever text has been emitted by the
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
-        /// </summary>
-        [WeakEvent]
-        public static event TextEmittedEventHandler TextEmitted;
-
-        /// <summary>
-        /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
-        /// </summary>
-        [WeakEvent]
-        public static event VerbosityChangedEventHandler VerbosityChanged;
-
-        /// <summary>
         /// Gets or sets the name of the application. Used for Windows event
         /// logging. Leave blank to not send events to the Application event log.
         /// </summary>
         public static string ApplicationName
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -81,10 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool ConsoleOnly
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -97,10 +78,8 @@ namespace xyLOGIX.Core.Debug
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -110,8 +89,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static IList<string> ExcludedExceptionTypes
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = new AdvisableCollection<string>();
 
         /// <summary>
@@ -125,20 +103,23 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary> Gets or sets a value that turns logging as a whole on or off. </summary>
         public static bool IsLogging
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
+
+        /// <summary>
+        /// Gets a value that indicates whether PostSharp is in use as the
+        /// logging infrastructure.
+        /// </summary>
+        private static bool IsPostSharp
+            => InfrastructureType == LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Users should set this property to the path to the log file, if
@@ -146,17 +127,14 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static string LogFileName
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary> Gets or sets a value telling us to mute all console output. </summary>
         public static bool MuteConsole
         {
-            [DebuggerStepThrough]
-            get => _muteConsole;
+            [DebuggerStepThrough] get => _muteConsole;
             [DebuggerStepThrough]
             set => OutputLocationProvider.MuteConsole = _muteConsole = value;
         }
@@ -167,10 +145,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool MuteDebugLevelIfReleaseMode
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -179,18 +155,24 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static TextWriter Out
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
+        /// </summary>
+        private static IOutputLocationProvider OutputLocationProvider
+        {
+            [DebuggerStepThrough] get;
+        } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary> Gets or sets the verbosity level. </summary>
         /// <remarks> Typically, applications set this to 1. </remarks>
         public static int Verbosity
         {
-            [DebuggerStepThrough]
-            get => _verbosity;
+            [DebuggerStepThrough] get => _verbosity;
             [DebuggerStepThrough]
             set
             {
@@ -203,23 +185,6 @@ namespace xyLOGIX.Core.Debug
                     );
             }
         }
-
-        /// <summary>
-        /// Gets a value that indicates whether PostSharp is in use as the
-        /// logging infrastructure.
-        /// </summary>
-        private static bool IsPostSharp
-            => InfrastructureType == LoggingInfrastructureType.PostSharp;
-
-        /// <summary>
-        /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" /> interface.
-        /// </summary>
-        private static IOutputLocationProvider OutputLocationProvider
-        {
-            [DebuggerStepThrough]
-            get;
-        } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary>
         /// Appends the specified <paramref name="text" /> directly to the file whose
@@ -373,7 +338,9 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                System.Diagnostics.Debug.WriteLine($"DebugUtils.ClearTempExceptionLog: *** FYI *** Attempting to delete the file, '{ExceptionLogPathname}'...");
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.ClearTempExceptionLog: *** FYI *** Attempting to delete the file, '{ExceptionLogPathname}'..."
+                );
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Checking whether the property, 'ExceptionLogPathname', appears to have a null or blank value..."
@@ -691,339 +658,6 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>
-        /// Logs the complete information about an exception to the log, under
-        /// the Error Level. Outputs the quote file and line number where the exception
-        /// occurred, as well as the message of the exception and its stack trace.
-        /// </summary>
-        /// <param name="exception">
-        /// Reference to the <see cref="T:System.Exception" /> to be
-        /// logged.
-        /// </param>
-        /// <param name="launchDebugger">
-        /// (Optional.) Value indicating whether the launch and break the debugger (if one
-        /// is attached) when this method is called.
-        /// <para />
-        /// The default value of this parameter is <see langword="true" />.
-        /// <para />
-        /// <b>EXTREME CAUTION</b> It is advisable to explicitly set this parameter to
-        /// <see langword="false" /> in most cases, especially when this method has the
-        /// likelihood of getting called often.
-        /// <para />
-        /// <b>NOTE:</b> The value of this parameter is ignored, and no launch of the
-        /// attached debugger occurs, when <paramref name="exception" /> is
-        /// <see cref="T:System.TypeInitializationException" /> or
-        /// <see cref="T:System.IO.FileNotFoundException" />, which occur so frequently as
-        /// to not be useful.
-        /// </param>
-        public static void LogException(
-            Exception exception,
-            bool launchDebugger = true
-        )
-        {
-            try
-            {
-                if (exception == null) return;
-
-                if (exception is TypeInitializationException)
-                    exception = exception.InnerException;
-
-                var message = string.Format(
-                    Resources.ExceptionMessageFormat, exception.GetType(),
-                    exception.Message, exception.StackTrace
-                );
-
-                OutputExceptionLoggingMessage(exception, message);
-
-                /*
-                 * Only launch the debugger if the required condition(s) are
-                 * met and only after having written the detailed exception info
-                 * to the log file.
-                 */
-
-                if (CanLaunchDebugger(exception, launchDebugger))
-                    ProgramFlowHelper.StartDebugger();
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Writes the content in <paramref name="format" /> to the
-        /// <paramref name="debugLevel" /> log.
-        /// </summary>
-        /// <param name="debugLevel">
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
-        /// which
-        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
-        /// </param>
-        /// <param name="format">
-        /// (Required.) String containing an optional format
-        /// specifier for parameters passed in <paramref name="args" />.
-        /// </param>
-        /// <param name="args">
-        /// (Optional.) Collection of objects whose values should be
-        /// included in the <paramref name="format" /> and written to the log.
-        /// </param>
-        /// <remarks>
-        /// If the <paramref name="format" /> parameter is a blank or empty
-        /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
-        /// defined, then this method assumes that the application was built in Release
-        /// mode. If this is so, then the method checks the value of the
-        /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
-        /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
-        /// this
-        /// method does nothing. This method does not add a newline character after writing
-        /// its content to the log.
-        /// </remarks>
-        public static void Write(
-            DebugLevel debugLevel,
-            string format,
-            params object[] args
-        )
-        {
-            try
-            {
-                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
-                if (DebugLevel.Unknown.Equals(debugLevel)) return;
-
-                // Do nothing if blank content was provided.
-                if (string.IsNullOrWhiteSpace(format)) return;
-
-#if !DEBUG
-                /* If this software is currently running in Release mode, then do not output ANY lines of text
-             * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
-             * parameter is set to DebugLevel.Debug, simply stop executing this method. */
-
-                if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
-                    return;
-#endif
-
-                LogEachLineIfMultiline(
-                    GenerateContentFromFormat(format, args), WriteCore,
-                    debugLevel
-                );
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Writes non-formatted content to the log using the
-        /// <paramref name="debugLevel" /> specified. No line terminator is appended to the
-        /// output.
-        /// </summary>
-        /// <param name="debugLevel">
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
-        /// which
-        /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content
-        /// should be written.
-        /// </param>
-        /// <param name="content"> (Required.) string containing the content to be written. </param>
-        /// <remarks>
-        /// If the <paramref name="content" /> is a blank or empty string, then
-        /// this method does nothing. This method's behavior is identical to that of
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteCore" />, except that a newline
-        /// character is appended to the end of the content.
-        /// <para />
-        /// This method does nothing if the value specified for the
-        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
-        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
-        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
-        /// the <paramref name="debugLevel" /> parameter.
-        /// </remarks>
-        public static void Write(
-            DebugLevel debugLevel,
-            [NotLogged] string content
-        )
-        {
-            try
-            {
-                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
-                if (DebugLevel.Unknown.Equals(debugLevel)) return;
-
-                // Do nothing if blank content was provided.
-                if (string.IsNullOrWhiteSpace(content)) return;
-
-                LogEachLineIfMultiline(content, WriteCore, debugLevel);
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Writes the content in <paramref name="format" /> to the
-        /// <paramref name="debugLevel" /> log.
-        /// </summary>
-        /// <param name="debugLevel">
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
-        /// which
-        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
-        /// </param>
-        /// <param name="format">
-        /// (Required.) String containing an optional format
-        /// specifier for parameters passed in <paramref name="args" />.
-        /// </param>
-        /// <param name="args">
-        /// (Optional.) Collection of objects whose values should be
-        /// included in the <paramref name="format" /> and written to the log.
-        /// </param>
-        /// <remarks>
-        /// If the <paramref name="format" /> parameter is a blank or empty
-        /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
-        /// defined, then this method assumes that the application was built in Release
-        /// mode. If this is so, then the method checks the value of the
-        /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
-        /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
-        /// this
-        /// method does nothing. This method adds a newline character after writing its
-        /// content to the log.
-        /// </remarks>
-        public static void WriteLine(
-            DebugLevel debugLevel,
-            string format,
-            params object[] args
-        )
-        {
-            try
-            {
-                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
-                if (DebugLevel.Unknown.Equals(debugLevel)) return;
-
-                if (string.IsNullOrWhiteSpace(format))
-                    return;
-
-#if !DEBUG
-                /* If this software is currently running in Release mode, then do not output ANY lines of text
-             * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
-             * parameter is set to DebugLevel.Debug, simply stop executing this method. */
-
-                if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
-                    return;
-#endif
-
-                var generatedContent = GenerateContentFromFormat(format, args);
-
-                if (string.IsNullOrWhiteSpace(generatedContent))
-                    return;
-
-                LogEachLineIfMultiline(generatedContent, WriteLine, debugLevel);
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Works the same as the overload which takes a
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> as its first argument,
-        /// but
-        /// if the formatted content consists of several lines of content, then the lines
-        /// are split and logged separately, all under the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> debugLevel.
-        /// </summary>
-        /// <param name="format">
-        /// (Required.) String containing an optional format
-        /// specifier for parameters passed in <paramref name="args" />.
-        /// </param>
-        /// <param name="args">
-        /// (Optional.) Collection of objects whose values should be
-        /// included in the <paramref name="format" /> and written to the log.
-        /// </param>
-        /// <remarks>
-        /// If the value of the <paramref name="format" /> parameter is
-        /// <see langword="null" />, a blank string, a <see cref="T:System.String" /> that
-        /// contains only whitespace, or the <see cref="F:System.String.Empty" /> value,
-        /// then this method does nothing.
-        /// <para />
-        /// This overload specifies that the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> logging
-        /// debugLevel is
-        /// to be utilized for each line.
-        /// </remarks>
-        public static void WriteLine(
-            [NotLogged] string format,
-            params object[] args
-        )
-        {
-            try
-            {
-                // Do not continue if the content that is to be formatted is not provided.
-                if (string.IsNullOrWhiteSpace(format))
-                    return;
-
-                var generatedContent = GenerateContentFromFormat(format, args);
-
-                if (string.IsNullOrWhiteSpace(generatedContent)) return;
-
-                LogEachLineIfMultiline(generatedContent, WriteLine);
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
-        /// <summary>
-        /// Writes non-formatted content to the log using the
-        /// <paramref name="debugLevel" /> specified, terminated by a newline character.
-        /// </summary>
-        /// <param name="debugLevel">
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
-        /// which
-        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
-        /// </param>
-        /// <param name="content"> (Required.) string containing the content to be written. </param>
-        /// <remarks>
-        /// If the <paramref name="content" /> is a blank or empty string, then
-        /// this method does nothing. This method's behavior is identical to that of
-        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteCore" />, except that a newline
-        /// character is appended to the end of the content.
-        /// <para />
-        /// This method does nothing if the value specified for the
-        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
-        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
-        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
-        /// the <paramref name="debugLevel" /> parameter.
-        /// </remarks>
-        [DebuggerStepThrough]
-        public static void WriteLine(DebugLevel debugLevel, string content)
-        {
-            try
-            {
-                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
-                if (DebugLevel.Unknown.Equals(debugLevel)) return;
-
-                // Do nothing if blank content was provided.
-                if (string.IsNullOrWhiteSpace(content)) return;
-
-                LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
-
         /// <summary> Helper method to, basically, carry out the formatting of a string. </summary>
         /// <param name="format"> (Required.) String value to be formatted. </param>
         /// <param name="args"> (Optional.) Array of format values. </param>
@@ -1236,6 +870,66 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
+        /// <summary>
+        /// Logs the complete information about an exception to the log, under
+        /// the Error Level. Outputs the quote file and line number where the exception
+        /// occurred, as well as the message of the exception and its stack trace.
+        /// </summary>
+        /// <param name="exception">
+        /// Reference to the <see cref="T:System.Exception" /> to be
+        /// logged.
+        /// </param>
+        /// <param name="launchDebugger">
+        /// (Optional.) Value indicating whether the launch and break the debugger (if one
+        /// is attached) when this method is called.
+        /// <para />
+        /// The default value of this parameter is <see langword="true" />.
+        /// <para />
+        /// <b>EXTREME CAUTION</b> It is advisable to explicitly set this parameter to
+        /// <see langword="false" /> in most cases, especially when this method has the
+        /// likelihood of getting called often.
+        /// <para />
+        /// <b>NOTE:</b> The value of this parameter is ignored, and no launch of the
+        /// attached debugger occurs, when <paramref name="exception" /> is
+        /// <see cref="T:System.TypeInitializationException" /> or
+        /// <see cref="T:System.IO.FileNotFoundException" />, which occur so frequently as
+        /// to not be useful.
+        /// </param>
+        public static void LogException(
+            Exception exception,
+            bool launchDebugger = true
+        )
+        {
+            try
+            {
+                if (exception == null) return;
+
+                if (exception is TypeInitializationException)
+                    exception = exception.InnerException;
+
+                var message = string.Format(
+                    Resources.ExceptionMessageFormat, exception.GetType(),
+                    exception.Message, exception.StackTrace
+                );
+
+                OutputExceptionLoggingMessage(exception, message);
+
+                /*
+                 * Only launch the debugger if the required condition(s) are
+                 * met and only after having written the detailed exception info
+                 * to the log file.
+                 */
+
+                if (CanLaunchDebugger(exception, launchDebugger))
+                    ProgramFlowHelper.StartDebugger();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
         /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
         /// <param name="e">
         /// (Required.) A
@@ -1290,6 +984,133 @@ namespace xyLOGIX.Core.Debug
 
                 WriteLine(DebugLevel.Error, "---");
                 LogException(exception.InnerException);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Occurs whenever text has been emitted by the
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.Write" /> or
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteLine" /> methods.
+        /// </summary>
+        [WeakEvent]
+        public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property is updated.
+        /// </summary>
+        [WeakEvent]
+        public static event VerbosityChangedEventHandler VerbosityChanged;
+
+        /// <summary>
+        /// Writes the content in <paramref name="format" /> to the
+        /// <paramref name="debugLevel" /> log.
+        /// </summary>
+        /// <param name="debugLevel">
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
+        /// which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// </param>
+        /// <param name="format">
+        /// (Required.) String containing an optional format
+        /// specifier for parameters passed in <paramref name="args" />.
+        /// </param>
+        /// <param name="args">
+        /// (Optional.) Collection of objects whose values should be
+        /// included in the <paramref name="format" /> and written to the log.
+        /// </param>
+        /// <remarks>
+        /// If the <paramref name="format" /> parameter is a blank or empty
+        /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
+        /// defined, then this method assumes that the application was built in Release
+        /// mode. If this is so, then the method checks the value of the
+        /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
+        /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
+        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
+        /// this
+        /// method does nothing. This method does not add a newline character after writing
+        /// its content to the log.
+        /// </remarks>
+        public static void Write(
+            DebugLevel debugLevel,
+            string format,
+            params object[] args
+        )
+        {
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(format)) return;
+
+#if !DEBUG
+                /* If this software is currently running in Release mode, then do not output ANY lines of text
+             * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
+             * parameter is set to DebugLevel.Debug, simply stop executing this method. */
+
+                if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
+                    return;
+#endif
+
+                LogEachLineIfMultiline(
+                    GenerateContentFromFormat(format, args), WriteCore,
+                    debugLevel
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes non-formatted content to the log using the
+        /// <paramref name="debugLevel" /> specified. No line terminator is appended to the
+        /// output.
+        /// </summary>
+        /// <param name="debugLevel">
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
+        /// which
+        /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content
+        /// should be written.
+        /// </param>
+        /// <param name="content"> (Required.) string containing the content to be written. </param>
+        /// <remarks>
+        /// If the <paramref name="content" /> is a blank or empty string, then
+        /// this method does nothing. This method's behavior is identical to that of
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteCore" />, except that a newline
+        /// character is appended to the end of the content.
+        /// <para />
+        /// This method does nothing if the value specified for the
+        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
+        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
+        /// the <paramref name="debugLevel" /> parameter.
+        /// </remarks>
+        public static void Write(
+            DebugLevel debugLevel,
+            [NotLogged] string content
+        )
+        {
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(content)) return;
+
+                LogEachLineIfMultiline(content, WriteCore, debugLevel);
             }
             catch (Exception ex)
             {
@@ -1395,6 +1216,167 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 OnTextEmitted(new TextEmittedEventArgs(content, debugLevel));
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes the content in <paramref name="format" /> to the
+        /// <paramref name="debugLevel" /> log.
+        /// </summary>
+        /// <param name="debugLevel">
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
+        /// which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// </param>
+        /// <param name="format">
+        /// (Required.) String containing an optional format
+        /// specifier for parameters passed in <paramref name="args" />.
+        /// </param>
+        /// <param name="args">
+        /// (Optional.) Collection of objects whose values should be
+        /// included in the <paramref name="format" /> and written to the log.
+        /// </param>
+        /// <remarks>
+        /// If the <paramref name="format" /> parameter is a blank or empty
+        /// string, then this method does nothing. If the <c>DEBUG</c> constant is not
+        /// defined, then this method assumes that the application was built in Release
+        /// mode. If this is so, then the method checks the value of the
+        /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
+        /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
+        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
+        /// this
+        /// method does nothing. This method adds a newline character after writing its
+        /// content to the log.
+        /// </remarks>
+        public static void WriteLine(
+            DebugLevel debugLevel,
+            string format,
+            params object[] args
+        )
+        {
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                if (string.IsNullOrWhiteSpace(format))
+                    return;
+
+#if !DEBUG
+                /* If this software is currently running in Release mode, then do not output ANY lines of text
+             * that are meant to be debugging logging statements! So, that is, if we detect that the debugLevel
+             * parameter is set to DebugLevel.Debug, simply stop executing this method. */
+
+                if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
+                    return;
+#endif
+
+                var generatedContent = GenerateContentFromFormat(format, args);
+
+                if (string.IsNullOrWhiteSpace(generatedContent))
+                    return;
+
+                LogEachLineIfMultiline(generatedContent, WriteLine, debugLevel);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Works the same as the overload which takes a
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> as its first argument,
+        /// but
+        /// if the formatted content consists of several lines of content, then the lines
+        /// are split and logged separately, all under the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> debugLevel.
+        /// </summary>
+        /// <param name="format">
+        /// (Required.) String containing an optional format
+        /// specifier for parameters passed in <paramref name="args" />.
+        /// </param>
+        /// <param name="args">
+        /// (Optional.) Collection of objects whose values should be
+        /// included in the <paramref name="format" /> and written to the log.
+        /// </param>
+        /// <remarks>
+        /// If the value of the <paramref name="format" /> parameter is
+        /// <see langword="null" />, a blank string, a <see cref="T:System.String" /> that
+        /// contains only whitespace, or the <see cref="F:System.String.Empty" /> value,
+        /// then this method does nothing.
+        /// <para />
+        /// This overload specifies that the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> logging
+        /// debugLevel is
+        /// to be utilized for each line.
+        /// </remarks>
+        public static void WriteLine(
+            [NotLogged] string format,
+            params object[] args
+        )
+        {
+            try
+            {
+                // Do not continue if the content that is to be formatted is not provided.
+                if (string.IsNullOrWhiteSpace(format))
+                    return;
+
+                var generatedContent = GenerateContentFromFormat(format, args);
+
+                if (string.IsNullOrWhiteSpace(generatedContent)) return;
+
+                LogEachLineIfMultiline(generatedContent, WriteLine);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Writes non-formatted content to the log using the
+        /// <paramref name="debugLevel" /> specified, terminated by a newline character.
+        /// </summary>
+        /// <param name="debugLevel">
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> values that indicates
+        /// which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
+        /// </param>
+        /// <param name="content"> (Required.) string containing the content to be written. </param>
+        /// <remarks>
+        /// If the <paramref name="content" /> is a blank or empty string, then
+        /// this method does nothing. This method's behavior is identical to that of
+        /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.WriteCore" />, except that a newline
+        /// character is appended to the end of the content.
+        /// <para />
+        /// This method does nothing if the value specified for the
+        /// <paramref name="debugLevel" /> parameter is not within the defined value set of
+        /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration, or if the
+        /// <see cref="F:xyLOGIX.Core.Debug.DebugLevel.Unknown" /> value is specified for
+        /// the <paramref name="debugLevel" /> parameter.
+        /// </remarks>
+        [DebuggerStepThrough]
+        public static void WriteLine(DebugLevel debugLevel, string content)
+        {
+            try
+            {
+                if (!Enum.IsDefined(typeof(DebugLevel), debugLevel)) return;
+                if (DebugLevel.Unknown.Equals(debugLevel)) return;
+
+                // Do nothing if blank content was provided.
+                if (string.IsNullOrWhiteSpace(content)) return;
+
+                LogEachLineIfMultiline(content, WriteLineCore, debugLevel);
             }
             catch (Exception ex)
             {
