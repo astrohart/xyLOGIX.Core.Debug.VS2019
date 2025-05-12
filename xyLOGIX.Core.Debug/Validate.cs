@@ -54,7 +54,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingSubsystemManager.InitializeLogging: Validating the Logging Infrastructure Type value, '{type}'..."
+                    $"Validate.LoggingInfrastructureType: Validating the Logging Infrastructure Type value, '{type}'..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
