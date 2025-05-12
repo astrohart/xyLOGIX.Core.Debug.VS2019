@@ -31,7 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingConfiguratorTypeValidator
-            LoggingConfiguratorTypeValidator { [DebuggerStepThrough] get; } =
+            LoggingConfiguratorTypeValidator
+        { [DebuggerStepThrough] get; } =
             GetLoggingConfiguratorTypeValidator.SoleInstance();
 
         /// <summary>
@@ -91,11 +92,19 @@ namespace xyLOGIX.Core.Debug
                 switch (type)
                 {
                     case LoggingConfiguratorType.FromConfigFile:
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** FYI *** Attempting to create a new instance of the 'FromConfigFile' Logging Configurator..."
+                        );
+
                         result = GetFromConfigFileLoggingConfigurator
                             .SoleInstance();
                         break;
 
                     case LoggingConfiguratorType.Programmatic:
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** FYI *** Attempting to create a new instance of the 'Programmatic' Logging Configurator..."
+                        );
+
                         result =
                             GetProgrammaticLoggingConfigurator.SoleInstance();
                         break;
@@ -114,6 +123,12 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the Logging Configurator of type, '{type}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the Logging Configurator of type, '{type}'.  Stopping..."
+            );
 
             return result;
         }
