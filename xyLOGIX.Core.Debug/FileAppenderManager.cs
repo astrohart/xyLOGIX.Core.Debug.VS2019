@@ -156,6 +156,10 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
+                    "FileAppenderManager.GetFirstAppender: *** FYI *** Attempting to get the first configured FileAppender..."
+                ):
+
+                System.Diagnostics.Debug.WriteLine(
                     loggerRepository != null
                         ? "FileAppenderManager.GetFirstAppender: *** SUCCESS *** We have been passed a valid object reference to an instance of an object that implements ILoggerRepository.  Proceeding..."
                         : "FileAppenderManager.GetFirstAppender: *** WARNING *** A null reference has been passed for the 'loggerRepository' parameter.  No matter, we will try to obtain the Root Logger instead..."
