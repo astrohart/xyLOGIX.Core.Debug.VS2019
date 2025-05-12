@@ -257,7 +257,7 @@ namespace xyLOGIX.Core.Debug
 
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** EventLogManager.Initialize: Checking whether the Event Log already has a source, '{eventSourceName}'..."
+                    $"*** EventLogManager.Initialize: Checking whether the Event Log already has a source called, '{eventSourceName}'..."
                 );
 
                 // Check to see whether the Event Log already has a source by the name of
@@ -283,7 +283,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"EventLogManager.Initialize: *** SUCCESS *** The Event Log already has a source, '{eventSourceName}.  Proceeding..."
+                    $"EventLogManager.Initialize: *** SUCCESS *** The Event Log already has a source called, '{eventSourceName}'.  Proceeding..."
                 );
 
                 // Finally, save the event quote and type settings in the
