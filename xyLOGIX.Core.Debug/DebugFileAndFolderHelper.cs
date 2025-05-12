@@ -1174,7 +1174,7 @@ namespace xyLOGIX.Core.Debug
 
                 // Check to see whether the ACL contains at least one rule that pertains to the current user.
                 // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // and then terminate the execution of this method, and ASSUME that the file is writeable.
                 if (!RulesFoundForUser(rules, sidCurrentUser))
                 {
                     // The ACL contains NO rule(s) that pertain to the current user.  This is not desirable.
@@ -1183,11 +1183,11 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.IsFileWriteable: Result = {result}"
+                        $"*** DebugFileAndFolderHelper.IsFileWriteable: Result = {true}"
                     );
 
                     // stop.
-                    return result;
+                    return true;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
@@ -1750,7 +1750,7 @@ namespace xyLOGIX.Core.Debug
 
                 // Check to see whether the ACL contains at least one rule that pertains to the current user.
                 // If this is not the case, then write an error message to the log folder,
-                // and then terminate the execution of this method.
+                // and then terminate the execution of this method --- and ASSUME that the folder is writeable.
                 if (!RulesFoundForUser(rules, sidCurrentUser))
                 {
                     // The ACL contains NO rule(s) that pertain to the current user.  This is not desirable.
@@ -1759,11 +1759,11 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** DebugFileAndFolderHelper.IsFolderWriteable: Result = {result}"
+                        $"*** DebugFileAndFolderHelper.IsFolderWriteable: Result = {true}"
                     );
 
                     // stop.
-                    return result;
+                    return true;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
