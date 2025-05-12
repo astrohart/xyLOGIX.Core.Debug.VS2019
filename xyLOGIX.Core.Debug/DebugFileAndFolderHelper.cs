@@ -1182,7 +1182,11 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The ACL contains NO rule(s) that pertain to the current user.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The ACL contains NO rule(s) that pertain to the current user.  Stopping..."
+                        "DebugFileAndFolderHelper.IsFileWriteable: *** FYI *** The ACL contains NO rule(s) that pertain to the current user.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.IsFileWriteable: *** SUCCESS *** The file, '{pathname}', is writeable by the user, '{FullyQualifiedUserName}'.  Proceeding..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -1759,9 +1763,13 @@ namespace xyLOGIX.Core.Debug
                 // and then terminate the execution of this method --- and ASSUME that the folder is writeable.
                 if (!RulesFoundForUser(rules, sidCurrentUser))
                 {
-                    // The ACL contains NO rule(s) that pertain to the current user.  This is not desirable.
+                    // The ACL contains NO rule(s) that pertain to the current user.  This is fine.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The ACL contains NO rule(s) that pertain to the current user.  Stopping..."
+                        "DebugFileAndFolderHelper.IsFolderWriteable: *** FYI *** The ACL contains NO rule(s) that pertain to the current user.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugFileAndFolderHelper.IsFolderWriteable: *** SUCCESS *** The folder, '{pathname}', is writeable by the user, '{FullyQualifiedUserName}'.  Proceeding..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
