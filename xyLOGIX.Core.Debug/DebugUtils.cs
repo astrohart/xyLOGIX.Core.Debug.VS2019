@@ -46,10 +46,6 @@ namespace xyLOGIX.Core.Debug
             ExceptionLogPathname = Path.Combine(
                 Path.GetTempPath(), $"{Guid.NewGuid():N}_log.tmp"
             );
-
-            System.Diagnostics.Debug.WriteLine("DebugUtils.DebugUtils (cctor): *** INFO *** Creating the exception log file...");
-
-            ClearTempExceptionLog();
         }
 
         /// <summary>
