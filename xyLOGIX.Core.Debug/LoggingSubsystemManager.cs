@@ -169,7 +169,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Attempting to delete the file, '{DebugUtils.ExceptionLogPathname}', if it exists..."
+                    $"LoggingSubsystemManager.InitializeLogging: *** FYI *** Attempting to delete the file, '{DebugUtils.ExceptionLogPathname}', if it exists..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
