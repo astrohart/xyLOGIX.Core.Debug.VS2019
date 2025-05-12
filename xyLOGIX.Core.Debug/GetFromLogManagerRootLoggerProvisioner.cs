@@ -35,6 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// root-logger provisioning strategy.
         /// </returns>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static IRootLoggerProvisioner SoleInstance()
         {
             IRootLoggerProvisioner result;
