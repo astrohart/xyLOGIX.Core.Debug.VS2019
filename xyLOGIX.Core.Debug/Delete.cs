@@ -49,6 +49,8 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to delete the file having the pathname, '{pathname}'...");
+
                 System.Diagnostics.Debug.WriteLine(
                     "Delete.FileIfExists *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
@@ -132,10 +134,12 @@ namespace xyLOGIX.Core.Debug
         /// This method also takes no action if the file having the specified
         /// <paramref name="pathname" /> does not already exist on the file system.
         /// </remarks>
-        public static void LogFile(string pathname)
+        public static void LogFile([NotLogged] string pathname)
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to delete the file having the pathname, '{pathname}'...");
+
                 System.Diagnostics.Debug.WriteLine(
                     "Delete.LogFile: Checking whether the value of the required method parameter, 'pathname' parameter is null or consists solely of whitespace..."
                 );
