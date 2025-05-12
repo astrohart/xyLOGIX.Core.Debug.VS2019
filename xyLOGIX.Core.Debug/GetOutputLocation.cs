@@ -65,6 +65,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="type" /> parameter, if it is not supported.
         /// </exception>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static IOutputLocation OfType(OutputLocationType type)
         {
             IOutputLocation result = default;
@@ -125,6 +126,12 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the Output Location of type, '{type}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the Output Location of type, '{type}'.  Stopping..."
+            );
 
             return result;
         }
