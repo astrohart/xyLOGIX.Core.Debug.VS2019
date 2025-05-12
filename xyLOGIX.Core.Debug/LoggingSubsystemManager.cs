@@ -1,4 +1,5 @@
-﻿using PostSharp.Patterns.Diagnostics;
+﻿using Alphaleonis.Win32.Filesystem;
+using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
 
@@ -168,13 +169,13 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** LoggingSubsystemManager.InitializeLogging: Checking whether the file, '{DebugUtils.ExceptionLogPathname}', could be successfully deleted..."
+                    $"*** LoggingSubsystemManager.InitializeLogging: Checking whether the file, '{DebugUtils.ExceptionLogPathname}', either could be successfully deleted, or it never existed in the first place..."
                 );
 
                 // Check to see whether the file, 'DebugUtils.ExceptionLogPathname', could be successfully deleted.
                 // If this is not the case, then write an error message to the Debug output,
                 // and then terminate the execution of this method.
-                if (!DebugUtils.ClearTempExceptionLog())
+                if (File.Exists(DebugUtils.ExceptionLogPathname) && !DebugUtils.ClearTempExceptionLog())
                 {
                     // The file, 'DebugUtils.ExceptionLogPathname', could NOT be successfully deleted.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
@@ -190,7 +191,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingSubsystemManager.InitializeLogging: *** SUCCESS *** The file, '{DebugUtils.ExceptionLogPathname}', could be successfully deleted.  Proceeding..."
+                    $"LoggingSubsystemManager.InitializeLogging: *** SUCCESS *** Either the file, '{DebugUtils.ExceptionLogPathname}', could be successfully deleted, or it never existed in the first place.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
