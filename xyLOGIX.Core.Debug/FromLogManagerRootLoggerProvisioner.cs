@@ -96,8 +96,8 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 result != null
-                    ? "*** SUCCESS *** Obtained a reference to the Root Logger.  Proceeding..."
-                    : "*** ERROR *** FAILED to obtain a reference to the Root Logger.  Stopping..."
+                    ? "FromLogManagerRootLoggerProvisioner.Provision: *** SUCCESS *** Obtained a reference to the Root Logger.  Proceeding..."
+                    : "FromLogManagerRootLoggerProvisioner.Provision: *** ERROR *** FAILED to obtain a reference to the Root Logger.  Stopping..."
             );
 
             return result;
