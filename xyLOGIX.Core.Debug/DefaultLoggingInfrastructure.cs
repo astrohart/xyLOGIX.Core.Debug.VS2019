@@ -484,6 +484,11 @@ namespace xyLOGIX.Core.Debug
         public event EventHandler LogFileNameChanged;
 
         /// <summary>
+        /// Occurs when the initialization of the logging subsystem has been completed.
+        /// </summary>
+        public event EventHandler LoggingInitializationFinished;
+
+        /// <summary>
         /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class to
         /// initialize its functionality.
         /// </summary>
@@ -637,11 +642,6 @@ namespace xyLOGIX.Core.Debug
         private static extern IntPtr GetConsoleWindow();
 
         /// <summary>
-        /// Occurs when the initialization of the logging subsystem has been completed.
-        /// </summary>
-        public event EventHandler LoggingInitializationFinished;
-
-        /// <summary>
         /// Raises the
         /// <see
         ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileNameChanged" />
@@ -672,7 +672,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         protected virtual bool OnLoggingInitializationFinished(
             bool overwrite = true,
-            ILoggerRepository repository = null
+            [NotLogged] ILoggerRepository repository = null
         )
         {
             var result = false;
@@ -680,9 +680,15 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** The main portion of the logging-subsystem initialization process has been completed.  Proceeding to run some final steps..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
                     "*** FYI *** Checking whether we're using PostSharp..."
                 );
 
+                // Check whether we're using PostSharp.  If this is NOT the case, then prepare the 
+                // log file, raise the LoggingInitializationFinished event, and then stop.
                 if (!Type.Equals(LoggingInfrastructureType.PostSharp))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -706,6 +712,12 @@ namespace xyLOGIX.Core.Debug
                     // stop.
                     return result;
                 }
+
+                /*
+                 * If we are here, then we've detected that PostSharp is being used.
+                 *
+                 * Override(s) of this method should take it from here.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** FYI *** We're using PostSharp.  Proceeding..."
