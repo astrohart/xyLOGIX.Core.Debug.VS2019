@@ -66,6 +66,8 @@ namespace xyLOGIX.Core.Debug
         /// corresponds to the specific enumeration value that was passed for the argument
         /// of the <paramref name="strategy" /> parameter, if it is not supported.
         /// </exception>
+        [DebuggerStepThrough]
+        [return: NotLogged]
         public static IRootLoggerProvisioner For(
             RootLoggerProvisioningStrategy strategy
         )
