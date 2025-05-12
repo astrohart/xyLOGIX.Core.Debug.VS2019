@@ -277,12 +277,12 @@ namespace xyLOGIX.Core.Debug
         public virtual bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFileName = "",
+            [NotLogged] string configurationFileName = "",
             bool muteConsole = false,
-            string logFilePathnameToUse = "",
+            [NotLogged] string logFilePathnameToUse = "",
             int verbosity = 1,
-            string applicationName = "",
-            ILoggerRepository repository = null
+            [NotLogged] string applicationName = "",
+            [NotLogged] ILoggerRepository repository = null
         )
         {
             var result = false;
@@ -543,13 +543,14 @@ namespace xyLOGIX.Core.Debug
                 DebugUtils.InfrastructureType = Type;
                 DebugUtils.LogFileName = LogFileName;
 
-                if (!AppDomain.CurrentDomain.FriendlyName
-                              .Contains("LINQPad")) { }
-
                 // do not print anything in this method if verbosity is set to
                 // anything less than 2
                 if (DebugUtils.Verbosity < 2)
                 {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** FYI *** Stopping now because DebugUtils.Verbosity is set to {DebugUtils.Verbosity}."
+                    );
+
                     return true;
                 }
 
