@@ -155,7 +155,7 @@ namespace xyLOGIX.Core.Debug
             bool muteConsole = false,
             [NotLogged] string logFileName = "",
             int verbosity = 1,
-            [NotLogged]  string applicationName = "",
+            [NotLogged] string applicationName = "",
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default
         )
@@ -164,6 +164,10 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.InitializeLogging: *** FYI *** Received a request to initialize the logging subsystem..."
+                );
+
                 System.Diagnostics.Debug.WriteLine(
                     $"*** FYI *** Attempting to delete the file, '{DebugUtils.ExceptionLogPathname}', if it exists..."
                 );
@@ -175,7 +179,8 @@ namespace xyLOGIX.Core.Debug
                 // Check to see whether the file, 'DebugUtils.ExceptionLogPathname', could be successfully deleted.
                 // If this is not the case, then write an error message to the Debug output,
                 // and then terminate the execution of this method.
-                if (File.Exists(DebugUtils.ExceptionLogPathname) && !DebugUtils.ClearTempExceptionLog())
+                if (File.Exists(DebugUtils.ExceptionLogPathname) &&
+                    !DebugUtils.ClearTempExceptionLog())
                 {
                     // The file, 'DebugUtils.ExceptionLogPathname', could NOT be successfully deleted.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
@@ -410,7 +415,9 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            System.Diagnostics.Debug.WriteLine($"LoggingSubsystemManager.SetUpDebugUtils: Result = {result}");
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingSubsystemManager.SetUpDebugUtils: Result = {result}"
+            );
 
             return result;
         }
