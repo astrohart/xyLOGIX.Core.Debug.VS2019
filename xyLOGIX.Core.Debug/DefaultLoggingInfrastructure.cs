@@ -636,6 +636,9 @@ namespace xyLOGIX.Core.Debug
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
 
+        /// <summary>
+        /// Occurs when the initialization of the logging subsystem has been completed.
+        /// </summary>
         public event EventHandler LoggingInitializationFinished;
 
         /// <summary>
