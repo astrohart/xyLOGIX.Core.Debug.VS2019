@@ -150,11 +150,11 @@ namespace xyLOGIX.Core.Debug
         public static bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            string configurationFileNamename = "",
+            [NotLogged] string configurationFileNamename = "",
             bool muteConsole = false,
-            string logFileName = "",
+            [NotLogged] string logFileName = "",
             int verbosity = 1,
-            string applicationName = "",
+            [NotLogged]  string applicationName = "",
             LoggingInfrastructureType infrastructureType =
                 LoggingInfrastructureType.Default
         )
