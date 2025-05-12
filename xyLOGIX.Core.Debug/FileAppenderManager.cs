@@ -157,7 +157,7 @@ namespace xyLOGIX.Core.Debug
             {
                 System.Diagnostics.Debug.WriteLine(
                     "FileAppenderManager.GetFirstAppender: *** FYI *** Attempting to get the first configured FileAppender..."
-                ):
+                );
 
                 System.Diagnostics.Debug.WriteLine(
                     loggerRepository != null
