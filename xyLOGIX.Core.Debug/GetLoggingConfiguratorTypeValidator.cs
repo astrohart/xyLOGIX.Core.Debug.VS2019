@@ -34,6 +34,7 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </returns>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static ILoggingConfiguratorTypeValidator SoleInstance()
         {
             ILoggingConfiguratorTypeValidator result;
