@@ -36,6 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// infrastructure type value.
         /// </returns>
         [DebuggerStepThrough]
+        [return: NotLogged]
         public static ILoggingInfrastructure SoleInstance()
         {
             ILoggingInfrastructure result;
