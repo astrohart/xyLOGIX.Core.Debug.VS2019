@@ -73,7 +73,7 @@ namespace xyLOGIX.Core.Debug
                     // The parameter, 'logFileName' was either passed a null value, or it is blank.  This means that
                     // the output of this method is to be set to 'LoggingConfiguratorType.FromConfigFile'.
                     System.Diagnostics.Debug.WriteLine(
-                        "Determine.LoggingConfiguratorTypeToUse: The parameter, 'logFileName' was either passed a null value, or it is blank. Setting the output to 'LoggingConfiguratorType.FromConfigFile'..."
+                        "Determine.LoggingConfiguratorTypeToUse: The parameter, 'logFileName' was either passed a null value, or it is blank. Setting the result to 'LoggingConfiguratorType.FromConfigFile'..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -85,7 +85,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The parameter 'logFileName' is not blank.  Setting the output to 'LoggingConfiguratorType.Programmatic'..."
+                    "*** SUCCESS *** The parameter 'logFileName' is not blank.  Setting the result to 'LoggingConfiguratorType.Programmatic'..."
                 );
 
                 result = LoggingConfiguratorType.Programmatic;
