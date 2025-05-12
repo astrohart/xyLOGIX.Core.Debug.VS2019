@@ -460,6 +460,13 @@ namespace xyLOGIX.Core.Debug
                  * NOTE: DO NOT call OnLoggingInitializationFinished from here.  ALWAYS
                  * call such a method in the OVERRIDES of this method, ONLY.
                  */
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
             }
             catch (Exception ex)
             {
