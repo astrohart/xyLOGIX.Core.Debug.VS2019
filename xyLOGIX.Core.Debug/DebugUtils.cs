@@ -373,7 +373,7 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to delete the file, '{ExceptionLogPathname}'...");
+                System.Diagnostics.Debug.WriteLine($"DebugUtils.ClearTempExceptionLog: *** FYI *** Attempting to delete the file, '{ExceptionLogPathname}'...");
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Checking whether the property, 'ExceptionLogPathname', appears to have a null or blank value..."
