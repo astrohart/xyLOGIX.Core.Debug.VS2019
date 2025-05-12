@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using System;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -33,6 +34,22 @@ namespace xyLOGIX.Core.Debug
         /// manages our access to the Windows System Event Logs.
         /// </returns>
         public static IEventLogManager SoleInstance()
-            => EventLogManager.Instance;
+        {
+            IEventLogManager result;
+
+            try
+            {
+                result = EventLogManager.Instance;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
     }
 }
