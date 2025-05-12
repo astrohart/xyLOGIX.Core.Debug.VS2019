@@ -58,6 +58,64 @@ namespace xyLOGIX.Core.Debug
         } = LoggingInfrastructureType.PostSharp;
 
         /// <summary>
+        /// Attempts to fetch the <c>log4net</c> relay for PostSharp by calling the
+        /// <see
+        ///     cref="PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetCollectingRepositorySelector.RedirectLoggingToPostSharp" />
+        /// method.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if no Exception(s) were caught during the
+        /// execution of this method, and if the
+        /// <see cref="F:xyLOGIX.Core.Debug.PostSharpLoggingInfrastructure._relay" /> field
+        /// ends up not being set to a <see langword="null" /> reference; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
+        private bool FetchRelay()
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.FetchRelay: *** FYI *** Attempting to fetch the PostSharp log4net relay..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.FetchRelay: Attempting to obtain the log relay for PostSharp..."
+                );
+
+                _relay = Log4NetCollectingRepositorySelector
+                    .RedirectLoggingToPostSharp();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.FetchRelay: *** SUCCESS *** Retrieved the relay from PostSharp.  Analyzing it..."
+                );
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded, PROVIDED the '_relay' field
+                 * is NOT set to a NULL reference.
+                 */
+
+                result = _relay != null;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"PostSharpLoggingInfrastructure.FetchRelay: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the value of the
         /// <see cref="P:log4net.Appender.FileAppender.File" /> property from the first
         /// appender in the list of appenders that is of type
@@ -235,7 +293,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to configure the logging subsystem for use with PostSharp..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** FYI *** Attempting to configure the logging subsystem for use with PostSharp..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -265,14 +323,33 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: Attempting to obtain the log relay for PostSharp..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** FYI *** Attempting to get the log4net relay for PostSharp..."
                 );
 
-                _relay = Log4NetCollectingRepositorySelector
-                    .RedirectLoggingToPostSharp();
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the relay was fetched successfully..."
+                );
+
+                // Check to see whether the relay was fetched successfully.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!FetchRelay())
+                {
+                    // The relay was NOT fetched successfully.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The relay was NOT fetched successfully.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.InitializeLogging: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** Retrieved the relay from PostSharp.  Analyzing it..."
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The relay was fetched successfully.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
