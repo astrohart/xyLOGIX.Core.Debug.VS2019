@@ -76,7 +76,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Configuring the appender '{appender.Name}' to use the minimal lock option..."
+                    $"*** FYI *** Configuring the appender corresponding to the file, '{appender.File}', to use the minimal-lock option..."
                 );
 
                 appender.ImmediateFlush = true;
@@ -84,7 +84,7 @@ namespace xyLOGIX.Core.Debug
                 appender.ActivateOptions();
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"FileAppenderConfigurator.SetMinimalLock: *** SUCCESS *** The appender '{appender.Name}' has been configured to use the minimal lock option."
+                    $"FileAppenderConfigurator.SetMinimalLock: *** SUCCESS *** The appender corresponding to the file, '{appender.File}', has been configured to use the minimal-lock option."
                 );
 
                 /*
