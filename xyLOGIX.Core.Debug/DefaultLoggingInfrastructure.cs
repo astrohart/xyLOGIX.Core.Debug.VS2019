@@ -781,6 +781,10 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Preparing to write the log file to the file system..."
+                );
+
                 /*
                  * This method is primarily concerned with deleting the previous log file and
                  * then starting a new one (for a subsequent execution, or user interaction
@@ -1094,6 +1098,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.WriteTimestamp: *** FYI *** Writing the timestamp to the log file..."
+                );
+
                 /*
                  * NOTE: For the vast majority of this file, we are using
                  * System.Diagnostics.Debug.WriteLine to send logging messages.
@@ -1106,6 +1114,10 @@ namespace xyLOGIX.Core.Debug
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     $"*** LOG STARTED ON {DateTime.Now.ToLongDateString()} at {DateTime.Now.ToLongTimeString()}"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DefaultLoggingInfrastructure.WriteTimestamp: *** SUCCESS *** The timestamp has been written to the log file."
                 );
             }
             catch (Exception ex)
