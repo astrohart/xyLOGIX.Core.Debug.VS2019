@@ -1068,7 +1068,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Attempting to set minimal locking for the FileAppender, '{firstAppender.Name}'..."
+                    $"*** FYI *** Attempting to set minimal locking for the FileAppender corresponding to the file, '{firstAppender.File}'..."
                 );
 
                 // minimize locking issues
