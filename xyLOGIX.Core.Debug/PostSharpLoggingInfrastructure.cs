@@ -488,6 +488,10 @@ namespace xyLOGIX.Core.Debug
                     $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The backend of type, '{backend.GetType()}', has been set as the default backend.  Proceeding..."
                 );
 
+                System.Diagnostics.Debug.WriteLine($"PostSharpLoggingInfrastructure.InitializeLogging: *** FYI *** Forcing the initialization of the logging subsystem...");
+
+                LoggingServices.Initialize();
+
                 System.Diagnostics.Debug.WriteLine(
                     "*** FYI *** Letting interested party(ies) know that the initialization of the logging subsystem has completed..."
                 );
