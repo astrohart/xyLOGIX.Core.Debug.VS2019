@@ -39,10 +39,8 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         private static bool? IsWindowsGUI
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -138,7 +136,11 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Determining whether the property, 'LoggingServices.DefaultBackend', is a NOT set to 'NullLoggingBackend'..."
+                    $"Has.LoggingBeenSetUp: *** FYI *** The type of the LoggingServices.DefaultBackend' property is: '{LoggingServices.DefaultBackend.GetType()}'."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Has.LoggingBeenSetUp: *** FYI *** Determining whether the property, 'LoggingServices.DefaultBackend', is NOT set to 'NullLoggingBackend'..."
                 );
 
                 result =
