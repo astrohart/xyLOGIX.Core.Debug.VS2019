@@ -25,6 +25,15 @@ namespace xyLOGIX.Core.Debug
         static LoggingSubsystemManager() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        private static IAppenderManager AppenderManager
+        {
+            [DebuggerStepThrough] get;
+        } = GetAppenderManager.SoleInstance();
+
+        /// <summary>
         /// Gets or sets the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
         /// that
@@ -73,16 +82,6 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
-        /// </summary>
-        private static IAppenderManager AppenderManager
-        {
-            [DebuggerStepThrough]
-            get;
-        } = GetAppenderManager.SoleInstance();
-
-        /// <summary>
-        /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface that
         /// corresponds to the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingSubsystemManager.Type" /> property.
@@ -99,8 +98,7 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingInfrastructureTypeValidator
-            LoggingInfrastructureTypeValidator
-        { [DebuggerStepThrough] get; } =
+            LoggingInfrastructureTypeValidator { [DebuggerStepThrough] get; } =
             GetLoggingInfrastructureTypeValidator.SoleInstance();
 
         /// <summary>
@@ -245,6 +243,41 @@ namespace xyLOGIX.Core.Debug
                         // skip to the next loop iteration.
                         continue;
                     }
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the new log file pathname is the same as the existing one..."
+                    );
+
+                    // Check to see whether the new log file pathname is the same as the existing one.
+                    // If this is not the case, then write an error message to the log file,
+                    // and then terminate the execution of the containing loop.
+                    if (newLogFilePath.Equals(
+                            fileAppender.File,
+                            StringComparison.OrdinalIgnoreCase
+                        ))
+                    {
+                        // The new log file pathname is the same as the existing value.  This is not desirable.
+                        DebugUtils.WriteLine(
+                            DebugLevel.Error,
+                            "*** ERROR *** The new log file pathname is the same as the existing value.  Stopping this loop..."
+                        );
+
+                        /*
+                         * Set the return value of this method to TRUE so that the caller
+                         * does not fall over.
+                         */
+
+                        result = true;
+
+                        // stop the loop.
+                        break;
+                    }
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The new log file pathname is the same as the existing one.  Proceeding..."
+                    );
 
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The current Appender is a FileAppender.  Proceeding..."
