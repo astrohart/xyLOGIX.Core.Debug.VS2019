@@ -4,6 +4,7 @@ using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -26,6 +27,15 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         [Log(AttributeExclude = true)]
         static Activate() { }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        private static IAppenderManager AppenderManager
+        {
+            [DebuggerStepThrough] get;
+        } = GetAppenderManager.SoleInstance();
 
         /// <summary>
         /// Sets up logging programmatically (as opposed to using a
@@ -387,6 +397,8 @@ namespace xyLOGIX.Core.Debug
                         ? "*** SUCCESS *** The logging subsystem has been configured.  Proceeding..."
                         : "*** ERROR *** FAILED to configure the logging subsystem.  Stopping..."
                 );
+
+                if (result) AppenderManager.AddAppender(roller);
             }
             catch (Exception ex)
             {
