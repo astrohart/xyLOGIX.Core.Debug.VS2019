@@ -488,7 +488,9 @@ namespace xyLOGIX.Core.Debug
                     $"PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The backend of type, '{backend.GetType()}', has been set as the default backend.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine($"PostSharpLoggingInfrastructure.InitializeLogging: *** FYI *** Forcing the initialization of the logging subsystem...");
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.InitializeLogging: *** FYI *** Forcing the initialization of the logging subsystem..."
+                );
 
                 LoggingServices.Initialize();
 
@@ -618,7 +620,7 @@ namespace xyLOGIX.Core.Debug
                      * Be sure to write the timestamp to a new log file before we finish.
                      */
 
-                    WriteTimestamp();
+                    Write.LogFileTimestamp();
 
                     System.Diagnostics.Debug.WriteLine(
                         $"*** PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Result = {true}"
@@ -644,7 +646,7 @@ namespace xyLOGIX.Core.Debug
                  * This will begin a new section.
                  */
 
-                WriteTimestamp();
+                Write.LogFileTimestamp();
             }
             catch (Exception ex)
             {

@@ -1092,39 +1092,5 @@ namespace xyLOGIX.Core.Debug
 
             return result;
         }
-
-        /// <summary> Writes a date and time stamp to the top of the log file. </summary>
-        protected virtual void WriteTimestamp()
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.WriteTimestamp: *** FYI *** Writing the timestamp to the log file..."
-                );
-
-                /*
-                 * NOTE: For the vast majority of this file, we are using
-                 * System.Diagnostics.Debug.WriteLine to send logging messages.
-                 *
-                 * However, this method is supposed to touch the log file (except
-                 * for when an exception is caught), so we are supposed to call
-                 * DebugUtils.WriteLine here.
-                 */
-
-                DebugUtils.WriteLine(
-                    DebugLevel.Info,
-                    $"*** LOG STARTED ON {DateTime.Now.ToLongDateString()} at {DateTime.Now.ToLongTimeString()}"
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "DefaultLoggingInfrastructure.WriteTimestamp: *** SUCCESS *** The timestamp has been written to the log file."
-                );
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-        }
     }
 }
