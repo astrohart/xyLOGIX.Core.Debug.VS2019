@@ -440,7 +440,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The file, 'DebugUtils.ExceptionLogPathname', could NOT be successfully deleted.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** ERROR *** The file, '{DebugUtils.ExceptionLogPathname}', could NOT be successfully deleted.  Stopping..."
+                        $"LoggingSubsystemManager.InitializeLogging: *** ERROR *** The file, '{DebugUtils.ExceptionLogPathname}', could NOT be successfully deleted.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -466,7 +466,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The specified Logging Infrastructure Type value is NOT valid.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** ERROR *** The specified Logging Infrastructure Type value, '{infrastructureType}', is NOT valid.  Stopping..."
+                        $"LoggingSubsystemManager.InitializeLogging: *** ERROR *** The specified Logging Infrastructure Type value, '{infrastructureType}', is NOT valid.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
