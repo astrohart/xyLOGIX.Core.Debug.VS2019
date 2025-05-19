@@ -123,7 +123,7 @@ namespace xyLOGIX.Core.Debug
                  */
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"ProgrammaticLoggingConfigurator.Configure *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
+                    "ProgrammaticLoggingConfigurator.Configure *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
                 );
 
                 // Check whether the value of the parameter, 'logFileName', is blank.
@@ -145,7 +145,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** SUCCESS *** The parameter, 'logFileName', is not blank.  Proceeding..."
+                    "*** SUCCESS *** The parameter, 'logFileName', is not blank.  Proceeding..."
                 );
 
                 /*
@@ -157,7 +157,7 @@ namespace xyLOGIX.Core.Debug
                     "ProgrammaticLoggingConfigurator.Configure: Checking whether the 'repository' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, repository, is null. If it is, send an 
+                // Check to see if the required parameter, repository, is null. If it is, send an
                 // error to the log file and quit, returning from this method.
                 if (repository == null)
                 {
