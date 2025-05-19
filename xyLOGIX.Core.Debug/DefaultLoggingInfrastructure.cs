@@ -304,7 +304,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The event log could NOT be configured properly.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The event log could NOT be configured properly.  Stopping..."
+                        "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR *** The event log could NOT be configured properly.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -320,7 +320,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Determining the type of Logging Configurator that is to be utilized..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** FYI *** Determining the type of Logging Configurator that is to be utilized..."
                 );
 
                 var configuratorType =
@@ -344,7 +344,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The configurator type is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** ERROR: The configurator type, '{configuratorType}', is NOT within the defined value set.  Stopping..."
+                        $"DefaultLoggingInfrastructure.InitializeLogging: *** ERROR: The configurator type, '{configuratorType}', is NOT within the defined value set.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -360,7 +360,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Attempting to get a reference to the logging configurator of type '{configuratorType}'..."
+                    $"DefaultLoggingInfrastructure.InitializeLogging: *** FYI *** Attempting to get a reference to the logging configurator of type '{configuratorType}'..."
                 );
 
                 var configurator = GetLoggingConfigurator.For(configuratorType);
@@ -408,7 +408,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The logging subsystem could NOT be configured properly.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The logging subsystem could NOT be configured properly.  Stopping..."
+                        "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR *** The logging subsystem could NOT be configured properly.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -424,7 +424,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Initializing the settings of the DebugUtils class..."
+                    "DefaultLoggingInfrastructure.InitializeLogging: *** FYI *** Initializing the settings of the DebugUtils class..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -441,7 +441,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The debug utilities object was NOT properly configured.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The debug utilities object was NOT properly configured.  Stopping..."
+                        "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR *** The debug utilities object was NOT properly configured.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -560,7 +560,7 @@ namespace xyLOGIX.Core.Debug
                 if (DebugUtils.Verbosity < 2)
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** FYI *** Stopping now because DebugUtils.Verbosity is set to {DebugUtils.Verbosity}."
+                        $"DefaultLoggingInfrastructure.SetUpDebugUtils: *** FYI *** Stopping now because DebugUtils.Verbosity is set to {DebugUtils.Verbosity}."
                     );
 
                     return true;
@@ -687,11 +687,11 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** The main portion of the logging-subsystem initialization process has been completed.  Proceeding to run some final steps..."
+                    "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** The main portion of the logging-subsystem initialization process has been completed.  Proceeding to run some final steps..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Checking whether we're using PostSharp..."
+                    "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** Checking whether we're using PostSharp..."
                 );
 
                 // Check whether we're using PostSharp.  If this is NOT the case, then prepare the 
@@ -699,13 +699,13 @@ namespace xyLOGIX.Core.Debug
                 if (!Type.Equals(LoggingInfrastructureType.PostSharp))
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        "*** FYI *** We're not using PostSharp.  Preparing the log file..."
+                        "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** We're not using PostSharp.  Preparing the log file..."
                     );
 
                     result = PrepareLogFile(repository);
 
                     System.Diagnostics.Debug.WriteLine(
-                        "*** FYI *** Raising the 'LoggingInitializationFinished' event..."
+                        "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** Raising the 'LoggingInitializationFinished' event..."
                     );
 
                     LoggingInitializationFinished?.Invoke(
@@ -727,11 +727,11 @@ namespace xyLOGIX.Core.Debug
                  */
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** We're using PostSharp.  Proceeding..."
+                    "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** We're using PostSharp.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Raising the 'LoggingInitializationFinished' event..."
+                    "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** Raising the 'LoggingInitializationFinished' event..."
                 );
 
                 LoggingInitializationFinished?.Invoke(this, EventArgs.Empty);
@@ -805,7 +805,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The logging backend is the console.  There is nothing to do.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** FYI *** The logging backend is the console.  There is nothing to do.  Stopping..."
+                        "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** The logging backend is the console.  There is nothing to do.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -821,7 +821,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** INFO: Checking whether the property, 'LogFileName', appears to have a null or blank value..."
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Checking whether the property, 'LogFileName', appears to have a null or blank value..."
                 );
 
                 // Check to see if the required property, 'LogFileName', appears to have a null 
@@ -831,7 +831,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The property, 'LogFileName', appears to have a null or blank value.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The property, 'LogFileName', appears to have a null or blank value.  Stopping..."
+                        "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The property, 'LogFileName', appears to have a null or blank value.  Stopping..."
                     );
 
                     // Emit the result to the Debug output.
@@ -844,11 +844,11 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The property, 'LogFileName', seems to have a non-blank value.  Proceeding..."
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The property, 'LogFileName', seems to have a non-blank value.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to obtain the fully-qualified pathname of the folder that is meant to hold the log file(s)..."
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Attempting to obtain the fully-qualified pathname of the folder that is meant to hold the log file(s)..."
                 );
 
                 var logFileDirectoryPath = Path.GetDirectoryName(LogFileName);
@@ -945,8 +945,8 @@ namespace xyLOGIX.Core.Debug
 
                     System.Diagnostics.Debug.WriteLine(
                         Directory.Exists(logFileDirectoryParent)
-                            ? $"*** SUCCESS *** Created the folder, '{logFileDirectoryParent}', on the file system.  Proceeding..."
-                            : $"*** ERROR *** FAILED to create the folder, '{logFileDirectoryParent}', on the file system.  Stopping..."
+                            ? $"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** Created the folder, '{logFileDirectoryParent}', on the file system.  Proceeding..."
+                            : $"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** FAILED to create the folder, '{logFileDirectoryParent}', on the file system.  Stopping..."
                     );
 
                     // Check whether a folder having pathname, 'logFileDirectoryParent', exists on the file system.
@@ -968,7 +968,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $@"*** FYI *** Checking whether the current user, '{Environment.UserDomainName}\{Environment.UserName}', has write privileges to the folder, '{logFileDirectoryParent}'..."
+                    $@"DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Checking whether the current user, '{Environment.UserDomainName}\{Environment.UserName}', has write privileges to the folder, '{logFileDirectoryParent}'..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -985,11 +985,11 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The current user does NOT have write access to the folder.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $@"*** ERROR *** The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'.  Stopping..."
+                        $@"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'.  Stopping..."
                     );
 
                     throw new UnauthorizedAccessException(
-                        $@"The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'."
+                        $@"DefaultLoggingInfrastructure.PrepareLogFile: The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'."
                     );
                 }
 
@@ -1015,8 +1015,8 @@ namespace xyLOGIX.Core.Debug
 
                     System.Diagnostics.Debug.WriteLine(
                         Directory.Exists(logFileDirectoryPath)
-                            ? $"*** SUCCESS *** Created the folder, '{logFileDirectoryPath}', on the file system.  Proceeding..."
-                            : $"*** ERROR *** FAILED to create the folder, '{logFileDirectoryPath}', on the file system.  Stopping..."
+                            ? $"DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** Created the folder, '{logFileDirectoryPath}', on the file system.  Proceeding..."
+                            : $"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** FAILED to create the folder, '{logFileDirectoryPath}', on the file system.  Stopping..."
                     );
 
                     // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the file system.
@@ -1038,7 +1038,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to get a reference to the first FileAppender configured..."
+                    "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Attempting to get a reference to the first FileAppender configured..."
                 );
 
                 var firstAppender =
@@ -1072,7 +1072,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Attempting to set minimal locking for the FileAppender corresponding to the file, '{firstAppender.File}'..."
+                    $"DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Attempting to set minimal locking for the FileAppender corresponding to the file, '{firstAppender.File}'..."
                 );
 
                 // minimize locking issues
