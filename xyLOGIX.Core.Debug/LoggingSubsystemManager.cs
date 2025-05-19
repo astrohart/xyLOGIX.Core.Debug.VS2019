@@ -1,4 +1,5 @@
 ﻿using Alphaleonis.Win32.Filesystem;
+using log4net.Appender;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
@@ -72,6 +73,16 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        private static IAppenderManager AppenderManager
+        {
+            [DebuggerStepThrough]
+            get;
+        } = GetAppenderManager.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface that
         /// corresponds to the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingSubsystemManager.Type" /> property.
@@ -88,8 +99,219 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingInfrastructureTypeValidator
-            LoggingInfrastructureTypeValidator { [DebuggerStepThrough] get; } =
+            LoggingInfrastructureTypeValidator
+        { [DebuggerStepThrough] get; } =
             GetLoggingInfrastructureTypeValidator.SoleInstance();
+
+        /// <summary>
+        /// Changes the pathname of the log file to the specified
+        /// <paramref name="newLogFilePath" />.
+        /// </summary>
+        /// <param name="newLogFilePath">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of the new log file.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the operation(s) were successful;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
+        public static bool ChangeLogFilePathname(
+            [NotLogged] string newLogFilePath
+        )
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.ChangeLogFilePathname *** INFO: Checking whether the value of the parameter, 'newLogFilePath', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'newLogFilePath', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(newLogFilePath))
+                {
+                    // The parameter, 'newLogFilePath' was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: The parameter, 'newLogFilePath', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingSubsystemManager.ChangeLogFilePathname: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter 'newLogFilePath', is not blank.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the property, 'AppenderManager', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'AppenderManager', has a null reference for a value.
+                // If that is the case, then we will write an error message to the log file, and then
+                // terminate the execution of this method, while returning the default return value.
+                if (AppenderManager == null)
+                {
+                    // The property, 'AppenderManager', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR *** The property, 'AppenderManager', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.ChangeLogFilePathname: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The property, 'AppenderManager', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the Appender Manager has greater than zero element(s) in its internal collection..."
+                );
+
+                // Check to see whether the Appender Manager has greater than zero element(s)
+                // in its internal collection.  If this is not the case, then write an error
+                // message to the log file, and then terminate the execution of this method.
+                if (!AppenderManager.HasAppenders)
+                {
+                    // The Appender Manager has zero element(s) in its internal collection.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The Appender Manager has zero element(s) in its internal collection.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.ChangeLogFilePathname: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The Appender Manager has greater than zero element(s) in its internal collection.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Searching for the first RollingFileAppender in the collection..."
+                );
+
+                foreach (var appender in AppenderManager.Appenders)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the variable 'appender' has a null reference for a value..."
+                    );
+
+                    // Check to see if the variable, appender, is null. If it is, send an error to the log file and continue to the next loop iteration.
+                    if (appender == null)
+                    {
+                        // the variable appender is required to have a valid object reference.
+                        System.Diagnostics.Debug.WriteLine(
+                            "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR ***  The 'appender' variable has a null reference.  Skipping to the next loop iteration..."
+                        );
+
+                        // continue to the next loop iteration.
+                        continue;
+                    }
+
+                    // We can use the variable, appender, because it's not set to a null reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The 'appender' variable has a valid object reference for its value.  Proceeding..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the current Appender is a FileAppender..."
+                    );
+
+                    // Check to see whether the current Appender is a FileAppender.
+                    // If this is not the case, then write an error message to the log file,
+                    // and then skip to the next loop iteration.
+                    if (!(appender is FileAppender fileAppender))
+                    {
+                        // The current Appender is NOT a FileAppender.  This is not desirable.
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** ERROR: The current Appender is NOT a FileAppender.  Skipping to the next Appender..."
+                        );
+
+                        // skip to the next loop iteration.
+                        continue;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The current Appender is a FileAppender.  Proceeding..."
+                    );
+
+                    fileAppender.File = newLogFilePath;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** FYI *** The current Appender has been successfully updated to use the new log file path, '{newLogFilePath}'."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** FYI *** Deleting the file, '{newLogFilePath}', if it exists..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the deletion operation was successful..."
+                    );
+
+                    // Check to see whether the deletion operation was successful.
+                    // If this is not the case, then write an error message to the log file,
+                    // and then skip to the next loop iteration.
+                    if (!Delete.FileIfExists(newLogFilePath))
+                    {
+                        // The deletion operation was NOT successful.  This is not desirable.
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** ERROR: The deletion operation was NOT successful.  Skipping to the next appender..."
+                        );
+
+                        // skip to the next loop iteration.
+                        continue;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The deletion operation was successful.  Proceeding..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** Writing the current timestamp to the first line of the new log file..."
+                    );
+
+                    Write.LogFileTimestamp();
+
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then
+                     * assume that the operation(s) succeeded.
+                     */
+
+                    result = true;
+
+                    break;
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingSubsystemManager.ChangeLogFilePathname: Result = {result}"
+            );
+
+            return result;
+        }
 
         /// <summary> Initializes the application's logging subsystem. </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
@@ -231,7 +453,6 @@ namespace xyLOGIX.Core.Debug
 
                 InfrastructureType = infrastructureType;
 
-
                 /* We now 'outsource' the functionality of this method (and all the
                   other methods of this class) to an 'infrastructure' object that follows (loosely)
                  the Abstract Factory pattern.  Either we use the Default way of initializing logging
@@ -241,7 +462,7 @@ namespace xyLOGIX.Core.Debug
                     "LoggingSubsystemManager.InitializeLogging: Checking whether the property, 'LoggingInfrastructure', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'LoggingInfrastructure', has a null reference for a value. 
+                // Check to see if the required property, 'LoggingInfrastructure', has a null reference for a value.
                 // If that is the case, then we will write an error message to the Debug output, and then
                 // terminate the execution of this method, while returning the default return value.
                 if (LoggingInfrastructure == null)
