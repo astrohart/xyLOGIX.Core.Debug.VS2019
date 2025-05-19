@@ -148,7 +148,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The parameter 'newLogFilePath', is not blank.  Proceeding..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The parameter 'newLogFilePath', is not blank.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -188,7 +188,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The Appender Manager has zero element(s) in its internal collection.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The Appender Manager has zero element(s) in its internal collection.  Stopping..."
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR *** The Appender Manager has zero element(s) in its internal collection.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -204,7 +204,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Searching for the first RollingFileAppender in the collection..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Searching for the first RollingFileAppender in the collection..."
                 );
 
                 foreach (var appender in AppenderManager.Appenders)
@@ -231,7 +231,7 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the current Appender is a FileAppender..."
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the current Appender is a FileAppender..."
                     );
 
                     // Check to see whether the current Appender is a FileAppender.
@@ -241,7 +241,7 @@ namespace xyLOGIX.Core.Debug
                     {
                         // The current Appender is NOT a FileAppender.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
-                            "*** ERROR: The current Appender is NOT a FileAppender.  Skipping to the next Appender..."
+                            "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The current Appender is NOT a FileAppender.  Skipping to the next Appender..."
                         );
 
                         // skip to the next loop iteration.
@@ -262,7 +262,7 @@ namespace xyLOGIX.Core.Debug
                     {
                         // The new log file pathname is the same as the existing value.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
-                            "*** ERROR *** The new log file pathname is the same as the existing value.  Stopping this loop..."
+                            "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** The new log file pathname is the same as the existing value.  There is nothing more to be done.  Stopping this loop..."
                         );
 
                         /*
@@ -287,11 +287,11 @@ namespace xyLOGIX.Core.Debug
                     fileAppender.File = newLogFilePath;
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** FYI *** The current Appender has been successfully updated to use the new log file path, '{newLogFilePath}'."
+                        $"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** The current Appender has been successfully updated to use the new log file path, '{newLogFilePath}'."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** FYI *** Deleting the file, '{newLogFilePath}', if it exists..."
+                        $"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Deleting the file, '{newLogFilePath}', if it exists..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -305,7 +305,7 @@ namespace xyLOGIX.Core.Debug
                     {
                         // The deletion operation was NOT successful.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
-                            "*** ERROR: The deletion operation was NOT successful.  Skipping to the next appender..."
+                            "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The deletion operation was NOT successful.  Skipping to the next appender..."
                         );
 
                         // skip to the next loop iteration.
@@ -317,7 +317,7 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        "*** FYI *** Writing the current timestamp to the first line of the new log file..."
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Writing the current timestamp to the first line of the new log file..."
                     );
 
                     Write.LogFileTimestamp();
