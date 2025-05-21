@@ -7,7 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// Exposes "secret" <see cref="T:System.String" /> extension methods to help the
     /// methods in this library only.
     /// </summary>
-    public static class SecretStringExtensions
+    internal static class SecretStringExtensions
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -39,7 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [Log(AttributeExclude = true)]
         [return: NotLogged]
-        public static string CollapseNewlinesToSpaces(
+        internal static string CollapseNewlinesToSpaces(
             [NotLogged] this string value
         )
         {
