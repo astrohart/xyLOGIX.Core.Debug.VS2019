@@ -762,6 +762,11 @@ namespace xyLOGIX.Core.Debug
                 var exceptionTypeString = exception.GetType()
                                                    .ToString();
 
+                // Dump the value of the variable, exceptionTypeString, to the Debug output
+                System.Diagnostics.Debug.WriteLine(
+                    $"DebugUtils.IsExceptionSuppressed: exceptionTypeString = '{exceptionTypeString}'"
+                );
+
                 System.Diagnostics.Debug.WriteLine(
                     "DebugUtils.IsExceptionSuppressed: Checking whether the variable, 'exceptionTypeString', has a null reference for a value, or is blank..."
                 );
