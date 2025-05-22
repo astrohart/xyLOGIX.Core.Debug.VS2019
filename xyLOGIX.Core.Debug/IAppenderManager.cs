@@ -40,5 +40,21 @@ namespace xyLOGIX.Core.Debug
         /// the internal collection.
         /// </param>
         void AddAppender([NotLogged] IAppender appender);
+
+        /// <summary>
+        /// Attempts to look up the <c>Appender</c> whose <c>File</c> property matches the
+        /// specified <paramref name="logFilePath" /> (ignoring case).
+        /// </summary>
+        /// <param name="logFilePath">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a file that is to be used to log messages.
+        /// </param>
+        /// <returns>
+        /// If successful, a reference to an instance of an object that implements
+        /// the <see cref="T:log4net.Appender.IAppender" /> interface; otherwise, a
+        /// <see langword="null" /> reference is returned.
+        /// </returns>
+        [return: NotLogged]
+        IAppender GetAppender([NotLogged] string logFilePath);
     }
 }
