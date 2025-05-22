@@ -116,11 +116,13 @@
   <ItemGroup>
     <Compile Include="Activate.cs" />
     <Compile Include="AppDomainFriendlyNames.cs" />
+    <Compile Include="AppenderFactoryBase.cs" />
     <Compile Include="AppenderManager.cs" />
     <Compile Include="AppenderRetrievalMode.cs" />
     <Compile Include="CommandLineParameter.cs" />
     <Compile Include="Compute.cs" />
     <Compile Include="ConsoleOutputLocation.cs" />
+    <Compile Include="CreateNewAppenderFactory.cs" />
     <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="DebuggerDump.cs" />
     <Compile Include="DebugLevel.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
     <Compile Include="IRollingFileAppenderConfiguration.cs" />
+    <Compile Include="IRollingFileAppenderConfigurationValidator.cs" />
     <Compile Include="IRollingModeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
@@ -224,6 +227,7 @@
     <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
     <Compile Include="RollingFileAppenderConfiguration.cs" />
+    <Compile Include="RollingFileAppenderConfigurationValidatorBase.cs" />
     <Compile Include="RollingModeValidator.cs" />
     <Compile Include="RootLoggerProvisionerBase.cs" />
     <Compile Include="RootLoggerProvisioningStrategy.cs" />
