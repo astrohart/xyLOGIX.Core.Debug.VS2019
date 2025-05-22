@@ -90,7 +90,11 @@ namespace xyLOGIX.Core.Debug
         public static IList<string> ExcludedExceptionTypes
         {
             [DebuggerStepThrough] get;
-        } = new AdvisableCollection<string>();
+        } = new AdvisableCollection<string>
+        {
+            @"Microsoft.VisualStudio.TemplateWizard.WizardBackoutException",
+            @"Microsoft.VisualStudio.TemplateWizard.WizardCancelledException"
+        };
 
         /// <summary>
         /// Gets or sets the depth down the call stack from which Exception
