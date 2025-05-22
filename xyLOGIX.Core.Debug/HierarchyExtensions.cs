@@ -93,6 +93,37 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
+                    "*** HierarchyExtensions.CloseAllAppenders: Checking whether the 'hierarchy.Root.Appenders' collection contains greater than zero elements..."
+                );
+
+                // Check to see whether the 'hierarchy.Root.Appenders' collection contains greater than
+                // zero elements.  Otherwise, write an error message to the Debug output, return
+                // the default return value, and then terminate the execution of this method.
+                if (hierarchy.Root.Appenders.Count <= 0)
+                {
+                    // The 'hierarchy.Root.Appenders' collection contains zero elements.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'hierarchy.Root.Appenders' collection contains zero elements.  Stopping..."
+                    );
+
+                    /*
+                     * Return TRUE so that the caller of this method does not
+                     * fall over.
+                     */
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"HierarchyExtensions.CloseAllAppenders: Result = {true}"
+                    );
+
+                    // stop.
+                    return true;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"HierarchyExtensions.CloseAllAppenders: *** SUCCESS *** {hierarchy.Root.Appenders.Count} element(s) were found in the 'hierarchy.Root.Appenders' collection.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
                     "HierarchyExtensions.CloseAllAppenders: *** FYI *** Iterating over all the currently-configured Appender(s), and closing each one of them..."
                 );
 
@@ -126,14 +157,25 @@ namespace xyLOGIX.Core.Debug
 
                     appender.Close();
                 }
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
             }
             catch (Exception ex)
             {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
 
                 result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"HierarchyExtensions.CloseAllAppenders: Result = {result}"
+            );
 
             return result;
         }
