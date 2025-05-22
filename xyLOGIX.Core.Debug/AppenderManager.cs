@@ -222,8 +222,32 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 DebugUtils.WriteLine(
+                    DebugLevel.Info, $"AppenderManager.AddAppender: Checking whether the internal collection already has an element corresponding to the specified file..."
+                );
+
+                // Check to see whether the internal collection already has an element corresponding to the specified file.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (HasAppenderWithFilePath(fileAppender.File))
+                {
+                    // The internal collection already has an element corresponding to the specified file.  This is not desirable.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        $"*** ERROR *** The internal collection already has an element corresponding to the specified file.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"AppenderManager.AddAppender: *** FYI *** Adding the appender '{fileAppender.Name}' to the internal collection of appenders."
+                    $"AppenderManager.AddAppender: *** SUCCESS *** The internal collection does NOT already have an element corresponding to the specified file.  Proceeding..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"AppenderManager.AddAppender: *** FYI *** Adding the appender, '{fileAppender.Name}', to the internal collection of appenders."
                 );
 
                 _appenders.Add(fileAppender.File, fileAppender);
