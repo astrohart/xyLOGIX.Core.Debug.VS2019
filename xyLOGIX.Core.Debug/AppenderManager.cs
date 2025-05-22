@@ -28,15 +28,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected AppenderManager()
-        { }
-
-        /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
-        /// </summary>
-        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
-            new AppenderManager();
+        protected AppenderManager() { }
 
         /// <summary>
         /// Gets the count of appenders in the internal collection.
@@ -121,6 +113,13 @@ namespace xyLOGIX.Core.Debug
                 return result;
             }
         }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
+            new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
@@ -217,7 +216,10 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.AddAppender: *** SUCCESS *** The property, 'fileAppender.File', is not blank.  Proceeding..."
                 );
 
-                DebugUtils.WriteLine(DebugLevel.Info, $"AppenderManager.AddAppender: *** FYI *** Adding the appender '{fileAppender.Name}' to the internal collection of appenders.");
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"AppenderManager.AddAppender: *** FYI *** Adding the appender '{fileAppender.Name}' to the internal collection of appenders."
+                );
 
                 _appenders.Add(fileAppender.File, fileAppender);
             }
@@ -241,7 +243,96 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="T:log4net.Appender.IAppender" /> interface; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        public IAppender GetAppender(string logFilePath)
-            => null;
+        [return: NotLogged]
+        public IAppender GetAppender([NotLogged] string logFilePath)
+        {
+            IAppender result = default;
+
+            try
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "AppenderManager.GetAppender *** INFO: Checking whether the value of the parameter, 'logFilePath', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'logFilePath', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(logFilePath))
+                {
+                    // The parameter, 'logFilePath' was either passed a null value, or it is blank.  This is not desirable.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "AppenderManager.GetAppender: The parameter, 'logFilePath', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        $"AppenderManager.GetAppender: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** SUCCESS *** The parameter 'logFilePath', is not blank.  Proceeding..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** AppenderManager.GetAppender: Checking whether the Appender Manager has greater than zero Appender(s) in its internal collection..."
+                );
+
+                // Check to see whether the Appender Manager has greater than zero Appender(s) in its internal collection.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!HasAppenders)
+                {
+                    // The Appender Manager currently has zero Appender(s) in its internal collection.  This is not desirable.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR *** The Appender Manager currently has zero Appender(s) in its internal collection.  Stopping..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        $"*** AppenderManager.GetAppender: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "AppenderManager.GetAppender: *** SUCCESS *** The Appender Manager has greater than zero Appender(s) in its internal collection.  Proceeding..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "AppenderManager.GetAppender: *** FYI *** Looking for the Appender whose File property matches the value of the parameter, 'logFilePath'..."
+                );
+
+                _appenders.TryGetValue(logFilePath, out result);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
+
+            DebugUtils.WriteLine(
+                result != null ? DebugLevel.Info : DebugLevel.Error,
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the Appender for the file, '{logFilePath}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the Appender for the file, '{logFilePath}'.  Stopping..."
+            );
+
+            return result;
+        }
     }
 }
