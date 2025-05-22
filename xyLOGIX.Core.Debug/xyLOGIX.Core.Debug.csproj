@@ -227,6 +227,7 @@
     <Compile Include="SetLog.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="Split.cs" />
+    <Compile Include="Switch.cs" />
     <Compile Include="TextEmittedEventArgs.cs" />
     <Compile Include="TextEmittedEventHandler.cs" />
     <Compile Include="TextWrittenEventArgs.cs" />
