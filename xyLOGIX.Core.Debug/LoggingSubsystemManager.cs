@@ -1,5 +1,4 @@
 ﻿using Alphaleonis.Win32.Filesystem;
-using log4net.Appender;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
@@ -148,17 +147,25 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the property, 'AppenderManager', has a null reference for a value..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Attempting to get a reference to the Hierarchy repository..."
                 );
 
-                // Check to see if the required property, 'AppenderManager', has a null reference for a value.
-                // If that is the case, then we will write an error message to the log file, and then
-                // terminate the execution of this method, while returning the default return value.
-                if (AppenderManager == null)
+                var hierarchy =
+                    LoggerRepositoryManager.GetHierarchyRepository() ??
+                    LoggerRepositoryManager.InitialRepository;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the variable, 'hierarchy', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'hierarchy', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (hierarchy == null)
                 {
-                    // The property, 'AppenderManager', has a null reference for a value.  This is not desirable.
+                    // The variable, 'hierarchy', has a null reference for a value.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR *** The property, 'AppenderManager', has a null reference for a value.  Stopping..."
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR ***  The variable, 'hierarchy', has a null reference for a value.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -169,26 +176,34 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
+                // We can use the variable, 'hierarchy', because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The property, 'AppenderManager', has a valid object reference for its value.  Proceeding..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The variable, 'hierarchy', has a valid object reference for its value.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the Appender Manager has greater than zero element(s) in its internal collection..."
+                    $"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Attempting to activate logging for the new log file path, '{newLogFilePath}'..."
                 );
 
-                // Check to see whether the Appender Manager has greater than zero element(s)
-                // in its internal collection.  If this is not the case, then write an error
-                // message to the log file, and then terminate the execution of this method.
-                if (!AppenderManager.HasAppenders)
+                // Activate logging for the new log file path.
+                Activate.LoggingForLogFileName(
+                    newLogFilePath, hierarchy, /* override existing config = */
+                    true
+                );
+
+                // Check to see whether the deletion operation was successful.
+                // If this is not the case, then write an error message to the log file,
+                // and then skip to the next loop iteration.
+                if (!Delete.FileIfExists(newLogFilePath))
                 {
-                    // The Appender Manager has zero element(s) in its internal collection.  This is not desirable.
+                    // The deletion operation was NOT successful.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR *** The Appender Manager has zero element(s) in its internal collection.  Stopping..."
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The deletion operation was NOT successful.  Stopping..."
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** LoggingSubsystemManager.ChangeLogFilePathname: Result = {result}"
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        $"LoggingSubsystemManager.ChangeLogFilePathname: Result = {result}"
                     );
 
                     // stop.
@@ -196,137 +211,21 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The Appender Manager has greater than zero element(s) in its internal collection.  Proceeding..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The deletion operation was successful.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Searching for the first RollingFileAppender in the collection..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Writing the current timestamp to the first line of the new log file..."
                 );
 
-                foreach (var appender in AppenderManager.Appenders)
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the variable 'appender' has a null reference for a value..."
-                    );
+                Write.LogFileTimestamp();
 
-                    // Check to see if the variable, appender, is null. If it is, send an error to the log file and continue to the next loop iteration.
-                    if (appender == null)
-                    {
-                        // the variable appender is required to have a valid object reference.
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR ***  The 'appender' variable has a null reference.  Skipping to the next loop iteration..."
-                        );
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
 
-                        // continue to the next loop iteration.
-                        continue;
-                    }
-
-                    // We can use the variable, appender, because it's not set to a null reference.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The 'appender' variable has a valid object reference for its value.  Proceeding..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the current Appender is a FileAppender..."
-                    );
-
-                    // Check to see whether the current Appender is a FileAppender.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next loop iteration.
-                    if (!(appender is FileAppender fileAppender))
-                    {
-                        // The current Appender is NOT a FileAppender.  This is not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The current Appender is NOT a FileAppender.  Skipping to the next Appender..."
-                        );
-
-                        // skip to the next loop iteration.
-                        continue;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the new log file pathname is the same as the existing one..."
-                    );
-
-                    // Check to see whether the new log file pathname is the same as the existing one.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then terminate the execution of the containing loop.
-                    if (newLogFilePath.Equals(
-                            fileAppender.File,
-                            StringComparison.OrdinalIgnoreCase
-                        ))
-                    {
-                        // The new log file pathname is the same as the existing value.  This is not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** The new log file pathname is the same as the existing value.  There is nothing more to be done.  Stopping this loop..."
-                        );
-
-                        /*
-                         * Set the return value of this method to TRUE so that the caller
-                         * does not fall over.
-                         */
-
-                        result = true;
-
-                        // stop the loop.
-                        break;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The new log file pathname is the same as the existing one.  Proceeding..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The current Appender is a FileAppender.  Proceeding..."
-                    );
-
-                    fileAppender.File = newLogFilePath;
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** The current Appender has been successfully updated to use the new log file path, '{newLogFilePath}'."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Deleting the file, '{newLogFilePath}', if it exists..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** LoggingSubsystemManager.ChangeLogFilePathname: Checking whether the deletion operation was successful..."
-                    );
-
-                    // Check to see whether the deletion operation was successful.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next loop iteration.
-                    if (!Delete.FileIfExists(newLogFilePath))
-                    {
-                        // The deletion operation was NOT successful.  This is not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The deletion operation was NOT successful.  Skipping to the next appender..."
-                        );
-
-                        // skip to the next loop iteration.
-                        continue;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The deletion operation was successful.  Proceeding..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Writing the current timestamp to the first line of the new log file..."
-                    );
-
-                    Write.LogFileTimestamp();
-
-                    /*
-                     * If we made it this far with no Exception(s) getting caught, then
-                     * assume that the operation(s) succeeded.
-                     */
-
-                    result = true;
-
-                    break;
-                }
+                result = true;
             }
             catch (Exception ex)
             {

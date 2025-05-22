@@ -3,6 +3,7 @@ using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
@@ -23,6 +24,17 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         [Log(AttributeExclude = true)]
         static LoggerRepositoryManager() { }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface that was
+        /// provided to the subsystem at initialization time.
+        /// </summary>
+        public static ILoggerRepository InitialRepository
+        {
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
+        }
 
         /// <summary>
         /// Gets a reference to an instance of the log4net repository as an

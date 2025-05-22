@@ -404,6 +404,8 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The relay is convertible to Hierarchy.  Proceeding..."
                 );
 
+                LoggerRepositoryManager.InitialRepository = _relay;
+
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Calling the base-class DefaultLoggingInfrastructure.InitializeLogging method..."
                 );
