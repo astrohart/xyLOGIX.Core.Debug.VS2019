@@ -28,7 +28,15 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected AppenderManager() { }
+        protected AppenderManager()
+        { }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
+            new AppenderManager();
 
         /// <summary>
         /// Gets the count of appenders in the internal collection.
@@ -113,13 +121,6 @@ namespace xyLOGIX.Core.Debug
                 return result;
             }
         }
-
-        /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
-        /// </summary>
-        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
-            new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
@@ -330,6 +331,118 @@ namespace xyLOGIX.Core.Debug
                 result != null
                     ? $"*** SUCCESS *** Obtained a reference to the Appender for the file, '{logFilePath}'.  Proceeding..."
                     : $"*** ERROR *** FAILED to obtain a reference to the Appender for the file, '{logFilePath}'.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether an <c>Appender</c> is present that corresponds to the
+        /// specified <paramref name="filePath" />.
+        /// </summary>
+        /// <param name="filePath">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a file for which to search.
+        /// </param>
+        /// <remarks>
+        /// If a <see langword="null" />, blank, or
+        /// <see cref="F:System.String.Empty" /> value is passed as the argument of the
+        /// <paramref name="filePath" /> parameter, then the method returns
+        /// <see langword="false" />.
+        /// <para />
+        /// The method also returns <see langword="false" /> if the internal collection is
+        /// currently empty.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if an  <c>Appender</c> is present that
+        /// corresponds to the specified <paramref name="filePath" />;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
+        public bool HasAppenderWithFilePath([NotLogged] string filePath)
+        {
+            var result = false;
+
+            try
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "AppenderManager.HasAppenderWithFilePath *** INFO: Checking whether the value of the parameter, 'filePath', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'filePath', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(filePath))
+                {
+                    // The parameter, 'filePath' was either passed a null value, or it is blank.  This is not desirable.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "AppenderManager.HasAppenderWithFilePath: The parameter, 'filePath', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        $"AppenderManager.HasAppenderWithFilePath: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** SUCCESS *** The parameter 'filePath', is not blank.  Proceeding..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** AppenderManager.HasAppenderWithFilePath: Checking whether the Appender Manager has greater than zero entry(ies) in its internal collection..."
+                );
+
+                // Check to see whether the Appender Manager has greater than zero entry(ies) in its internal collection.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!HasAppenders)
+                {
+                    // The Appender Manager currently has zero entry(ies) in its internal collection.  This is not desirable.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Error,
+                        "*** ERROR *** The Appender Manager currently has zero entry(ies) in its internal collection.  Stopping..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Debug,
+                        $"*** AppenderManager.HasAppenderWithFilePath: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "AppenderManager.HasAppenderWithFilePath: *** SUCCESS *** The Appender Manager has greater than zero entry(ies) in its internal collection.  Proceeding..."
+                );
+
+                /*
+                 * We are not actually interested in obtaining the value corresponding
+                 * to the specified filePath, we simply want to know if such a key
+                 * exists.
+                 */
+
+                result = _appenders.ContainsKey(filePath);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = false;
+            }
+
+            DebugUtils.WriteLine(
+                DebugLevel.Debug,
+                $"AppenderManager.HasAppenderWithFilePath: Result = {result}"
             );
 
             return result;
