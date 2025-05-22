@@ -13,8 +13,9 @@ namespace xyLOGIX.Core.Debug
     public interface IRollingFileAppenderConfigurationValidator
     {
         /// <summary>
-        /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration
-        /// value that identifies how this <c>Appender Factory</c> operates.
+        /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" />
+        /// enumeration value that identifies how this
+        /// <c>Rolling File Appender Configuration Validator</c> operates.
         /// </summary>
         AppenderRetrievalMode Mode { [DebuggerStepThrough] get; }
 
