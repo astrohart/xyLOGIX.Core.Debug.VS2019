@@ -185,6 +185,7 @@
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="HierarchyExtensions.cs" />
+    <Compile Include="IAppenderFactory.cs" />
     <Compile Include="IAppenderManager.cs" />
     <Compile Include="IDebugLevelValidator.cs" />
     <Compile Include="IDirectoryWriteabilityStatusValidator.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="ILoggingBackendTypeValidator.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
+    <Compile Include="IRollingFileAppenderConfiguration.cs" />
     <Compile Include="IRollingModeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
+    <Compile Include="MakeNewRollingFileAppenderConfiguration.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
@@ -220,6 +223,7 @@
     <Compile Include="OutputLocationTypeValidator.cs" />
     <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
+    <Compile Include="RollingFileAppenderConfiguration.cs" />
     <Compile Include="RollingModeValidator.cs" />
     <Compile Include="RootLoggerProvisionerBase.cs" />
     <Compile Include="RootLoggerProvisioningStrategy.cs" />
