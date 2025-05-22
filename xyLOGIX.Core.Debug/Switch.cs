@@ -187,9 +187,9 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 /*
-                 * NOTE: We ignore whether the hierarchy variable is in the 'Configured'
+                 * NOTE: We ignore whether the 'hierarchy' variable is in the 'Configured'
                  * state or not.  This is because we want to be able to reconfigure the
-                 * logging subsystem, if necessary.
+                 * logging subsystem, if necessary, in order to, e.g, swap out a log file.
                  */
 
                 System.Diagnostics.Debug.WriteLine(
@@ -306,7 +306,7 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Activating the RollingFileAppender..."
                 );
 
-                roller.SwitchOptions();
+                roller.ActivateOptions();
 
                 System.Diagnostics.Debug.WriteLine(
                     "Switch.LoggingForLogFileName: Checking whether the property, 'hierarchy.Root', has a null reference for a value..."
@@ -335,11 +335,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: *** FYI *** Closing all of the current Appender(s)..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: Checking whether the existing Appender(s) could be closed successfully..."
+                    "Switch.LoggingForLogFileName: Attempting to close all the existing Appender(s)..."
                 );
 
                 // Check to see whether the existing Appender(s) could be closed successfully.
@@ -361,15 +357,71 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: *** SUCCESS *** The existing Appender(s) could be closed successfully.  Proceeding..."
+                    "Switch.LoggingForLogFileName: *** SUCCESS *** The existing Appender(s) have been closed successfully.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Adding the new RollingFileAppender to the hierarchy..."
+                    "Switch.LoggingForLogFileName: *** FYI *** Attempting to remove all the existing Appender(s) from the Logger..."
+                );
+
+                hierarchy.Root.RemoveAllAppenders();
+
+                DebugUtils.WriteLine(
+                    hierarchy.Root.Appenders.Count <= 0
+                        ? DebugLevel.Info
+                        : DebugLevel.Error,
+                    hierarchy.Root.Appenders.Count <= 0
+                        ? "*** SUCCESS *** All the existing Appender(s) have been removed from the Logger.  Proceeding..."
+                        : $"*** ERROR *** FAILED to remove all existing Appender(s) from the Logger; it still has {hierarchy.Root.Appenders.Count} appender(s) configured.  Stopping..."
+                );
+
+                /*
+                 * Double-check that the Logger currently has ZERO Appender(s) configured.
+                 * This is necessary, otherwise, logging may be multiplexed to more than one
+                 * destination(s).
+                 *
+                 * That would not be desirable, since here, we're just switching out one log
+                 * file for another.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Switch.LoggingForLogFileName: Checking whether the Logger has any Appender(s) configured..."
+                );
+
+                // Check to see whether the Logger has any Appender(s) configured.
+                // If this is not the case, then write an error message to the Debug output,
+                // and then terminate the execution of this method.
+                if (hierarchy.Root.Appenders.Count > 0)
+                {
+                    // The Logger has greater than zero appender(s) currently configured.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The Logger has {hierarchy.Root.Appenders.Count} appender(s) currently configured.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Switch.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Switch.LoggingForLogFileName: *** SUCCESS *** The Logger has zero Appender(s) configured (as should be the case at this time).  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: *** SUCCESS *** The new RollingFileAppender has been added to the hierarchy.  Proceeding..."
+                    "Switch.LoggingForLogFileName: *** SUCCESS *** All the existing Appender(s) have been removed from the Logger.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Adding the new RollingFileAppender to the Logger..."
+                );
+
+                hierarchy.Root.AddAppender(roller);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Switch.LoggingForLogFileName: *** SUCCESS *** The new RollingFileAppender has been added to the Logger.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -390,6 +442,7 @@ namespace xyLOGIX.Core.Debug
                         : "*** ERROR *** FAILED to configure the logging subsystem.  Stopping..."
                 );
 
+                // Store the Appender in the AppenderManager, if the configuration was successful.
                 if (result) AppenderManager.AddAppender(roller);
             }
             catch (Exception ex)
