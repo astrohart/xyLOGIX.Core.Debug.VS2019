@@ -8,6 +8,10 @@ using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
+    /// <summary>
+    /// Manages the collection of <c>Appender</c>s that are currently in use with the
+    /// logging subsystem.
+    /// </summary>
     public class AppenderManager : IAppenderManager
     {
         /// <summary>
@@ -28,15 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected AppenderManager()
-        { }
-
-        /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
-        /// </summary>
-        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
-            new AppenderManager();
+        protected AppenderManager() { }
 
         /// <summary>
         /// Gets the count of appenders in the internal collection.
@@ -121,6 +117,13 @@ namespace xyLOGIX.Core.Debug
                 return result;
             }
         }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
+            new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
