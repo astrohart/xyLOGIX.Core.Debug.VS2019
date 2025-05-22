@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// encapsulates the configuration for a
     /// <see cref="T:log4net.Appender.RollingFileAppender" />.
     /// </summary>
-    internal interface IRollingFileAppenderConfiguration
+    public interface IRollingFileAppenderConfiguration
     {
         /// <summary>
         /// Gets or sets a flag that indicates whether the file should be appended
