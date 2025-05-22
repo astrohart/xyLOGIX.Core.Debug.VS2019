@@ -32,15 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected AppenderManager()
-        { }
-
-        /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
-        /// </summary>
-        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
-            new AppenderManager();
+        protected AppenderManager() { }
 
         /// <summary>
         /// Gets the count of appenders in the internal collection.
@@ -127,6 +119,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
+            new AppenderManager();
+
+        /// <summary>
         /// Adds a reference to an instance of an object that implements the
         /// <see cref="T:log4net.Appender.IAppender" /> interface to the list of configured
         /// appenders.
@@ -140,6 +139,10 @@ namespace xyLOGIX.Core.Debug
         /// If a <see langword="null" /> reference is passed as the argument of
         /// the <paramref name="appender" /> parameter, then it is not added to the
         /// internal collection.
+        /// <para />
+        /// The specified <paramref name="appender" /> is also not added to the internal
+        /// collection if an <c>Appender</c> is already present that corresponds to the
+        /// same file.
         /// <para />
         /// The specified <paramref name="appender" /> must be of type
         /// <see cref="T:log4net.Appender.FileAppender" /> or a type that inherits it.
@@ -222,7 +225,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 DebugUtils.WriteLine(
-                    DebugLevel.Info, $"AppenderManager.AddAppender: Checking whether the internal collection already has an element corresponding to the specified file..."
+                    DebugLevel.Info,
+                    "AppenderManager.AddAppender: Checking whether the internal collection already has an element corresponding to the specified file..."
                 );
 
                 // Check to see whether the internal collection already has an element corresponding to the specified file.
@@ -233,7 +237,7 @@ namespace xyLOGIX.Core.Debug
                     // The internal collection already has an element corresponding to the specified file.  This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
-                        $"*** ERROR *** The internal collection already has an element corresponding to the specified file.  Stopping..."
+                        "*** ERROR *** The internal collection already has an element corresponding to the specified file.  Stopping..."
                     );
 
                     // stop.
@@ -242,7 +246,7 @@ namespace xyLOGIX.Core.Debug
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    $"AppenderManager.AddAppender: *** SUCCESS *** The internal collection does NOT already have an element corresponding to the specified file.  Proceeding..."
+                    "AppenderManager.AddAppender: *** SUCCESS *** The internal collection does NOT already have an element corresponding to the specified file.  Proceeding..."
                 );
 
                 DebugUtils.WriteLine(
