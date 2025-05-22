@@ -117,6 +117,7 @@
     <Compile Include="Activate.cs" />
     <Compile Include="AppDomainFriendlyNames.cs" />
     <Compile Include="AppenderManager.cs" />
+    <Compile Include="AppenderRetrievalMode.cs" />
     <Compile Include="CommandLineParameter.cs" />
     <Compile Include="Compute.cs" />
     <Compile Include="ConsoleOutputLocation.cs" />
