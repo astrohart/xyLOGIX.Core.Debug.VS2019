@@ -6,6 +6,16 @@ namespace xyLOGIX.Core.Debug
 {
     public static class HierarchyExtensions
     {
+        /// <summary>
+        /// Attempts to close all the <c>Appender</c>(s) that are associated with the
+        /// specified <paramref name="hierarchy" />.
+        /// </summary>
+        /// <param name="hierarchy">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:log4net.Repository.Hierarchy.Hierarchy" /> that contains the
+        /// <c>Appender</c>(s) that are to be closed.
+        /// </param>
+        /// <returns></returns>
         public static bool CloseAllAppenders(
             [NotLogged] this Hierarchy hierarchy
         )
