@@ -124,6 +124,7 @@
     <Compile Include="Compute.cs" />
     <Compile Include="ConsoleOutputLocation.cs" />
     <Compile Include="CreateNewAppenderRetriever.cs" />
+    <Compile Include="CreateNewRollingFileAppenderConfigurationValidator.cs" />
     <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="DebuggerDump.cs" />
     <Compile Include="DebugLevel.cs" />
