@@ -12,11 +12,13 @@ namespace xyLOGIX.Core.Debug
     /// initialize them.
     /// </summary>
     [Log(AttributeExclude = true)]
-    internal static class MakeNewFoo
+    internal static class MakeNewRollingFileAppenderConfiguration
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.MakeNewFoo" /> class.
+        /// for the
+        /// <see cref="T:xyLOGIX.Core.Debug.MakeNewRollingFileAppenderConfiguration" />
+        /// class.
         /// </summary>
         /// <remarks>
         /// This constructor is called automatically prior to the first instance being
@@ -26,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        static MakeNewFoo() { }
+        static MakeNewRollingFileAppenderConfiguration() { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -46,7 +48,8 @@ namespace xyLOGIX.Core.Debug
         /// <param name="self">
         /// (Required.) Reference to an instance of an object that
         /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" />
+        /// interface.
         /// </param>
         /// <param name="maxSizeRollingBackups">
         /// (Required.) An
@@ -105,7 +108,8 @@ namespace xyLOGIX.Core.Debug
         /// <param name="self">
         /// (Required.) Reference to an instance of an object that
         /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" />
+        /// interface.
         /// </param>
         /// <param name="staticLogFileName">
         /// (Required.) A <see cref="T:System.Boolean" />
@@ -238,7 +242,8 @@ namespace xyLOGIX.Core.Debug
         /// <param name="self">
         /// (Required.) Reference to an instance of an object that
         /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" />
+        /// interface.
         /// </param>
         /// <param name="file">
         /// (Required.) A <see cref="T:System.String" /> containing the
@@ -281,7 +286,8 @@ namespace xyLOGIX.Core.Debug
         /// <param name="self">
         /// (Required.) Reference to an instance of an object that
         /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" />
+        /// interface.
         /// </param>
         /// <param name="appendToFile">
         /// (Required.) A <see cref="T:System.Boolean" /> value
@@ -318,7 +324,8 @@ namespace xyLOGIX.Core.Debug
         /// <param name="self">
         /// (Required.) Reference to an instance of an object that
         /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" />
+        /// interface.
         /// </param>
         /// <param name="maximumFileSize">
         /// (Required.) A <see cref="T:System.String" />
@@ -381,7 +388,8 @@ namespace xyLOGIX.Core.Debug
         /// <param name="self">
         /// (Required.) Reference to an instance of an object that
         /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" />
+        /// interface.
         /// </param>
         /// <param name="layout">
         /// (Required.) Reference to an instance of
