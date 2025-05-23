@@ -161,6 +161,7 @@
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetEventLogTypeValidator.cs" />
+    <Compile Include="MakeNewRollingFileAppenderConfiguration.cs" />
     <Compile Include="ObtainExistingAppenderRetriever.cs" />
     <Compile Include="ObtainExistingRollingFileAppenderConfigurationValidator.cs" />
     <Compile Include="GetFileBasedXmlLoggingConfigurator.cs" />
