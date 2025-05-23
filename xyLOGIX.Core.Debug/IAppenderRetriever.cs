@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
     /// for creating or retrieving <c>Appender</c>(s) for the purpose of routing log
     /// messages to a specific destination(s).
     /// </remarks>
-    public interface IAppenderFactory
+    public interface IAppenderRetriever
     {
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration
