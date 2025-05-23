@@ -100,6 +100,10 @@ namespace xyLOGIX.Core.Debug
                  */
 
                 System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** It is mandatory that the value of the 'config.AppendToFile' property be set to 'true'."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
                     "*** CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configuration is set to 'Append' to the file..."
                 );
 
