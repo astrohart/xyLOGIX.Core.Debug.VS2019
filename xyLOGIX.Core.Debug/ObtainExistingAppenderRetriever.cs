@@ -70,7 +70,60 @@ namespace xyLOGIX.Core.Debug
         {
             IAppender result = default;
 
-            try { }
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "ObtainExistingAppenderRetriever.GetFileAppenderByPath: Checking whether the 'config' method parameter has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, config, is null. If it is, send an 
+                // error to the Debug output and quit, returning the default return value of
+                // this method.
+                if (config == null)
+                {
+                    // The parameter, 'config', is required and is not supposed to have a NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "ObtainExistingAppenderRetriever.GetFileAppenderByPath: *** ERROR *** A null reference was passed for the 'config' method parameter.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ObtainExistingAppenderRetriever.GetFileAppenderByPath: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "ObtainExistingAppenderRetriever.GetFileAppenderByPath: *** SUCCESS *** We have been passed a valid object reference for the 'config' method parameter.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "ObtainExistingAppenderRetriever.GetFileAppenderByPath: Checking whether the Appender Manager has existing Appender(s)..."
+                );
+
+                // Check to see whether the Appender Manager has existing Appender(s).
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!AppenderManager.HasAppenders)
+                {
+                    // The Appender Manager does NOT have any Appender(s) in its internal collection.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "ObtainExistingAppenderRetriever.GetFileAppenderByPath: *** ERROR *** The Appender Manager does NOT have any Appender(s) in its internal collection.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ObtainExistingAppenderRetriever.GetFileAppenderByPath: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "ObtainExistingAppenderRetriever.GetFileAppenderByPath: *** SUCCESS *** The Appender Manager has existing Appender(s).  Proceeding..."
+                );
+            }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output.
