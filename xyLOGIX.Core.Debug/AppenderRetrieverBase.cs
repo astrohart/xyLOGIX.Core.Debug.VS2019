@@ -8,22 +8,22 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all
     /// <c>Appender Factory</c>(ies).
     /// </summary>
-    public abstract class AppenderFactoryBase : IAppenderFactory
+    public abstract class AppenderRetrieverBase : IAppenderRetriever
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.AppenderFactoryBase" /> class.
+        /// for the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrieverBase" /> class.
         /// </summary>
         /// <remarks>
         /// This constructor is called automatically prior to the first instance being
         /// created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        static AppenderFactoryBase() { }
+        static AppenderRetrieverBase() { }
 
         /// <summary>
         /// Initializes a new instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.AppenderFactoryBase" /> and returns a reference
+        /// <see cref="T:xyLOGIX.Core.Debug.AppenderRetrieverBase" /> and returns a reference
         /// to it.
         /// </summary>
         /// <remarks>
@@ -31,7 +31,7 @@ namespace xyLOGIX.Core.Debug
         /// due to the fact that this class is marked <see langword="abstract" />.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        protected AppenderFactoryBase() { }
+        protected AppenderRetrieverBase() { }
 
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration
@@ -64,7 +64,7 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough]
             get
             {
-                return GetRo
+                return GetRollingFileAppenderConfigurationValidatoor.
             }
     }
 }
