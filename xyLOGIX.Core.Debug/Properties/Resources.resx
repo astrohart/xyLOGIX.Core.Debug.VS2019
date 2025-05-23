@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -127,11 +128,14 @@
     <value>Unable to determine the path to the log file's containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file.</value>
   </data>
   <data name="TempExceptionFileMessage" xml:space="preserve">
-      <value>{0} at {1}: Exception caught: {2}
+    <value>{0} at {1}: Exception caught: {2}
 	{3}
 
 ---
 
 </value>
+  </data>
+  <data name="Regex_PathnameValidator_PathPattern" xml:space="preserve">
+    <value>^(?:[a-zA-Z]:\\|\\\\[^\\/:*?"&lt;&gt;|]+\\[^\\/:*?"&lt;&gt;|]+\\?)(?:[^\\/:*?"&lt;&gt;|]+\\?)*$</value>
   </data>
 </root>

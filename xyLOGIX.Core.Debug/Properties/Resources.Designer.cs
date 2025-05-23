@@ -22,21 +22,21 @@ namespace xyLOGIX.Core.Debug.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resources() {
+        internal Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("xyLOGIX.Core.Debug.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The &apos;depth&apos; parameter must be zero or greater..
         /// </summary>
-        public static string Error_DepthMustBeNonNegative {
+        internal static string Error_DepthMustBeNonNegative {
             get {
                 return ResourceManager.GetString("Error_DepthMustBeNonNegative", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Unable to determine the path to the log file&apos;s containing folder.  Please ensure that the necessary entries for log4net are included in your App.config file..
         /// </summary>
-        public static string Error_UnableFindAppConfigEntries {
+        internal static string Error_UnableFindAppConfigEntries {
             get {
                 return ResourceManager.GetString("Error_UnableFindAppConfigEntries", resourceCulture);
             }
@@ -82,9 +82,18 @@ namespace xyLOGIX.Core.Debug.Properties {
         ///   Looks up a localized string similar to {0}: {1}
         ///	{2}.
         /// </summary>
-        public static string ExceptionMessageFormat {
+        internal static string ExceptionMessageFormat {
             get {
                 return ResourceManager.GetString("ExceptionMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^(?:[a-zA-Z]:\\|\\\\[^\\/:*?&quot;&lt;&gt;|]+\\[^\\/:*?&quot;&lt;&gt;|]+\\?)(?:[^\\/:*?&quot;&lt;&gt;|]+\\?)*$.
+        /// </summary>
+        internal static string Regex_PathnameValidator_PathPattern {
+            get {
+                return ResourceManager.GetString("Regex_PathnameValidator_PathPattern", resourceCulture);
             }
         }
         
@@ -96,7 +105,7 @@ namespace xyLOGIX.Core.Debug.Properties {
         ///
         ///.
         /// </summary>
-        public static string TempExceptionFileMessage {
+        internal static string TempExceptionFileMessage {
             get {
                 return ResourceManager.GetString("TempExceptionFileMessage", resourceCulture);
             }
