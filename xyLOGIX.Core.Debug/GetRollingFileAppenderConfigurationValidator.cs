@@ -32,7 +32,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetrievalModeValidator" /> interface.
         /// </summary>
         private static IAppenderRetrievalModeValidator
-            AppenderRetrievalModeValidator { [DebuggerStepThrough] get; } =
+            AppenderRetrievalModeValidator
+        { [DebuggerStepThrough] get; } =
             GetAppenderRetrievalModeValidator.SoleInstance();
 
         /// <summary>
@@ -105,13 +106,14 @@ namespace xyLOGIX.Core.Debug
                 switch (mode)
                 {
                     case AppenderRetrievalMode.CreateNew:
-                        result = CreateNewAppenderConfigurationValidator
-                            .Instance;
+                        result =
+                            GetCreateNewRollingFileAppenderConfigurationValidator
+                                .SoleInstance();
                         break;
 
                     case AppenderRetrievalMode.ObtainExisting:
-                        result = ObtainExistingAppenderConfigurationValidator
-                            .Instance;
+                        result = GetObtainExistingAppenderConfigurationValidator
+                            .SoleInstance();
                         break;
 
                     default:
