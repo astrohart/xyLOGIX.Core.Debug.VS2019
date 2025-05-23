@@ -70,13 +70,33 @@ namespace xyLOGIX.Core.Debug
         {
             var result = true;
 
-            try { }
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the base-class version of this method worked properly..."
+                );
+
+                // Check to see whether the base-class version of this method worked properly.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!base.IsValid(config))
+                {
+                    // The base-class version of this method did NOT work properly.  This is not desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The base-class version of this method did NOT work properly.  Stopping..."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The base-class version of this method worked properly.  Proceeding..."
+                );
+            }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
 
-                result = true;
+                result = false;
             }
 
             System.Diagnostics.Debug.WriteLine(
