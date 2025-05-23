@@ -155,6 +155,7 @@
     <Compile Include="GetAppenderRetrievalModeValidator.cs" />
     <Compile Include="GetAssembly.cs" />
     <Compile Include="GetConsoleOutputLocation.cs" />
+    <Compile Include="GetCreateNewRollingFileAppenderConfigurationValidator.cs" />
     <Compile Include="GetDebugLevelValidator.cs" />
     <Compile Include="GetDebugOutputLocation.cs" />
     <Compile Include="GetDefaultLoggingInfrastructure.cs" />
