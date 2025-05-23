@@ -1,9 +1,5 @@
-﻿using Alphaleonis.Win32.Filesystem;
-using PostSharp.Patterns.Diagnostics;
-using System;
+﻿using PostSharp.Patterns.Diagnostics;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
-using xyLOGIX.Core.Debug.Properties;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -26,7 +22,9 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfigurationValidator" />
-        /// interface.
+        /// interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.AppenderRetrievalMode.ObtainExisting" /> use
+        /// case.
         /// </summary>
         public static IRollingFileAppenderConfigurationValidator Instance
         {
