@@ -55,7 +55,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" /> reference is returned.
         /// </returns>
         [return: NotLogged]
-        IAppender GetAppender([NotLogged] string logFilePath);
+        IAppender GetFileAppenderByPath([NotLogged] string logFilePath);
 
         /// <summary>
         /// Determines whether an <c>Appender</c> is present that corresponds to the
