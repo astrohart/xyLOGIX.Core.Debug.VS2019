@@ -273,11 +273,47 @@ namespace xyLOGIX.Core.Debug
 
                 foreach (var segment in pathSegments)
                 {
-                    if (string.IsNullOrWhiteSpace(segment)) continue;
-                    if (IsReservedDeviceName(segment))
-                        throw new InvalidOperationException(
-                            $"*** ERROR *** The current path segment, '{segment}', is a reserved device name.  Stopping..."
+                    System.Diagnostics.Debug.WriteLine(
+                        "RollingFileAppenderConfigurationValidatorBase.IsValid: *** FYI *** Checking whether the variable, 'segment', appears to have a null or blank value..."
+                    );
+
+                    // Check to see if the required variable, 'segment', appears to have a null 
+                    // or blank value. If it does, then send an error to the log file and then 
+                    // skip to the next loop iteration.
+                    if (string.IsNullOrWhiteSpace(segment))
+                    {
+                        // The variable, 'segment', appears to have a null or blank value.  This is not desirable.
+                        System.Diagnostics.Debug.WriteLine(
+                            "RollingFileAppenderConfigurationValidatorBase.IsValid: *** ERROR: The variable, 'segment', appears to have a null or blank value.  Skipping to the next path segment..."
                         );
+
+                        // skip to the next iteration of this loop.
+                        continue;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "RollingFileAppenderConfigurationValidatorBase.IsValid: *** SUCCESS *** The variable, 'segment', seems to have a non-blank value.  Proceeding..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** RollingFileAppenderConfigurationValidatorBase.IsValid: Checking whether the current path segment is a reserved name..."
+                    );
+
+                    // Check to see whether the current path segment is a reserved name.
+                    // If this is not the case, then write an error message to the log file,
+                    // and then skip to the next iteration of the loop.
+                    if (IsReservedDeviceName(segment))
+                    {
+                        // The current path segment is a reserved name.  This is not desirable.
+                        // We will actually throw InvalidOperationException here, because this is a fatal error.
+                        throw new InvalidOperationException(
+                            $"*** ERROR *** The current path segment, '{segment}', is a reserved name.  Stopping..."
+                        );
+                    }
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"RollingFileAppenderConfigurationValidatorBase.IsValid: *** SUCCESS *** The path segment, '{segment}', is NOT a reserved name.  Proceeding..."
+                    );
                 }
 
                 System.Diagnostics.Debug.WriteLine(
