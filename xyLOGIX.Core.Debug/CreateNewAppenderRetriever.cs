@@ -9,26 +9,26 @@ namespace xyLOGIX.Core.Debug
     /// Implements an <c>Appender Factory</c> that creates new <c>Appender</c>(s) from
     /// scratch.
     /// </summary>
-    public class CreateNewAppenderFactory : AppenderFactoryBase
+    public class CreateNewAppenderRetriever : AppenderRetrieverBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        static CreateNewAppenderFactory() { }
+        static CreateNewAppenderRetriever() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected CreateNewAppenderFactory() { }
+        protected CreateNewAppenderRetriever() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderFactory" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetriever" /> interface.
         /// </summary>
-        public static IAppenderFactory Instance { [DebuggerStepThrough] get; } =
-            new CreateNewAppenderFactory();
+        public static IAppenderRetriever Instance { [DebuggerStepThrough] get; } =
+            new CreateNewAppenderRetriever();
 
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration
@@ -62,7 +62,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "CreateNewAppenderFactory.GetAppender: Checking whether the 'config' method parameter has a null reference for a value..."
+                    "CreateNewAppenderRetriever.GetAppender: Checking whether the 'config' method parameter has a null reference for a value..."
                 );
 
                 // Check to see if the required parameter, config, is null. If it is, send an 
@@ -72,11 +72,11 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The parameter, 'config', is required and is not supposed to have a NULL value.
                     System.Diagnostics.Debug.WriteLine(
-                        "CreateNewAppenderFactory.GetAppender: *** ERROR *** A null reference was passed for the 'config' method parameter.  Stopping..."
+                        "CreateNewAppenderRetriever.GetAppender: *** ERROR *** A null reference was passed for the 'config' method parameter.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** CreateNewAppenderFactory.GetAppender: Result = {result}"
+                        $"*** CreateNewAppenderRetriever.GetAppender: Result = {result}"
                     );
 
                     // stop.
@@ -84,8 +84,10 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "CreateNewAppenderFactory.GetAppender: *** SUCCESS *** We have been passed a valid object reference for the 'config' method parameter.  Proceeding..."
+                    "CreateNewAppenderRetriever.GetAppender: *** SUCCESS *** We have been passed a valid object reference for the 'config' method parameter.  Proceeding..."
                 );
+
+
             }
             catch (Exception ex)
             {
