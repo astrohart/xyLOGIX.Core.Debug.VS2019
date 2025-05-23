@@ -62,7 +62,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "CreateNewAppenderRetriever.GetAppender: Checking whether the 'config' method parameter has a null reference for a value..."
+                    "CreateNewAppenderRetriever.GetFileAppenderByPath: Checking whether the 'config' method parameter has a null reference for a value..."
                 );
 
                 // Check to see if the required parameter, config, is null. If it is, send an 
@@ -72,11 +72,11 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The parameter, 'config', is required and is not supposed to have a NULL value.
                     System.Diagnostics.Debug.WriteLine(
-                        "CreateNewAppenderRetriever.GetAppender: *** ERROR *** A null reference was passed for the 'config' method parameter.  Stopping..."
+                        "CreateNewAppenderRetriever.GetFileAppenderByPath: *** ERROR *** A null reference was passed for the 'config' method parameter.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"*** CreateNewAppenderRetriever.GetAppender: Result = {result}"
+                        $"*** CreateNewAppenderRetriever.GetFileAppenderByPath: Result = {result}"
                     );
 
                     // stop.
@@ -84,7 +84,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "CreateNewAppenderRetriever.GetAppender: *** SUCCESS *** We have been passed a valid object reference for the 'config' method parameter.  Proceeding..."
+                    "CreateNewAppenderRetriever.GetFileAppenderByPath: *** SUCCESS *** We have been passed a valid object reference for the 'config' method parameter.  Proceeding..."
                 );
 
 
