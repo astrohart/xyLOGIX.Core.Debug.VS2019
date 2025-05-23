@@ -16,7 +16,7 @@
         /// <summary>
         /// Attempt to obtain an <c>Appender</c> from the <c>Appender Manager</c>.
         /// </summary>
-        GetExisting,
+        ObtainExisting,
 
         /// <summary>
         /// Unknown retrieval mode.
