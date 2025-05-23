@@ -23,7 +23,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Initializes a new instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.AppenderRetrieverBase" /> and returns a reference
+        /// <see cref="T:xyLOGIX.Core.Debug.AppenderRetrieverBase" /> and returns a
+        /// reference
         /// to it.
         /// </summary>
         /// <remarks>
@@ -43,6 +44,23 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfigurationValidator" />
+        /// interface that is used to validate the value(s) of the property(ies) of an
+        /// instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfiguration" /> interface
+        /// for the specified <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" />
+        /// that is provided by the current value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.AppenderRetrieverBase.Mode" /> property.
+        /// </summary>
+        protected IRollingFileAppenderConfigurationValidator
+            RollingFileAppenderConfigurationValidator
+        {
+            [DebuggerStepThrough]
+            get => GetRollingFileAppenderConfigurationValidator.For(Mode);
+        }
+
+        /// <summary>
         /// Given the specified <paramref name="config" />, creates or retrieves an
         /// <c>Appender</c> associated with the specified settings.
         /// </summary>
@@ -57,14 +75,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" /> reference is returned.
         /// </returns>
         public abstract IAppender GetAppender(
-            IRollingFileAppenderConfiguration config
+            [NotLogged] IRollingFileAppenderConfiguration config
         );
-
-        protected IRollingFileAppenderConfigurationValidator RollingFileAppenderConfigurationValidator {
-            [DebuggerStepThrough]
-            get
-            {
-                return GetRollingFileAppenderConfigurationValidatoor.
-            }
     }
 }
