@@ -224,7 +224,6 @@
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
-    <Compile Include="MakeNewFoo.cs" />
     <Compile Include="MaxPathLength.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
