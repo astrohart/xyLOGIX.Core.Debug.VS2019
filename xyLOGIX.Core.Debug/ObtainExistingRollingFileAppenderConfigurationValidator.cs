@@ -8,7 +8,7 @@ using xyLOGIX.Core.Debug.Properties;
 namespace xyLOGIX.Core.Debug
 {
     public class
-        GetExistingRollingFileAppenderConfigurationValidator :
+        ObtainExistingRollingFileAppenderConfigurationValidator :
         RollingFileAppenderConfigurationValidatorBase
     {
         /// <summary>
@@ -26,13 +26,13 @@ namespace xyLOGIX.Core.Debug
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        static GetExistingRollingFileAppenderConfigurationValidator() { }
+        static ObtainExistingRollingFileAppenderConfigurationValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected GetExistingRollingFileAppenderConfigurationValidator() { }
+        protected ObtainExistingRollingFileAppenderConfigurationValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -42,7 +42,7 @@ namespace xyLOGIX.Core.Debug
         public static IRollingFileAppenderConfigurationValidator Instance
         {
             [DebuggerStepThrough] get;
-        } = new GetExistingRollingFileAppenderConfigurationValidator();
+        } = new ObtainExistingRollingFileAppenderConfigurationValidator();
 
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" />
@@ -52,7 +52,7 @@ namespace xyLOGIX.Core.Debug
         public override AppenderRetrievalMode Mode
         {
             [DebuggerStepThrough] get;
-        } = AppenderRetrievalMode.GetExisting;
+        } = AppenderRetrievalMode.ObtainExisting;
 
         /// <summary>
         /// Regex pattern to match valid Windows config.Files.
@@ -138,7 +138,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the method parameter, 'config', has a null reference for a value..."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the method parameter, 'config', has a null reference for a value..."
                 );
 
                 // Check to see if the required parameter, 'config', is null. If it is, then
@@ -153,7 +153,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'config'."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'config'."
                 );
 
                 /*
@@ -165,7 +165,7 @@ namespace xyLOGIX.Core.Debug
                  */
 
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the property, 'config.File', has a null reference for a value, or is blank..."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the property, 'config.File', has a null reference for a value, or is blank..."
                 );
 
                 // Check to see if the required property, 'config.File', is set to a null reference,
@@ -181,11 +181,11 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** {config.File.Length} B of data appear to be present in the value of the property, 'config.File'.  Proceeding..."
+                    $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** {config.File.Length} B of data appear to be present in the value of the property, 'config.File'.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** GetExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the log file config.File is an absolute path..."
+                    "*** ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the log file config.File is an absolute path..."
                 );
 
                 // Check to see whether the log file config.File is an absolute path.
@@ -200,7 +200,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The log file config.File is an absolute path.  Proceeding..."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The log file config.File is an absolute path.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -214,11 +214,11 @@ namespace xyLOGIX.Core.Debug
 
                 // Dump the variable, maxPathLength, to the Debug output
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetExistingRollingFileAppenderConfigurationValidator.IsValid: maxPathLength = {maxPathLength}"
+                    $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: maxPathLength = {maxPathLength}"
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configured log file pathname is NOT longer than {maxPathLength} B..."
+                    $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configured log file pathname is NOT longer than {maxPathLength} B..."
                 );
 
                 // Check to see whether the configured log file pathname is NOT longer than the maximum.
@@ -233,14 +233,14 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The configured log file pathname is NOT longer than {maxPathLength} B.  Proceeding..."
+                    $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The configured log file pathname is NOT longer than {maxPathLength} B.  Proceeding..."
                 );
 
                 // Match the input against the PathPattern regex
                 var match = PathPattern.Match(config.File);
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** GetExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configured log file pathname, '{config.File}', matches the valid format..."
+                    $"*** ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configured log file pathname, '{config.File}', matches the valid format..."
                 );
 
                 // Check to see whether the configured log file pathname matches the valid format.
@@ -255,7 +255,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The configured log file pathname, '{config.File}', matches the valid format.  Proceeding..."
+                    $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The configured log file pathname, '{config.File}', matches the valid format.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -266,7 +266,7 @@ namespace xyLOGIX.Core.Debug
                 var pathSegments = config.File.Split('\\');
 
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the variable, 'pathSegments', has a null reference for a value..."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Checking whether the variable, 'pathSegments', has a null reference for a value..."
                 );
 
                 // Check to see if the variable, pathSegments, is null. If it is, send an error to the
@@ -281,11 +281,11 @@ namespace xyLOGIX.Core.Debug
 
                 // We can use the variable, pathSegments, because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The variable, 'pathSegments', has a valid object reference for its value.  Proceeding..."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The variable, 'pathSegments', has a valid object reference for its value.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "GetExistingRollingFileAppenderConfigurationValidator.IsValid *** INFO: Checking whether the array, 'pathSegments', has greater than zero elements..."
+                    "ObtainExistingRollingFileAppenderConfigurationValidator.IsValid *** INFO: Checking whether the array, 'pathSegments', has greater than zero elements..."
                 );
 
                 // Check whether the array, 'pathSegments', has greater than zero elements.  If it is empty,
@@ -300,7 +300,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"GetExistingRollingFileAppenderConfigurationValidator.IsValid *** SUCCESS *** {pathSegments.Length} element(s) were found in the 'pathSegments' array.  Proceeding..."
+                    $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid *** SUCCESS *** {pathSegments.Length} element(s) were found in the 'pathSegments' array.  Proceeding..."
                 );
 
                 foreach (var segment in pathSegments)
@@ -332,7 +332,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             System.Diagnostics.Debug.WriteLine(
-                $"GetExistingRollingFileAppenderConfigurationValidator.IsValid: Result = {result}"
+                $"ObtainExistingRollingFileAppenderConfigurationValidator.IsValid: Result = {result}"
             );
 
             return result;
