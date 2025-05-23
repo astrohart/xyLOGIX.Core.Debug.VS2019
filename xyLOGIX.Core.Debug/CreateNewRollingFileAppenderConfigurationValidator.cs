@@ -94,6 +94,11 @@ namespace xyLOGIX.Core.Debug
                     "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The base-class version of this method worked properly.  Proceeding..."
                 );
 
+                /*
+                 * For this particular implementation and use case, it is mandatory that the value of the
+                 * 'config.AppendToFile' property be set to 'true'.
+                 */
+
                 System.Diagnostics.Debug.WriteLine(
                     "*** CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configuration is set to 'Append' to the file..."
                 );
@@ -105,7 +110,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The configuration is NOT set to 'Append' to the file.  This is not desirable.
                     throw new InvalidOperationException(
-                        "*** ERROR *** The configuration is NOT set to 'Append' to the file.  Stopping..."
+                        "*** ERROR *** The configuration is NOT set to 'Append' to the file.  This is not desirable.  Stopping..."
                     );
                 }
 
