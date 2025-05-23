@@ -116,14 +116,14 @@
   <ItemGroup>
     <Compile Include="Activate.cs" />
     <Compile Include="AppDomainFriendlyNames.cs" />
-    <Compile Include="AppenderFactoryBase.cs" />
+    <Compile Include="AppenderRetrieverBase.cs" />
     <Compile Include="AppenderManager.cs" />
     <Compile Include="AppenderRetrievalMode.cs" />
     <Compile Include="AppenderRetrievalModeValidator.cs" />
     <Compile Include="CommandLineParameter.cs" />
     <Compile Include="Compute.cs" />
     <Compile Include="ConsoleOutputLocation.cs" />
-    <Compile Include="CreateNewAppenderFactory.cs" />
+    <Compile Include="CreateNewAppenderRetriever.cs" />
     <Compile Include="DebugFileAndFolderHelper.cs" />
     <Compile Include="DebuggerDump.cs" />
     <Compile Include="DebugLevel.cs" />
@@ -151,6 +151,7 @@
     <Compile Include="FromLogManagerRootLoggerProvisioner.cs" />
     <Compile Include="FromProvidedLoggingRepositoryRootLoggerProvisioner.cs" />
     <Compile Include="GetAppenderManager.cs" />
+    <Compile Include="GetAppenderRetrievalModeValidator.cs" />
     <Compile Include="GetAssembly.cs" />
     <Compile Include="GetConsoleOutputLocation.cs" />
     <Compile Include="GetDebugLevelValidator.cs" />
@@ -160,8 +161,8 @@
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetEventLogTypeValidator.cs" />
-    <Compile Include="GetExistingAppenderFactory.cs" />
-    <Compile Include="GetExistingRollingFileAppenderConfigurationValidator.cs" />
+    <Compile Include="ObtainExistingAppenderRetriever.cs" />
+    <Compile Include="ObtainExistingRollingFileAppenderConfigurationValidator.cs" />
     <Compile Include="GetFileBasedXmlLoggingConfigurator.cs" />
     <Compile Include="GetFileWriteabilityStatusValidator.cs" />
     <Compile Include="GetFromConfigFileLoggingConfigurator.cs" />
@@ -191,14 +192,14 @@
     <Compile Include="GlobalAspects.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="HierarchyExtensions.cs" />
-    <Compile Include="IAppenderFactory.cs" />
+    <Compile Include="IAppenderRetriever.cs" />
     <Compile Include="IAppenderManager.cs" />
     <Compile Include="IAppenderRetrievalModeValidator.cs" />
     <Compile Include="IDebugLevelValidator.cs" />
     <Compile Include="IDirectoryWriteabilityStatusValidator.cs" />
     <Compile Include="IEventLogManager.cs" />
     <Compile Include="IEventLogTypeValidator.cs" />
-    <Compile Include="IFileWriteabilityResultValidator.cs" />
+    <Compile Include="IFileWriteabilityStatusValidator.cs" />
     <Compile Include="ILoggingBackendTypeValidator.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
@@ -222,7 +223,7 @@
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
-    <Compile Include="MakeNewRollingFileAppenderConfiguration.cs" />
+    <Compile Include="MakeNewFoo.cs" />
     <Compile Include="MaxPathLength.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
