@@ -277,7 +277,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" /> reference is returned.
         /// </returns>
         [return: NotLogged]
-        public IAppender GetAppender([NotLogged] string logFilePath)
+        public IAppender GetFileAppenderByPath([NotLogged] string logFilePath)
         {
             IAppender result = default;
 
@@ -285,7 +285,7 @@ namespace xyLOGIX.Core.Debug
             {
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    "AppenderManager.GetAppender *** INFO: Checking whether the value of the parameter, 'logFilePath', is blank..."
+                    "AppenderManager.GetFileAppenderByPath *** INFO: Checking whether the value of the parameter, 'logFilePath', is blank..."
                 );
 
                 // Check whether the value of the parameter, 'logFilePath', is blank.
@@ -296,12 +296,12 @@ namespace xyLOGIX.Core.Debug
                     // The parameter, 'logFilePath' was either passed a null value, or it is blank.  This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
-                        "AppenderManager.GetAppender: The parameter, 'logFilePath', was either passed a null value, or it is blank. Stopping..."
+                        "AppenderManager.GetFileAppenderByPath: The parameter, 'logFilePath', was either passed a null value, or it is blank. Stopping..."
                     );
 
                     DebugUtils.WriteLine(
                         DebugLevel.Debug,
-                        $"AppenderManager.GetAppender: Result = {result}"
+                        $"AppenderManager.GetFileAppenderByPath: Result = {result}"
                     );
 
                     // stop.
@@ -315,7 +315,7 @@ namespace xyLOGIX.Core.Debug
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    "*** AppenderManager.GetAppender: Checking whether the Appender Manager has greater than zero Appender(s) in its internal collection..."
+                    "*** AppenderManager.GetFileAppenderByPath: Checking whether the Appender Manager has greater than zero Appender(s) in its internal collection..."
                 );
 
                 // Check to see whether the Appender Manager has greater than zero Appender(s) in its internal collection.
@@ -331,7 +331,7 @@ namespace xyLOGIX.Core.Debug
 
                     DebugUtils.WriteLine(
                         DebugLevel.Debug,
-                        $"*** AppenderManager.GetAppender: Result = {result}"
+                        $"*** AppenderManager.GetFileAppenderByPath: Result = {result}"
                     );
 
                     // stop.
@@ -340,12 +340,12 @@ namespace xyLOGIX.Core.Debug
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    "AppenderManager.GetAppender: *** SUCCESS *** The Appender Manager has greater than zero Appender(s) in its internal collection.  Proceeding..."
+                    "AppenderManager.GetFileAppenderByPath: *** SUCCESS *** The Appender Manager has greater than zero Appender(s) in its internal collection.  Proceeding..."
                 );
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
-                    "AppenderManager.GetAppender: *** FYI *** Looking for the Appender whose File property matches the value of the parameter, 'logFilePath'..."
+                    "AppenderManager.GetFileAppenderByPath: *** FYI *** Looking for the Appender whose File property matches the value of the parameter, 'logFilePath'..."
                 );
 
                 _appenders.TryGetValue(logFilePath, out result);
