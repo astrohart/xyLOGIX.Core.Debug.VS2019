@@ -33,6 +33,15 @@ namespace xyLOGIX.Core.Debug
         protected ObtainExistingAppenderRetriever() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        private static IAppenderManager AppenderManager
+        {
+            [DebuggerStepThrough] get;
+        } = GetAppenderManager.SoleInstance();
+
+        /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration
         /// value that identifies how this <c>Appender Factory</c> operates.
         /// </summary>
