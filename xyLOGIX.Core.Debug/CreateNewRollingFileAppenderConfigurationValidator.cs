@@ -16,27 +16,27 @@ namespace xyLOGIX.Core.Debug
         RollingFileAppenderConfigurationValidatorBase
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.CreateNewRollingFileAppenderConfigurationValidator" />
-        /// class.
+        /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
         [Log(AttributeExclude = true)]
         static CreateNewRollingFileAppenderConfigurationValidator() { }
 
         /// <summary>
-        /// Creates a new instance of
-        /// <see
-        ///     cref="T:xyLOGIX.Core.Debug.CreateNewRollingFileAppenderConfigurationValidator" />
-        /// and returns a reference to it.
+        /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        public CreateNewRollingFileAppenderConfigurationValidator() { }
+        protected CreateNewRollingFileAppenderConfigurationValidator() { }
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingFileAppenderConfigurationValidator" />
+        /// interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.AppenderRetrievalMode.CreateNew" /> use case.
+        /// </summary>
+        public static IRollingFileAppenderConfigurationValidator Instance
+        {
+            [DebuggerStepThrough] get;
+        } = new CreateNewRollingFileAppenderConfigurationValidator();
 
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" />
@@ -70,10 +70,7 @@ namespace xyLOGIX.Core.Debug
         {
             var result = true;
 
-            try
-            {
-
-            }
+            try { }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output.
