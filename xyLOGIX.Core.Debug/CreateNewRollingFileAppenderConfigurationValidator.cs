@@ -79,6 +79,9 @@ namespace xyLOGIX.Core.Debug
                 // Check to see whether the base-class version of this method worked properly.
                 // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
+                // 
+                // NOTE: This method takes care of validating the value of the 'config.File'
+                // property.
                 if (!base.IsValid(config))
                 {
                     // The base-class version of this method did NOT work properly.  This is not desirable.
@@ -89,6 +92,25 @@ namespace xyLOGIX.Core.Debug
 
                 System.Diagnostics.Debug.WriteLine(
                     "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The base-class version of this method worked properly.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the configuration is set to 'Append' to the file..."
+                );
+
+                // Check to see whether the configuration is set to 'Append' to the file.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!config.AppendToFile)
+                {
+                    // The configuration is NOT set to 'Append' to the file.  This is not desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The configuration is NOT set to 'Append' to the file.  Stopping..."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The configuration is set to 'Append' to the file.  Proceeding..."
                 );
             }
             catch (Exception ex)
