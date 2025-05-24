@@ -99,6 +99,32 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
+                    "ObtainExistingAppenderRetriever.GetAppender: Checking whether the Rolling File Appender Configuration has valid settings..."
+                );
+
+                // Check to see whether the Rolling File Appender Configuration has valid settings.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!RollingFileAppenderConfigurationValidator.IsValid(config))
+                {
+                    // The Rolling File Appender Configuration does NOT have valid settings.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "ObtainExistingAppenderRetriever.GetAppender: *** ERROR *** The Rolling File Appender Configuration does NOT have valid settings.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ObtainExistingAppenderRetriever.GetAppender: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "ObtainExistingAppenderRetriever.GetAppender: *** SUCCESS *** The Rolling File Appender Configuration has valid settings.  Getting a new 'RollingFileAppender'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
                     "ObtainExistingAppenderRetriever.GetFileAppenderByPath: Checking whether the Appender Manager has existing Appender(s)..."
                 );
 
@@ -123,6 +149,12 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(
                     "ObtainExistingAppenderRetriever.GetFileAppenderByPath: *** SUCCESS *** The Appender Manager has existing Appender(s).  Proceeding..."
                 );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"ObtainExistingAppenderRetriever.GetFileAppenderByPath: Attempting to retrieve the Appender whose File property matches the pathname, '{config.File}'..."
+                );
+
+                result = AppenderManager.GetFileAppenderByPath(config.File);
             }
             catch (Exception ex)
             {
@@ -131,6 +163,12 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the Appender having the path, '{config.File}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the Appender having the path, '{config.File}'.  Stopping..."
+            );
 
             return result;
         }
