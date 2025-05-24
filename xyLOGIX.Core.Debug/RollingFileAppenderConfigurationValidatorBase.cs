@@ -76,6 +76,15 @@ namespace xyLOGIX.Core.Debug
             );
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IRollingModeValidator" /> interface.
+        /// </summary>
+        protected static IRollingModeValidator RollingModeValidator
+        {
+            [DebuggerStepThrough] get;
+        } = GetRollingModeValidator.SoleInstance();
+
+        /// <summary>
         /// Validates the value(s) of the property(ies) of the specified
         /// <paramref name="config" />, given the current value of the
         /// <see
