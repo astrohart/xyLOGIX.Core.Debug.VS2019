@@ -28,6 +28,15 @@ namespace xyLOGIX.Core.Debug
         static Determine() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// </summary>
+        private static IAppenderManager AppenderManager
+        {
+            [DebuggerStepThrough] get;
+        } = GetAppenderManager.SoleInstance();
+
+        /// <summary>
         /// Determines whether the application is to use a programmatic logging
         /// configurator or configure logging from either the <c>app.config</c> or
         /// <c>web.config</c> file(s).
@@ -104,6 +113,85 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"Determine.LoggingConfiguratorTypeToUse: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines which of the
+        /// <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration value(s)
+        /// are to be used for accessing an <c>Appender</c>, based on whether an
+        /// <c>Appender</c> is already present for the specified
+        /// <paramref name="logFilePath" />.
+        /// </summary>
+        /// <param name="logFilePath">
+        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of a log file.
+        /// </param>
+        /// <returns>
+        /// One of the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" />
+        /// enumeration value(s) that is to be used for accessing an <c>Appender</c>, based
+        /// on whether an <c>Appender</c> is already present for the specified
+        /// <paramref name="logFilePath" />, or
+        /// <see cref="F:xyLOGIX.Core.Debug.AppenderRetrievalMode.Unknown" /> if the
+        /// determination cannot be made.
+        /// </returns>
+        public static AppenderRetrievalMode TheAppenderRetrievalModeToUse(
+            [NotLogged] string logFilePath
+        )
+        {
+            var result = AppenderRetrievalMode.CreateNew;
+
+            try
+            {
+                /*
+                 * Check whether an Appender already exists for the specified
+                 * 'logFilePath' value. If it does, then set the value of the
+                 * result variable to 'ObtainExisting'; otherwise, set the
+                 * result variable to 'CreateNew'.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** Determine.TheAppenderRetrievalModeToUse: Checking whether the Appender Manager has Appender(s) listed..."
+                );
+
+                // Check to see whether the Appender Manager has Appender(s) listed.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!AppenderManager.HasAppenders)
+                {
+                    // The Appender Manager has ZERO Appender(s) listed.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The Appender Manager has ZERO Appender(s) listed.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Determine.TheAppenderRetrievalModeToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TheAppenderRetrievalModeToUse: *** SUCCESS *** The Appender Manager has {AppenderManager.AppenderCount} Appender(s) listed.  Proceeding..."
+                );
+
+                result = AppenderManager.HasAppenderWithFilePath(logFilePath)
+                    ? AppenderRetrievalMode.ObtainExisting
+                    : AppenderRetrievalMode.CreateNew;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = AppenderRetrievalMode.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TheAppenderRetrievalModeToUse: Result = '{result}'"
             );
 
             return result;
