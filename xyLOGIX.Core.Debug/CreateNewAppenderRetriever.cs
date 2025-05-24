@@ -26,7 +26,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetriever" /> interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetriever" /> interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.AppenderRetrievalMode.CreateNew" /> use case.
         /// </summary>
         public static IAppenderRetriever
             Instance { [DebuggerStepThrough] get; } =
