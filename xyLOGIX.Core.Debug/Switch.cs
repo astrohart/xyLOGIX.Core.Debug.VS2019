@@ -242,20 +242,20 @@ namespace xyLOGIX.Core.Debug
                     $"Switch.LoggingForLogFileName: *** FYI *** Determining whether an Appender already exists for the log file, '{logFileName}'..."
                 );
 
-                var mode = Determine.TheAppenderRetrievalModeToUse(logFileName);
+                var appenderRetrievalMode = Determine.TheAppenderRetrievalModeToUse(logFileName);
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"Switch.LoggingForLogFileName: Checking whether the Appender Retrieval Mode, '{mode}', is within the defined value set..."
+                    $"Switch.LoggingForLogFileName: Checking whether the Appender Retrieval Mode, '{appenderRetrievalMode}', is within the defined value set..."
                 );
 
                 // Check to see whether the Appender Retrieval Mode is within the defined value set.
                 // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
-                if (!AppenderRetrievalModeValidator.IsValid(mode))
+                if (!AppenderRetrievalModeValidator.IsValid(appenderRetrievalMode))
                 {
                     // The Appender Retrieval Mode is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"Switch.LoggingForLogFileName: *** ERROR *** The Appender Retrieval Mode, '{mode}', is NOT within the defined value set.  Stopping..."
+                        $"Switch.LoggingForLogFileName: *** ERROR *** The Appender Retrieval Mode, '{appenderRetrievalMode}', is NOT within the defined value set.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -267,7 +267,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"Switch.LoggingForLogFileName: *** SUCCESS *** The Appender Retrieval Mode, '{mode}', is within the defined value set.  Proceeding..."
+                    $"Switch.LoggingForLogFileName: *** SUCCESS *** The Appender Retrieval Mode, '{appenderRetrievalMode}', is within the defined value set.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine($"Switch.LoggingForLogFileName: *** FYI *** Specifying the RollingFileAppender configuration for the log file, '{logFileName}'...");
@@ -281,7 +281,39 @@ namespace xyLOGIX.Core.Debug
 
                 System.Diagnostics.Debug.WriteLine($"Switch.LoggingForLogFileName: *** FYI *** Attempting to retrieve the RollingFileAppender for the log file, '{logFileName}'...");
 
-                var retriever = GetAppenderRetriever
+                var retriever = GetAppenderRetriever.For(appenderRetrievalMode);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Switch.LoggingForLogFileName: Checking whether the variable, 'retriever', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'retriever', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (retriever == null)
+                {
+                    // The variable, 'retriever', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Switch.LoggingForLogFileName: *** ERROR ***  The variable, 'retriever', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Switch.LoggingForLogFileName: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'retriever', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "Switch.LoggingForLogFileName: *** SUCCESS *** The variable, 'retriever', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to get the RollingFileAppender for the log file, '{logFileName}'...");
+
+                var roller =
+                    retriever.GetAppender(config) as RollingFileAppender;
 
                 System.Diagnostics.Debug.WriteLine(
                     "Switch.LoggingForLogFileName: Checking whether the variable, 'roller', has a null reference for a value..."
