@@ -34,8 +34,18 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IAppenderManager AppenderManager
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetAppenderManager.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetrievalModeValidator" /> interface.
+        /// </summary>
+        private static IAppenderRetrievalModeValidator
+            AppenderRetrievalModeValidator
+        { [DebuggerStepThrough] get; } =
+            GetAppenderRetrievalModeValidator.SoleInstance();
 
         /// <summary>
         /// Sets up logging programmatically (as opposed to using a
@@ -112,7 +122,7 @@ namespace xyLOGIX.Core.Debug
                     "Switch.LoggingForLogFileName: Checking whether the 'repository' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, repository, is null. If it is, send an 
+                // Check to see if the required parameter, repository, is null. If it is, send an
                 // error to the Debug output and quit, returning the default return value of
                 // this method.
                 if (repository == null)
@@ -229,26 +239,23 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Setting up a new RollingFileAppender..."
+                    $"Switch.LoggingForLogFileName: *** FYI *** Determining whether an Appender already exists for the log file, '{logFileName}'..."
                 );
 
-                var roller =
-                    MakeNewRollingFileAppender.ForRollingStyle(
-                        RollingFileAppender.RollingMode.Size
-                    );
+                var mode = Determine.TheAppenderRetrievalModeToUse(logFileName);
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: Checking whether the variable, 'roller', has a null reference for a value..."
+                    $"Switch.LoggingForLogFileName: Checking whether the Appender Retrieval Mode, '{mode}', is within the defined value set..."
                 );
 
-                // Check to see if the variable, 'roller', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
-                if (roller == null)
+                // Check to see whether the Appender Retrieval Mode is within the defined value set.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!AppenderRetrievalModeValidator.IsValid(mode))
                 {
-                    // The variable, 'roller', has a null reference for a value.  This is not desirable.
+                    // The Appender Retrieval Mode is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "Switch.LoggingForLogFileName: *** ERROR ***  The variable, 'roller', has a null reference for a value.  Stopping..."
+                        $"Switch.LoggingForLogFileName: *** ERROR *** The Appender Retrieval Mode, '{mode}', is NOT within the defined value set.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -259,21 +266,22 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, 'roller', because it's not set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: *** SUCCESS *** The variable, 'roller', has a valid object reference for its value.  Proceeding..."
+                    $"Switch.LoggingForLogFileName: *** SUCCESS *** The Appender Retrieval Mode, '{mode}', is within the defined value set.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Continuing to set up the RollingFileAppender..."
-                );
+                System.Diagnostics.Debug.WriteLine($"Switch.LoggingForLogFileName: *** FYI *** Specifying the RollingFileAppender configuration for the log file, '{logFileName}'...");
 
-                roller = roller.SetLogFileNameTo(logFileName)
-                               .WithPatternLayout(patternLayout)
-                               .AndMaximumNumberOfRollingBackups(10)
-                               .WithMaximumFileSizeOf("1GB")
-                               .ThatShouldAppendToFile(true)
-                               .AndThatHasAStaticLogFileName(true);
+                var config = MakeNewRollingFileAppenderConfiguration.ForRollingStyle(RollingFileAppender.RollingMode.Size).SetLogFileNameTo(logFileName)
+                    .WithPatternLayout(patternLayout)
+                    .AndMaximumNumberOfRollingBackups(10)
+                    .WithMaximumFileSizeOf("1GB")
+                    .ThatShouldAppendToFile(true)
+                    .AndThatHasAStaticLogFileName(true);
+
+                System.Diagnostics.Debug.WriteLine($"Switch.LoggingForLogFileName: *** FYI *** Attempting to retrieve the RollingFileAppender for the log file, '{logFileName}'...");
+
+                var retriever = GetAppenderRetriever
 
                 System.Diagnostics.Debug.WriteLine(
                     "Switch.LoggingForLogFileName: Checking whether the variable, 'roller', has a null reference for a value..."
@@ -312,7 +320,7 @@ namespace xyLOGIX.Core.Debug
                     "Switch.LoggingForLogFileName: Checking whether the property, 'hierarchy.Root', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'hierarchy.Root', has a null reference for a value. 
+                // Check to see if the required property, 'hierarchy.Root', has a null reference for a value.
                 // If that is the case, then we will write an error message to the Debug output, and then
                 // terminate the execution of this method, while returning the default return value.
                 if (hierarchy.Root == null)
