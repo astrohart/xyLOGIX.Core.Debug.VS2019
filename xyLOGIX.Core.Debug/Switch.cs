@@ -34,8 +34,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IAppenderManager AppenderManager
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetAppenderManager.SoleInstance();
 
         /// <summary>
@@ -43,8 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetrievalModeValidator" /> interface.
         /// </summary>
         private static IAppenderRetrievalModeValidator
-            AppenderRetrievalModeValidator
-        { [DebuggerStepThrough] get; } =
+            AppenderRetrievalModeValidator { [DebuggerStepThrough] get; } =
             GetAppenderRetrievalModeValidator.SoleInstance();
 
         /// <summary>
@@ -62,12 +60,6 @@ namespace xyLOGIX.Core.Debug
         /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
         /// interface that plays the role of the <c>Hierarchy</c> object that is configured
         /// for logging.
-        /// </param>
-        /// <param name="overrideExistingConfig">
-        /// (Optional.) A <see cref="T:System.Boolean" /> value that indicates whether to
-        /// override the existing configuration.
-        /// <para />
-        /// The default value of this parameter is <see langword="false" />.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation(s) completed successfully;
@@ -242,7 +234,8 @@ namespace xyLOGIX.Core.Debug
                     $"Switch.LoggingForLogFileName: *** FYI *** Determining whether an Appender already exists for the log file, '{logFileName}'..."
                 );
 
-                var appenderRetrievalMode = Determine.TheAppenderRetrievalModeToUse(logFileName);
+                var appenderRetrievalMode =
+                    Determine.TheAppenderRetrievalModeToUse(logFileName);
 
                 System.Diagnostics.Debug.WriteLine(
                     $"Switch.LoggingForLogFileName: Checking whether the Appender Retrieval Mode, '{appenderRetrievalMode}', is within the defined value set..."
@@ -251,7 +244,9 @@ namespace xyLOGIX.Core.Debug
                 // Check to see whether the Appender Retrieval Mode is within the defined value set.
                 // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
-                if (!AppenderRetrievalModeValidator.IsValid(appenderRetrievalMode))
+                if (!AppenderRetrievalModeValidator.IsValid(
+                        appenderRetrievalMode
+                    ))
                 {
                     // The Appender Retrieval Mode is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
@@ -270,16 +265,24 @@ namespace xyLOGIX.Core.Debug
                     $"Switch.LoggingForLogFileName: *** SUCCESS *** The Appender Retrieval Mode, '{appenderRetrievalMode}', is within the defined value set.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine($"Switch.LoggingForLogFileName: *** FYI *** Specifying the RollingFileAppender configuration for the log file, '{logFileName}'...");
+                System.Diagnostics.Debug.WriteLine(
+                    $"Switch.LoggingForLogFileName: *** FYI *** Specifying the RollingFileAppender configuration for the log file, '{logFileName}'..."
+                );
 
-                var config = MakeNewRollingFileAppenderConfiguration.ForRollingStyle(RollingFileAppender.RollingMode.Size).SetLogFileNameTo(logFileName)
-                    .WithPatternLayout(patternLayout)
-                    .AndMaximumNumberOfRollingBackups(10)
-                    .WithMaximumFileSizeOf("1GB")
-                    .ThatShouldAppendToFile(true)
-                    .AndThatHasAStaticLogFileName(true);
+                var config = MakeNewRollingFileAppenderConfiguration
+                             .ForRollingStyle(
+                                 RollingFileAppender.RollingMode.Size
+                             )
+                             .SetLogFileNameTo(logFileName)
+                             .WithPatternLayout(patternLayout)
+                             .AndMaximumNumberOfRollingBackups(10)
+                             .WithMaximumFileSizeOf("1GB")
+                             .ThatShouldAppendToFile(true)
+                             .AndThatHasAStaticLogFileName(true);
 
-                System.Diagnostics.Debug.WriteLine($"Switch.LoggingForLogFileName: *** FYI *** Attempting to retrieve the RollingFileAppender for the log file, '{logFileName}'...");
+                System.Diagnostics.Debug.WriteLine(
+                    $"Switch.LoggingForLogFileName: *** FYI *** Attempting to retrieve the RollingFileAppender for the log file, '{logFileName}'..."
+                );
 
                 var retriever = GetAppenderRetriever.For(appenderRetrievalMode);
 
@@ -310,7 +313,9 @@ namespace xyLOGIX.Core.Debug
                     "Switch.LoggingForLogFileName: *** SUCCESS *** The variable, 'retriever', has a valid object reference for its value.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine($"*** FYI *** Attempting to get the RollingFileAppender for the log file, '{logFileName}'...");
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to get the RollingFileAppender for the log file, '{logFileName}'..."
+                );
 
                 var roller =
                     retriever.GetAppender(config) as RollingFileAppender;
