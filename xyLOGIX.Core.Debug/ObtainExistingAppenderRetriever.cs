@@ -8,27 +8,14 @@ namespace xyLOGIX.Core.Debug
     public class ObtainExistingAppenderRetriever : AppenderRetrieverBase
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.ObtainExistingAppenderRetriever" />
-        /// class.
+        /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
         [Log(AttributeExclude = true)]
         static ObtainExistingAppenderRetriever() { }
 
         /// <summary>
-        /// Initializes a new instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.ObtainExistingAppenderRetriever" /> and returns
-        /// a
-        /// reference to it.
+        /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        /// <remarks>
-        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
-        /// due to the fact that this class is marked <see langword="abstract" />.
-        /// </remarks>
         [Log(AttributeExclude = true)]
         protected ObtainExistingAppenderRetriever() { }
 
@@ -40,6 +27,16 @@ namespace xyLOGIX.Core.Debug
         {
             [DebuggerStepThrough] get;
         } = GetAppenderManager.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderRetriever" /> interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.AppenderRetrievalMode.ObtainExisting" /> use
+        /// case.
+        /// </summary>
+        public static IAppenderRetriever
+            Instance { [DebuggerStepThrough] get; } =
+            new ObtainExistingAppenderRetriever();
 
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration
