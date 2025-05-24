@@ -1,4 +1,5 @@
-﻿using PostSharp.Patterns.Diagnostics;
+﻿using log4net.Layout;
+using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
 
@@ -121,6 +122,116 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(
                     "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The configuration is set to 'Append' to the file.  Proceeding..."
                 );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the specified Layout is a PatternLayout..."
+                );
+
+                // Check to see whether the specified Layout is a PatternLayout.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!(config.Layout is PatternLayout layout))
+                {
+                    // The specified Layout is NOT a PatternLayout.  This is not desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The specified Layout is NOT a PatternLayout.  Stopping..."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The specified Layout is a PatternLayout.  Proceeding..."
+                );
+
+                /*
+                 * It is required that the 'layout.ConversionPattern' property be set to a
+                 * non-null reference, non-empty string, and that it does not consist only
+                 * of whitespace.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the property, 'layout.ConversionPattern', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required property, 'layout.ConversionPattern', is set to a null reference,
+                // the empty string, or it is otherwise consisting only of whitespace.  If any
+                // one of these three case(s) is true, then throw InvalidOperationException with
+                // a descriptive error message.
+                if (string.IsNullOrWhiteSpace(layout.ConversionPattern))
+                {
+                    // The required property, 'layout.ConversionPattern', is set to a null reference, the empty string, or it consists only of whitespace.  None of these case(s) are desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The required property, 'layout.ConversionPattern', is set to a null reference, the empty string, or it consists only of whitespace."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** {layout.ConversionPattern.Length} B of data appear to be present in the value of the property, 'layout.ConversionPattern'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the max number of backup file(s) is a positive number..."
+                );
+
+                // Check to see whether the max number of backup file(s) is a positive number.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method by throwing an exception.
+                if (config.MaxSizeRollBackups <= 0)
+                {
+                    // The max number of backup file(s) is NOT a positive number.  This is not desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The max number of backup file(s) is NOT a positive number.  Stopping..."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The max number of backup file(s) is a positive number.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the 'RollingStyle' value is within the defined value set..."
+                );
+
+                // Check to see whether the 'RollingStyle' value is within the defined value set.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!RollingModeValidator.IsValid(config.RollingStyle))
+                {
+                    // The 'RollingStyle' value is NOT within the defined value set.  This is not desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The 'RollingStyle' value is NOT within the defined value set.  Stopping..."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** The 'RollingStyle' value is within the defined value set.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "CreateNewRollingFileAppenderConfigurationValidator.IsValid: Checking whether the property, 'config.MaximumFileSize', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required property, 'config.MaximumFileSize', is set to a null reference,
+                // the empty string, or it is otherwise consisting only of whitespace.  If any
+                // one of these three case(s) is true, then throw InvalidOperationException with
+                // a descriptive error message.
+                if (string.IsNullOrWhiteSpace(config.MaximumFileSize))
+                {
+                    // The required property, 'config.MaximumFileSize', is set to a null reference, the empty string, or it consists only of whitespace.  None of these case(s) are desirable.
+                    throw new InvalidOperationException(
+                        "*** ERROR *** The required property, 'config.MaximumFileSize', is set to a null reference, the empty string, or it consists only of whitespace."
+                    );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"CreateNewRollingFileAppenderConfigurationValidator.IsValid: *** SUCCESS *** {config.MaximumFileSize.Length} B of data appear to be present in the value of the property, 'config.MaximumFileSize'.  Proceeding..."
+                );
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
             }
             catch (Exception ex)
             {
