@@ -1,6 +1,7 @@
 ﻿using log4net.Appender;
 using log4net.Layout;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -9,6 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// Configuration settings for the
     /// <see cref="T:log4net.Appender.RollingFileAppender" />.
     /// </summary>
+    [ExplicitlySynchronized]
     internal class
         RollingFileAppenderConfiguration : IRollingFileAppenderConfiguration
     {
