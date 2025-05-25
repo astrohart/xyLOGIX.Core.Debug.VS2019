@@ -186,9 +186,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Activate logging for the new log file path.
-                Activate.LoggingForLogFileName(
-                    newLogFilePath, hierarchy, /* override existing config = */
-                    true
+                Switch.LoggingForLogFileName(
+                    newLogFilePath, hierarchy
                 );
 
                 // Check to see whether the deletion operation was successful.
