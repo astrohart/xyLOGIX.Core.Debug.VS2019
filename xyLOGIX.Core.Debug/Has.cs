@@ -155,7 +155,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             System.Diagnostics.Debug.WriteLine(
-                DebugLevel.Debug, $"Has.LoggingBeenSetUp: Result = {result}"
+                $"Has.LoggingBeenSetUp: Result = {result}"
             );
 
             return result;
