@@ -119,7 +119,7 @@
   </resheader>
   <data name="ExceptionMessageFormat" xml:space="preserve">
     <value>{0}: {1}
-	{2}</value>
+    {2}</value>
   </data>
   <data name="Error_DepthMustBeNonNegative" xml:space="preserve">
     <value>The 'depth' parameter must be zero or greater.</value>
@@ -129,7 +129,7 @@
   </data>
   <data name="TempExceptionFileMessage" xml:space="preserve">
     <value>{0} at {1}: Exception caught: {2}
-	{3}
+    {3}
 
 ---
 
