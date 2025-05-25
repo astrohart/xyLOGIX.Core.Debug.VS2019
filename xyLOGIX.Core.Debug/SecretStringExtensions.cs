@@ -8,22 +8,9 @@ namespace xyLOGIX.Core.Debug
     /// Exposes "secret" <see cref="T:System.String" /> extension methods to help the
     /// methods in this library only.
     /// </summary>
+    [Log(AttributeExclude = true)]
     internal static class SecretStringExtensions
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.SecretStringExtensions" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static SecretStringExtensions() { }
-
         /// <summary>
         /// "Collapses" or "folds" the specified <paramref name="value" /> so that all
         /// newlines are transformed to single whitespace characters.
@@ -38,7 +25,6 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Multiple newlines are removed.
         /// </returns>
-        [Log(AttributeExclude = true)]
         [return: NotLogged]
         internal static string CollapseNewlinesToSpaces(
             [NotLogged] this string value
