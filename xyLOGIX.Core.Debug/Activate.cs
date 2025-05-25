@@ -53,17 +53,13 @@ namespace xyLOGIX.Core.Debug
         /// interface that plays the role of the <c>Hierarchy</c> object that is configured
         /// for logging.
         /// </param>
-        /// <param name="overrideExistingConfig">
-        /// (Optional.) A <see cref="T:System.Boolean" /> value that indicates whether to override the existing configuration.<para/>The default value of this parameter is <see langword="false" />.
-        /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation(s) completed successfully;
         /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool LoggingForLogFileName(
             string logFileName,
-            ILoggerRepository repository,
-            bool overrideExistingConfig = false
+            ILoggerRepository repository
         )
         {
             var result = false;
@@ -209,7 +205,7 @@ namespace xyLOGIX.Core.Debug
                 // Otherwise, inform the developer that logging is currently configured,
                 // and then terminate the execution of this method, returning TRUE, which
                 // indicates success.
-                if (result = !overrideExistingConfig & hierarchy.Configured)
+                if (result = hierarchy.Configured)
                 {
                     // The logger is already configured.  Therefore, there is nothing more to be done.
                     System.Diagnostics.Debug.WriteLine(
