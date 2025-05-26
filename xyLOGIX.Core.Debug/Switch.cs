@@ -379,31 +379,31 @@ namespace xyLOGIX.Core.Debug
                     "Switch.LoggingForLogFileName: *** SUCCESS *** The property, 'hierarchy.Root', has a valid object reference for its value.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: Attempting to close all the existing Appender(s)..."
-                );
+                //System.Diagnostics.Debug.WriteLine(
+                //    "Switch.LoggingForLogFileName: Attempting to close all the existing Appender(s)..."
+                //);
 
-                // Check to see whether the existing Appender(s) could be closed successfully.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
-                if (!hierarchy.CloseAllAppenders())
-                {
-                    // The existing Appender(s) could NOT be closed.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "Switch.LoggingForLogFileName: *** ERROR *** The existing Appender(s) could NOT be closed.  Stopping..."
-                    );
+                //// Check to see whether the existing Appender(s) could be closed successfully.
+                //// If this is not the case, then write an error message to the log file,
+                //// and then terminate the execution of this method.
+                //if (!hierarchy.CloseAllAppenders())
+                //{
+                //    // The existing Appender(s) could NOT be closed.  This is not desirable.
+                //    System.Diagnostics.Debug.WriteLine(
+                //        "Switch.LoggingForLogFileName: *** ERROR *** The existing Appender(s) could NOT be closed.  Stopping..."
+                //    );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** Switch.LoggingForLogFileName: Result = {result}"
-                    );
+                //    System.Diagnostics.Debug.WriteLine(
+                //        $"*** Switch.LoggingForLogFileName: Result = {result}"
+                //    );
 
-                    // stop.
-                    return result;
-                }
+                //    // stop.
+                //    return result;
+                //}
 
-                System.Diagnostics.Debug.WriteLine(
-                    "Switch.LoggingForLogFileName: *** SUCCESS *** The existing Appender(s) have been closed successfully.  Proceeding..."
-                );
+                //System.Diagnostics.Debug.WriteLine(
+                //    "Switch.LoggingForLogFileName: *** SUCCESS *** The existing Appender(s) have been closed successfully.  Proceeding..."
+                //);
 
                 System.Diagnostics.Debug.WriteLine(
                     "Switch.LoggingForLogFileName: *** FYI *** Attempting to remove all the existing Appender(s) from the Logger..."
@@ -486,6 +486,8 @@ namespace xyLOGIX.Core.Debug
 
                 // Store the Appender in the AppenderManager, if the configuration was successful.
                 if (result) AppenderManager.AddAppender(roller);
+
+                FileAppenderConfigurator.SetMinimalLock(roller);
             }
             catch (Exception ex)
             {
