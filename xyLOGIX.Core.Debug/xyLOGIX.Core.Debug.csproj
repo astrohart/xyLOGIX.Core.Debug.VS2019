@@ -257,6 +257,7 @@
     <Compile Include="TextWrittenEventArgs.cs" />
     <Compile Include="TextWrittenEventHandler.cs" />
     <Compile Include="TraceOutputLocation.cs" />
+    <Compile Include="Truncate.cs" />
     <Compile Include="Validate.cs" />
     <Compile Include="VerbosityChangedEventArgs.cs" />
     <Compile Include="VerbosityChangedEventHandler.cs" />
