@@ -409,7 +409,7 @@ namespace xyLOGIX.Core.Debug
                     "Switch.LoggingForLogFileName: *** FYI *** Attempting to remove all the existing Appender(s) from the Logger..."
                 );
 
-                hierarchy.Root.RemoveAllAppenders();
+                hierarchy.Root.Appenders.Clear();
 
                 System.Diagnostics.Debug.WriteLine(
                     hierarchy.Root.Appenders.Count <= 0
