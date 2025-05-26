@@ -6,26 +6,13 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Exposes static method(s) for writing to the log file.
     /// </summary>
-    public static class Write
+    [Log(AttributeExclude = true)]
+    internal static class Write
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.Write" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static Write() { }
-
         /// <summary>
         /// Emits a timestamp to the log file. This is useful for debugging purposes.
         /// </summary>
-        public static void LogFileTimestamp()
+        internal static void LogFileTimestamp()
         {
             try
             {
