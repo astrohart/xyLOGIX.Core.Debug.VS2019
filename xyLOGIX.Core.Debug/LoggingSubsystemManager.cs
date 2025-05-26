@@ -108,12 +108,20 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
         /// pathname of the new log file.
         /// </param>
+        /// <param name="overwrite">
+        /// (Optional.) A <see cref="T:System.Boolean" /> value that indicates whether the
+        /// file having the specified <paramref name="newLogFilePath" /> is to be truncated
+        /// and overwritten with the latest logging information.
+        /// <para />
+        /// The default value of this parameter is <see langword="true" />.
+        /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation(s) were successful;
         /// <see langword="false" /> otherwise.
         /// </returns>
         public static bool ChangeLogFilePathname(
-            [NotLogged] string newLogFilePath
+            [NotLogged] string newLogFilePath,
+            bool overwrite = true
         )
         {
             var result = false;
@@ -186,16 +194,17 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Activate logging for the new log file path.
-                Switch.LoggingForLogFileName(
-                    newLogFilePath, hierarchy
-                );
+                Switch.LoggingForLogFileName(newLogFilePath, hierarchy);
 
-                System.Diagnostics.Debug.WriteLine($"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Attempting to truncate the log file, '{newLogFilePath}'...");
+                if (overwrite)
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Attempting to truncate the log file, '{newLogFilePath}'..."
+                    );
 
                 // Check to see whether the truncation operation was successful.
                 // If this is not the case, then write an error message to the log file,
                 // and then skip to the next loop iteration.
-                if (!Truncate.FileHavingPath(newLogFilePath))
+                if (overwrite && !Truncate.FileHavingPath(newLogFilePath))
                 {
                     // The truncation operation was NOT successful.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
@@ -211,15 +220,18 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The truncation operation was successful.  Proceeding..."
-                );
+                if (overwrite)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The truncation operation was successful.  Proceeding..."
+                    );
 
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Writing the current timestamp to the first line of the new log file..."
-                );
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Writing the current timestamp to the first line of the new log file..."
+                    );
 
-                Write.LogFileTimestamp();
+                    Write.LogFileTimestamp();
+                }
 
                 /*
                  * If we made it this far with no Exception(s) getting caught, then
