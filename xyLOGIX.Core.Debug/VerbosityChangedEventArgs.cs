@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>VerbosityChanged</c> event handlers. </summary>
-    [ExplicitlySynchronized]
+    [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class VerbosityChangedEventArgs : EventArgs
     {
         /// <summary>
