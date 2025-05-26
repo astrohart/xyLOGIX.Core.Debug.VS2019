@@ -299,7 +299,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="Change.cs" />
     <None Include="key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
