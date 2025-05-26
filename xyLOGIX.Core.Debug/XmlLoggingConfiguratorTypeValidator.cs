@@ -8,19 +8,18 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType" /> enumeration.
     /// </summary>
-    public class
+    [Log(AttributeExclude = true)]
+    internal class
         XmlLoggingConfiguratorTypeValidator :
         IXmlLoggingConfiguratorTypeValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
-        [Log(AttributeExclude = true)]
         static XmlLoggingConfiguratorTypeValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected XmlLoggingConfiguratorTypeValidator() { }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         ///     cref="T:xyLOGIX.Core.Debug.Interfaces.IXmlLoggingConfiguratorTypeValidator" />
         /// interface.
         /// </summary>
-        public static IXmlLoggingConfiguratorTypeValidator Instance
+        internal static IXmlLoggingConfiguratorTypeValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new XmlLoggingConfiguratorTypeValidator();
