@@ -14,11 +14,6 @@
         CreateNew,
 
         /// <summary>
-        /// Attempt to obtain an <c>Appender</c> from the <c>Appender Manager</c>.
-        /// </summary>
-        ObtainExisting,
-
-        /// <summary>
         /// Unknown retrieval mode.
         /// </summary>
         Unknown = -1
