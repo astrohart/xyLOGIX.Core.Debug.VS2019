@@ -190,6 +190,8 @@ namespace xyLOGIX.Core.Debug
                     newLogFilePath, hierarchy
                 );
 
+                System.Diagnostics.Debug.WriteLine($"LoggingSubsystemManager.ChangeLogFilePathname: *** FYI *** Attempting to truncate the log file, '{newLogFilePath}'...");
+
                 // Check to see whether the truncation operation was successful.
                 // If this is not the case, then write an error message to the log file,
                 // and then skip to the next loop iteration.
