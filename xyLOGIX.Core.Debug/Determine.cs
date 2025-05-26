@@ -141,60 +141,7 @@ namespace xyLOGIX.Core.Debug
             [NotLogged] string logFilePath
         )
         {
-            var result = AppenderRetrievalMode.CreateNew;
-
-            try
-            {
-                /*
-                 * Check whether an Appender already exists for the specified
-                 * 'logFilePath' value. If it does, then set the value of the
-                 * result variable to 'ObtainExisting'; otherwise, set the
-                 * result variable to 'CreateNew'.
-                 */
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** Determine.TheAppenderRetrievalModeToUse: Checking whether the Appender Manager has Appender(s) listed..."
-                );
-
-                // Check to see whether the Appender Manager has Appender(s) listed.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
-                if (!AppenderManager.HasAppenders)
-                {
-                    // The Appender Manager has ZERO Appender(s) listed.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The Appender Manager has ZERO Appender(s) listed.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** Determine.TheAppenderRetrievalModeToUse: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"Determine.TheAppenderRetrievalModeToUse: *** SUCCESS *** The Appender Manager has {AppenderManager.AppenderCount} Appender(s) listed.  Proceeding..."
-                );
-
-                result = AppenderManager.HasAppenderWithFilePath(logFilePath)
-                    ? AppenderRetrievalMode.ObtainExisting
-                    : AppenderRetrievalMode.CreateNew;
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-
-                result = AppenderRetrievalMode.Unknown;
-            }
-
-            System.Diagnostics.Debug.WriteLine(
-                $"Determine.TheAppenderRetrievalModeToUse: Result = '{result}'"
-            );
-
-            return result;
+            return AppenderRetrievalMode.CreateNew;
         }
 
         /// <summary>
