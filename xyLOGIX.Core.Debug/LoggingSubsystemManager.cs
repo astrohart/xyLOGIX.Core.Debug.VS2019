@@ -190,14 +190,14 @@ namespace xyLOGIX.Core.Debug
                     newLogFilePath, hierarchy
                 );
 
-                // Check to see whether the deletion operation was successful.
+                // Check to see whether the truncation operation was successful.
                 // If this is not the case, then write an error message to the log file,
                 // and then skip to the next loop iteration.
-                if (!Delete.FileIfExists(newLogFilePath))
+                if (!Truncate.FileHavingPath(newLogFilePath))
                 {
-                    // The deletion operation was NOT successful.  This is not desirable.
+                    // The truncation operation was NOT successful.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The deletion operation was NOT successful.  Stopping..."
+                        "LoggingSubsystemManager.ChangeLogFilePathname: *** ERROR: The truncation operation was NOT successful.  Stopping..."
                     );
 
                     DebugUtils.WriteLine(
@@ -210,7 +210,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The deletion operation was successful.  Proceeding..."
+                    "LoggingSubsystemManager.ChangeLogFilePathname: *** SUCCESS *** The truncation operation was successful.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
