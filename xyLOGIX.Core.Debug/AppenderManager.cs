@@ -1,6 +1,7 @@
 ﻿using log4net.Appender;
 using PostSharp.Patterns.Collections;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ namespace xyLOGIX.Core.Debug
     /// Manages the collection of <c>Appender</c>s that are currently in use with the
     /// logging subsystem.
     /// </summary>
+    [ExplicitlySynchronized]
     public class AppenderManager : IAppenderManager
     {
         /// <summary>
