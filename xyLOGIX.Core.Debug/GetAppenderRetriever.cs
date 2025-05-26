@@ -102,11 +102,6 @@ namespace xyLOGIX.Core.Debug
                         result = GetCreateNewAppenderRetriever.SoleInstance();
                         break;
 
-                    case AppenderRetrievalMode.ObtainExisting:
-                        result =
-                            GetObtainExistingAppenderRetriever.SoleInstance();
-                        break;
-
                     default:
                         throw new ArgumentOutOfRangeException(
                             nameof(mode), mode,
