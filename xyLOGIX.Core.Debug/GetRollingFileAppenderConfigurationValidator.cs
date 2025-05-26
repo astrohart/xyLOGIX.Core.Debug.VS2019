@@ -111,11 +111,6 @@ namespace xyLOGIX.Core.Debug
                                 .SoleInstance();
                         break;
 
-                    case AppenderRetrievalMode.ObtainExisting:
-                        result = GetObtainExistingAppenderConfigurationValidator
-                            .SoleInstance();
-                        break;
-
                     default:
                         throw new ArgumentOutOfRangeException(
                             nameof(mode), mode,
