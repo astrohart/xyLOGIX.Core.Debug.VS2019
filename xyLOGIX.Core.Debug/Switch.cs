@@ -411,10 +411,7 @@ namespace xyLOGIX.Core.Debug
 
                 hierarchy.Root.RemoveAllAppenders();
 
-                DebugUtils.WriteLine(
-                    hierarchy.Root.Appenders.Count <= 0
-                        ? DebugLevel.Info
-                        : DebugLevel.Error,
+                System.Diagnostics.Debug.WriteLine(
                     hierarchy.Root.Appenders.Count <= 0
                         ? "*** SUCCESS *** All the existing Appender(s) have been removed from the Logger.  Proceeding..."
                         : $"*** ERROR *** FAILED to remove all existing Appender(s) from the Logger; it still has {hierarchy.Root.Appenders.Count} appender(s) configured.  Stopping..."
