@@ -8,8 +8,20 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all
     /// <c>XML Logging Configurator</c>s.
     /// </summary>
-    public abstract class XmlLoggingConfiguratorBase : IXmlLoggingConfigurator
+    [Log(AttributeExclude = true)]
+    internal abstract class XmlLoggingConfiguratorBase : IXmlLoggingConfigurator
     {
+        /// <summary>
+        /// Initializes a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.XmlLoggingConfiguratorBase" /> and returns a
+        /// reference to it.
+        /// </summary>
+        /// <remarks>
+        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
+        /// due to the fact that this class is marked <see langword="abstract" />.
+        /// </remarks>
+        protected XmlLoggingConfiguratorBase() { }
+
         /// <summary>
         /// Gets or sets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType" /> enumeration
