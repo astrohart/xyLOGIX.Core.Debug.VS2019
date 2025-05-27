@@ -9,23 +9,10 @@ namespace xyLOGIX.Core.Debug
     /// Methods to send objects to the log by calling an extension method
     /// called 'Dump', like in LINQpad.
     /// </summary>
+    /// <remarks>This class is part of the publicly-exposed API of this class library.</remarks>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class DebuggerDump
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.DebuggerDump" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static DebuggerDump() { }
-
         /// <summary>
         /// Dumps the specified object, a reference to which is in the
         /// <paramref name="element" /> parameter, to the log.
