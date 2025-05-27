@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Provides access to the one and only instance of the object that implements the
     /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationTypeValidator" /> interface.
     /// </summary>
-    public static class GetOutputLocationTypeValidator
+    internal static class GetOutputLocationTypeValidator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -33,7 +33,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IOutputLocationTypeValidator SoleInstance()
+        internal static IOutputLocationTypeValidator SoleInstance()
         {
             IOutputLocationTypeValidator result;
 
