@@ -12,22 +12,9 @@ namespace xyLOGIX.Core.Debug
     /// These methods are here in order to assist applications in working
     /// with log files and prepping for application startup and first-time use.
     /// </remarks>
-    public static class DebugFileAndFolderHelper
+    [Log(AttributeExclude = true)]
+    internal static class DebugFileAndFolderHelper
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.DebugFileAndFolderHelper" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static DebugFileAndFolderHelper() { }
-
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IDirectoryWriteabilityStatusValidator" />
@@ -52,7 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a <see cref="T:System.String" /> that contains the fully-qualified
         /// username of the currently-logged-in OS user.
         /// </summary>
-        public static string FullyQualifiedUserName
+        internal static string FullyQualifiedUserName
         {
             [DebuggerStepThrough]
             get
@@ -80,7 +67,7 @@ namespace xyLOGIX.Core.Debug
         /// Attempts to clear the files and folders from the user's temporary
         /// files folder.
         /// </summary>
-        public static void ClearTempFileDir()
+        internal static void ClearTempFileDir()
         {
             try
             {
@@ -133,7 +120,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="directoryPath" />, is passed a blank or <see langword="null" />
         /// value.
         /// </exception>
-        public static void CreateDirectoryIfNotExists(
+        internal static void CreateDirectoryIfNotExists(
             [NotLogged] string directoryPath
         )
         {
@@ -705,7 +692,7 @@ namespace xyLOGIX.Core.Debug
         /// found or if it does exist but an operating system error occurs (such as
         /// insufficient permissions) during the search.
         /// </returns>
-        public static bool InsistPathExists([NotLogged] string fileName)
+        internal static bool InsistPathExists([NotLogged] string fileName)
         {
             var result = false;
 
@@ -793,7 +780,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="true" /> if the file having the <paramref name="pathname" /> is
         /// marked with the 'Read-Only' attribute; otherwise, <see langword="false" />.
         /// </returns>
-        public static bool IsFileReadOnly([NotLogged] string pathname)
+        internal static bool IsFileReadOnly([NotLogged] string pathname)
         {
             var result = false;
 
@@ -886,7 +873,7 @@ namespace xyLOGIX.Core.Debug
         /// The value <see langword="false" /> is also returned if an operating system
         /// error or exception occurs while trying to look up the file's permissions.
         /// </returns>
-        public static bool IsFileWriteable([NotLogged] string pathname)
+        internal static bool IsFileWriteable([NotLogged] string pathname)
         {
             // write the name of the current class and method we are now
             var result = false;
@@ -1375,7 +1362,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="true" /> if the folder having the <paramref name="pathname" />
         /// is marked with the 'Read-Only' attribute; otherwise, <see langword="false" />.
         /// </returns>
-        public static bool IsFolderReadOnly([NotLogged] string pathname)
+        internal static bool IsFolderReadOnly([NotLogged] string pathname)
         {
             var result = false;
 
@@ -1469,7 +1456,7 @@ namespace xyLOGIX.Core.Debug
         /// The value <see langword="false" /> is also returned if an operating system
         /// error or exception occurs while trying to look up the folder's permissions.
         /// </returns>
-        public static bool IsFolderWriteable([NotLogged] string pathname)
+        internal static bool IsFolderWriteable([NotLogged] string pathname)
         {
             // write the name of the current class and method we are now
             var result = false;
@@ -1961,7 +1948,7 @@ namespace xyLOGIX.Core.Debug
         /// returns <see langword="true" />. Otherwise, the return value is
         /// <see langword="false" />.
         /// </returns>
-        public static bool IsValidPath(string fullyQualifiedPath)
+        internal static bool IsValidPath(string fullyQualifiedPath)
         {
             var result = false;
 
