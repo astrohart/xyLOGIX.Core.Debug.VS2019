@@ -11,8 +11,7 @@ namespace xyLOGIX.Core.Debug
     /// exceptions.
     /// </summary>
     /// <remarks>This class is part of the publicly-exposed API of this library.</remarks>
-    [Log(AttributeExclude = true)]
-    [ExplicitlySynchronized]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class ExceptionExtensions
     {
         /// <summary>
