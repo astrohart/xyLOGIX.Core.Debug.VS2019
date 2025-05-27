@@ -11,23 +11,9 @@ namespace xyLOGIX.Core.Debug
     /// operational
     /// flow of a Windows service.
     /// </summary>
-    [ExplicitlySynchronized]
+    [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public static class ServiceFlowHelper
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.ServiceFlowHelper" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static ServiceFlowHelper() { }
-
         /// <summary> Raised when a start of the debugger is about to occur. </summary>
         [WeakEvent]
         public static event Action DebuggerStartPending;
@@ -45,7 +31,9 @@ namespace xyLOGIX.Core.Debug
         /// to be automatically re-started by the operating system.
         /// </remarks>
         [Yielder, DebuggerStepThrough]
-        public static void EmergencyStop([NotLogged] Action notificationAction = null)
+        public static void EmergencyStop(
+            [NotLogged] Action notificationAction = null
+        )
         {
             try
             {
