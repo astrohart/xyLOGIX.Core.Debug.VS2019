@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration.
     /// </summary>
-    public class OutputLocationTypeValidator : IOutputLocationTypeValidator
+    internal class OutputLocationTypeValidator : IOutputLocationTypeValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
         [Log(AttributeExclude = true)]
@@ -27,7 +27,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IOutputLocationTypeValidator" />
         /// interface.
         /// </summary>
-        public static IOutputLocationTypeValidator Instance
+        internal static IOutputLocationTypeValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new OutputLocationTypeValidator();
