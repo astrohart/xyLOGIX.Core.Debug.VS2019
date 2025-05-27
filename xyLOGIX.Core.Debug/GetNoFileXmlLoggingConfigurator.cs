@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.NoFile" />
     /// <c>XML Logging Configurator Type</c>.
     /// </summary>
-    public static class GetNoFileXmlLoggingConfigurator
+    internal static class GetNoFileXmlLoggingConfigurator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IXmlLoggingConfigurator SoleInstance()
+        internal static IXmlLoggingConfigurator SoleInstance()
         {
             IXmlLoggingConfigurator result;
 
