@@ -5,7 +5,7 @@
     /// facts
     /// about logs or logging are true.
     /// </summary>
-    public static class IsLog
+    internal static class IsLog
     {
         /// <summary>
         /// Gets a value that determines whether the logging system has been
@@ -15,7 +15,7 @@
         /// <see langword="true" /> if the logging system has been initialized;
         /// <see langword="false" /> otherwise.
         /// </returns>
-        public static bool Initialized
+        internal static bool Initialized
             => !string.IsNullOrWhiteSpace(SetLog.ApplicationName);
     }
 }
