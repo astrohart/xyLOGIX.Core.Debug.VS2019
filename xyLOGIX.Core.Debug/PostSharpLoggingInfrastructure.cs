@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
     /// PostSharp aspects to handle the bulk of logging for us.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public class PostSharpLoggingInfrastructure : DefaultLoggingInfrastructure
+    internal class PostSharpLoggingInfrastructure : DefaultLoggingInfrastructure
     {
         /// <summary> Reference to the object that relays all logging to PostSharp. </summary>
         /// <remarks>
@@ -26,13 +26,11 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static PostSharpLoggingInfrastructure() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected PostSharpLoggingInfrastructure() { }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
         /// infrastructure type value.
         /// </summary>
-        public static ILoggingInfrastructure Instance
+        internal static ILoggingInfrastructure Instance
         {
             [DebuggerStepThrough] get;
         } = new PostSharpLoggingInfrastructure();
