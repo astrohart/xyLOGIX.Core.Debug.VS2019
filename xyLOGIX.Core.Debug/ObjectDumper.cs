@@ -13,6 +13,10 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:System.String" /> representation of objects to the log file. Works
     /// in a way very similar to LINQPad's Dump() method.
     /// </summary>
+    /// <remarks>
+    /// This class is marked <see langword="public" /> because it is part of
+    /// the public API exposed by this library.
+    /// </remarks>
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class ObjectDumper
     {
@@ -66,8 +70,7 @@ namespace xyLOGIX.Core.Debug
         /// that contains the event data.
         /// </param>
         [Yielder]
-        protected static void OnTextWritten(
-            [NotLogged] TextWrittenEventArgs e)
+        protected static void OnTextWritten([NotLogged] TextWrittenEventArgs e)
             => TextWritten?.Invoke(e);
 
         /// <summary> Occurs when text is written to an output stream. </summary>
@@ -286,8 +289,10 @@ namespace xyLOGIX.Core.Debug
         /// parameter is less than zero, then this method does nothing.
         /// </remarks>
         public static void WriteLine(
-            [NotLogged] object element, int depth,
-            [NotLogged] TextWriter log)
+            [NotLogged] object element,
+            int depth,
+            [NotLogged] TextWriter log
+        )
         {
             try
             {
@@ -465,7 +470,10 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to the instance of the object to
         /// be dumped to the output stream.
         /// </param>
-        private void WriteObjectToLines(string prefix, [NotLogged] object element)
+        private void WriteObjectToLines(
+            string prefix,
+            [NotLogged] object element
+        )
         {
             try
             {
