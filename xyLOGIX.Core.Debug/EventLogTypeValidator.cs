@@ -8,17 +8,16 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> enumeration.
     /// </summary>
-    public class EventLogTypeValidator : IEventLogTypeValidator
+    [Log(AttributeExclude = true)]
+    internal class EventLogTypeValidator : IEventLogTypeValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
-        [Log(AttributeExclude = true)]
         static EventLogTypeValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected EventLogTypeValidator() { }
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IEventLogTypeValidator" />
         /// interface.
         /// </summary>
-        public static IEventLogTypeValidator Instance
+        internal static IEventLogTypeValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new EventLogTypeValidator();
