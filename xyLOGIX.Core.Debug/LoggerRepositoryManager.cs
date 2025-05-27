@@ -156,7 +156,7 @@ namespace xyLOGIX.Core.Debug
         /// such an object cannot be found.
         /// </returns>
         [return: NotLogged]
-        public static ILoggerRepository GetLoggerRepository()
+        internal static ILoggerRepository GetLoggerRepository()
         {
             ILoggerRepository result = default;
 
