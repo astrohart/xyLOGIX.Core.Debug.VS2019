@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public class TraceOutputLocation : OutputLocationBase
+    internal class TraceOutputLocation : OutputLocationBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this
@@ -33,7 +33,7 @@ namespace xyLOGIX.Core.Debug
         /// debugging output to the <b>Output</b> window in Visual Studio when running in
         /// Release mode.
         /// </summary>
-        public static IOutputLocation Instance { [DebuggerStepThrough] get; } =
+        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new TraceOutputLocation();
 
         /// <summary>
