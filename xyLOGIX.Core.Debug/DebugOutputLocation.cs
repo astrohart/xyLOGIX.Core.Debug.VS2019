@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public class DebugOutputLocation : OutputLocationBase
+    internal class DebugOutputLocation : OutputLocationBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this
@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
         /// </summary>
-        public static IOutputLocation Instance { [DebuggerStepThrough] get; } =
+        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new DebugOutputLocation();
 
         /// <summary>
