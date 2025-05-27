@@ -7,20 +7,18 @@ namespace xyLOGIX.Core.Debug
 {
     /// <summary> Class to manage access to the event log. </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public class EventLogManager : IEventLogManager
+    internal class EventLogManager : IEventLogManager
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static EventLogManager() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected EventLogManager()
         {
             // set defaults
@@ -43,7 +41,7 @@ namespace xyLOGIX.Core.Debug
         /// that
         /// manages our access to the Windows System Event Logs.
         /// </summary>
-        public static IEventLogManager Instance { [DebuggerStepThrough] get; } =
+        internal static IEventLogManager Instance { [DebuggerStepThrough] get; } =
             new EventLogManager();
 
         /// <summary>
