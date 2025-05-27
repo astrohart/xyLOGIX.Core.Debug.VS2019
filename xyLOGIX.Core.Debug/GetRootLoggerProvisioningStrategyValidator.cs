@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.IRootLoggerProvisioningStrategyValidator" />
     /// interface.
     /// </summary>
-    public static class GetRootLoggerProvisioningStrategyValidator
+    internal static class GetRootLoggerProvisioningStrategyValidator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -36,7 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IRootLoggerProvisioningStrategyValidator SoleInstance()
+        internal static IRootLoggerProvisioningStrategyValidator SoleInstance()
         {
             IRootLoggerProvisioningStrategyValidator result;
 
