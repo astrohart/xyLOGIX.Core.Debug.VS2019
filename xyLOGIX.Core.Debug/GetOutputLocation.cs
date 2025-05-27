@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// depending
     /// on the strategy desired.
     /// </summary>
-    public static class GetOutputLocation
+    internal static class GetOutputLocation
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -66,7 +66,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IOutputLocation OfType(OutputLocationType type)
+        internal static IOutputLocation OfType(OutputLocationType type)
         {
             IOutputLocation result = default;
 
