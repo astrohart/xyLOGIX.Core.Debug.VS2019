@@ -10,20 +10,9 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.Default" /> logging
     /// infrastructure type value.
     /// </summary>
-    public static class GetDefaultLoggingInfrastructure
+    [Log(AttributeExclude = true)]
+    internal static class GetDefaultLoggingInfrastructure
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed
-        /// once only for the
-        /// <see cref="T:xyLOGIX.Core.Debug.GetDefaultLoggingInfrastructure" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance
-        /// being created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetDefaultLoggingInfrastructure() { }
-
         /// <summary>
         /// Obtains access to the sole instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface, and
@@ -36,7 +25,7 @@ namespace xyLOGIX.Core.Debug
         /// infrastructure type value.
         /// </returns>
         [DebuggerStepThrough]
-        public static ILoggingInfrastructure SoleInstance()
+        internal static ILoggingInfrastructure SoleInstance()
         {
             ILoggingInfrastructure result;
 
