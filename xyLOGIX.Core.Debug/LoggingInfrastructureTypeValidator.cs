@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> enumeration.
     /// </summary>
-    public class
+    internal class
         LoggingInfrastructureTypeValidator : ILoggingInfrastructureTypeValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
@@ -28,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.ILoggingInfrastructureTypeValidator" />
         /// interface.
         /// </summary>
-        public static ILoggingInfrastructureTypeValidator Instance
+        internal static ILoggingInfrastructureTypeValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new LoggingInfrastructureTypeValidator();
