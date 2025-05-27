@@ -13,20 +13,19 @@ namespace xyLOGIX.Core.Debug
     /// reference to an instance of
     /// <see cref="T:log4net.Repository.Hierarchy.Hierarchy" />.
     /// </summary>
-    public class
+    [Log(AttributeExclude = true)]
+    internal class
         FromProvidedLoggingRepositoryRootLoggerProvisioner :
         RootLoggerProvisionerBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static FromProvidedLoggingRepositoryRootLoggerProvisioner() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected FromProvidedLoggingRepositoryRootLoggerProvisioner() { }
 
         /// <summary>
@@ -36,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         ///     cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.FromProvidedLoggingRepository" />
         /// root-logger provisioning strategy.
         /// </summary>
-        public static IRootLoggerProvisioner Instance
+        internal static IRootLoggerProvisioner Instance
         {
             [DebuggerStepThrough] get;
         } = new FromProvidedLoggingRepositoryRootLoggerProvisioner();
