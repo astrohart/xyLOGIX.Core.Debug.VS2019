@@ -10,18 +10,17 @@ namespace xyLOGIX.Core.Debug
     /// <c>Logging Configurator</c> file that sets up logging based on setting(s) that
     /// are found in an <c>app.config</c> or a <c>web.config</c> file.
     /// </summary>
-    public class FromConfigFileLoggingConfigurator : LoggingConfiguratorBase
+    [Log(AttributeExclude = true)]
+    internal class FromConfigFileLoggingConfigurator : LoggingConfiguratorBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static FromConfigFileLoggingConfigurator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected FromConfigFileLoggingConfigurator() { }
 
         /// <summary>
@@ -30,7 +29,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
         /// <c>Logging Configurator Type</c>.
         /// </summary>
-        public static ILoggingConfigurator Instance
+        internal static ILoggingConfigurator Instance
         {
             [DebuggerStepThrough] get;
         } = new FromConfigFileLoggingConfigurator();
