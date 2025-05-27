@@ -8,19 +8,9 @@ namespace xyLOGIX.Core.Debug
     /// Exposes <see langword="static" /> methods to get information on .NET
     /// assemblies.
     /// </summary>
-    public static class GetAssembly
+    [Log(AttributeExclude = true)]
+    internal static class GetAssembly
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetAssembly" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetAssembly() { }
-
         /// <summary>
         /// Obtains the fully-qualified pathname of the specified
         /// <paramref name="assembly" />.
@@ -36,7 +26,7 @@ namespace xyLOGIX.Core.Debug
         /// it could not be obtained, or if the argument of the
         /// <paramref name="assembly" /> parameter is a <see langword="null" /> reference.
         /// </returns>
-        public static string Pathname([NotLogged] Assembly assembly)
+        internal static string Pathname([NotLogged] Assembly assembly)
         {
             var result = string.Empty;
 
@@ -135,7 +125,7 @@ namespace xyLOGIX.Core.Debug
         /// <para />
         /// Failing that, then the assembly that called this method is used.
         /// </remarks>
-        public static Assembly ToUseForEventLogging(Assembly assembly)
+        internal static Assembly ToUseForEventLogging(Assembly assembly)
         {
             var result = assembly;
 
