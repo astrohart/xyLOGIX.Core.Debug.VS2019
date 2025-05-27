@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
     /// A <c>XML Logging Configurator</c> that relies on a particular <c>.config</c>
     /// file to contain the logging setting(s).
     /// </summary>
-    public class NoFileXmlLoggingConfigurator : XmlLoggingConfiguratorBase
+    internal class NoFileXmlLoggingConfigurator : XmlLoggingConfiguratorBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
@@ -33,7 +33,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.NoFile" />
         /// <c>XML Logging Configurator Type</c>.
         /// </summary>
-        public static IXmlLoggingConfigurator Instance
+        internal static IXmlLoggingConfigurator Instance
         {
             [DebuggerStepThrough]
             get;
