@@ -10,6 +10,10 @@ using System.Linq;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides access to a list of output locations for debugging. </summary>
+    /// <remarks>
+    /// This class must be exposed as part of the public API of the library,
+    /// so we are not marking it as having <see langword="internal" /> visibility here.
+    /// </remarks>
     [Log(AttributeExclude = true), Aggregatable, ExplicitlySynchronized]
     public class OutputLocationProvider : IOutputLocationProvider
     {
@@ -26,11 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// This constructor is called automatically prior to the first instance being
         /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
         /// </remarks>
-        [Log(AttributeExclude = true)]
         static OutputLocationProvider() { }
 
         /// <summary>
@@ -38,7 +38,6 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationProvider" /> and returns a
         /// reference to it.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected OutputLocationProvider()
             => InitializeInternalOutputLocationList();
 
@@ -222,18 +221,18 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** OutputLocationProvider.AddOutputLocation: Checking whether the Output Location specified is already a member of the internal collection..."
+                    "*** OutputLocationProvider.AddOutputLocation: Checking whether the Output Location specified is already a member of the public collection..."
                 );
 
                 // Check to see whether the Output Location specified
-                // is already a member of the internal collection.
+                // is already a member of the public collection.
                 // Otherwise, write an error message to the log file,
                 // and then terminate the execution of this method.
                 if (InternalOutputLocationList.Contains(location))
                 {
-                    // The Output Location specified is already a member of the internal collection.  This is not desirable.
+                    // The Output Location specified is already a member of the public collection.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The Output Location specified is already a member of the internal collection.  Stopping..."
+                        "*** ERROR *** The Output Location specified is already a member of the public collection.  Stopping..."
                     );
 
                     // stop.
@@ -241,11 +240,11 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "OutputLocationProvider.AddOutputLocation: *** SUCCESS *** The Output Location specified is NOT already a member of the internal collection.  Proceeding..."
+                    "OutputLocationProvider.AddOutputLocation: *** SUCCESS *** The Output Location specified is NOT already a member of the public collection.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Adding output location of type, '{location.Type}', to the internal collection..."
+                    $"*** FYI *** Adding output location of type, '{location.Type}', to the public collection..."
                 );
 
                 InternalOutputLocationList.Add(location);
@@ -267,7 +266,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to clear the internal collection..."
+                    "*** FYI *** Attempting to clear the public collection..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -325,8 +324,8 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 !HasLocations
-                    ? "*** SUCCESS *** Cleared all Output Location(s) from the internal collection.  Proceeding..."
-                    : "*** ERROR *** FAILED to clear all output location(s) from the internal collection.  Stopping..."
+                    ? "*** SUCCESS *** Cleared all Output Location(s) from the public collection.  Proceeding..."
+                    : "*** ERROR *** FAILED to clear all output location(s) from the public collection.  Stopping..."
             );
         }
 
@@ -344,7 +343,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
-        /// If the internal collection has zero <c>Output Location</c>(s)
+        /// If the public collection has zero <c>Output Location</c>(s)
         /// configured, then this method takes no action.
         /// </remarks>
         [Log(AttributeExclude = true)]
@@ -600,7 +599,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Adding the Console Output Location to the internal collection..."
+                    "*** FYI *** Adding the Console Output Location to the public collection..."
                 );
 
                 AddOutputLocation(consoleOutputLocation);
@@ -635,7 +634,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Adding the Debug Output Location to the internal collection..."
+                    "*** FYI *** Adding the Debug Output Location to the public collection..."
                 );
 
                 AddOutputLocation(debugOutputLocation);
@@ -670,13 +669,13 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Adding the Trace Output Location to the internal collection..."
+                    "*** FYI *** Adding the Trace Output Location to the public collection..."
                 );
 
                 AddOutputLocation(traceOutputLocation);
 
                 System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** DONE adding the Output Location(s) to the internal collection."
+                    "*** FYI *** DONE adding the Output Location(s) to the public collection."
                 );
             }
             catch (Exception ex)
