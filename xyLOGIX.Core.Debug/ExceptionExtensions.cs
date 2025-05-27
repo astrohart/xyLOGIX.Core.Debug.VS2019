@@ -9,22 +9,10 @@ namespace xyLOGIX.Core.Debug
     /// Exposes static extension methods in order to facilitate handling
     /// exceptions.
     /// </summary>
+    /// <remarks>This class is part of the publicly-exposed API of this library.</remarks>
+    [Log(AttributeExclude = true)]
     public static class ExceptionExtensions
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.ExceptionExtensions" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static ExceptionExtensions() { }
-
         /// <summary>
         /// Determines whether the <see cref="T:System.Type" /> of the specified
         /// <paramref name="exception" /> matches any of the specified
@@ -43,7 +31,6 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="types" /> array matches the type of the specified
         /// <paramref name="exception" />; <see langword="false" /> otherwise.
         /// </returns>
-        [Log(AttributeExclude = true)]
         public static bool IsAnyOf(
             this Exception exception,
             params Type[] types
