@@ -12,22 +12,9 @@ namespace xyLOGIX.Core.Debug
     /// Exposes <see langword="static" /> methods to activate functionality,
     /// such as logging.
     /// </summary>
-    public static class Activate
+    [Log(AttributeExclude = true)]
+    internal static class Activate
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.Activate" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static Activate() { }
-
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
@@ -57,7 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="true" /> if the operation(s) completed successfully;
         /// <see langword="false" /> otherwise.
         /// </returns>
-        public static bool LoggingForLogFileName(
+        internal static bool LoggingForLogFileName(
             string logFileName,
             ILoggerRepository repository
         )
