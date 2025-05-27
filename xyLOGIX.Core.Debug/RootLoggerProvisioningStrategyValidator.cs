@@ -8,19 +8,18 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration.
     /// </summary>
-    public class
+    [Log(AttributeExclude = true)]
+    internal class
         RootLoggerProvisioningStrategyValidator :
         IRootLoggerProvisioningStrategyValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
-        [Log(AttributeExclude = true)]
         static RootLoggerProvisioningStrategyValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected RootLoggerProvisioningStrategyValidator() { }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         ///     cref="T:xyLOGIX.Core.Debug.Interfaces.IRootLoggerProvisioningStrategyValidator" />
         /// interface.
         /// </summary>
-        public static IRootLoggerProvisioningStrategyValidator Instance
+        internal static IRootLoggerProvisioningStrategyValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new RootLoggerProvisioningStrategyValidator();
