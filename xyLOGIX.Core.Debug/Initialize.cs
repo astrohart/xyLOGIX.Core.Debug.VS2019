@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Exposes <see langword="static" /> methods to initialize data. </summary>
-    public static class Initialize
+    internal static class Initialize
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only for the <see cref="T:xyLOGIX.Core.Debug.Initialize"/> class.
@@ -37,7 +37,7 @@ namespace xyLOGIX.Core.Debug
         /// framework, such as <c>log4net</c> or <c>PostSharp</c> etc.
         /// </remarks>
         [DebuggerStepThrough]
-        public static bool Logging(string applicationName)
+        internal static bool Logging(string applicationName)
         {
             var success = true; // successful unless found otherwise
 
