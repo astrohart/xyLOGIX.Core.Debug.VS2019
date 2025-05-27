@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.Programmatic" />
     /// <c>Logging Configurator Type</c>.
     /// </summary>
-    public static class GetProgrammaticLoggingConfigurator
+    internal static class GetProgrammaticLoggingConfigurator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -37,7 +37,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ILoggingConfigurator SoleInstance()
+        internal static ILoggingConfigurator SoleInstance()
         {
             ILoggingConfigurator result;
 
