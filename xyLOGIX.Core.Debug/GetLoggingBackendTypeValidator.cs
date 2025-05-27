@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Provides access to the one and only instance of the object that implements the
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingBackendTypeValidator" /> interface.
     /// </summary>
-    public static class GetLoggingBackendTypeValidator
+    internal static class GetLoggingBackendTypeValidator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -33,7 +33,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ILoggingBackendTypeValidator SoleInstance()
+        internal static ILoggingBackendTypeValidator SoleInstance()
         {
             ILoggingBackendTypeValidator result;
 
