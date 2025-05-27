@@ -11,19 +11,9 @@ namespace xyLOGIX.Core.Debug
     /// directs debugging output to the standard output of the application and/or a
     /// console window, if present.
     /// </summary>
-    public static class GetConsoleOutputLocation
+    [Log(AttributeExclude = true)]
+    internal static class GetConsoleOutputLocation
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetConsoleOutputLocation" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetConsoleOutputLocation() { }
-
         /// <summary>
         /// Obtains access to the sole instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface, and returns a
@@ -38,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IOutputLocation SoleInstance()
+        internal static IOutputLocation SoleInstance()
         {
             IOutputLocation result;
 
