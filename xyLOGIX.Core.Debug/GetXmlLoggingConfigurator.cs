@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.IXmlLoggingConfigurator" /> interface that
     /// change depending on the strategy desired.
     /// </summary>
-    public static class GetXmlLoggingConfigurator
+    internal static class GetXmlLoggingConfigurator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -66,7 +66,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IXmlLoggingConfigurator For(
+        internal static IXmlLoggingConfigurator For(
             XmlLoggingConfiguratorType type
         )
         {
