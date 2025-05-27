@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     /// <remarks>This class is part of the publicly-exposed API of this library.</remarks>
     [Log(AttributeExclude = true)]
+    [ExplicitlySynchronized]
     public static class ExceptionExtensions
     {
         /// <summary>
