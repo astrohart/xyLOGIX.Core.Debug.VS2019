@@ -9,25 +9,24 @@ namespace xyLOGIX.Core.Debug
     /// Defines the publicly-exposed events, methods and properties of a
     /// <c>Logging Configurator</c> file that sets up logging purely programmatically.
     /// </summary>
-    public class ProgrammaticLoggingConfigurator : LoggingConfiguratorBase
+    [Log(AttributeExclude = true)]
+    internal class ProgrammaticLoggingConfigurator : LoggingConfiguratorBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static ProgrammaticLoggingConfigurator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected ProgrammaticLoggingConfigurator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface.
         /// </summary>
-        public static ILoggingConfigurator Instance
+        internal static ILoggingConfigurator Instance
         {
             [DebuggerStepThrough] get;
         } = new ProgrammaticLoggingConfigurator();
