@@ -5,22 +5,9 @@ using System.IO;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Methods to delete files and folders. </summary>
-    public static class Delete
+    [Log(AttributeExclude = true)]
+    internal static class Delete
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.Delete" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static Delete() { }
-
         /// <summary>
         /// Deletes the file having the specified <paramref name="pathname" />, if
         /// it exists.
@@ -43,7 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="pathname" /> was found on the file system and successfully
         /// deleted; <see langword="false" /> otherwise.
         /// </returns>
-        public static bool FileIfExists([NotLogged] string pathname)
+        internal static bool FileIfExists([NotLogged] string pathname)
         {
             var result = false;
 
@@ -134,7 +121,7 @@ namespace xyLOGIX.Core.Debug
         /// This method also takes no action if the file having the specified
         /// <paramref name="pathname" /> does not already exist on the file system.
         /// </remarks>
-        public static void LogFile([NotLogged] string pathname)
+        internal static void LogFile([NotLogged] string pathname)
         {
             try
             {
