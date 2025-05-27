@@ -11,18 +11,17 @@ namespace xyLOGIX.Core.Debug
     /// attempts to return the value of such, ignoring any provided reference to a
     /// <c>Logging Repository</c>.
     /// </summary>
-    public class FromLogManagerRootLoggerProvisioner : RootLoggerProvisionerBase
+    [Log(AttributeExclude = true)]
+    internal class FromLogManagerRootLoggerProvisioner : RootLoggerProvisionerBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static FromLogManagerRootLoggerProvisioner() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected FromLogManagerRootLoggerProvisioner() { }
 
         /// <summary>
@@ -31,7 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.FromLogManager" />
         /// root-logger provisioning strategy.
         /// </summary>
-        public static IRootLoggerProvisioner Instance
+        internal static IRootLoggerProvisioner Instance
         {
             [DebuggerStepThrough] get;
         } = new FromLogManagerRootLoggerProvisioner();
