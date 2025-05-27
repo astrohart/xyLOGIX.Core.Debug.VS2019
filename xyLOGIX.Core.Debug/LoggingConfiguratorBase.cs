@@ -7,7 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all
     /// <c>Logging Configurator</c> object(s).
     /// </summary>
-    public abstract class LoggingConfiguratorBase : ILoggingConfigurator
+    internal abstract class LoggingConfiguratorBase : ILoggingConfigurator
     {
         /// <summary>
         /// Gets or sets one of the
