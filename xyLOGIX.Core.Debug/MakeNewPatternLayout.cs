@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:log4net.Layout.PatternLayout" /> that are initialized properly,
     /// and return a reference to them.
     /// </summary>
-    public static class MakeNewPatternLayout
+    internal static class MakeNewPatternLayout
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -49,7 +49,7 @@ namespace xyLOGIX.Core.Debug
         /// the specified <paramref name="conversionPattern" />; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        public static PatternLayout HavingConversionPattern(
+        internal static PatternLayout HavingConversionPattern(
             string conversionPattern
         )
         {
