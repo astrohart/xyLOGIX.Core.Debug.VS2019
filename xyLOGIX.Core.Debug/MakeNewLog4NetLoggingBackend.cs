@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
     /// class, and return references to them.
     /// </summary>
-    public static class MakeNewLog4NetLoggingBackend
+    internal static class MakeNewLog4NetLoggingBackend
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -52,7 +52,7 @@ namespace xyLOGIX.Core.Debug
         /// initialized with the specified <paramref name="relay" />; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        public static Log4NetLoggingBackend ForRelay(
+        internal static Log4NetLoggingBackend ForRelay(
             [NotLogged] ILoggerRepository relay
         )
         {
@@ -117,7 +117,7 @@ namespace xyLOGIX.Core.Debug
         ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
         /// .
         /// </returns>
-        public static Log4NetLoggingBackend FromScratch()
+        internal static Log4NetLoggingBackend FromScratch()
         {
             Log4NetLoggingBackend result = default;
 
