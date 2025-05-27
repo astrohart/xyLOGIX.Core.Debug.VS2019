@@ -10,20 +10,9 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
     /// <c>Logging Configurator Type</c>.
     /// </summary>
-    public static class GetFromConfigFileLoggingConfigurator
+    [Log(AttributeExclude = true)]
+    internal static class GetFromConfigFileLoggingConfigurator
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed
-        /// once only for the
-        /// <see cref="T:xyLOGIX.Core.Debug.GetFromConfigFileLoggingConfigurator" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance
-        /// being created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetFromConfigFileLoggingConfigurator() { }
-
         /// <summary>
         /// Obtains access to the sole instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface, and returns
@@ -37,7 +26,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ILoggingConfigurator SoleInstance()
+        internal static ILoggingConfigurator SoleInstance()
         {
             ILoggingConfigurator result;
 
