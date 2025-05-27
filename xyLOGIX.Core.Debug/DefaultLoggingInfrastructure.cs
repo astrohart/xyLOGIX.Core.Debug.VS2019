@@ -15,7 +15,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public class DefaultLoggingInfrastructure : ILoggingInfrastructure
+    internal class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary>
         /// A <see cref="T:System.String" /> that contains the fully-qualified pathname of
@@ -41,7 +41,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.Default" /> logging
         /// infrastructure type value.
         /// </summary>
-        public static ILoggingInfrastructure Instance
+        internal static ILoggingInfrastructure Instance
         {
             [DebuggerStepThrough] get;
         } = new DefaultLoggingInfrastructure();
