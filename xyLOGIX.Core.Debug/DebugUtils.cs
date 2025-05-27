@@ -17,6 +17,9 @@ using xyLOGIX.Core.Debug.Properties;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Helpers to manage the writing of content to the debugging log. </summary>
+    /// <remarks>
+    /// This class is one of the main object(s) exposed by this library.
+    /// </remarks>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     public static class DebugUtils
     {
@@ -281,9 +284,9 @@ namespace xyLOGIX.Core.Debug
                  * to see the exception message and stack trace in the console window, and then decide
                  * whether to launch the debugger or not.
                  */
-                if (!Split.CommandLine(Environment.CommandLine)
-                          .Contains(CommandLineParameter.HaltOnException) &
-                    !Debugger.IsAttached) return result;
+                if (!Environment.CommandLine.Contains(
+                        CommandLineParameter.HaltOnException
+                    ) & !Debugger.IsAttached) return result;
 
                 /*
                  * ALWAYS stop for Assertion Exceptions.
