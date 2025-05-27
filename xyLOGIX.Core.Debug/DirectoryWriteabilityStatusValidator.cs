@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -8,20 +9,20 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus" /> enumeration.
     /// </summary>
-    public class
+    [Log(AttributeExclude = true)]
+    internal class
         DirectoryWriteabilityStatusValidator :
         IDirectoryWriteabilityStatusValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
-        [Log(AttributeExclude = true)]
         static DirectoryWriteabilityStatusValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
-        protected DirectoryWriteabilityStatusValidator() { }
+        protected DirectoryWriteabilityStatusValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -29,9 +30,10 @@ namespace xyLOGIX.Core.Debug
         ///     cref="T:xyLOGIX.Core.Debug.Interfaces.IDirectoryWriteabilityStatusValidator" />
         /// interface.
         /// </summary>
-        public static IDirectoryWriteabilityStatusValidator Instance
+        internal static IDirectoryWriteabilityStatusValidator Instance
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = new DirectoryWriteabilityStatusValidator();
 
         /// <summary>
@@ -78,7 +80,7 @@ namespace xyLOGIX.Core.Debug
                     $"DirectoryWriteabilityStatusValidator.IsValid: Checking whether the value of the 'status' parameter, i.e., '{status}', is within the defined value set of its enumerated data type..."
                 );
 
-                // Check whether the value of the 'status' parameter is within the defined value set of its 
+                // Check whether the value of the 'status' parameter is within the defined value set of its
                 // enumeration data type.  If this is not the case, then write an error message to the log
                 // file, and then terminate the execution of this method while returning the default return
                 // value.
@@ -137,7 +139,7 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                 // dump all the exception info to the Debug output.
+                // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
 
                 result = false;
