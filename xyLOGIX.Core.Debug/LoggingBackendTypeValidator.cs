@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration.
     /// </summary>
-    public class LoggingBackendTypeValidator : ILoggingBackendTypeValidator
+    internal class LoggingBackendTypeValidator : ILoggingBackendTypeValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
         [Log(AttributeExclude = true)]
@@ -27,7 +27,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.ILoggingBackendTypeValidator" />
         /// interface.
         /// </summary>
-        public static ILoggingBackendTypeValidator Instance
+        internal static ILoggingBackendTypeValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new LoggingBackendTypeValidator();
