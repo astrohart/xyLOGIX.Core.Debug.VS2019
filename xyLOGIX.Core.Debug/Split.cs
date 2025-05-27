@@ -10,22 +10,9 @@ namespace xyLOGIX.Core.Debug
     /// Provides methods for splitting <see cref="T:System.String" /> value(s) into
     /// array(s) of argument(s)
     /// </summary>
-    public static class Split
+    [Log(AttributeExclude = true)]
+    internal static class Split
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.Split" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static Split() { }
-
         /// <summary>
         /// Gets a reference to an instance of
         /// <see cref="T:System.Text.RegularExpressions.Regex" /> that is a regular
@@ -60,7 +47,7 @@ namespace xyLOGIX.Core.Debug
         /// Unquoted arguments are split on spaces.
         /// </remarks>
         [return: NotLogged]
-        public static string[] CommandLine([NotLogged] string commandLine)
+        internal static string[] CommandLine([NotLogged] string commandLine)
         {
             var result = Array.Empty<string>();
 
