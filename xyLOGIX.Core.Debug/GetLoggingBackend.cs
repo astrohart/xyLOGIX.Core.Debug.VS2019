@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" />
     /// enumeration value.
     /// </summary>
-    public static class GetLoggingBackend
+    internal static class GetLoggingBackend
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -57,7 +57,7 @@ namespace xyLOGIX.Core.Debug
         /// to the provided <paramref name="type" /> and/or <paramref name="relay" />
         /// values.
         /// </returns>
-        public static LoggingBackend For(
+        internal static LoggingBackend For(
             LoggingBackendType type,
             [NotLogged] ILoggerRepository relay = null
         )
