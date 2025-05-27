@@ -13,8 +13,8 @@ namespace xyLOGIX.Core.Debug
     /// Manages the collection of <c>Appender</c>s that are currently in use with the
     /// logging subsystem.
     /// </summary>
-    [ExplicitlySynchronized]
-    public class AppenderManager : IAppenderManager
+    [ExplicitlySynchronized, Log(AttributeExclude = true)]
+    internal class AppenderManager : IAppenderManager
     {
         /// <summary>
         /// Collection mapping a <see cref="T:System.String" /> containing a log file
@@ -124,8 +124,8 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to the one and only instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </summary>
-        public static IAppenderManager Instance { [DebuggerStepThrough] get; } =
-            new AppenderManager();
+        internal static IAppenderManager
+            Instance { [DebuggerStepThrough] get; } = new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
