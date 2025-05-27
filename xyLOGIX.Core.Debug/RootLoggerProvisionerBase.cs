@@ -10,19 +10,9 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all
     /// <c>Root Logger Provisioner</c> object(s).
     /// </summary>
-    public abstract class RootLoggerProvisionerBase : IRootLoggerProvisioner
+    [Log(AttributeExclude = true)]
+    internal abstract class RootLoggerProvisionerBase : IRootLoggerProvisioner
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisionerBase" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static RootLoggerProvisionerBase() { }
-
         /// <summary>
         /// Initializes a new instance of
         /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisionerBase" /> and returns a
@@ -32,7 +22,6 @@ namespace xyLOGIX.Core.Debug
         /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
         /// due to the fact that this class is marked <see langword="abstract" />.
         /// </remarks>
-        [Log(AttributeExclude = true)]
         protected RootLoggerProvisionerBase()
         { }
 
