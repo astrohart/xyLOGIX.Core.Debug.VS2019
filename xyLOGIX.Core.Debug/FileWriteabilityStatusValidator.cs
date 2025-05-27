@@ -8,18 +8,17 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration.
     /// </summary>
-    public class
+    [Log(AttributeExclude = true)]
+    internal class
         FileWriteabilityStatusValidator : IFileWriteabilityStatusValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
-        [Log(AttributeExclude = true)]
         static FileWriteabilityStatusValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected FileWriteabilityStatusValidator()
         { }
 
@@ -29,7 +28,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IFileWriteabilityStatusValidator" />
         /// interface.
         /// </summary>
-        public static IFileWriteabilityStatusValidator Instance
+        internal static IFileWriteabilityStatusValidator Instance
         {
             [DebuggerStepThrough]
             get;
