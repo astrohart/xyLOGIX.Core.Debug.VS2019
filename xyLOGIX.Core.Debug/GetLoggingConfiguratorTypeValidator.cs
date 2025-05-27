@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfiguratorTypeValidator" />
     /// interface.
     /// </summary>
-    public static class GetLoggingConfiguratorTypeValidator
+    internal static class GetLoggingConfiguratorTypeValidator
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ILoggingConfiguratorTypeValidator SoleInstance()
+        internal static ILoggingConfiguratorTypeValidator SoleInstance()
         {
             ILoggingConfiguratorTypeValidator result;
 
