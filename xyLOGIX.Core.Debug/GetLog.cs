@@ -6,10 +6,10 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Gets data used for logging. </summary>
-    public static class GetLog
+    internal static class GetLog
     {
         /// <summary> String containing the pattern to use for the name of the log file. </summary>
-        public static readonly string FileName =
+        internal static readonly string FileName =
             $"dd_{SetLog.ApplicationName}_Run_{Guid.NewGuid():N}_{DateTime.Now:yyyyMMMddHHmmss}_log.txt";
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a string that contains the fully-qualified pathname of the
         /// current user's temporary files folder.
         /// </summary>
-        public static string FileFolder
+        internal static string FileFolder
         {
             [DebuggerStepThrough]
             get
@@ -54,7 +54,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a string containing the fully-qualified pathname to use for the
         /// current log file.
         /// </summary>
-        public static string FilePath
+        internal static string FilePath
         {
             [DebuggerStepThrough]
             get
