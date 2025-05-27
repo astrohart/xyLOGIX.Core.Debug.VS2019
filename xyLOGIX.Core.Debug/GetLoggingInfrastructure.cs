@@ -8,7 +8,7 @@ namespace xyLOGIX.Core.Debug
     /// Creates instances of objects that implement the
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface.
     /// </summary>
-    public static class GetLoggingInfrastructure
+    internal static class GetLoggingInfrastructure
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -50,7 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ILoggingInfrastructure OfType(
+        internal static ILoggingInfrastructure OfType(
             LoggingInfrastructureType type
         )
         {
