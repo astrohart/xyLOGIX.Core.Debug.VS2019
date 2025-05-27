@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     ///     cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.FromProvidedLoggingRepository" />
     /// root-logger provisioning strategy.
     /// </summary>
-    public static class GetFromProvidedLoggingRepositoryRootLoggerProvisioner
+    internal static class GetFromProvidedLoggingRepositoryRootLoggerProvisioner
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -40,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IRootLoggerProvisioner SoleInstance()
+        internal static IRootLoggerProvisioner SoleInstance()
         {
             IRootLoggerProvisioner result;
 
