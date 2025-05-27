@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Console.ConsoleLoggingBackend" />
     /// class, and return references to them.
     /// </summary>
-    public static class MakeNewConsoleLoggingBackend
+    internal static class MakeNewConsoleLoggingBackend
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -41,7 +41,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ConsoleLoggingBackend FromScratch()
+        internal static ConsoleLoggingBackend FromScratch()
         {
             PostSharp.Patterns.Diagnostics.Backends.Console.ConsoleLoggingBackend result = default;
 
