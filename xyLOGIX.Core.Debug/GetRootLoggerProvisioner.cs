@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.IRootLoggerProvisioner" /> interface that
     /// change depending on the strategy desired.
     /// </summary>
-    public static class GetRootLoggerProvisioner
+    internal static class GetRootLoggerProvisioner
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -68,7 +68,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IRootLoggerProvisioner For(
+        internal static IRootLoggerProvisioner For(
             RootLoggerProvisioningStrategy strategy
         )
         {
