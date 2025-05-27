@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// Provides methods to access objects of type
     /// <see cref="T:log4net.Hierarchy.Repository.Logger" /> from log4net.
     /// </summary>
-    public static class LoggerManager
+    internal static class LoggerManager
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -49,7 +49,7 @@ namespace xyLOGIX.Core.Debug
         /// <c>Root Logger</c> component that is to be used, if found; a
         /// <see langword="null" /> reference is returned otherwise.
         /// </returns>
-        public static Logger GetRootLogger(
+        internal static Logger GetRootLogger(
             [NotLogged] ILoggerRepository loggerRepository = null
         )
         {
