@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// location objects.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public abstract class OutputLocationBase : IOutputLocation
+    internal abstract class OutputLocationBase : IOutputLocation
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
