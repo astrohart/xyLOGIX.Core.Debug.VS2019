@@ -9,22 +9,9 @@ namespace xyLOGIX.Core.Debug
     /// Provides methods to access instances of objects of type
     /// <see cref="T:log4net.Appender.FileAppender" />.
     /// </summary>
-    public static class FileAppenderManager
+    [Log(AttributeExclude = true)]
+    internal static class FileAppenderManager
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.FileAppenderManager" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static FileAppenderManager() { }
-
         /// <summary>
         /// Attempts to obtain a reference to an instance of
         /// <see cref="T:log4net.Appender.FileAppender" /> that is configured under a
@@ -45,7 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// a <see cref="T:log4net.Appender.FileAppender" /> instance that corresponds to
         /// the entry; otherwise, <see langword="null" /> is returned.
         /// </returns>
-        public static FileAppender GetAppenderByName([NotLogged] string name)
+        internal static FileAppender GetAppenderByName([NotLogged] string name)
         {
             FileAppender result = default;
 
@@ -147,7 +134,7 @@ namespace xyLOGIX.Core.Debug
         /// repository. If a suitable appender can still not be located, then the return
         /// value of this method is <see langword="null" />.
         /// </remarks>
-        public static FileAppender GetFirstAppender(
+        internal static FileAppender GetFirstAppender(
             [NotLogged] ILoggerRepository loggerRepository = null
         )
         {
