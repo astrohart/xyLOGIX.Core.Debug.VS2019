@@ -11,7 +11,8 @@ namespace xyLOGIX.Core.Debug
     /// Defines the events, methods, properties, and behaviors for all
     /// <c>Rolling File Appender Configuration Validator</c> class(es).
     /// </summary>
-    public abstract class
+    [Log(AttributeExclude = true)]
+    internal abstract class
         RollingFileAppenderConfigurationValidatorBase :
         IRollingFileAppenderConfigurationValidator
     {
@@ -36,7 +37,6 @@ namespace xyLOGIX.Core.Debug
         /// This constructor is called automatically prior to the first instance being
         /// created or before any static members are referenced.
         /// </remarks>
-        [Log(AttributeExclude = true)]
         static RollingFileAppenderConfigurationValidatorBase() { }
 
         /// <summary>
@@ -48,7 +48,6 @@ namespace xyLOGIX.Core.Debug
         /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
         /// due to the fact that this class is marked <see langword="abstract" />.
         /// </remarks>
-        [Log(AttributeExclude = true)]
         protected RollingFileAppenderConfigurationValidatorBase() { }
 
         /// <summary>
