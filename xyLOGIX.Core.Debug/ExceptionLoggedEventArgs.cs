@@ -6,23 +6,9 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>ExceptionLogged</c> event handlers. </summary>
-    [ExplicitlySynchronized]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]    
     public class ExceptionLoggedEventArgs : EventArgs
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.ExceptionLoggedEventArgs" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static ExceptionLoggedEventArgs() { }
-
         /// <summary>
         /// Constructs a new instance of
         /// <see cref="T:xyLOGIX.Core.Debug.ExceptionLoggedEventArgs" /> and returns a
@@ -32,7 +18,6 @@ namespace xyLOGIX.Core.Debug
         /// (Required.) Reference to an instance of the
         /// <see cref="T:System.Exception" /> that was logged.
         /// </param>
-        [Log(AttributeExclude = true)]
         public ExceptionLoggedEventArgs([NotLogged] Exception exception)
             => Exception = exception;
 
