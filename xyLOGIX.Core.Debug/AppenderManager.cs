@@ -27,14 +27,13 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static AppenderManager() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this class.
         /// </summary>
-        [Log(AttributeExclude = true)]
-        protected AppenderManager() { }
+        protected AppenderManager()
+        { }
 
         /// <summary>
         /// Gets the count of appenders in the internal collection.
@@ -125,7 +124,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </summary>
         internal static IAppenderManager
-            Instance { [DebuggerStepThrough] get; } = new AppenderManager();
+            Instance
+        { [DebuggerStepThrough] get; } = new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
