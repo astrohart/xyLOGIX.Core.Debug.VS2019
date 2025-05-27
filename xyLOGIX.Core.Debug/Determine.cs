@@ -11,22 +11,9 @@ namespace xyLOGIX.Core.Debug
     /// Exposes static methods to determine whether program flow is to follow a given
     /// path based on data, or other value(s) that are dependent on yet other data.
     /// </summary>
+    [Log(AttributeExclude = true)]
     public static class Determine
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.Determine" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// <para />
-        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
-        /// attribute in order to simplify the logging output.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static Determine() { }
-
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
@@ -57,7 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
         /// value is returned.
         /// </returns>
-        public static LoggingConfiguratorType LoggingConfiguratorTypeToUse(
+        internal static LoggingConfiguratorType LoggingConfiguratorTypeToUse(
             string logFileName
         )
         {
@@ -119,32 +106,6 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines which of the
-        /// <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" /> enumeration value(s)
-        /// are to be used for accessing an <c>Appender</c>, based on whether an
-        /// <c>Appender</c> is already present for the specified
-        /// <paramref name="logFilePath" />.
-        /// </summary>
-        /// <param name="logFilePath">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a log file.
-        /// </param>
-        /// <returns>
-        /// One of the <see cref="T:xyLOGIX.Core.Debug.AppenderRetrievalMode" />
-        /// enumeration value(s) that is to be used for accessing an <c>Appender</c>, based
-        /// on whether an <c>Appender</c> is already present for the specified
-        /// <paramref name="logFilePath" />, or
-        /// <see cref="F:xyLOGIX.Core.Debug.AppenderRetrievalMode.Unknown" /> if the
-        /// determination cannot be made.
-        /// </returns>
-        public static AppenderRetrievalMode TheAppenderRetrievalModeToUse(
-            [NotLogged] string logFilePath
-        )
-        {
-            return AppenderRetrievalMode.CreateNew;
-        }
-
-        /// <summary>
         /// Attempts to determine which of the
         /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
         /// value(s) most likely pertain to the situation at hand.
@@ -164,7 +125,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.Unknown" /> if
         /// such a value cannot be ascertained.
         /// </returns>
-        public static RootLoggerProvisioningStrategy
+        internal static RootLoggerProvisioningStrategy
             TheRootLoggerProvisioningStrategyToUse(
                 ILoggerRepository loggerRepository = null
             )
@@ -273,7 +234,7 @@ namespace xyLOGIX.Core.Debug
         /// returned.
         /// </returns>
         [DebuggerStepThrough]
-        public static XmlLoggingConfiguratorType
+        internal static XmlLoggingConfiguratorType
             XmlLoggingConfiguratorTypeToUse(
                 [NotLogged] string configurationFileName
             )
