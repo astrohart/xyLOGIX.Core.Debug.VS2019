@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
     /// path based on data, or other value(s) that are dependent on yet other data.
     /// </summary>
     [Log(AttributeExclude = true)]
-    public static class Determine
+    internal static class Determine
     {
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
