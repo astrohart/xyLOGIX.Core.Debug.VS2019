@@ -10,26 +10,16 @@ namespace xyLOGIX.Core.Debug
     /// Exposes <see langword="static" /> methods for interacting with the
     /// Windows Event Log.
     /// </summary>
-    public static class GetEvent
+    [Log(AttributeExclude = true)]
+    internal static class GetEvent
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetEvent" /> class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetEvent() { }
-
         /// <summary>
         /// Attempts to obtain a user-friendly display name for the event-logging
         /// quote, based on the name of the application that is calling this debug logging
         /// library.
         /// </summary>
         /// <returns></returns>
-        public static string SourceName()
+        internal static string SourceName()
         {
             var result = string.Empty;
 
