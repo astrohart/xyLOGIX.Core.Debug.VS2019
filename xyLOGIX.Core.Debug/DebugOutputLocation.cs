@@ -17,14 +17,12 @@ namespace xyLOGIX.Core.Debug
         /// Empty, static constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static DebugOutputLocation() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected DebugOutputLocation() { }
 
         /// <summary>
