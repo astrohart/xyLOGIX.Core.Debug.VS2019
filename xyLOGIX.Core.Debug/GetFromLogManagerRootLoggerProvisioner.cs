@@ -9,21 +9,9 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.FromLogManager" />
     /// root-logger provisioning strategy.
     /// </summary>
-    public static class GetFromLogManagerRootLoggerProvisioner
+    [Log(AttributeExclude = true)]
+    internal static class GetFromLogManagerRootLoggerProvisioner
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed
-        /// once only for the
-        /// <see cref="T:xyLOGIX.Core.Debug.GetFromLogManagerRootLoggerProvisioner" />
-        /// class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance
-        /// being created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetFromLogManagerRootLoggerProvisioner() { }
-
         /// <summary>
         /// Obtains access to the sole instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IRootLoggerProvisioner" /> interface, and
@@ -36,7 +24,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IRootLoggerProvisioner SoleInstance()
+        internal static IRootLoggerProvisioner SoleInstance()
         {
             IRootLoggerProvisioner result;
 
