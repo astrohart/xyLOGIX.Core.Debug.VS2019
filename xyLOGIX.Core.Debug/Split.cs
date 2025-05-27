@@ -53,10 +53,37 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "Split.CommandLine *** INFO: Checking whether the value of the parameter, 'commandLine', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'commandLine', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
                 if (string.IsNullOrWhiteSpace(commandLine))
+                {
+                    // The parameter, 'commandLine' was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Split.CommandLine: The parameter, 'commandLine' was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Split.CommandLine: Result = '{result}'"
+                    );
+
+                    // stop.
                     return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter 'commandLine' is not blank.  Proceeding..."
+                );
 
                 var args = new AdvisableCollection<string>();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Split.CommandLine *** INFO: Splitting the command line into arguments..."
+                );
 
                 foreach (Match match in CommandLineRegex.Matches(commandLine))
                 {
@@ -66,7 +93,31 @@ namespace xyLOGIX.Core.Debug
                     args.Add(arg);
                 }
 
-                if (args.Count <= 0) return result;
+                System.Diagnostics.Debug.WriteLine(
+                    "*** Split.CommandLine: Checking whether the 'args' collection contains greater than zero elements..."
+                );
+
+                // Check to see whether the 'args' collection contains greater than
+                // zero elements.  Otherwise, write an error message to the Debug output, return
+                // the default return value, and then terminate the execution of this method.
+                if (args.Count <= 0)
+                {
+                    // The 'args' collection contains zero elements.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The 'args' collection contains zero elements.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Split.CommandLine: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Split.CommandLine: *** SUCCESS *** {args.Count} element(s) were found in the 'args' collection.  Proceeding..."
+                );
 
                 result = args.ToArray();
             }
@@ -74,6 +125,10 @@ namespace xyLOGIX.Core.Debug
             {
                 result = Array.Empty<string>();
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Split.CommandLine: Result = '{result}'"
+            );
 
             return result;
         }
