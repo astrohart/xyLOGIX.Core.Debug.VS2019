@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:System.Diagnostics.Trace" /> class' methods.
     /// </summary>
     [Log(AttributeExclude = true)]
-    public static class GetTraceOutputLocation
+    internal static class GetTraceOutputLocation
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -41,7 +41,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static IOutputLocation SoleInstance()
+        internal static IOutputLocation SoleInstance()
         {
             IOutputLocation result;
 
