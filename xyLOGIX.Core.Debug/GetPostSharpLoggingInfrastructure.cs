@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
     /// infrastructure type value.
     /// </summary>
-    public static class GetPostSharpLoggingInfrastructure
+    internal static class GetPostSharpLoggingInfrastructure
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed
@@ -37,7 +37,7 @@ namespace xyLOGIX.Core.Debug
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
-        public static ILoggingInfrastructure SoleInstance()
+        internal static ILoggingInfrastructure SoleInstance()
         {
             ILoggingInfrastructure result;
 
