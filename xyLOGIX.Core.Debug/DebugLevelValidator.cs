@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -8,17 +9,16 @@ namespace xyLOGIX.Core.Debug
     /// Validates whether certain value(s) are within the defined value set of the
     /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration.
     /// </summary>
-    public class DebugLevelValidator : IDebugLevelValidator
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
+    internal class DebugLevelValidator : IDebugLevelValidator
     {
         /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
-        [Log(AttributeExclude = true)]
         static DebugLevelValidator() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected DebugLevelValidator() { }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace xyLOGIX.Core.Debug
         /// implements the
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IDebugLevelValidator" /> interface.
         /// </summary>
-        public static IDebugLevelValidator Instance
+        internal static IDebugLevelValidator Instance
         {
             [DebuggerStepThrough] get;
         } = new DebugLevelValidator();
