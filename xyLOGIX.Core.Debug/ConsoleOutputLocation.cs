@@ -10,20 +10,18 @@ namespace xyLOGIX.Core.Debug
     /// and/or a console window, if present.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    public class ConsoleOutputLocation : OutputLocationBase
+    internal class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>
         /// Empty, static constructor to prohibit direct allocation of
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         static ConsoleOutputLocation() { }
 
         /// <summary>
         /// Empty, protected constructor to prohibit direct allocation of the
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
-        [Log(AttributeExclude = true)]
         protected ConsoleOutputLocation() { }
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// that directs debugging output to the standard output of the application and/or
         /// a console window, if present.
         /// </summary>
-        public static IOutputLocation Instance { [DebuggerStepThrough] get; } =
+        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new ConsoleOutputLocation();
 
         /// <summary>
