@@ -167,8 +167,7 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Attempting to get the first File Appender from the relay..."
                 );
 
-                var firstAppender =
-                    FileAppenderManager.GetFirstAppender(_relay);
+                var firstAppender = GetFirstFileAppender(_relay);
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the variable, 'firstAppender', has a null reference for a value..."
