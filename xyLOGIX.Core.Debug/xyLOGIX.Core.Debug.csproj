@@ -212,6 +212,7 @@
     <Compile Include="MakeNewPatternLayout.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
+    <Compile Include="ContextAwareBackend.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
     <Compile Include="OutputLocationBase.cs" />
     <Compile Include="OutputLocationProvider.cs" />
