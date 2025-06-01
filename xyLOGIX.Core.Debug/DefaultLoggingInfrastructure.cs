@@ -1,4 +1,5 @@
-﻿using log4net.Repository;
+﻿using log4net.Appender;
+using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Console;
 using PostSharp.Patterns.Threading;
@@ -18,6 +19,17 @@ namespace xyLOGIX.Core.Debug
     internal class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary>
+        /// Represents the first file appender used for logging operations.
+        /// </summary>
+        /// <remarks>
+        /// This field is intended for internal use only and holds a reference to the
+        /// primary
+        /// <see cref="T:log4net.Appender.FileAppender" /> instance. It is initialized to
+        /// its default value.
+        /// </remarks>
+        private FileAppender _firstFileAppender;
+
+        /// <summary>
         /// A <see cref="T:System.String" /> that contains the fully-qualified pathname of
         /// the log file.
         /// </summary>
@@ -34,6 +46,17 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         [Log(AttributeExclude = true)]
         protected DefaultLoggingInfrastructure() { }
+
+        /// <summary>
+        /// Gets a reference to an instance of
+        /// <see cref="T:log4net.Appender.FileAppender" /> that represents the first file
+        /// appender in the list of appenders maintained by the logging infrastructure.
+        /// </summary>
+        protected FileAppender Appender
+        {
+            [DebuggerStepThrough] get => _firstFileAppender;
+            [DebuggerStepThrough] set => _firstFileAppender = value;
+        }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -168,7 +191,7 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Attempting to get a reference to the first FileAppender in the list of Appender(s)..."
                 );
 
-                var fileAppender = FileAppenderManager.GetFirstAppender();
+                var fileAppender = GetFirstFileAppender();
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the variable, 'fileAppender', has a null reference for a value..."
@@ -648,6 +671,51 @@ namespace xyLOGIX.Core.Debug
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
 
+        protected FileAppender GetFirstFileAppender()
+        {
+            FileAppender result = default;
+
+            try
+            {
+                if (_firstFileAppender != null) return _firstFileAppender;
+
+                result = _firstFileAppender =
+                    FileAppenderManager.GetFirstAppender();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
+
+        protected FileAppender GetFirstFileAppender(ILoggerRepository repository)
+        {
+            FileAppender result = default;
+
+            try
+            {
+                if (_firstFileAppender != null) return _firstFileAppender;
+                if (repository == null) return result;
+
+                result = _firstFileAppender =
+                    FileAppenderManager.GetFirstAppender(repository);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Raises the
         /// <see
@@ -1042,7 +1110,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 var firstAppender =
-                    FileAppenderManager.GetFirstAppender(repository);
+                    GetFirstFileAppender(repository);
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'firstAppender', has a null reference for a value..."
