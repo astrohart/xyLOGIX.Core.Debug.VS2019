@@ -1,6 +1,5 @@
 ﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
-using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using System;
 
 namespace xyLOGIX.Core.Debug
@@ -8,7 +7,7 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Exposes static method(s) that create and initialize new instances of the
     /// <see
-    ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+    ///     cref="T:xyLOGIX.Core.Debug.ContextAwareBackend" />
     /// class, and return references to them.
     /// </summary>
     internal static class MakeNewLog4NetLoggingBackend
@@ -30,7 +29,7 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Creates a new instance of
         /// <see
-        ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+        ///     cref="T:xyLOGIX.Core.Debug.ContextAwareBackend" />
         /// , initialized for the specified <paramref name="relay" />, and returns a
         /// reference to it.
         /// </summary>
@@ -48,15 +47,15 @@ namespace xyLOGIX.Core.Debug
         /// <returns>
         /// If successful, a reference to a newly-created instance of
         /// <see
-        ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+        ///     cref="T:xyLOGIX.Core.Debug.ContextAwareBackend" />
         /// initialized with the specified <paramref name="relay" />; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        internal static Log4NetLoggingBackend ForRelay(
+        internal static ContextAwareBackend ForRelay(
             [NotLogged] ILoggerRepository relay
         )
         {
-            Log4NetLoggingBackend result = default;
+            ContextAwareBackend result = default;
 
             try
             {
@@ -86,7 +85,7 @@ namespace xyLOGIX.Core.Debug
                     "MakeNewLog4NetLoggingBackend.ForRelay: *** SUCCESS *** We have been passed a valid object reference for the 'relay' method parameter.  Proceeding..."
                 );
 
-                result = new Log4NetLoggingBackend(relay);
+                result = new ContextAwareBackend(relay);
             }
             catch (Exception ex)
             {
@@ -108,22 +107,22 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Creates a new instance of
         /// <see
-        ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+        ///     cref="T:xyLOGIX.Core.Debug.ContextAwareBackend" />
         /// and returns a reference to it.
         /// </summary>
         /// <returns>
         /// Reference to a newly-created instance of
         /// <see
-        ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+        ///     cref="T:xyLOGIX.Core.Debug.ContextAwareBackend" />
         /// .
         /// </returns>
-        internal static Log4NetLoggingBackend FromScratch()
+        internal static ContextAwareBackend FromScratch()
         {
-            Log4NetLoggingBackend result = default;
+            ContextAwareBackend result = default;
 
             try
             {
-                result = new Log4NetLoggingBackend();
+                result = new ContextAwareBackend();
             }
             catch (Exception ex)
             {
