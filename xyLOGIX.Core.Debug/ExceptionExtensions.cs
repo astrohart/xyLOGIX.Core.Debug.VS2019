@@ -91,7 +91,11 @@ namespace xyLOGIX.Core.Debug
              * Nothing to do if there are no exceptions to be logged.
              */
 
-            if (exceptions == null || exceptions.Any()) return;
+            if (exceptions == null) return;
+
+            var exceptionArray = exceptions.ToArray();
+
+            if (exceptionArray.Length <= 0) return;
 
             /*
              * Iterate through the collection of Exception objects passed,
@@ -101,8 +105,12 @@ namespace xyLOGIX.Core.Debug
              * collection is itself non-null, log that exception first.
              */
 
-            foreach (var exception in exceptions.Where(e => e != null))
+            foreach (var exception in exceptionArray)
+            {
+                if (exception == null) continue;
+
                 DebugUtils.LogException(exception);
+            }
         }
     }
 }
