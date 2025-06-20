@@ -25,7 +25,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IOutputLocationProvider OutputLocationProvider
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary>
