@@ -9,7 +9,7 @@ namespace xyLOGIX.Core.Debug
     /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
     /// interface.
     /// </summary>
-    internal static class GetOutputLocationProvider
+    public static class GetOutputLocationProvider
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
