@@ -1462,22 +1462,26 @@ namespace xyLOGIX.Core.Debug
                 switch (debugLevel)
                 {
                     case DebugLevel.Error:
+                        OutputMultiplexer.Write("[ ERROR ] " + content);
                         logger.Error(content);
                         EventLogManager.Instance.Error(content);
                         break;
 
                     case DebugLevel.Output:
                     case DebugLevel.Info:
+                        OutputMultiplexer.Write("[ INFO ] " + content);
                         logger.Info(content);
                         EventLogManager.Instance.Info(content);
                         break;
 
                     case DebugLevel.Warning:
+                        OutputMultiplexer.Write("[ WARN ] " + content);
                         logger.Warn(content);
                         EventLogManager.Instance.Warn(content);
                         break;
 
                     case DebugLevel.Debug:
+                        OutputMultiplexer.Write("[ DEBUG ] " + content);
                         logger.Debug(content);
 
                         //#endif
