@@ -1469,19 +1469,19 @@ namespace xyLOGIX.Core.Debug
 
                     case DebugLevel.Output:
                     case DebugLevel.Info:
-                        OutputMultiplexer.Write("[ INFO ] " + content);
+                        OutputMultiplexer.WriteLine("[ INFO ] " + content);
                         logger.Info(content);
                         EventLogManager.Instance.Info(content);
                         break;
 
                     case DebugLevel.Warning:
-                        OutputMultiplexer.Write("[ WARN ] " + content);
+                        OutputMultiplexer.WriteLine("[ WARN ] " + content);
                         logger.Warn(content);
                         EventLogManager.Instance.Warn(content);
                         break;
 
                     case DebugLevel.Debug:
-                        OutputMultiplexer.Write("[ DEBUG ] " + content);
+                        OutputMultiplexer.WriteLine("[ DEBUG ] " + content);
                         logger.Debug(content);
 
                         //#endif
