@@ -139,6 +139,10 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingInfrastructureTypeValidator.IsValid: Result = {result}"
+            );
+
             return result;
         }
     }
