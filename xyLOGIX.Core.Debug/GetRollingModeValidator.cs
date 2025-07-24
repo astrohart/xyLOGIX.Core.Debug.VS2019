@@ -8,20 +8,9 @@ namespace xyLOGIX.Core.Debug
     /// Provides access to the one and only instance of the object that implements the
     /// <see cref="T:xyLOGIX.Core.Debug.IRollingModeValidator" /> interface.
     /// </summary>
+    [Log(AttributeExclude = true)]
     internal static class GetRollingModeValidator
     {
-        /// <summary>
-        /// Initializes static data or performs actions that need to be performed
-        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetRollingModeValidator" />
-        /// class.
-        /// </summary>
-        /// <remarks>
-        /// This constructor is called automatically prior to the first instance
-        /// being created or before any static members are referenced.
-        /// </remarks>
-        [Log(AttributeExclude = true)]
-        static GetRollingModeValidator() { }
-
         /// <summary>
         /// Obtains access to the sole instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IRollingModeValidator" /> interface, and
