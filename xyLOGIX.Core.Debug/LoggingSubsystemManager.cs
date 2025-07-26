@@ -341,7 +341,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="false" /> otherwise.
         /// </returns>
         [DebuggerStepThrough]
-        internal static bool SetUpDebugUtils(
+        public static bool SetUpDebugUtils(
             bool muteDebugLevelIfReleaseMode,
             bool isLogging = true,
             bool consoleOnly = false,
