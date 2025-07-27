@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Obtains references to instances of objects that implement the
+    /// Obtains references to instance(s) of object(s) that implement the
     /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that change
     /// depending
     /// on the strategy desired.

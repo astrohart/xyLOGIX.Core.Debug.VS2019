@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Creates instances of objects that implement the
+    /// Creates instance(s) of object(s) that implement the
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface.
     /// </summary>
     internal static class GetLoggingInfrastructure
