@@ -6,7 +6,7 @@ namespace xyLOGIX.Core.Debug
 {
     /// <summary> Methods to delete files and folders. </summary>
     [Log(AttributeExclude = true)]
-    internal static class Delete
+    public static class Delete
     {
         /// <summary>
         /// Deletes the file having the specified <paramref name="pathname" />, if
@@ -30,7 +30,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="pathname" /> was found on the file system and successfully
         /// deleted; <see langword="false" /> otherwise.
         /// </returns>
-        internal static bool FileIfExists([NotLogged] string pathname)
+        public static bool FileIfExists([NotLogged] string pathname)
         {
             var result = false;
 
@@ -121,7 +121,7 @@ namespace xyLOGIX.Core.Debug
         /// This method also takes no action if the file having the specified
         /// <paramref name="pathname" /> does not already exist on the file system.
         /// </remarks>
-        internal static void LogFile([NotLogged] string pathname)
+        public static void LogFile([NotLogged] string pathname)
         {
             try
             {

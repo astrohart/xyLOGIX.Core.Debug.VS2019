@@ -7,12 +7,12 @@ namespace xyLOGIX.Core.Debug
     /// Exposes static method(s) for writing to the log file.
     /// </summary>
     [Log(AttributeExclude = true)]
-    internal static class Write
+    public static class Write
     {
         /// <summary>
         /// Emits a timestamp to the log file. This is useful for debugging purposes.
         /// </summary>
-        internal static void LogFileTimestamp()
+        public static void LogFileTimestamp()
         {
             try
             {
