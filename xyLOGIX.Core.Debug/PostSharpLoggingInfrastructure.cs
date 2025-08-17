@@ -32,7 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private PostSharpLoggingInfrastructure() { }
+        internal PostSharpLoggingInfrastructure() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
