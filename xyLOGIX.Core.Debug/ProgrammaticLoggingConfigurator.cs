@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
     internal class ProgrammaticLoggingConfigurator : LoggingConfiguratorBase
     {
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
         /// </summary>
         static ProgrammaticLoggingConfigurator() { }
 

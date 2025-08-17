@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
     internal class
         FileWriteabilityStatusValidator : IFileWriteabilityStatusValidator
     {
-        /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
         static FileWriteabilityStatusValidator() { }
 
         /// <summary>

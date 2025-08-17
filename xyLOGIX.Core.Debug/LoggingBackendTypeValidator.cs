@@ -10,7 +10,7 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     internal class LoggingBackendTypeValidator : ILoggingBackendTypeValidator
     {
-        /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
         [Log(AttributeExclude = true)]
         static LoggingBackendTypeValidator() { }
 

@@ -25,7 +25,7 @@ namespace xyLOGIX.Core.Debug
             new AdvisableDictionary<string, IAppender>();
 
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
         /// </summary>
         static AppenderManager() { }
 

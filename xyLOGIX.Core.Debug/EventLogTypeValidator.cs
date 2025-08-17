@@ -11,7 +11,7 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true)]
     internal class EventLogTypeValidator : IEventLogTypeValidator
     {
-        /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
         static EventLogTypeValidator() { }
 
         /// <summary>

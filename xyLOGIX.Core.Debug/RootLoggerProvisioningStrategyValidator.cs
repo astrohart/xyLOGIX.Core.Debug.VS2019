@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
         RootLoggerProvisioningStrategyValidator :
         IRootLoggerProvisioningStrategyValidator
     {
-        /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
         static RootLoggerProvisioningStrategyValidator() { }
 
         /// <summary>

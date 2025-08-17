@@ -36,7 +36,7 @@ namespace xyLOGIX.Core.Debug
         private string _logFilePathnameToUse = "";
 
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         static DefaultLoggingInfrastructure() { }

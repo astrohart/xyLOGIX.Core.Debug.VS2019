@@ -15,7 +15,7 @@ namespace xyLOGIX.Core.Debug
     internal class NoFileXmlLoggingConfigurator : XmlLoggingConfiguratorBase
     {
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         static NoFileXmlLoggingConfigurator() { }

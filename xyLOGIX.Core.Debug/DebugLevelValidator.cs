@@ -12,7 +12,7 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal class DebugLevelValidator : IDebugLevelValidator
     {
-        /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
         static DebugLevelValidator() { }
 
         /// <summary>

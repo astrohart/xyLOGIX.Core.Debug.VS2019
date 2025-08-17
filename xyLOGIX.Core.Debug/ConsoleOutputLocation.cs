@@ -13,7 +13,7 @@ namespace xyLOGIX.Core.Debug
     internal class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
         static ConsoleOutputLocation() { }

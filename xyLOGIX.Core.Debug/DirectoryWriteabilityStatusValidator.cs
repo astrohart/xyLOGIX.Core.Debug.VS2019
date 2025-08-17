@@ -14,7 +14,7 @@ namespace xyLOGIX.Core.Debug
         DirectoryWriteabilityStatusValidator :
         IDirectoryWriteabilityStatusValidator
     {
-        /// <summary>Empty, static constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
         static DirectoryWriteabilityStatusValidator() { }
 
         /// <summary>

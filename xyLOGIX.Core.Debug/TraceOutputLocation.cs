@@ -14,7 +14,7 @@ namespace xyLOGIX.Core.Debug
     internal class TraceOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, static constructor to prohibit direct allocation of this
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
