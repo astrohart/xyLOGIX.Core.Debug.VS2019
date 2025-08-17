@@ -18,10 +18,11 @@ namespace xyLOGIX.Core.Debug
         static DirectoryWriteabilityStatusValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected DirectoryWriteabilityStatusValidator()
+        [Log(AttributeExclude = true)]
+        private DirectoryWriteabilityStatusValidator()
         { }
 
         /// <summary>

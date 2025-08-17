@@ -29,9 +29,10 @@ namespace xyLOGIX.Core.Debug
         static PostSharpLoggingInfrastructure() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
         /// </summary>
-        protected PostSharpLoggingInfrastructure() { }
+        [Log(AttributeExclude = true)]
+        private PostSharpLoggingInfrastructure() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the

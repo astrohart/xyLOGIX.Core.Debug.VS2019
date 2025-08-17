@@ -16,10 +16,11 @@ namespace xyLOGIX.Core.Debug
         static DebugLevelValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected DebugLevelValidator() { }
+        [Log(AttributeExclude = true)]
+        private DebugLevelValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that

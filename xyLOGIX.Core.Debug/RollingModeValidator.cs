@@ -13,10 +13,11 @@ namespace xyLOGIX.Core.Debug
     internal class RollingModeValidator : IRollingModeValidator
     {
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected RollingModeValidator()
+        [Log(AttributeExclude = true)]
+        private RollingModeValidator()
         { }
 
         /// <summary>

@@ -17,10 +17,11 @@ namespace xyLOGIX.Core.Debug
         static XmlLoggingConfiguratorTypeValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected XmlLoggingConfiguratorTypeValidator() { }
+        [Log(AttributeExclude = true)]
+        private XmlLoggingConfiguratorTypeValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the

@@ -16,7 +16,7 @@ namespace xyLOGIX.Core.Debug
         static LoggingInfrastructureTypeValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]

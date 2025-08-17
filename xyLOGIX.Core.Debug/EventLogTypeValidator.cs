@@ -15,10 +15,11 @@ namespace xyLOGIX.Core.Debug
         static EventLogTypeValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected EventLogTypeValidator() { }
+        [Log(AttributeExclude = true)]
+        private EventLogTypeValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that

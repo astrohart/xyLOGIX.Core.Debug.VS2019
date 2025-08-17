@@ -17,10 +17,11 @@ namespace xyLOGIX.Core.Debug
         static RootLoggerProvisioningStrategyValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected RootLoggerProvisioningStrategyValidator() { }
+        [Log(AttributeExclude = true)]
+        private RootLoggerProvisioningStrategyValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the

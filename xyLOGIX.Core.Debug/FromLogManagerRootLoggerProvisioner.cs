@@ -20,9 +20,10 @@ namespace xyLOGIX.Core.Debug
         static FromLogManagerRootLoggerProvisioner() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
         /// </summary>
-        protected FromLogManagerRootLoggerProvisioner() { }
+        [Log(AttributeExclude = true)]
+        private FromLogManagerRootLoggerProvisioner() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the

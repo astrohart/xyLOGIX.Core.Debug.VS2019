@@ -21,9 +21,10 @@ namespace xyLOGIX.Core.Debug
         static FileBasedXmlLoggingConfigurator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
         /// </summary>
-        protected FileBasedXmlLoggingConfigurator() { }
+        [Log(AttributeExclude = true)]
+        private FileBasedXmlLoggingConfigurator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the

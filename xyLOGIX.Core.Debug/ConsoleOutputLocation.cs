@@ -19,10 +19,11 @@ namespace xyLOGIX.Core.Debug
         static ConsoleOutputLocation() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of the
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of the
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
-        protected ConsoleOutputLocation() { }
+        [Log(AttributeExclude = true)]
+        private ConsoleOutputLocation() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that

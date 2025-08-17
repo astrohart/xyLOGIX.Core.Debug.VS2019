@@ -16,10 +16,11 @@ namespace xyLOGIX.Core.Debug
         static FileWriteabilityStatusValidator() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected FileWriteabilityStatusValidator()
+        [Log(AttributeExclude = true)]
+        private FileWriteabilityStatusValidator()
         { }
 
         /// <summary>

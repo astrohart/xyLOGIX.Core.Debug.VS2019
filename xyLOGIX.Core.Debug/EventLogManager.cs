@@ -16,10 +16,11 @@ namespace xyLOGIX.Core.Debug
         static EventLogManager() { }
 
         /// <summary>
-        /// Empty, protected constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
         /// class.
         /// </summary>
-        protected EventLogManager()
+        [Log(AttributeExclude = true)]
+        private EventLogManager()
         {
             // set defaults
             Source = string.Empty;
