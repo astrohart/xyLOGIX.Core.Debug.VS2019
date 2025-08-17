@@ -45,7 +45,7 @@ namespace xyLOGIX.Core.Debug
         /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private DefaultLoggingInfrastructure() { }
+        internal DefaultLoggingInfrastructure() { }
 
         /// <summary>
         /// Gets a reference to an instance of
