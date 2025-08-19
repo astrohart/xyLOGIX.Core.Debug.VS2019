@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingConfiguratorType" /> values that is to
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingConfiguratorType" /> value(s) that is to
         /// be examined.
         /// </param>
         /// <returns>

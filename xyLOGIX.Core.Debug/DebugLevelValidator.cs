@@ -39,7 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="level">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> values that is to be examined.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that is to be examined.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the debug <paramref name="level" /> falls

@@ -39,7 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> values that is to be
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> value(s) that is to be
         /// examined.
         /// </param>
         /// <remarks>

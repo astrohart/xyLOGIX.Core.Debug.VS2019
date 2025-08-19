@@ -35,7 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// is returned.
         /// </param>
         /// <returns>
-        /// An enumerable collection of <see cref="T:System.String" /> values,
+        /// An enumerable collection of <see cref="T:System.String" /> value(s),
         /// each representing an argument parsed from the command line.
         /// The empty collection is returned if the <paramref name="commandLine" /> is
         /// <see langword="null" />, blank, or if a parsing error occurs.

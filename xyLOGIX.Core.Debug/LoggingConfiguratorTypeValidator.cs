@@ -40,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingConfiguratorTypeToUse" /> values that is to
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingConfiguratorTypeToUse" /> value(s) that is to
         /// be examined.
         /// </param>
         /// <returns>

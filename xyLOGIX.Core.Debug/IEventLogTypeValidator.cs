@@ -20,7 +20,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> values that is to be examined.
+        /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> value(s) that is to be examined.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the event log <paramref name="type" />

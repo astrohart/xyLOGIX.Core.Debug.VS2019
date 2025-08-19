@@ -21,7 +21,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="mode">
         /// (Required.) One of the
-        /// <see cref="T:log4net.Appender.RollingFileAppender.RollingMode" /> values that
+        /// <see cref="T:log4net.Appender.RollingFileAppender.RollingMode" /> value(s) that
         /// is to be examined.
         /// </param>
         /// <returns>

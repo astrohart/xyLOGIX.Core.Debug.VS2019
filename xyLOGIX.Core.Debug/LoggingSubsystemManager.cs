@@ -148,7 +148,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value(s)
         /// that
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp, for example).
@@ -331,7 +331,7 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> values
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value(s)
         /// that
         /// indicates what type of logging infrastructure is to be utilized (default or
         /// PostSharp).

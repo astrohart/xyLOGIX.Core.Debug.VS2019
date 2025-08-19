@@ -39,7 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> values that is to be
+        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> value(s) that is to be
         /// examined.
         /// </param>
         /// <returns>
