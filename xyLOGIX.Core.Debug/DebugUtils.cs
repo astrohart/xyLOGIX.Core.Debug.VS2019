@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using xyLOGIX.Core.Debug.Properties;
@@ -916,6 +917,10 @@ namespace xyLOGIX.Core.Debug
             {
                 if (exception == null) return;
 
+                System.Diagnostics.Debug.WriteLine(
+                    $"exception type = '{exception.GetType()}'"
+                );
+
                 if (exception is TypeInitializationException)
                     exception = exception.InnerException;
 
@@ -923,6 +928,10 @@ namespace xyLOGIX.Core.Debug
                     Resources.ExceptionMessageFormat, exception.GetType(),
                     exception.Message, exception.StackTrace
                 );
+
+                // Dump the variable message to the log
+
+               System.Diagnostics.Debug.WriteLine($"message = '{message}'");
 
                 OutputExceptionLoggingMessage(exception, message);
 
