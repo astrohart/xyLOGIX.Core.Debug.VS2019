@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using xyLOGIX.Core.Debug.Properties;
@@ -931,7 +930,7 @@ namespace xyLOGIX.Core.Debug
 
                 // Dump the variable message to the log
 
-               System.Diagnostics.Debug.WriteLine($"message = '{message}'");
+                System.Diagnostics.Debug.WriteLine($"message = '{message}'");
 
                 OutputExceptionLoggingMessage(exception, message);
 
@@ -1034,7 +1033,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that indicates
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// indicates
         /// which
         /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
@@ -1100,7 +1100,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that indicates
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// indicates
         /// which
         /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content
         /// should be written.
@@ -1146,7 +1147,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that determine
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// determine
         /// what
         /// logging debugLevel to utilize.
         /// </param>
@@ -1251,7 +1253,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that indicates
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// indicates
         /// which
         /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
@@ -1369,7 +1372,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that indicates
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// indicates
         /// which
         /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
@@ -1412,7 +1416,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that determine
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// determine
         /// what
         /// logging debugLevel to utilize.
         /// </param>
