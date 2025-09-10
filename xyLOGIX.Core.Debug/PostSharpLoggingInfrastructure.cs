@@ -24,12 +24,14 @@ namespace xyLOGIX.Core.Debug
         private ILoggerRepository _relay;
 
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         static PostSharpLoggingInfrastructure() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         internal PostSharpLoggingInfrastructure() { }
@@ -77,6 +79,40 @@ namespace xyLOGIX.Core.Debug
             {
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.FetchRelay: *** FYI *** Attempting to fetch the PostSharp log4net relay..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.FetchRelay: Checking whether the relay is NULL currently..."
+                );
+
+                // Check to see whether the relay is NULL currently.
+                // If this is not the case, then write an FYI message
+                // to the Debug output, and then terminate the execution
+                // of this method.
+                if (_relay != null)
+                {
+                    // The relay is NOT already NULL.  Just use it.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** The relay is NOT already NULL.  Using it..."
+                    );
+
+                    // Dump the value of the variable, _relay.GetType(), to the Debug output
+                    System.Diagnostics.Debug.WriteLine(
+                        $"PostSharpLoggingInfrastructure.FetchRelay: _relay.GetType() = '{_relay.GetType()}'"
+                    );
+
+                    result = _relay != null;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** PostSharpLoggingInfrastructure.FetchRelay: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "PostSharpLoggingInfrastructure.FetchRelay: *** SUCCESS *** The relay is NULL currently.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -378,6 +414,11 @@ namespace xyLOGIX.Core.Debug
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the relay is convertible to Hierarchy..."
+                );
+
+                // Dump the variable _relay.GetType().ToString() to the log
+                System.Diagnostics.Debug.WriteLine(
+                    $"_relay.GetType() = '{_relay.GetType()}'"
                 );
 
                 // Check to see whether the relay is convertible to Hierarchy.
