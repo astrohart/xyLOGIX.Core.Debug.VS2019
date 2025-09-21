@@ -17,7 +17,7 @@ namespace xyLOGIX.Core.Debug
     /// handle the <c>MuteConsoleChanged</c> event.
     /// </remarks>
     public delegate void MuteConsoleChangedEventHandler(
-        object sender,
+        [NotLogged] object sender,
         [NotLogged] MuteConsoleChangedEventArgs e
     );
 }
