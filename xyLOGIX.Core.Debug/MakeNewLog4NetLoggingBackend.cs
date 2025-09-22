@@ -1,4 +1,5 @@
-﻿using log4net.Repository;
+﻿using System.Diagnostics;
+using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using System;
