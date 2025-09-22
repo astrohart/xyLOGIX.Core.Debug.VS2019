@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.IO;
