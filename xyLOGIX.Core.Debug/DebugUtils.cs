@@ -958,7 +958,7 @@ namespace xyLOGIX.Core.Debug
         /// event data.
         /// </param>
         [Yielder]
-        private static void OnTextEmitted([NotLogged] TextEmittedEventArgs e)
+        private static void OnTextEmitted([NotLogged] TextEmitted[NotLogged] EventArgs e)
             => TextEmitted?.Invoke(e);
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         [Yielder]
         private static void OnVerbosityChanged(
-            [NotLogged] VerbosityChangedEventArgs e
+            [NotLogged] VerbosityChanged[NotLogged] EventArgs e
         )
             => VerbosityChanged?.Invoke(e);
 
