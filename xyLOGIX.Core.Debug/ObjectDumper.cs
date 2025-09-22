@@ -1,4 +1,5 @@
-﻿using PostSharp.Patterns.Diagnostics;
+﻿using System.Diagnostics;
+using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Threading;
 using System;
 using System.Collections;
@@ -70,7 +71,7 @@ namespace xyLOGIX.Core.Debug
         /// that contains the event data.
         /// </param>
         [Yielder]
-        protected static void OnTextWritten([NotLogged] TextWritten[NotLogged] EventArgs e)
+        protected static void OnTextWritten([NotLogged] TextWrittenEventArgs e)
             => TextWritten?.Invoke(e);
 
         /// <summary> Occurs when text is written to an output stream. </summary>
