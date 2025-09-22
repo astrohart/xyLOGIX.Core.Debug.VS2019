@@ -10,6 +10,6 @@
     /// handle the <c>ExceptionLogged</c> event.
     /// </remarks>
     public delegate void ExceptionLoggedEventHandler(
-        ExceptionLoggedEventArgs e
+    [NotLogged] ExceptionLoggedEventArgs e
     );
 }
