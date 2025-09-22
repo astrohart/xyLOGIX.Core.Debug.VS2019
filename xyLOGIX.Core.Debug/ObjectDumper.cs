@@ -70,7 +70,7 @@ namespace xyLOGIX.Core.Debug
         /// that contains the event data.
         /// </param>
         [Yielder]
-        protected static void OnTextWritten([NotLogged] TextWrittenEventArgs e)
+        protected static void OnTextWritten([NotLogged] TextWritten[NotLogged] EventArgs e)
             => TextWritten?.Invoke(e);
 
         /// <summary> Occurs when text is written to an output stream. </summary>
