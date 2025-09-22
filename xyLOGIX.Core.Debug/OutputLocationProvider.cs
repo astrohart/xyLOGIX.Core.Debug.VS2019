@@ -697,7 +697,7 @@ namespace xyLOGIX.Core.Debug
         /// the event data.
         /// </param>
         protected virtual void OnMuteConsoleChanged(
-            [NotLogged] MuteConsoleChangedEventArgs e
+            [NotLogged] MuteConsoleChanged[NotLogged] EventArgs e
         )
             => MuteConsoleChanged?.Invoke(this, e);
     }
