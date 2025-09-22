@@ -1,4 +1,5 @@
-﻿namespace xyLOGIX.Core.Debug
+﻿using PostSharp.Patterns.Diagnostics;
+namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>ExceptionLogged</c> event. </summary>
     /// <param name="e">
