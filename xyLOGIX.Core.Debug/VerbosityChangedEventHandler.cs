@@ -13,6 +13,6 @@ namespace xyLOGIX.Core.Debug
     /// handle the <c>VerbosityChanged</c> event.
     /// </remarks>
     public delegate void VerbosityChangedEventHandler(
-        [NotLogged] VerbosityChangedEventArgs e
+        [NotLogged] VerbosityChanged[NotLogged] EventArgs e
     );
 }
