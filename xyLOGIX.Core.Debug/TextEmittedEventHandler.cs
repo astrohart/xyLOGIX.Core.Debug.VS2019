@@ -9,5 +9,5 @@
     /// This delegate merely specifies the signature of all methods that
     /// handle the <c>TextEmitted</c> event.
     /// </remarks>
-    public delegate void TextEmittedEventHandler(TextEmittedEventArgs e);
+    public delegate void TextEmittedEventHandler(TextEmitted[NotLogged] EventArgs e);
 }
