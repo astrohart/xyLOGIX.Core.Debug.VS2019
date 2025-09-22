@@ -1,4 +1,5 @@
-﻿using log4net.Layout;
+﻿using System.Diagnostics;
+using log4net.Layout;
 using PostSharp.Patterns.Diagnostics;
 using System;
 
