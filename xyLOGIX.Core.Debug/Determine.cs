@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods to determine whether program flow is to follow a given
+    /// Exposes static method(s) to determine whether program flow is to follow a given
     /// path based on data, or other value(s) that are dependent on yet other data.
     /// </summary>
     [Log(AttributeExclude = true)]
