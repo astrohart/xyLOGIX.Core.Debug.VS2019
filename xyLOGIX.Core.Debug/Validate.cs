@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static methods to validate information and settings.
+    /// Exposes static method(s) to validate information and settings.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal static class Validate
