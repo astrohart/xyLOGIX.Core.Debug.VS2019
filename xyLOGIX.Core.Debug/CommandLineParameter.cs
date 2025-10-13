@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using PostSharp.Patterns.Diagnostics;
+﻿using PostSharp.Patterns.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -16,5 +15,14 @@ namespace xyLOGIX.Core.Debug
         /// method when an exception is thrown.
         /// </summary>
         public const string HaltOnException = "--hoe";
+
+        /// <summary>
+        /// A <see cref="T:System.String" /> that contains the text of the
+        /// <c>Suppress On Exception</c> command-line flag, which, if present, will stop us
+        /// from calling the
+        /// <see cref="M:xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger" />
+        /// method when an exception is thrown.
+        /// </summary>
+        public const string SuppressOnException = "--soe";
     }
 }
