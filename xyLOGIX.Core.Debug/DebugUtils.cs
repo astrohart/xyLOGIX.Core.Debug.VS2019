@@ -283,7 +283,16 @@ namespace xyLOGIX.Core.Debug
                  * flag to the executable. This is useful for debugging purposes, as it allows the user
                  * to see the exception message and stack trace in the console window, and then decide
                  * whether to launch the debugger or not.
+                 *
+                 * NOTE: If the '--soe' command-line flag is present, then we will NOT launch the debugger,
+                 * and will simply return false.
                  */
+
+                if (Environment.CommandLine.Contains(
+                        CommandLineParameter.SuppressOnException
+                    ))
+                    return result;
+
                 if (!Environment.CommandLine.Contains(
                         CommandLineParameter.HaltOnException
                     ) & !Debugger.IsAttached) return result;
