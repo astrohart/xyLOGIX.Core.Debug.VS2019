@@ -489,6 +489,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Occurs when an exception has just been logged by the <c>LogException</c>
+        /// method.
+        /// </summary>
+        public static event ExceptionLoggedEventHandler ExceptionLogged;
+
+        /// <summary>
         /// Structures the text of an <see cref="T:System.Exception" />, a
         /// reference to an instance of which is passed in the <paramref name="e" />
         /// parameter, to be the error message on a line by itself, followed by the stack
@@ -943,6 +949,8 @@ namespace xyLOGIX.Core.Debug
 
                 OutputExceptionLoggingMessage(exception, message);
 
+                OnExceptionLogged(exception);
+
                 /*
                  * Only launch the debugger if the required condition(s) are
                  * met and only after having written the detailed exception info
@@ -958,6 +966,18 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(ex);
             }
         }
+
+        /// <summary>
+        /// Raises the <see cref="E:xyLOGIX.Core.Debug.DebugUtils.ExceptionLogged" />
+        /// event.
+        /// </summary>
+        /// <param name="ex">
+        /// (Requried.) Reference to an instance of
+        /// <see cref="T:System.Exception" /> that is the exception that was just logged.
+        /// </param>
+        [Yielder, Log(AttributeExclude = true)]
+        private static void OnExceptionLogged(Exception ex)
+            => ExceptionLogged?.Invoke(new ExceptionLoggedEventArgs(ex));
 
         /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
         /// <param name="e">
