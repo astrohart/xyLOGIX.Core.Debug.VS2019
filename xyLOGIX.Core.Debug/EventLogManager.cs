@@ -10,13 +10,15 @@ namespace xyLOGIX.Core.Debug
     internal class EventLogManager : IEventLogManager
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         static EventLogManager() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
@@ -42,8 +44,8 @@ namespace xyLOGIX.Core.Debug
         /// that
         /// manages our access to the Windows System Event Logs.
         /// </summary>
-        internal static IEventLogManager Instance { [DebuggerStepThrough] get; } =
-            new EventLogManager();
+        internal static IEventLogManager
+            Instance { [DebuggerStepThrough] get; } = new EventLogManager();
 
         /// <summary>
         /// Gets a value indicating whether this object has been properly
@@ -278,7 +280,8 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     DebugUtils.WriteLine(
-                        DebugLevel.Debug, $"EventLogManager.Initialize: Result = {true}"
+                        DebugLevel.Debug,
+                        $"EventLogManager.Initialize: Result = {true}"
                     );
 
                     // stop.
