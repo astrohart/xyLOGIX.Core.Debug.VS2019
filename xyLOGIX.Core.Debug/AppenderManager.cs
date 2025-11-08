@@ -25,16 +25,17 @@ namespace xyLOGIX.Core.Debug
             new AdvisableDictionary<string, IAppender>();
 
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         static AppenderManager() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private AppenderManager()
-        { }
+        private AppenderManager() { }
 
         /// <summary>
         /// Gets the count of appenders in the internal collection.
@@ -125,8 +126,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </summary>
         internal static IAppenderManager
-            Instance
-        { [DebuggerStepThrough] get; } = new AppenderManager();
+            Instance { [DebuggerStepThrough] get; } = new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
