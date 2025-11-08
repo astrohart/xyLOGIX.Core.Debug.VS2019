@@ -15,17 +15,18 @@ namespace xyLOGIX.Core.Debug
     internal class NoFileXmlLoggingConfigurator : XmlLoggingConfiguratorBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         static NoFileXmlLoggingConfigurator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private NoFileXmlLoggingConfigurator()
-        { }
+        private NoFileXmlLoggingConfigurator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -35,8 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static IXmlLoggingConfigurator Instance
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = new NoFileXmlLoggingConfigurator();
 
         /// <summary>
@@ -46,8 +46,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public override XmlLoggingConfiguratorType Type
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = XmlLoggingConfiguratorType.NoFile;
 
         /// <summary>
