@@ -31,8 +31,7 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static IXmlLoggingConfiguratorTypeValidator
-            XmlLoggingConfiguratorTypeValidator
-        { [DebuggerStepThrough] get; } =
+            XmlLoggingConfiguratorTypeValidator { [DebuggerStepThrough] get; } =
             GetXmlLoggingConfiguratorTypeValidator.SoleInstance();
 
         /// <summary>
