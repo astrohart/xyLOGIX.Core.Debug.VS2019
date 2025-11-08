@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
@@ -67,7 +68,10 @@ namespace xyLOGIX.Core.Debug
         /// specifies the
         /// type of log to send events to.
         /// </param>
-        /// <returns><see langword="true" /> if the operation(s) completed successfully; <see langword="false" /> otherwise.</returns>
+        /// <returns>
+        /// <see langword="true" /> if the operation(s) completed successfully;
+        /// <see langword="false" /> otherwise.
+        /// </returns>
         bool Initialize(string eventSourceName, EventLogType logType);
 
         /// <summary>
