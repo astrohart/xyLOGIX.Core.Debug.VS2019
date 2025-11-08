@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>TextEmitted</c> event. </summary>
@@ -10,5 +11,7 @@ namespace xyLOGIX.Core.Debug
     /// This delegate merely specifies the signature of all methods that
     /// handle the <c>TextEmitted</c> event.
     /// </remarks>
-    public delegate void TextEmittedEventHandler([NotLogged] TextEmittedEventArgs e);
+    public delegate void TextEmittedEventHandler(
+        [NotLogged] TextEmittedEventArgs e
+    );
 }
