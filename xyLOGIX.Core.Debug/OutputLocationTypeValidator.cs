@@ -10,12 +10,16 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     internal class OutputLocationTypeValidator : IOutputLocationTypeValidator
     {
-        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
+        /// </summary>
         [Log(AttributeExclude = true)]
         static OutputLocationTypeValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
@@ -132,7 +136,7 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                 // dump all the exception info to the Debug output.
+                // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
 
                 result = false;
