@@ -14,6 +14,58 @@ namespace xyLOGIX.Core.Debug
     internal static class GetEvent
     {
         /// <summary>
+        /// Attempts to obtain a reference to an instance of
+        /// <see cref="T:System.Reflection.Assembly" /> that represents the proper assembly
+        /// to use for event logging.
+        /// </summary>
+        /// <returns>
+        /// If successful, a reference to an instance of
+        /// <see cref="T:System.Reflection.Assembly" /> that represents the proper assembly
+        /// to use for event logging; otherwise, a <see langword="null" /> reference is
+        /// returned.
+        /// </returns>
+        private static Assembly SourceAssembly()
+        {
+            Assembly result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "GetEvent.SourceAssembly: *** FYI *** Attempting to get a reference to the currently-executing assembly..."
+                );
+
+                // Get a reference to the currently-executing assembly.
+                var executingAssembly = Assembly.GetExecutingAssembly();
+
+                /*
+                 * NOTE: We do not need to check whether 'executingAssembly' is null.
+                 * The method we call next does that.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    "GetEvent.SourceAssembly: *** FYI *** Attempting to get a reference to the currently-executing assembly..."
+                );
+
+                result = GetAssembly.ToUseForEventLogging(executingAssembly);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? "*** SUCCESS *** Obtained a reference to the proper assembly to be used for an event source.  Proceeding..."
+                    : "*** ERROR *** FAILED to obtain a reference to the proper assembly to be used for an event source.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
         /// Attempts to obtain a user-friendly display name for the event-logging
         /// quote, based on the name of the application that is calling this debug logging
         /// library.
@@ -169,58 +221,6 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"GetEvent.SourceName: Result = '{result}'"
-            );
-
-            return result;
-        }
-
-        /// <summary>
-        /// Attempts to obtain a reference to an instance of
-        /// <see cref="T:System.Reflection.Assembly" /> that represents the proper assembly
-        /// to use for event logging.
-        /// </summary>
-        /// <returns>
-        /// If successful, a reference to an instance of
-        /// <see cref="T:System.Reflection.Assembly" /> that represents the proper assembly
-        /// to use for event logging; otherwise, a <see langword="null" /> reference is
-        /// returned.
-        /// </returns>
-        private static Assembly SourceAssembly()
-        {
-            Assembly result = default;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "GetEvent.SourceAssembly: *** FYI *** Attempting to get a reference to the currently-executing assembly..."
-                );
-
-                // Get a reference to the currently-executing assembly.
-                var executingAssembly = Assembly.GetExecutingAssembly();
-
-                /*
-                 * NOTE: We do not need to check whether 'executingAssembly' is null.
-                 * The method we call next does that.
-                 */
-
-                System.Diagnostics.Debug.WriteLine(
-                    "GetEvent.SourceAssembly: *** FYI *** Attempting to get a reference to the currently-executing assembly..."
-                );
-
-                result = GetAssembly.ToUseForEventLogging(executingAssembly);
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = default;
-            }
-
-            System.Diagnostics.Debug.WriteLine(
-                result != null
-                    ? "*** SUCCESS *** Obtained a reference to the proper assembly to be used for an event source.  Proceeding..."
-                    : "*** ERROR *** FAILED to obtain a reference to the proper assembly to be used for an event source.  Stopping..."
             );
 
             return result;
