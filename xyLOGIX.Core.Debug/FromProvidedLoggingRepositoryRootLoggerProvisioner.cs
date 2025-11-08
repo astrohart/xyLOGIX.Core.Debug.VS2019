@@ -19,12 +19,14 @@ namespace xyLOGIX.Core.Debug
         RootLoggerProvisionerBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         static FromProvidedLoggingRepositoryRootLoggerProvisioner() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         private FromProvidedLoggingRepositoryRootLoggerProvisioner() { }
