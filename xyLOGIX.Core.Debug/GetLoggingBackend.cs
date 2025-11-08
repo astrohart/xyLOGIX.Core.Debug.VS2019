@@ -31,8 +31,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingBackendTypeValidator LoggingBackendTypeValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingBackendTypeValidator.SoleInstance();
 
         /// <summary>
