@@ -17,8 +17,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public abstract LoggingConfiguratorType Type
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         }
 
         /// <summary> Initializes the application's logging subsystem.</summary>
