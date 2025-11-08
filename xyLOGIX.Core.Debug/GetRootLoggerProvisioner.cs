@@ -33,8 +33,7 @@ namespace xyLOGIX.Core.Debug
         private static IRootLoggerProvisioningStrategyValidator
             RootLoggerProvisioningStrategyValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } =
             GetRootLoggerProvisioningStrategyValidator.SoleInstance();
 
