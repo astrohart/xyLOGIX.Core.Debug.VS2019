@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using log4net.Layout;
+﻿using log4net.Layout;
 using PostSharp.Patterns.Diagnostics;
 using System;
 
@@ -71,7 +70,9 @@ namespace xyLOGIX.Core.Debug
                     "*** SUCCESS *** The parameter 'conversionPattern' is not blank.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine($"*** FYI *** Making a new Pattern Layout having the conversion pattern, '{conversionPattern}'...");
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Making a new Pattern Layout having the conversion pattern, '{conversionPattern}'..."
+                );
 
                 result = new PatternLayout
                 {
