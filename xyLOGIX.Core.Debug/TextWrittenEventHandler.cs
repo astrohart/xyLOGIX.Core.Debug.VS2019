@@ -16,5 +16,6 @@ namespace xyLOGIX.Core.Debug
     /// software system to participate in the output of text.
     /// </remarks>
     public delegate void TextWrittenEventHandler(
-        [NotLogged] TextWrittenEventArgs e);
+        [NotLogged] TextWrittenEventArgs e
+    );
 }
