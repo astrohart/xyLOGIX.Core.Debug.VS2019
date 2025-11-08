@@ -36,13 +36,15 @@ namespace xyLOGIX.Core.Debug
         private string _logFilePathnameToUse = "";
 
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         static DefaultLoggingInfrastructure() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         internal DefaultLoggingInfrastructure() { }
@@ -693,7 +695,9 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        protected FileAppender GetFirstFileAppender(ILoggerRepository repository)
+        protected FileAppender GetFirstFileAppender(
+            ILoggerRepository repository
+        )
         {
             FileAppender result = default;
 
@@ -1109,8 +1113,7 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Attempting to get a reference to the first FileAppender configured..."
                 );
 
-                var firstAppender =
-                    GetFirstFileAppender(repository);
+                var firstAppender = GetFirstFileAppender(repository);
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'firstAppender', has a null reference for a value..."
