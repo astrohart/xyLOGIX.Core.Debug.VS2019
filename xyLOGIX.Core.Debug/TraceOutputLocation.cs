@@ -14,14 +14,16 @@ namespace xyLOGIX.Core.Debug
     internal class TraceOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
         static TraceOutputLocation() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
@@ -33,8 +35,8 @@ namespace xyLOGIX.Core.Debug
         /// debugging output to the <b>Output</b> window in Visual Studio when running in
         /// Release mode.
         /// </summary>
-        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
-            new TraceOutputLocation();
+        internal static IOutputLocation
+            Instance { [DebuggerStepThrough] get; } = new TraceOutputLocation();
 
         /// <summary>
         /// Gets one of the
@@ -54,7 +56,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
         /// parameter to be a <see langword="null" /> reference.
-        /// <para/>
+        /// <para />
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
         public override void Write([NotLogged] object value)
@@ -132,7 +134,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
         /// parameter to be a <see langword="null" /> reference.
-        /// <para/>
+        /// <para />
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
         public override void WriteLine([NotLogged] object value)
