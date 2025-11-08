@@ -43,7 +43,7 @@ namespace xyLOGIX.Core.Debug
         [return: NotLogged]
         internal static ConsoleLoggingBackend FromScratch()
         {
-            PostSharp.Patterns.Diagnostics.Backends.Console.ConsoleLoggingBackend result = default;
+            ConsoleLoggingBackend result = default;
 
             try
             {
