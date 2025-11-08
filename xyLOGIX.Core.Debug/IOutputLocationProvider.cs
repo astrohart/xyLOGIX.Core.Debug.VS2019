@@ -20,6 +20,19 @@ namespace xyLOGIX.Core.Debug
         bool HasLocations { [DebuggerStepThrough] get; }
 
         /// <summary>
+        /// Gets the count of <c>Output Location</c>(s) that are currently defined.
+        /// </summary>
+        /// <remarks>
+        /// If an exception is caught during the execution of the getter of this
+        /// property, then the property evaluates to zero.
+        /// </remarks>
+        /// <returns>
+        /// An <see cref="T:System.Int32" /> value that is set to the count of
+        /// <c>Output Location</c>(s) that are currently defined.
+        /// </returns>
+        int LocationCount { [DebuggerStepThrough] get; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
@@ -34,19 +47,6 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough] get;
             [DebuggerStepThrough] set;
         }
-
-        /// <summary>
-        /// Gets the count of <c>Output Location</c>(s) that are currently defined.
-        /// </summary>
-        /// <remarks>
-        /// If an exception is caught during the execution of the getter of this
-        /// property, then the property evaluates to zero.
-        /// </remarks>
-        /// <returns>
-        /// An <see cref="T:System.Int32" /> value that is set to the count of
-        /// <c>Output Location</c>(s) that are currently defined.
-        /// </returns>
-        int LocationCount { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Adds the specified output <paramref name="location" /> to the
