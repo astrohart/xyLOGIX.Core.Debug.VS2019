@@ -1,5 +1,4 @@
 ﻿using PostSharp.Patterns.Diagnostics;
-using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -14,16 +13,19 @@ namespace xyLOGIX.Core.Debug
         DirectoryWriteabilityStatusValidator :
         IDirectoryWriteabilityStatusValidator
     {
-        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
+        /// </summary>
         static DirectoryWriteabilityStatusValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private DirectoryWriteabilityStatusValidator()
-        { }
+        private DirectoryWriteabilityStatusValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -33,8 +35,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static IDirectoryWriteabilityStatusValidator Instance
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = new DirectoryWriteabilityStatusValidator();
 
         /// <summary>
@@ -45,7 +46,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="status">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus" /> value(s) that is
+        /// <see cref="T:xyLOGIX.Core.Debug.DirectoryWriteabilityStatus" /> value(s) that
+        /// is
         /// to be examined.
         /// </param>
         /// <returns>
