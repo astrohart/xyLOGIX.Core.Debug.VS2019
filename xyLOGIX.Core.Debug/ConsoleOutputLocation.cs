@@ -19,7 +19,8 @@ namespace xyLOGIX.Core.Debug
         static ConsoleOutputLocation() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of the
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// the
         /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
         [Log(AttributeExclude = true)]
@@ -31,7 +32,8 @@ namespace xyLOGIX.Core.Debug
         /// that directs debugging output to the standard output of the application and/or
         /// a console window, if present.
         /// </summary>
-        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
+        internal static IOutputLocation
+            Instance { [DebuggerStepThrough] get; } =
             new ConsoleOutputLocation();
 
         /// <summary>
