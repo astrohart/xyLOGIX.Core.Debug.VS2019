@@ -14,13 +14,15 @@ namespace xyLOGIX.Core.Debug
     internal class DebugOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         static DebugOutputLocation() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
@@ -34,8 +36,8 @@ namespace xyLOGIX.Core.Debug
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
         /// </summary>
-        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
-            new DebugOutputLocation();
+        internal static IOutputLocation
+            Instance { [DebuggerStepThrough] get; } = new DebugOutputLocation();
 
         /// <summary>
         /// Gets one of the
@@ -55,7 +57,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
         /// parameter to be a <see langword="null" /> reference.
-        /// <para/>
+        /// <para />
         /// If a debugger is not attached, or if logging is not enabled on the
         /// attached debugger, then this method does nothing.
         /// </remarks>
@@ -121,7 +123,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
         /// parameter to be a <see langword="null" /> reference.
-        /// <para/>
+        /// <para />
         /// If a debugger is not attached, or if logging is not enabled on the
         /// attached debugger, then this method does nothing.
         /// </remarks>
