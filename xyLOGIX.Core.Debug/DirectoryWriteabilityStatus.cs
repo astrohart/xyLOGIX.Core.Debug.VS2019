@@ -1,7 +1,8 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Value(s) that indicate whether a folder is writeable or not, or whether it cannot
+    /// Value(s) that indicate whether a folder is writeable or not, or whether it
+    /// cannot
     /// be determined from the information available.
     /// </summary>
     public enum DirectoryWriteabilityStatus
