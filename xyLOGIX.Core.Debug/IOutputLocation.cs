@@ -97,7 +97,10 @@ namespace xyLOGIX.Core.Debug
         /// or if it contains element(s) whose value(s) do not match the format
         /// specifier(s) in the <paramref name="format" /> parameter.
         /// </remarks>
-        void WriteLine([NotLogged] string format, [NotLogged] params object[] arg);
+        void WriteLine(
+            [NotLogged] string format,
+            [NotLogged] params object[] arg
+        );
 
         /// <summary>Writes the current line terminator to the output location.</summary>
         /// <remarks>
