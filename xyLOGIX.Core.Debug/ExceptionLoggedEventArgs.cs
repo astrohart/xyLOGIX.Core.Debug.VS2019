@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Provides information for <c>ExceptionLogged</c> event handlers. </summary>
-    [Log(AttributeExclude = true), ExplicitlySynchronized]    
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     public class ExceptionLoggedEventArgs : EventArgs
     {
         /// <summary>
