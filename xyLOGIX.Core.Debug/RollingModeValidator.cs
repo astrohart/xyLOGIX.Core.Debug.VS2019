@@ -13,12 +13,12 @@ namespace xyLOGIX.Core.Debug
     internal class RollingModeValidator : IRollingModeValidator
     {
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private RollingModeValidator()
-        { }
+        private RollingModeValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -27,8 +27,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static IRollingModeValidator Instance
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = new RollingModeValidator();
 
         /// <summary>
