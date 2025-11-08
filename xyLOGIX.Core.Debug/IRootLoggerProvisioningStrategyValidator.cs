@@ -20,7 +20,8 @@
         /// </summary>
         /// <param name="strategy">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> value(s)
+        /// that
         /// is to be examined.
         /// </param>
         /// <returns>
