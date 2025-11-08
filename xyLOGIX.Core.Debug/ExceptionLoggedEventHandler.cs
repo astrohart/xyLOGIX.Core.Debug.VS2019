@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Represents a handler for a <c>ExceptionLogged</c> event. </summary>
@@ -11,6 +12,6 @@ namespace xyLOGIX.Core.Debug
     /// handle the <c>ExceptionLogged</c> event.
     /// </remarks>
     public delegate void ExceptionLoggedEventHandler(
-    [NotLogged] ExceptionLoggedEventArgs e
+        [NotLogged] ExceptionLoggedEventArgs e
     );
 }
