@@ -13,11 +13,15 @@ namespace xyLOGIX.Core.Debug
         XmlLoggingConfiguratorTypeValidator :
         IXmlLoggingConfiguratorTypeValidator
     {
-        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
+        /// </summary>
         static XmlLoggingConfiguratorTypeValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
