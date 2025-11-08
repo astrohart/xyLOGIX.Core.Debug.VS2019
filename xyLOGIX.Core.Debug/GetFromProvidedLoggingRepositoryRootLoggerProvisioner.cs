@@ -34,7 +34,8 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                result = FromProvidedLoggingRepositoryRootLoggerProvisioner.Instance;
+                result = FromProvidedLoggingRepositoryRootLoggerProvisioner
+                    .Instance;
             }
             catch (Exception ex)
             {
