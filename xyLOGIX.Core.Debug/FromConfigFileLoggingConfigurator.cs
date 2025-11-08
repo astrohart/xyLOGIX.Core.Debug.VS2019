@@ -14,12 +14,14 @@ namespace xyLOGIX.Core.Debug
     internal class FromConfigFileLoggingConfigurator : LoggingConfiguratorBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         static FromConfigFileLoggingConfigurator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         private FromConfigFileLoggingConfigurator() { }
