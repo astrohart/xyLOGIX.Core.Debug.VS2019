@@ -12,16 +12,19 @@ namespace xyLOGIX.Core.Debug
     internal class
         FileWriteabilityStatusValidator : IFileWriteabilityStatusValidator
     {
-        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
+        /// </summary>
         static FileWriteabilityStatusValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of this
+        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
+        /// this
         /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private FileWriteabilityStatusValidator()
-        { }
+        private FileWriteabilityStatusValidator() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -31,8 +34,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static IFileWriteabilityStatusValidator Instance
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = new FileWriteabilityStatusValidator();
 
         /// <summary>
@@ -42,7 +44,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="status">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> value(s) that is to be
+        /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> value(s) that is to
+        /// be
         /// examined.
         /// </param>
         /// <returns>
