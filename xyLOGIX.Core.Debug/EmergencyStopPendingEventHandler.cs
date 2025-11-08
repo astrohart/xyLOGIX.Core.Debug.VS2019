@@ -15,5 +15,7 @@ namespace xyLOGIX.Core.Debug
     /// This delegate merely specifies the signature of all methods that
     /// handle the <c>EmergencyStopPending</c> event.
     /// </remarks>
-    public delegate void EmergencyStopPendingEventHandler([NotLogged] CancelEventArgs e);
+    public delegate void EmergencyStopPendingEventHandler(
+        [NotLogged] CancelEventArgs e
+    );
 }
