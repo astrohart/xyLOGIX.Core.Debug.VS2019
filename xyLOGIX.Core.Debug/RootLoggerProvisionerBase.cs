@@ -22,8 +22,7 @@ namespace xyLOGIX.Core.Debug
         /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
         /// due to the fact that this class is marked <see langword="abstract" />.
         /// </remarks>
-        protected RootLoggerProvisionerBase()
-        { }
+        protected RootLoggerProvisionerBase() { }
 
         /// <summary>
         /// Gets the <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" />
@@ -32,8 +31,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public abstract RootLoggerProvisioningStrategy Strategy
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         }
 
         /// <summary>
