@@ -349,22 +349,94 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>True if the current process is devenv.exe.</summary>
-        [DebuggerStepThrough]
+        /// <summary>
+        /// Determines whether this code is running inside Visual Studio (i.e., the host
+        /// process' name is <c>devenv.exe</c>) or not.
+        /// <para />
+        /// If so, then it's highly likely that this code is being called from a VSIX
+        /// extension or a template wizard.
+        /// </summary>
+        /// <remarks>
+        /// If this method cannot make the determination due to an error, then
+        /// this method returns <see langword="false" />.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if the current process is <c>devenv.exe</c>;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
         internal static bool IsVsixHost()
         {
             var result = false;
+
             try
             {
+                System.Diagnostics.Debug.WriteLine($"VsixHosting.IsVsixHost: *** FYI *** Attempting to get a reference to the current process...");
+
                 var proc = Process.GetCurrentProcess();
-                var name = proc != null ? proc.ProcessName : string.Empty;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.IsVsixHost: Checking whether the variable, 'proc', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'proc', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (proc == null)
+                {
+                    // The variable, 'proc', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.IsVsixHost: *** ERROR ***  The variable, 'proc', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.IsVsixHost: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'proc', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.IsVsixHost: *** SUCCESS *** The variable, 'proc', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'proc.ProcessName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'proc.ProcessName', appears to have a null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(proc.ProcessName))
+                {
+                    // The property, 'proc.ProcessName', appears to have a null or blank value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'proc.ProcessName', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.IsVsixHost: Result = {result}"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'proc.ProcessName', seems to have a non-blank value.  Proceeding to check whether it is equal to 'devenv' (case-insensitive)..."
+                );
+
                 result = string.Equals(
-                    name, "devenv", StringComparison.OrdinalIgnoreCase
+                    proc.ProcessName, "devenv", StringComparison.OrdinalIgnoreCase
                 );
             }
             catch (Exception ex)
             {
+                // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
+
                 result = false;
             }
 
