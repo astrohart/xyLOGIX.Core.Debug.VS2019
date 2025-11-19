@@ -97,7 +97,7 @@ namespace xyLOGIX.Core.Debug
                     $"VsixHosting.EnsureAssemblyResolver: *** SUCCESS *** The folder, '{baseDir}', exists on the file system.  Proceeding..."
                 );
 
-                InitializeAssemblyResolve();
+                InitializeCurrentAppDomain();
                 
                 _resolverInstalled = true;
             }
@@ -294,16 +294,16 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        private static void InitializeAssemblyResolve()
+        private static void InitializeCurrentAppDomain()
         {
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "VsixHosting.InitializeAssemblyResolve: *** FYI *** Attempting to subscribe the 'AssemblyResolve' event of the current AppDomain..."
+                    "VsixHosting.InitializeCurrentAppDomain: *** FYI *** Attempting to subscribe the 'AssemblyResolve' event of the current AppDomain..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "VsixHosting.InitializeAssemblyResolve: Checking whether the property, 'AppDomain.CurrentDomain', has a null reference for a value..."
+                    "VsixHosting.InitializeCurrentAppDomain: Checking whether the property, 'AppDomain.CurrentDomain', has a null reference for a value..."
                 );
 
                 // Check to see if the required property, 'AppDomain.CurrentDomain', has a null reference for a
@@ -313,7 +313,7 @@ namespace xyLOGIX.Core.Debug
                 {
                     // The property, 'AppDomain.CurrentDomain', has a null reference for a value.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "VsixHosting.InitializeAssemblyResolve: *** ERROR *** The property, 'AppDomain.CurrentDomain', has a null reference for a value.  Stopping..."
+                        "VsixHosting.InitializeCurrentAppDomain: *** ERROR *** The property, 'AppDomain.CurrentDomain', has a null reference for a value.  Stopping..."
                     );
 
                     // stop.
@@ -321,7 +321,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "VsixHosting.InitializeAssemblyResolve: *** SUCCESS *** The property, 'AppDomain.CurrentDomain', has a valid object reference for its value.  Proceeding..."
+                    "VsixHosting.InitializeCurrentAppDomain: *** SUCCESS *** The property, 'AppDomain.CurrentDomain', has a valid object reference for its value.  Proceeding..."
                 );
 
                 AppDomain.CurrentDomain.AssemblyResolve -= OnAssemblyResolve;
