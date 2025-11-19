@@ -21,7 +21,48 @@ namespace xyLOGIX.Core.Debug
         /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        static LoggingSubsystemManager() { }
+        static LoggingSubsystemManager()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Initializing the LoggingSubsystemManager class..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Checking whether we're being hosted inside a VSIX..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** LoggingSubsystemManager.LoggingSubsystemManager: Checking whether the code is being hosted inside a VSIX..."
+                );
+
+                // Check to see whether the code is being hosted inside a VSIX.
+                // If this is not the case, then write an FYI message to the log file
+                // and then terminate the execution of this method.
+                if (!VsixHosting.IsVsixHost())
+                {
+                    // The code is NOT being hosted inside a VSIX.  Just a FYI.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI ***  The code is NOT being hosted inside a VSIX.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.LoggingSubsystemManager: *** SUCCESS *** The code is being hosted inside a VSIX.  Ensuring that this code is resolved correctly..."
+                );
+
+                VsixHosting.EnsureAssemblyResolver();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
