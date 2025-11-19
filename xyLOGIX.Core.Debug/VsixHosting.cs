@@ -96,23 +96,9 @@ namespace xyLOGIX.Core.Debug
                 System.Diagnostics.Debug.WriteLine(
                     $"VsixHosting.EnsureAssemblyResolver: *** SUCCESS *** The folder, '{baseDir}', exists on the file system.  Proceeding..."
                 );
-                AppDomain.CurrentDomain.AssemblyResolve += (s, e) =>
-                {
-                    try
-                    {
-                        var an = new AssemblyName(e.Name);
-                        var path = Path.Combine(baseDir, an.Name + ".dll");
-                        if (File.Exists(path))
-                            return Assembly.LoadFrom(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine(ex);
-                    }
 
-                    return null;
-                };
-
+                InitializeAssemblyResolve();
+                
                 _resolverInstalled = true;
             }
             catch (Exception ex)
