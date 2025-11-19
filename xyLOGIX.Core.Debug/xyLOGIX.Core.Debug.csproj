@@ -237,6 +237,7 @@
     <Compile Include="Validate.cs" />
     <Compile Include="VerbosityChangedEventArgs.cs" />
     <Compile Include="VerbosityChangedEventHandler.cs" />
+    <Compile Include="VsixHosting.cs" />
     <Compile Include="Write.cs" />
     <Compile Include="XmlLoggingConfiguratorBase.cs" />
     <Compile Include="XmlLoggingConfiguratorType.cs" />

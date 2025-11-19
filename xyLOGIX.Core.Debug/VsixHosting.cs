@@ -1,0 +1,667 @@
+﻿using PostSharp.Patterns.Diagnostics;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+
+namespace xyLOGIX.Core.Debug
+{
+    /// <summary>
+    /// Helpers for VSIX hosting (Visual Studio runs inside devenv.exe).
+    /// Ensures dependent assemblies (e.g., log4net, PostSharp runtime) are
+    /// found in the VSIX folder even if the host didn't add a binding path.
+    /// </summary>
+    [Log(AttributeExclude = true)]
+    internal static class VsixHosting
+    {
+        /// <summary>
+        /// Value that indicates whether the assembly resolver has been installed.
+        /// </summary>
+        private static bool _resolverInstalled;
+
+        /// <summary>
+        /// Installs a conservative <c>AppDomain.AssemblyResolve</c> handler that
+        /// probes the folder of this assembly.
+        /// <para />
+        /// This complements Visual Studio's probing rules.
+        /// </summary>
+        internal static void EnsureAssemblyResolver()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** VsixHosting.EnsureAssemblyResolver: Checking whether the assembly resolver has already been installed..."
+                );
+
+                // Check to see whether the assembly resolver has already been installed.
+                // Otherwise, write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (_resolverInstalled)
+                {
+                    // The assembly resolver has already been installed.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The assembly resolver has already been installed.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.EnsureAssemblyResolver: *** WARNING *** The assembly resolver has NOT already been installed.  Proceeding..."
+                );
+
+                var baseDir = GetContainingBaseDir();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.EnsureAssemblyResolver: Checking whether the variable, 'baseDir', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'baseDir', is null or blank. If it is, 
+                // then send an  error to the log file and then terminate the execution of this
+                // method.
+                if (string.IsNullOrWhiteSpace(baseDir))
+                {
+                    // The variable, baseDir, has a null reference for its value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.EnsureAssemblyResolver: *** ERROR *** The variable, 'baseDir', has a null reference for its value, or it is blank.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.EnsureAssemblyResolver: *** SUCCESS *** {baseDir.Length} B of data appear to be present in the variable, 'baseDir'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** VsixHosting.EnsureAssemblyResolver: Checking whether the folder, '{baseDir}', exists on the file system..."
+                );
+
+                // Check to see whether the folder, 'baseDir', exists on the file system.
+                // If this is not the case, then write an error message to the log file
+                // and then terminate the execution of this method.
+                if (!Directory.Exists(baseDir))
+                {
+                    // The folder, 'baseDir', does NOT exist on the file system.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR: The folder, '{baseDir}', does NOT exist on the file system.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.EnsureAssemblyResolver: *** SUCCESS *** The folder, '{baseDir}', exists on the file system.  Proceeding..."
+                );
+                AppDomain.CurrentDomain.AssemblyResolve += (s, e) =>
+                {
+                    try
+                    {
+                        var an = new AssemblyName(e.Name);
+                        var path = Path.Combine(baseDir, an.Name + ".dll");
+                        if (File.Exists(path))
+                            return Assembly.LoadFrom(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex);
+                    }
+
+                    return null;
+                };
+
+                _resolverInstalled = true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Attempts to obtain the fully-qualified pathname of the folder that contains
+        /// whatever assembly this code is running in.
+        /// </summary>
+        /// <returns>
+        /// If successful, a <see cref="T:System.String" /> containing the
+        /// fully-qualified pathname of the folder that contains whatever assembly this
+        /// code is running in; otherwise, the method returns the
+        /// <see cref="F:System.String.Empty" /> value.
+        /// </returns>
+        private static string GetContainingBaseDir()
+        {
+            var result = string.Empty;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.GetContainingBaseDir: *** FYI *** Attempting to obtain the pathname where this assembly is located (assuming the VSIX file is in the same folder)..."
+                );
+
+                result = Path.GetDirectoryName(
+                    typeof(VsixHosting).Assembly.Location
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = string.Empty;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"VsixHosting.GetContainingBaseDir: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a sensible log file path under <c>%PROGRAMDATA%</c> for a VSIX.
+        /// </summary>
+        /// <param name="assemblyTitle">
+        /// (Required.) A <see cref="T:System.String" /> containing the title of the
+        /// assembly that is to be logged.
+        /// <para />
+        /// The value of this parameter must not be blank.
+        /// <para />
+        /// Furthermore, it cannot contain any whitespace.
+        /// </param>
+        /// <param name="productName">
+        /// (Required.) A <see cref="T:System.String" /> containing the name of the
+        /// product.
+        /// <para />
+        /// The value of this parameter cannot be blank.
+        /// <para />
+        /// It can contain whitespace.
+        /// </param>
+        /// <remarks>
+        /// If <see langword="null" />, a blank <see cref="T:System.String" />, or the
+        /// <see cref="F:System.String.Empty" /> value is passed as the argument of either
+        /// of the <paramref name="assemblyTitle" /> or <paramref name="productName" />
+        /// parameters, then this method returns the <see cref="F:System.String.Empty" />
+        /// value.
+        /// </remarks>
+        /// <returns>
+        /// If successful, a <see cref="T:System.String" /> containing the
+        /// fully-qualified pathname of the log file to use for the target VSIX extension;
+        /// otherwise, the method returns the <see cref="F:System.String.Empty" /> value.
+        /// </returns>
+        [return: NotLogged]
+        internal static string GetDefaultVsixLogPath(
+            [NotLogged] string assemblyTitle,
+            [NotLogged] string productName
+        )
+        {
+            var result = string.Empty;
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.GetDefaultVsixLogPath *** INFO: Checking whether the value of the parameter, 'productName', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'productName', is blank.
+                // If this is so, then emit an error message to the log file, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(productName))
+                {
+                    // The parameter, 'productName' was either passed a null value, or it is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.GetDefaultVsixLogPath: The parameter, 'productName' was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.GetDefaultVsixLogPath: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The parameter 'productName' is not blank.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.GetDefaultVsixLogPath: *** FYI *** Formulating the base log folder path for the product, '{productName}'..."
+                );
+
+                var baseFolder = Environment.GetFolderPath(
+                    Environment.SpecialFolder.CommonApplicationData
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.GetDefaultVsixLogPath: Checking whether the variable, 'baseFolder', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'baseFolder', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(baseFolder))
+                {
+                    // The variable, 'baseFolder', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.GetDefaultVsixLogPath: *** ERROR *** The variable, 'baseFolder', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.GetDefaultVsixLogPath: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.GetDefaultVsixLogPath: *** SUCCESS *** {baseFolder.Length} B of data appear to be present in the variable, 'baseFolder'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** VsixHosting.GetDefaultVsixLogPath: Checking whether the folder, '{baseFolder}', exists on the file system..."
+                );
+
+                // Check to see whether the folder, 'baseFolder', exists on the file system.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!Directory.Exists(baseFolder))
+                {
+                    // The folder, 'baseFolder', does NOT exist on the file system.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The folder, '{baseFolder}', does NOT exist on the file system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.GetDefaultVsixLogPath: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.GetDefaultVsixLogPath: *** SUCCESS *** The folder, '{baseFolder}', exists on the file system.  Proceeding..."
+                );
+
+                var folder = Path.Combine(
+                    baseFolder, $@"xyLOGIX, LLC\{productName}\Logs"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.GetDefaultVsixLogPath: *** FYI *** Attempting to create the folder, '{folder}', on the file system if it does not already exist..."
+                );
+
+                DebugFileAndFolderHelper.CreateDirectoryIfNotExists(folder);
+
+                result = Path.Combine(folder, productName + ".log");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+                result = string.Empty;
+            }
+
+            return result;
+        }
+
+        private static void InitializeAssemblyResolve()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.InitializeAssemblyResolve: *** FYI *** Attempting to subscribe the 'AssemblyResolve' event of the current AppDomain..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.InitializeAssemblyResolve: Checking whether the property, 'AppDomain.CurrentDomain', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'AppDomain.CurrentDomain', has a null reference for a
+                // value. If that is the case, then we will write an error message to the Debug
+                // output, and then terminate the execution of this method.
+                if (AppDomain.CurrentDomain == null)
+                {
+                    // The property, 'AppDomain.CurrentDomain', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.InitializeAssemblyResolve: *** ERROR *** The property, 'AppDomain.CurrentDomain', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.InitializeAssemblyResolve: *** SUCCESS *** The property, 'AppDomain.CurrentDomain', has a valid object reference for its value.  Proceeding..."
+                );
+
+                AppDomain.CurrentDomain.AssemblyResolve -= OnAssemblyResolve;
+                AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
+        }
+
+        /// <summary>True if the current process is devenv.exe.</summary>
+        [DebuggerStepThrough]
+        internal static bool IsVsixHost()
+        {
+            var result = false;
+            try
+            {
+                var proc = Process.GetCurrentProcess();
+                var name = proc != null ? proc.ProcessName : string.Empty;
+                result = string.Equals(
+                    name, "devenv", StringComparison.OrdinalIgnoreCase
+                );
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Handles the <see cref="E:System.AppDomain.AssemblyResolve" /> event raised by
+        /// the current <c>AppDomain</c> when it fails to resolve an assembly.
+        /// </summary>
+        /// <param name="sender">
+        /// Reference to an instance of the object that raised the
+        /// event.
+        /// </param>
+        /// <param name="e">
+        /// A <see cref="T:System.ResolveEventArgs" /> that contains the
+        /// event data.
+        /// </param>
+        /// <returns>
+        /// If successful, a reference to an instance of
+        /// <see cref="T:System.Reflection.Assembly" /> that resolves the type, assembly,
+        /// or resource; or a <see langword="null" /> reference if the assembly cannot be
+        /// resolved.
+        /// </returns>
+        private static Assembly OnAssemblyResolve(
+            [NotLogged] object sender,
+            [NotLogged] ResolveEventArgs e
+        )
+        {
+            Assembly result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: Checking whether the method parameter, 'e', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'e', is null. If it is,
+                // then write an error message to the log file and then terminate the
+                // execution of this method, returning the default return value.
+                if (e == null)
+                {
+                    // The method parameter, 'e', is required and is not supposed
+                    // to have a NULL value.  It does, and this is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.OnAssemblyResolve: *** ERROR *** A null reference was passed for the method parameter, 'e'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'e'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: *** FYI *** Attempting to get the name of the target assembly from the 'e.Name' property..."
+                );
+
+                var targetAssemblyName = new AssemblyName(e.Name);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: Checking whether the variable, 'targetAssemblyName', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'targetAssemblyName', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (targetAssemblyName == null)
+                {
+                    // The variable, 'targetAssemblyName', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.OnAssemblyResolve: *** ERROR ***  The variable, 'targetAssemblyName', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'targetAssemblyName', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: *** SUCCESS *** The variable, 'targetAssemblyName', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'targetAssemblyName.Name', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'targetAssemblyName.Name', appears to have a null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(targetAssemblyName.Name))
+                {
+                    // The property, 'targetAssemblyName.Name', appears to have a null or blank value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'targetAssemblyName.Name', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'targetAssemblyName.Name', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: *** FYI *** Attempting to get the fully-qualified pathname of the folder in which this code is running..."
+                );
+
+                var baseDir = GetContainingBaseDir();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: Checking whether the variable, 'baseDir', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'baseDir', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(baseDir))
+                {
+                    // The variable, 'baseDir', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.OnAssemblyResolve: *** ERROR *** The variable, 'baseDir', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: *** SUCCESS *** {baseDir.Length} B of data appear to be present in the variable, 'baseDir'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: Checking whether the folder, '{baseDir}', exists on the file system..."
+                );
+
+                // Check to see whether the folder, 'baseDir', exists on the file system.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!Directory.Exists(baseDir))
+                {
+                    // The folder, 'baseDir', could not be located on the file system.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.OnAssemblyResolve: *** ERROR *** The folder, '{baseDir}', could not be located on the file system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: *** SUCCESS *** The folder, '{baseDir}', exists on the file system.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: *** FYI *** Formulating the full path to the target assembly, '{targetAssemblyName.Name}.dll'..."
+                );
+
+                var path = Path.Combine(
+                    GetContainingBaseDir(), targetAssemblyName.Name + ".dll"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.OnAssemblyResolve: Checking whether the variable, 'path', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'path', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    // The variable, 'path', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.OnAssemblyResolve: *** ERROR *** The variable, 'path', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: *** SUCCESS *** {path.Length} B of data appear to be present in the variable, 'path'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: Checking whether the file, '{path}', could be located on the file system..."
+                );
+
+                // Check to see whether the target assembly .dll file could be located on the file system.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!File.Exists(path))
+                {
+                    // The target assembly .dll file could NOT be located on the file system.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.OnAssemblyResolve: *** ERROR *** The file, '{path}', could NOT be located on the file system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.OnAssemblyResolve: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.OnAssemblyResolve: *** SUCCESS *** The file, '{path}', was found on the file system.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to load the assembly from the file, '{path}'..."
+                );
+
+                result = Assembly.LoadFrom(path);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? "*** SUCCESS *** Obtained a reference to the resolved assembly.  Proceeding..."
+                    : "*** ERROR *** FAILED to obtain a reference to the resolved assembly.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a full path to a VSIX-local log4net config file, if present.
+        /// </summary>
+        [DebuggerStepThrough]
+        internal static string TryGetLog4NetConfigPath()
+        {
+            var result = string.Empty;
+            try
+            {
+                var folder = Path.GetDirectoryName(
+                    typeof(VsixHosting).Assembly.Location
+                );
+                if (string.IsNullOrWhiteSpace(folder)) return result;
+
+                var candidates = new[]
+                {
+                    Path.Combine(folder, "log4net.vsix.config"),
+                    Path.Combine(folder, "log4net.config"),
+                    Path.Combine(folder, "Log4Net.config")
+                };
+
+                foreach (var c in candidates)
+                    if (File.Exists(c))
+                    {
+                        result = c;
+                        break;
+                    }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+                result = string.Empty;
+            }
+
+            return result;
+        }
+    }
+}
