@@ -57,7 +57,7 @@ namespace xyLOGIX.Core.Debug
                     "VsixHosting.EnsureAssemblyResolver: Checking whether the variable, 'baseDir', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'baseDir', is null or blank. If it is, 
+                // Check to see if the required variable, 'baseDir', is null or blank. If it is,
                 // then send an  error to the log file and then terminate the execution of this
                 // method.
                 if (string.IsNullOrWhiteSpace(baseDir))
@@ -238,8 +238,8 @@ namespace xyLOGIX.Core.Debug
                     "VsixHosting.GetDefaultVsixLogPath: Checking whether the variable, 'baseFolder', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'baseFolder', is null or blank. If it is, 
-                // then send an  error to the log file and quit, returning the default value 
+                // Check to see if the required variable, 'baseFolder', is null or blank. If it is,
+                // then send an  error to the log file and quit, returning the default value
                 // of the result variable.
                 if (string.IsNullOrWhiteSpace(baseFolder))
                 {
@@ -461,7 +461,7 @@ namespace xyLOGIX.Core.Debug
                     "*** INFO: Checking whether the property, 'targetAssemblyName.Name', appears to have a null or blank value..."
                 );
 
-                // Check to see if the required property, 'targetAssemblyName.Name', appears to have a null 
+                // Check to see if the required property, 'targetAssemblyName.Name', appears to have a null
                 // or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(targetAssemblyName.Name))
@@ -494,8 +494,8 @@ namespace xyLOGIX.Core.Debug
                     "VsixHosting.OnAssemblyResolve: Checking whether the variable, 'baseDir', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'baseDir', is null or blank. If it is, 
-                // then send an  error to the log file and quit, returning the default value 
+                // Check to see if the required variable, 'baseDir', is null or blank. If it is,
+                // then send an  error to the log file and quit, returning the default value
                 // of the result variable.
                 if (string.IsNullOrWhiteSpace(baseDir))
                 {
@@ -555,8 +555,8 @@ namespace xyLOGIX.Core.Debug
                     "VsixHosting.OnAssemblyResolve: Checking whether the variable, 'path', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'path', is null or blank. If it is, 
-                // then send an  error to the log file and quit, returning the default value 
+                // Check to see if the required variable, 'path', is null or blank. If it is,
+                // then send an  error to the log file and quit, returning the default value
                 // of the result variable.
                 if (string.IsNullOrWhiteSpace(path))
                 {
@@ -628,8 +628,21 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a full path to a VSIX-local log4net config file, if present.
+        /// Gets the fully-qualified pathname of the VSIX-local log4net config file, e.g.,
+        /// <c>log4net.vsix.config</c>, or <c>log4net.config</c>, if present in the same
+        /// folder as which the <c>*.dll</c> file containing this code also lives.
         /// </summary>
+        /// <remarks>
+        /// If the method fails, then the <see cref="F:System.String.Empty" />
+        /// value is returned.
+        /// </remarks>
+        /// <returns>
+        /// If successful, a <see cref="T:System.String" /> containing the
+        /// fully-qualified pathname of the VSIX-local log4net config file, e.g.,
+        /// <c>log4net.vsix.config</c>, or <c>log4net.config</c>, if present in the same
+        /// folder as which the <c>*.dll</c> file containing this code also lives;
+        /// otherwise, the method returns the <see cref="F:System.String.Empty" /> value.
+        /// </returns>
         [DebuggerStepThrough]
         internal static string TryGetLog4NetConfigPath()
         {
@@ -637,10 +650,72 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                var folder = Path.GetDirectoryName(
-                    typeof(VsixHosting).Assembly.Location
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.TryGetLog4NetConfigPath: *** FYI *** Attempting to find the log4net config file in the same folder as which this assembly lives..."
                 );
-                if (string.IsNullOrWhiteSpace(folder)) return result;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to get the fully-qualified pathname of the folder in which this code is running..."
+                );
+
+                var folder = GetContainingBaseDir();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.TryGetLog4NetConfigPath: Checking whether the variable, 'folder', has a null reference for a value, or is blank..."
+                );
+
+                // Check to see if the required variable, 'folder', is null or blank. If it is, 
+                // then send an  error to the log file and quit, returning the default value 
+                // of the result variable.
+                if (string.IsNullOrWhiteSpace(folder))
+                {
+                    // The variable, 'folder', has a null reference for a value, or is blank.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.TryGetLog4NetConfigPath: *** ERROR *** The variable, 'folder', has a null reference for a value, or is blank.  Stopping..."
+                    );
+
+                    // log the result
+                    System.Diagnostics.Debug.WriteLine(
+                        $"VsixHosting.TryGetLog4NetConfigPath: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.TryGetLog4NetConfigPath: *** SUCCESS *** {folder.Length} B of data appear to be present in the variable, 'folder'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** VsixHosting.TryGetLog4NetConfigPath: Checking whether the folder, '{folder}', exists on the file system..."
+                );
+
+                // Check to see whether the folder, 'folder', exists on the file system.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!Directory.Exists(folder))
+                {
+                    // The folder, 'folder', could NOT be located on the file system.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR *** The folder, '{folder}', could NOT be located on the file system.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** VsixHosting.TryGetLog4NetConfigPath: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.TryGetLog4NetConfigPath: *** SUCCESS *** The folder, '{folder}', exists on the file system.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Formulating candidate file name(s)..."
+                );
 
                 var candidates = new[]
                 {
@@ -649,12 +724,59 @@ namespace xyLOGIX.Core.Debug
                     Path.Combine(folder, "Log4Net.config")
                 };
 
-                foreach (var c in candidates)
-                    if (File.Exists(c))
+                System.Diagnostics.Debug.WriteLine(
+                    "VsixHosting.TryGetLog4NetConfigPath: *** FYI *** Checking each candidate..."
+                );
+
+                foreach (var candidate in candidates)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.TryGetLog4NetConfigPath: *** FYI *** Checking whether the variable, 'candidate', appears to have a null or blank value..."
+                    );
+
+                    // Check to see if the required variable, 'candidate', appears to have a null 
+                    // or blank value. If it does, then send an error to the log file and then 
+                    // skip to the next loop iteration.
+                    if (string.IsNullOrWhiteSpace(candidate))
                     {
-                        result = c;
-                        break;
+                        // The variable, 'candidate', appears to have a null or blank value.  This is not desirable.
+                        System.Diagnostics.Debug.WriteLine(
+                            "VsixHosting.TryGetLog4NetConfigPath: *** ERROR: The variable, 'candidate', appears to have a null or blank value.  Skipping to the next candidate file name..."
+                        );
+
+                        // skip to the next iteration of this loop.
+                        continue;
                     }
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.TryGetLog4NetConfigPath: *** SUCCESS *** The variable, 'candidate', seems to have a non-blank value.  Proceeding..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** VsixHosting.TryGetLog4NetConfigPath: Checking whether the file, 'file', exists on the file system..."
+                    );
+
+                    // Check to see whether the file, 'file', exists on the file system.
+                    // If this is not the case, then write an error message to the Debug output,
+                    // and then skip to the next loop iteration.
+                    if (!File.Exists(candidate))
+                    {
+                        // The file, 'file', could NOT be located on the file system.  This is not desirable.
+                        System.Diagnostics.Debug.WriteLine(
+                            "*** ERROR: The file, 'file', could NOT be located on the file system.  Skipping to the next candidate..."
+                        );
+
+                        // skip to the next loop iteration.
+                        continue;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "VsixHosting.TryGetLog4NetConfigPath: *** SUCCESS *** The file, 'file', exists on the file system.  Proceeding..."
+                    );
+
+                    result = candidate;
+                    break;
+                }
             }
             catch (Exception ex)
             {
@@ -663,6 +785,10 @@ namespace xyLOGIX.Core.Debug
 
                 result = string.Empty;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"VsixHosting.TryGetLog4NetConfigPath: Result = '{result}'"
+            );
 
             return result;
         }
