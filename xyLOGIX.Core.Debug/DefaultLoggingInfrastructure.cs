@@ -314,6 +314,15 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                // NEW: VSIX-aware defaults
+                var effectiveConfigurationFileName = configurationFileName;
+
+                if (VsixHosting.IsVsixHost())
+                {
+                    if (string.IsNullOrWhiteSpace(effectiveConfigurationFileName))
+                        effectiveConfigurationFileName = VsixHosting.TryGetLog4NetConfigPath();
+                }
+
                 System.Diagnostics.Debug.WriteLine(
                     $"DefaultLoggingInfrastructure.InitializeLogging: *** FYI *** Setting up an Event Source of the name '{applicationName}'..."
                 );
@@ -426,7 +435,7 @@ namespace xyLOGIX.Core.Debug
                 // and then terminate the execution of this method.
                 if (!configurator.Configure(
                         muteDebugLevelIfReleaseMode, overwrite,
-                        configurationFileName, muteConsole,
+                        effectiveConfigurationFileName, muteConsole,
                         logFilePathnameToUse, verbosity, applicationName,
                         repository
                     ))
