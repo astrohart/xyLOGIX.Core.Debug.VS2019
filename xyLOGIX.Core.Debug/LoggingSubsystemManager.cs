@@ -202,7 +202,7 @@ namespace xyLOGIX.Core.Debug
         public static bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
-            [NotLogged] string configurationFileNamename = "",
+            [NotLogged] string configurationFileName = "",
             bool muteConsole = false,
             [NotLogged] string logFileName = "",
             int verbosity = 1,
@@ -319,7 +319,7 @@ namespace xyLOGIX.Core.Debug
 
                 result = LoggingInfrastructure.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFileNamename, muteConsole, logFileName,
+                    configurationFileName, muteConsole, logFileName,
                     verbosity, applicationName
                 );
             }
