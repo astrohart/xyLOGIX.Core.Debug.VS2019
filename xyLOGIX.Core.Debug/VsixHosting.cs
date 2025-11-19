@@ -634,6 +634,7 @@ namespace xyLOGIX.Core.Debug
         internal static string TryGetLog4NetConfigPath()
         {
             var result = string.Empty;
+
             try
             {
                 var folder = Path.GetDirectoryName(
@@ -657,7 +658,9 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
+                // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
+
                 result = string.Empty;
             }
 
