@@ -14,7 +14,7 @@ namespace xyLOGIX.Core.Debug
     /// present.
     /// </summary>
     [ExplicitlySynchronized]
-    internal static class Has
+    public static class Has
     {
         /// <summary>
         /// Initializes static data or performs actions that need to be performed once only
@@ -69,7 +69,7 @@ namespace xyLOGIX.Core.Debug
         /// main window).
         /// </remarks>
         [DebuggerStepThrough]
-        internal static bool ConsoleWindow()
+        public static bool ConsoleWindow()
         {
             bool result;
 
@@ -99,7 +99,7 @@ namespace xyLOGIX.Core.Debug
         /// .
         /// </returns>
         [DebuggerStepThrough]
-        internal static bool LoggingBeenSetUp()
+        public static bool LoggingBeenSetUp()
         {
             var result = false;
 
@@ -185,7 +185,7 @@ namespace xyLOGIX.Core.Debug
         /// references either WPF or WinForm system framework assemblies.
         /// </remarks>
         [DebuggerStepThrough]
-        internal static bool WindowsGui(bool useEntryAssembly = false)
+        public static bool WindowsGui(bool useEntryAssembly = false)
         {
             if (IsWindowsGUI.HasValue)
                 return IsWindowsGUI.Value;
