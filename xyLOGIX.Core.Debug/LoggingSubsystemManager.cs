@@ -319,8 +319,8 @@ namespace xyLOGIX.Core.Debug
 
                 result = LoggingInfrastructure.InitializeLogging(
                     muteDebugLevelIfReleaseMode, overwrite,
-                    configurationFileName, muteConsole, logFileName,
-                    verbosity, applicationName
+                    configurationFileName, muteConsole, logFileName, verbosity,
+                    applicationName
                 );
             }
             catch (Exception ex)
