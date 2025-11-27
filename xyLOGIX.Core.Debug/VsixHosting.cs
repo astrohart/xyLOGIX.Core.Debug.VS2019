@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -17,6 +18,7 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Value that indicates whether the assembly resolver has been installed.
         /// </summary>
+        [ExplicitlySynchronized]
         private static int _resolverInstalled;
 
         /// <summary>
