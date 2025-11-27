@@ -370,7 +370,9 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                System.Diagnostics.Debug.WriteLine($"VsixHosting.IsVsixHost: *** FYI *** Attempting to get a reference to the current process...");
+                System.Diagnostics.Debug.WriteLine(
+                    $"VsixHosting.IsVsixHost: *** FYI *** Attempting to get a reference to the current process..."
+                );
 
                 var proc = Process.GetCurrentProcess();
 
@@ -429,7 +431,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 result = string.Equals(
-                    proc.ProcessName, "devenv", StringComparison.OrdinalIgnoreCase
+                    proc.ProcessName, "devenv",
+                    StringComparison.OrdinalIgnoreCase
                 );
             }
             catch (Exception ex)
