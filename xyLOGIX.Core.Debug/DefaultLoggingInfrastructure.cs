@@ -319,8 +319,11 @@ namespace xyLOGIX.Core.Debug
 
                 if (VsixHosting.IsVsixHost())
                 {
-                    if (string.IsNullOrWhiteSpace(effectiveConfigurationFileName))
-                        effectiveConfigurationFileName = VsixHosting.TryGetLog4NetConfigPath();
+                    if (string.IsNullOrWhiteSpace(
+                            effectiveConfigurationFileName
+                        ))
+                        effectiveConfigurationFileName =
+                            VsixHosting.TryGetLog4NetConfigPath();
                 }
 
                 System.Diagnostics.Debug.WriteLine(
