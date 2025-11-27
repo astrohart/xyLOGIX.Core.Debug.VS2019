@@ -17,7 +17,7 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Value that indicates whether the assembly resolver has been installed.
         /// </summary>
-        private static bool _resolverInstalled;
+        private static int _resolverInstalled;
 
         /// <summary>
         /// Initializes <see langword="static" /> data or performs actions that
@@ -51,7 +51,7 @@ namespace xyLOGIX.Core.Debug
                 // Check to see whether the assembly resolver has already been installed.
                 // Otherwise, write an error message to the log file,
                 // and then terminate the execution of this method.
-                if (_resolverInstalled)
+                if (System.Threading.Interlocked.CompareExchange(ref _resolverInstalled, 0, 0) != 0)
                 {
                     // The assembly resolver has already been installed.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
@@ -114,7 +114,7 @@ namespace xyLOGIX.Core.Debug
 
                 InitializeCurrentAppDomain();
 
-                _resolverInstalled = true;
+                System.Threading.Interlocked.Exchange(ref _resolverInstalled, 1);
             }
             catch (Exception ex)
             {
@@ -371,7 +371,7 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"VsixHosting.IsVsixHost: *** FYI *** Attempting to get a reference to the current process..."
+                    "VsixHosting.IsVsixHost: *** FYI *** Attempting to get a reference to the current process..."
                 );
 
                 var proc = Process.GetCurrentProcess();
