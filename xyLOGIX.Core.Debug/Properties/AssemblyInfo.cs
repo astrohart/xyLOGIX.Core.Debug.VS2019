@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("xyLOGIX.Core.Debug")]
 [assembly:
     AssemblyDescription(
-        "Provides objects and functionality support to do such things as debugging and logging."
+        "Provides object(s) and functionality support to do such things as debugging and logging."
     )]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("xyLOGIX, LLC")]
