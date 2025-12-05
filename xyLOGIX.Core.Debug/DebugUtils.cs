@@ -972,11 +972,11 @@ namespace xyLOGIX.Core.Debug
         /// event.
         /// </summary>
         /// <param name="ex">
-        /// (Requried.) Reference to an instance of
+        /// (Required.) Reference to an instance of
         /// <see cref="T:System.Exception" /> that is the exception that was just logged.
         /// </param>
         [Yielder, Log(AttributeExclude = true)]
-        private static void OnExceptionLogged(Exception ex)
+        private static void OnExceptionLogged([NotLogged] Exception ex)
             => ExceptionLogged?.Invoke(new ExceptionLoggedEventArgs(ex));
 
         /// <summary> Raises the <see cref="TextEmitted" /> event. </summary>
