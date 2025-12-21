@@ -21,7 +21,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IAppenderManager AppenderManager
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetAppenderManager.SoleInstance();
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace xyLOGIX.Core.Debug
                     "Activate.LoggingForLogFileName: Checking whether the 'repository' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, repository, is null. If it is, send an 
+                // Check to see if the required parameter, repository, is null. If it is, send an
                 // error to the Debug output and quit, returning the default return value of
                 // this method.
                 if (repository == null)
@@ -335,7 +336,7 @@ namespace xyLOGIX.Core.Debug
                     "Activate.LoggingForLogFileName: Checking whether the property, 'hierarchy.Root', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'hierarchy.Root', has a null reference for a value. 
+                // Check to see if the required property, 'hierarchy.Root', has a null reference for a value.
                 // If that is the case, then we will write an error message to the Debug output, and then
                 // terminate the execution of this method, while returning the default return value.
                 if (hierarchy.Root == null)
