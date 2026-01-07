@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("xyLOGIX Core Debugging Library")]
 [assembly:
     AssemblyCopyright(
-        "Copyright © 2017-25 by xyLOGIX, LLC.  All rights reserved."
+        "Copyright © 2017-26 by xyLOGIX, LLC.  All rights reserved."
     )]
 [assembly:
     AssemblyTrademark(
