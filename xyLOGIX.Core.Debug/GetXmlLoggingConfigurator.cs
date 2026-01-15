@@ -80,7 +80,7 @@ namespace xyLOGIX.Core.Debug
                 // Check to see whether the XML Configurator Type is within the defined value set.
                 // If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
-                if (XmlLoggingConfiguratorTypeValidator.IsValid(type))
+                if (!XmlLoggingConfiguratorTypeValidator.IsValid(type))
                 {
                     // The XML Configurator Type is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
