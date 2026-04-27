@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -18,8 +19,7 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Value that indicates whether the assembly resolver has been installed.
         /// </summary>
-        [ExplicitlySynchronized]
-        private static int _resolverInstalled;
+        [ExplicitlySynchronized] private static int _resolverInstalled;
 
         /// <summary>
         /// Initializes <see langword="static" /> data or performs actions that
@@ -53,7 +53,8 @@ namespace xyLOGIX.Core.Debug
                 // Check to see whether the assembly resolver has already been installed.
                 // Otherwise, write an error message to the log file,
                 // and then terminate the execution of this method.
-                if (System.Threading.Interlocked.CompareExchange(ref _resolverInstalled, 0, 0) != 0)
+                if (Interlocked.CompareExchange(ref _resolverInstalled, 0, 0) !=
+                    0)
                 {
                     // The assembly resolver has already been installed.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
@@ -116,7 +117,7 @@ namespace xyLOGIX.Core.Debug
 
                 InitializeCurrentAppDomain();
 
-                System.Threading.Interlocked.Exchange(ref _resolverInstalled, 1);
+                Interlocked.Exchange(ref _resolverInstalled, 1);
             }
             catch (Exception ex)
             {
