@@ -21,8 +21,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IAppenderManager AppenderManager
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetAppenderManager.SoleInstance();
 
         /// <summary>
