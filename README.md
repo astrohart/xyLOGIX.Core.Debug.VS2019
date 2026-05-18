@@ -83,12 +83,12 @@ call time with a single enum value.
 ```mermaid
 flowchart TB
     CALLER(["Caller code"])
-    LSM["LoggingSubsystemManager\nInitializeLogging / SetUpDebugUtils / LogFileName"]
+    LSM["LoggingSubsystemManager<br/>InitializeLogging / SetUpDebugUtils / LogFileName"]
     GLI["GetLoggingInfrastructure.OfType(LoggingInfrastructureType)"]
-    ENUM["LoggingInfrastructureType\n{ Default · PostSharp · Unknown }"]
+    ENUM["LoggingInfrastructureType<br/>{ Default · PostSharp · Unknown }"]
     IFACE[["ILoggingInfrastructure"]]
-    DEF["DefaultLoggingInfrastructure\nlog4net only"]
-    PS["PostSharpLoggingInfrastructure\nlog4net + PostSharp relay"]
+    DEF["DefaultLoggingInfrastructure<br/>log4net only"]
+    PS["PostSharpLoggingInfrastructure<br/>log4net + PostSharp relay"]
 
     CALLER --> LSM
     LSM -->|"delegates to"| GLI
@@ -104,10 +104,10 @@ flowchart TB
 flowchart TB
     WRITE["DebugUtils.WriteLine / Write / LogException"]
     CORE["WriteCore"]
-    CON["System.Console\n(unless MuteConsole = true)"]
-    LOG4["log4net ILog\n(unless ConsoleOnly = true)"]
-    EVT["EventLogManager\n(Info / Warning / Error only)"]
-    EMIT["TextEmitted event\n(always fired)"]
+    CON["System.Console<br/>(unless MuteConsole = true)"]
+    LOG4["log4net ILog<br/>(unless ConsoleOnly = true)"]
+    EVT["EventLogManager<br/>(Info / Warning / Error only)"]
+    EMIT["TextEmitted event<br/>(always fired)"]
 
     WRITE --> CORE
     CORE --> CON
@@ -301,14 +301,14 @@ Every call to `InitializeLogging` takes the following steps internally:
 ```mermaid
 flowchart TB
     START(["InitializeLogging called"])
-    CLEAR["1. ClearTempExceptionLog\nDelete ExceptionLogPathname if present"]
+    CLEAR["1. ClearTempExceptionLog<br/>Delete ExceptionLogPathname if present"]
     CLEARFAIL(["return false"])
-    VALIDATE["2. Validate.LoggingInfrastructureType\nConfirm value is defined and not Unknown"]
+    VALIDATE["2. Validate.LoggingInfrastructureType<br/>Confirm value is defined and not Unknown"]
     VALIDFAIL(["return false"])
-    RECORD["3. Set InfrastructureType\nRecord chosen strategy on LoggingSubsystemManager"]
-    RESOLVE["4. GetLoggingInfrastructure.OfType\nResolve ILoggingInfrastructure singleton"]
+    RECORD["3. Set InfrastructureType<br/>Record chosen strategy on LoggingSubsystemManager"]
+    RESOLVE["4. GetLoggingInfrastructure.OfType<br/>Resolve ILoggingInfrastructure singleton"]
     RESFAIL(["return false"])
-    DELEGATE["5. LoggingInfrastructure.InitializeLogging\nAll log4net / PostSharp wiring happens here"]
+    DELEGATE["5. LoggingInfrastructure.InitializeLogging<br/>All log4net / PostSharp wiring happens here"]
     DONE(["return bool result from strategy"])
 
     START --> CLEAR
