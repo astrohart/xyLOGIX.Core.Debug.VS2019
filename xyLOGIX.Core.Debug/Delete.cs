@@ -5,9 +5,23 @@ using System.IO;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary> Methods to delete files and folders. </summary>
-    [Log(AttributeExclude = true)]
     public static class Delete
     {
+        /// <summary>
+        /// Initializes <see langword="static" /> data or performs actions that
+        /// need to be performed once only for the
+        /// <see cref="T:xyLOGIX.Core.Debug.Delete" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any <see langword="static" /> members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static Delete() { }
+
         /// <summary>
         /// Deletes the file having the specified <paramref name="pathname" />, if
         /// it exists.
@@ -31,6 +45,150 @@ namespace xyLOGIX.Core.Debug
         /// deleted; <see langword="false" /> otherwise.
         /// </returns>
         public static bool FileIfExists([NotLogged] string pathname)
+        {
+            var result = false;
+
+            try
+            {
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"*** FYI *** Attempting to delete the file having the pathname, '{pathname}'..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "Delete.FileIfExists *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
+                );
+
+                // Check whether the value of the parameter, 'pathname', is blank.
+                // If this is so, then emit an error message to the Debug output, and
+                // then terminate the execution of this method.
+                if (string.IsNullOrWhiteSpace(pathname))
+                {
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        "Delete.FileIfExists: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        $"Delete.FileIfExists: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    "*** SUCCESS *** The parameter, 'pathname', is not blank.  Proceeding..."
+                );
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"Delete.FileIfExists *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
+                );
+
+                // Check whether a file having pathname, 'pathname', exists on the file system.
+                // If it does not, then write an FYI message to the Debug output, and then
+                // terminate the execution of this method, but return TRUE.
+                if (!File.Exists(pathname))
+                {
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        $"*** FYI *** The system could not locate the file having pathname, '{pathname}', on the file system.  There is nothing to do. Stopping, but returning 'success'..."
+                    );
+
+                    DebugUtils.WriteLine(
+                        DebugLevel.Info,
+                        $"*** Delete.FileIfExists: Result = {true}"
+                    );
+
+                    // stop.
+                    return true;
+                }
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"Delete.FileIfExists *** SUCCESS *** The file having pathname, '{pathname}', was found on the file system.  Attempting to delete it..."
+                );
+
+                File.Delete(pathname);
+
+                /*
+                 * Base whether this method succeeded or failed on whether the file
+                 * was successfully deleted.
+                 */
+
+                DebugUtils.WriteLine(
+                    DebugLevel.Info,
+                    $"Delete.FileIfExists: *** FYI *** Checking whether the file having pathname, '{pathname}', still exists on the file system after the attempt to delete it..."
+                );
+
+                result = !File.Exists(pathname);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = false;
+            }
+
+            DebugUtils.WriteLine(
+                result 
+                    ? DebugLevel.Info 
+                    : DebugLevel.Error,
+                result
+                    ? $"*** SUCCESS *** The file, '{pathname}', has been removed from the file system.  Proceeding..."
+                    : $"*** ERROR *** FAILED to remove the file, '{pathname}', from the file system.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deletes the file having the specified <paramref name="pathname" />, if
+        /// it exists.
+        /// </summary>
+        /// <param name="pathname">
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the fully-qualified pathname of the file that is to be deleted.
+        /// </param>
+        /// <remarks>
+        /// If the <paramref name="pathname" /> parameter is blank, the
+        /// <see cref="F:System.String.Empty" /> value, or <see langword="null" />, then
+        /// this method returns <see langword="false" />.
+        /// <para />
+        /// This method also returns <see langword="true" /> if the file having the
+        /// specified <paramref name="pathname" /> does not already exist on the file
+        /// system.
+        /// <para />
+        /// This version of the method only logs to the <b>Output</b> window of Visual
+        /// Studio, and only when this software system is running in the Visual Studio
+        /// Debugger.
+        /// <para />
+        /// It does not log to the log file, and it does not log when this software system
+        /// is running outside of the Visual Studio Debugger.
+        /// <para />
+        /// This method is intended to be used in situations where the caller wants to
+        /// attempt to delete a file, but does not care whether the file was actually
+        /// deleted or not, and just wants to know whether the file was found on the file
+        /// system or not.
+        /// <para />
+        /// In such cases, this method will log more information about what it is doing
+        /// than the <see cref="FileIfExistsSilent" /> method, but it will only log that
+        /// information to the <b>Output</b> window of Visual Studio, and only when this
+        /// software system is running in the Visual Studio Debugger.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if the file having the specified
+        /// <paramref name="pathname" /> was found on the file system and successfully
+        /// deleted; <see langword="false" /> otherwise.
+        /// </returns>
+        [Log(AttributeExclude = true)]
+        public static bool FileIfExistsDo([NotLogged] string pathname)
         {
             var result = false;
 
@@ -105,6 +263,55 @@ namespace xyLOGIX.Core.Debug
                 // dump all the exception info to the log
                 System.Diagnostics.Debug.WriteLine(ex);
 
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deletes the file having the specified <paramref name="pathname" />, if
+        /// it exists.
+        /// </summary>
+        /// <param name="pathname">
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the fully-qualified pathname of the file that is to be deleted.
+        /// </param>
+        /// <remarks>
+        /// If the <paramref name="pathname" /> parameter is blank, the
+        /// <see cref="F:System.String.Empty" /> value, or <see langword="null" />, then
+        /// this method returns <see langword="false" />.
+        /// <para />
+        /// This method also returns <see langword="false" /> if the file having the
+        /// specified
+        /// <paramref name="pathname" /> does not already exist on the file system.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if the file having the specified
+        /// <paramref name="pathname" /> was found on the file system and successfully
+        /// deleted; <see langword="false" /> otherwise.
+        /// </returns>
+        [Log(AttributeExclude = true)]
+        public static bool FileIfExistsSilent([NotLogged] string pathname)
+        {
+            var result = false;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(pathname)) return result;
+                if (!File.Exists(pathname)) return true;
+
+                File.Delete(pathname);
+
+                /*
+                 * Base whether this method succeeded or failed on whether the file
+                 * was successfully deleted.
+                 */
+
+                result = !File.Exists(pathname);
+            }
+            catch
+            {
                 result = false;
             }
 
