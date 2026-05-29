@@ -137,9 +137,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             DebugUtils.WriteLine(
-                result 
-                    ? DebugLevel.Info 
-                    : DebugLevel.Error,
+                result ? DebugLevel.Info : DebugLevel.Error,
                 result
                     ? $"*** SUCCESS *** The file, '{pathname}', has been removed from the file system.  Proceeding..."
                     : $"*** ERROR *** FAILED to remove the file, '{pathname}', from the file system.  Stopping..."
