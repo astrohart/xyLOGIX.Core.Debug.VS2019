@@ -84,7 +84,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Opening with FileMode.Truncate sets the length to zero immediately.
-                using (var fs = new FileStream(
+                using (_ = new FileStream(
                            pathname, FileMode.Truncate, FileAccess.Write,
                            FileShare.Read
                        ))
