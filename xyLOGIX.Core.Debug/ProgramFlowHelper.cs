@@ -12,16 +12,15 @@ namespace xyLOGIX.Core.Debug
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public static class ProgramFlowHelper
     {
-        /// <summary> Brings the application to an immediate halt. </summary>
+        /// <summary>Brings the application to an immediate halt.</summary>
         [DebuggerStepThrough]
         public static void EmergencyStop()
             => Environment.Exit(-1);
 
-        /// <summary> Launches the Visual Studio Debugger. </summary>
+        /// <summary>Launches the Visual Studio Debugger.</summary>
         /// <remarks>
-        /// This method should be called only as necessary to automatically
-        /// launch the Visual Studio Debugger, attached to the currently-running process
-        /// instance.
+        /// This method should be called only as necessary to automatically launch
+        /// the Visual Studio Debugger, attached to the currently-running process instance.
         /// <para />
         /// Such calls should be commented out or deleted when no longer needed.
         /// </remarks>
