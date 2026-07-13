@@ -5,15 +5,15 @@ using System;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes "secret" <see cref="T:System.String" /> extension methods to help the
-    /// methods in this library only.
+    /// Exposes "secret" <see cref="T:System.String" /> extension methods to
+    /// help the methods in this library only.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal static class SecretStringExtensions
     {
         /// <summary>
-        /// "Collapses" or "folds" the specified <paramref name="value" /> so that all
-        /// newlines are transformed to single whitespace characters.
+        /// "Collapses" or "folds" the specified <paramref name="value" /> so that
+        /// all newlines are transformed to single whitespace characters.
         /// </summary>
         /// <param name="value">
         /// (Required.) A <see cref="T:System.String" /> containing the
@@ -26,9 +26,7 @@ namespace xyLOGIX.Core.Debug
         /// Multiple newlines are removed.
         /// </returns>
         [return: NotLogged]
-        internal static string CollapseNewlinesToSpaces(
-            [NotLogged] this string value
-        )
+        internal static string CollapseNewlinesToSpaces([NotLogged] this string value)
         {
             var result = string.Empty;
 
@@ -38,12 +36,13 @@ namespace xyLOGIX.Core.Debug
                     "SecretStringExtensions.CollapseNewlinesToSpaces *** INFO: Checking whether the value of the parameter, 'value', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'value', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'value', is blank. If this is so, then
+                // emit an error message to the log file, and then terminate the execution of this
+                // method.
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    // The parameter, 'value' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'value' was either passed a null value, or it is blank.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "SecretStringExtensions.CollapseNewlinesToSpaces: The parameter, 'value' was either passed a null value, or it is blank. Stopping..."
                     );
@@ -77,8 +76,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines whether the specified <paramref name="value" /> is equal to,
-        /// regardless of case, any of the item(s) in the specified
+        /// Determines whether the specified <paramref name="value" /> is equal
+        /// to, regardless of case, any of the item(s) in the specified
         /// <paramref name="list" />.
         /// </summary>
         /// <param name="value">
@@ -117,19 +116,14 @@ namespace xyLOGIX.Core.Debug
 
                 foreach (var item in list)
                 {
-                    /* special case: if the current item is null or
-                     blank, and so is the value, then return true
-                     immediately */
-                    if (string.IsNullOrWhiteSpace(item) &&
-                        string.IsNullOrWhiteSpace(value)) return true;
+                    /* special case: if the current item is null or blank, and so is the value, then
+                     return true immediately */
+                    if (string.IsNullOrWhiteSpace(item) && string.IsNullOrWhiteSpace(value))
+                        return true;
 
-                    /*
-                     * otherwise, skip the current item if it isn't equal
-                     * to the value, regardless of case.
-                     */
-                    if (!item.Equals(
-                            value, StringComparison.OrdinalIgnoreCase
-                        )) continue;
+                    /* otherwise, skip the current item if it isn't equal to the value, regardless
+                     of case. */
+                    if (!item.Equals(value, StringComparison.OrdinalIgnoreCase)) continue;
 
                     result = true;
                     break;
@@ -150,10 +144,10 @@ namespace xyLOGIX.Core.Debug
         /// Determines whether the specified <paramref name="path" /> is a
         /// fully-qualified, absolute path or not.
         /// </summary>
-        /// <param name="path"> (Required.) String containing the path to be checked. </param>
+        /// <param name="path">(Required.) String containing the path to be checked.</param>
         /// <returns>
-        /// <see langword="true" /> if the <paramref name="path" /> specified is
-        /// a fully-qualified, absolute path; <see langword="false" /> otherwise.
+        /// <see langword="true" /> if the <paramref name="path" /> specified is a
+        /// fully-qualified, absolute path; <see langword="false" /> otherwise.
         /// </returns>
         internal static bool IsAbsolutePath(this string path)
         {
@@ -165,10 +159,10 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 result = Path.IsPathRooted(path) && !Path.GetPathRoot(path)
-                    .Equals(
-                        Path.DirectorySeparatorChar.ToString(),
-                        StringComparison.Ordinal
-                    );
+                                                         .Equals(
+                                                             Path.DirectorySeparatorChar.ToString(),
+                                                             StringComparison.Ordinal
+                                                         );
             }
             catch
             {
