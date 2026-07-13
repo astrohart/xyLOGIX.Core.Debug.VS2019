@@ -11,12 +11,13 @@ namespace xyLOGIX.Core.Debug
     internal static class GetLoggingInfrastructure
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetLoggingInfrastructure" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetLoggingInfrastructure" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static GetLoggingInfrastructure() { }
@@ -30,9 +31,7 @@ namespace xyLOGIX.Core.Debug
         /// <param name="type">
         /// One of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" />
-        /// value(s)
-        /// that
-        /// describes what type of object you want.
+        /// value(s) that describes what type of object you want.
         /// </param>
         /// <returns>
         /// A reference to the instance of the object that implements the
@@ -51,9 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        internal static ILoggingInfrastructure OfType(
-            LoggingInfrastructureType type
-        )
+        internal static ILoggingInfrastructure OfType(LoggingInfrastructureType type)
         {
             ILoggingInfrastructure result = default;
 
@@ -63,12 +60,13 @@ namespace xyLOGIX.Core.Debug
                     "*** GetLoggingInfrastructure.OfType: Checking whether the Logging Infrastructure Type value specified is valid..."
                 );
 
-                // Check to see whether the Logging Infrastructure Type value specified is valid.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // Check to see whether the Logging Infrastructure Type value specified is valid. If
+                // this is not the case, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
                 if (!Validate.LoggingInfrastructureType(type))
                 {
-                    // The Logging Infrastructure Type value specified is NOT valid.  This is not desirable.
+                    // The Logging Infrastructure Type value specified is NOT valid.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The Logging Infrastructure Type value specified is NOT valid.  Stopping..."
                     );
@@ -92,8 +90,7 @@ namespace xyLOGIX.Core.Debug
                         break;
 
                     case LoggingInfrastructureType.PostSharp:
-                        result =
-                            GetPostSharpLoggingInfrastructure.SoleInstance();
+                        result = GetPostSharpLoggingInfrastructure.SoleInstance();
                         break;
 
                     default:
