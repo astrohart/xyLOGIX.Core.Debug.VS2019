@@ -9,18 +9,18 @@ namespace xyLOGIX.Core.Debug
     /// Obtains a reference to a new instance of the
     /// <see cref="T:PostSharp.Patterns.Diagnostics.LoggingBackend" /> that corresponds
     /// to the specified
-    /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" />
-    /// enumeration value.
+    /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" /> enumeration
+    /// value.
     /// </summary>
     public static class GetLoggingBackend
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetLoggingBackend" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetLoggingBackend" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static GetLoggingBackend() { }
@@ -31,7 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingBackendTypeValidator LoggingBackendTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingBackendTypeValidator.SoleInstance();
 
         /// <summary>
@@ -43,8 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// <param name="type">
         /// (Required.) The
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingBackendType" /> enumeration
-        /// value
-        /// that explains which type of backend to get.
+        /// value that explains which type of backend to get.
         /// </param>
         /// <param name="relay">
         /// (Optional.) Reference to an instance of an object that
@@ -69,12 +69,13 @@ namespace xyLOGIX.Core.Debug
                     "GetLoggingBackend.For: Checking whether the type of logging backend requested is within the defined value set..."
                 );
 
-                // Check to see whether the type of logging backend requested is within the defined value set.
-                // If this is not the case, then write an error message to the log file,
+                // Check to see whether the type of logging backend requested is within the defined
+                // value set. If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
                 if (!LoggingBackendTypeValidator.IsValid(type))
                 {
-                    // The type of logging backend requested is NOT within the defined value set.  This is not desirable.
+                    // The type of logging backend requested is NOT within the defined value set.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The type of logging backend requested is NOT within the defined value set.  Stopping..."
                     );
@@ -87,21 +88,20 @@ namespace xyLOGIX.Core.Debug
                     "GetLoggingBackend.For: *** SUCCESS *** The type of logging backend requested is within the defined value set.  Proceeding..."
                 );
 
-                /*
-                 * If log4net is the requested backend, the 'relay'
-                 * parameter must be non-NULL.
-                 */
+                /* If log4net is the requested backend, the 'relay' parameter must be non-NULL. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "GetLoggingBackend.For: Checking whether the log4net backend is requested, but a null reference has been passed for the 'relay' parameter..."
                 );
 
-                // Check to see whether the log4net backend is requested, but a null reference has been passed for the 'relay' parameter.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // Check to see whether the log4net backend is requested, but a null reference has
+                // been passed for the 'relay' parameter. If this is not the case, then write an
+                // error message to the Debug output, and then terminate the execution of this
+                // method.
                 if (type == LoggingBackendType.Log4Net && relay == null)
                 {
-                    // The log4net backend is requested, but a  null reference has been passed for the value of the 'relay' parameter.  This is not desirable.
+                    // The log4net backend is requested, but a  null reference has been passed for
+                    // the value of the 'relay' parameter.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The log4net backend is requested, but a null reference has been passed for the value of the 'relay' parameter.  Stopping..."
                     );
