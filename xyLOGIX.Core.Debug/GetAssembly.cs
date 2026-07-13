@@ -40,12 +40,13 @@ namespace xyLOGIX.Core.Debug
                     "GetAssembly.Pathname: Checking whether the required method parameter, 'assembly', has a null reference for a value..."
                 );
 
-                // Check to see if the required method parameter, assembly, is null. If it is, send an 
-                // error to the log file and quit, returning the default return value of this
+                // Check to see if the required method parameter, assembly, is null. If it is, send
+                // an  error to the log file and quit, returning the default return value of this
                 // method.
                 if (assembly == null)
                 {
-                    // The parameter, 'assembly', is required and is not supposed to have a NULL value.
+                    // The parameter, 'assembly', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "GetAssembly.Pathname: *** ERROR *** A null reference was passed for the required method parameter, 'assembly'.  Stopping..."
                     );
@@ -66,12 +67,13 @@ namespace xyLOGIX.Core.Debug
                     "*** INFO: Checking whether the property, 'assembly.Location', appears to have a null or blank value..."
                 );
 
-                // Check to see if the required property, 'assembly.Location', appears to have a null 
-                // or blank value. If it does, then send an error to the log file and quit,
+                // Check to see if the required property, 'assembly.Location', appears to have a
+                // null  or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(assembly.Location))
                 {
-                    // The property, 'assembly.Location', appears to have a null or blank value.  This is not desirable.
+                    // The property, 'assembly.Location', appears to have a null or blank value.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR: The property, 'assembly.Location', appears to have a null or blank value.  Stopping..."
                     );
@@ -99,9 +101,7 @@ namespace xyLOGIX.Core.Debug
                 result = string.Empty;
             }
 
-            System.Diagnostics.Debug.WriteLine(
-                $"GetAssembly.Pathname: Result = '{result}'"
-            );
+            System.Diagnostics.Debug.WriteLine($"GetAssembly.Pathname: Result = '{result}'");
 
             return result;
         }
@@ -117,9 +117,9 @@ namespace xyLOGIX.Core.Debug
         /// application event logging quote; <see langword="null" /> otherwise.
         /// </returns>
         /// <remarks>
-        /// To find the assembly to use as a quote for event logging, this
-        /// method first attempts to locate the assembly containing the application's
-        /// entry-point, and use that.
+        /// To find the assembly to use as a quote for event logging, this method
+        /// first attempts to locate the assembly containing the application's entry-point,
+        /// and use that.
         /// <para />
         /// Failing that, the assembly that is currently executing is tried.
         /// <para />
@@ -136,7 +136,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the variable, assembly, is NOT null.  If this is the case, then
-                // simply make this method idempotent by returning the value of the variable, assembly.
+                // simply make this method idempotent by returning the value of the variable,
+                // assembly.
                 if (assembly != null)
                 {
                     // The variable, 'assembly', does NOT have a null reference, so return it.
@@ -148,8 +149,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We have to come up with another return value, since the parameter,
-                // 'assembly', is set to a null reference.
+                // We have to come up with another return value, since the parameter, 'assembly', is
+                // set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetAssembly.ToUseForEventLogging: *** ERROR *** The variable, 'assembly', has a NULL object reference for its value.  Proceeding..."
                 );
@@ -164,8 +165,9 @@ namespace xyLOGIX.Core.Debug
                     "GetAssembly.ToUseForEventLogging: Checking whether the variable, 'assemblyToUse', does NOT have a null reference for a value..."
                 );
 
-                // Check to see if the variable, assemblyToUse, is NOT null.  If this is the case, then
-                // simply make this method idempotent by returning the value of the variable, result.
+                // Check to see if the variable, assemblyToUse, is NOT null.  If this is the case,
+                // then simply make this method idempotent by returning the value of the variable,
+                // result.
                 if (assemblyToUse != null)
                 {
                     // The variable, 'assemblyToUse', does NOT have a null reference, so return it.
@@ -177,8 +179,8 @@ namespace xyLOGIX.Core.Debug
                     return assemblyToUse;
                 }
 
-                // We have to come up with another return value, since the parameter,
-                // 'result', is set to a null reference.
+                // We have to come up with another return value, since the parameter, 'result', is
+                // set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetAssembly.ToUseForEventLogging: *** ERROR *** The variable, 'assemblyToUse', has a NULL object reference for its value.  Proceeding..."
                 );
@@ -193,8 +195,9 @@ namespace xyLOGIX.Core.Debug
                     "GetAssembly.ToUseForEventLogging: Checking whether the variable, 'assemblyToUse', does NOT have a null reference for a value..."
                 );
 
-                // Check to see if the variable, assemblyToUse, is NOT null.  If this is the case, then
-                // simply make this method idempotent by returning the value of the variable, result.
+                // Check to see if the variable, assemblyToUse, is NOT null.  If this is the case,
+                // then simply make this method idempotent by returning the value of the variable,
+                // result.
                 if (assemblyToUse != null)
                 {
                     // The variable, 'assemblyToUse', does NOT have a null reference, so return it.
@@ -206,8 +209,8 @@ namespace xyLOGIX.Core.Debug
                     return assemblyToUse;
                 }
 
-                // We have to come up with another return value, since the parameter,
-                // 'result', is set to a null reference.
+                // We have to come up with another return value, since the parameter, 'result', is
+                // set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetAssembly.ToUseForEventLogging: *** ERROR *** The variable, 'assemblyToUse', has a NULL object reference for its value.  Proceeding..."
                 );
@@ -222,8 +225,9 @@ namespace xyLOGIX.Core.Debug
                     "GetAssembly.ToUseForEventLogging: Checking whether the variable, 'assemblyToUse', does NOT have a null reference for a value..."
                 );
 
-                // Check to see if the variable, assemblyToUse, is NOT null.  If this is the case, then
-                // simply make this method idempotent by returning the value of the variable, result.
+                // Check to see if the variable, assemblyToUse, is NOT null.  If this is the case,
+                // then simply make this method idempotent by returning the value of the variable,
+                // result.
                 if (assemblyToUse != null)
                 {
                     // The variable, 'assemblyToUse', does NOT have a null reference, so return it.
@@ -235,8 +239,8 @@ namespace xyLOGIX.Core.Debug
                     return assemblyToUse;
                 }
 
-                // We have to come up with another return value, since the parameter,
-                // 'result', is set to a null reference.
+                // We have to come up with another return value, since the parameter, 'result', is
+                // set to a null reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetAssembly.ToUseForEventLogging: *** ERROR *** The variable, 'assemblyToUse', has a NULL object reference for its value.  Giving up..."
                 );
