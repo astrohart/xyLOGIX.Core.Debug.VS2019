@@ -12,12 +12,13 @@ namespace xyLOGIX.Core.Debug
     internal static class GetRootLoggerProvisioner
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetRootLoggerProvisioner" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetRootLoggerProvisioner" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -32,9 +33,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IRootLoggerProvisioningStrategyValidator
             RootLoggerProvisioningStrategyValidator
-        {
-            [DebuggerStepThrough] get;
-        } =
+        { [DebuggerStepThrough] get; } =
             GetRootLoggerProvisioningStrategyValidator.SoleInstance();
 
         /// <summary>
@@ -67,9 +66,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        internal static IRootLoggerProvisioner For(
-            RootLoggerProvisioningStrategy strategy
-        )
+        internal static IRootLoggerProvisioner For(RootLoggerProvisioningStrategy strategy)
         {
             IRootLoggerProvisioner result = default;
 
@@ -79,12 +76,13 @@ namespace xyLOGIX.Core.Debug
                     "*** GetRootLoggerProvisioner.OfType: Checking whether the provided Root Logger Provisioning Strategy is within the defined value set..."
                 );
 
-                // Check to see whether the provided Root Logger Provisioning Strategy is within the defined value set.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the provided Root Logger Provisioning Strategy is within the
+                // defined value set. If this is not the case, then write an error message to the
+                // log file, and then terminate the execution of this method.
                 if (!RootLoggerProvisioningStrategyValidator.IsValid(strategy))
                 {
-                    // The provided Root Logger Provisioning Strategy is NOT within the defined value set.  This is not desirable.
+                    // The provided Root Logger Provisioning Strategy is NOT within the defined
+                    // value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The provided Root Logger Provisioning Strategy is NOT within the defined value set.  Stopping..."
                     );
@@ -99,16 +97,13 @@ namespace xyLOGIX.Core.Debug
 
                 switch (strategy)
                 {
-                    case RootLoggerProvisioningStrategy
-                        .FromProvidedLoggingRepository:
+                    case RootLoggerProvisioningStrategy.FromProvidedLoggingRepository:
                         result =
-                            GetFromProvidedLoggingRepositoryRootLoggerProvisioner
-                                .SoleInstance();
+                            GetFromProvidedLoggingRepositoryRootLoggerProvisioner.SoleInstance();
                         break;
 
                     case RootLoggerProvisioningStrategy.FromLogManager:
-                        result = GetFromLogManagerRootLoggerProvisioner
-                            .SoleInstance();
+                        result = GetFromLogManagerRootLoggerProvisioner.SoleInstance();
                         break;
 
                     default:
