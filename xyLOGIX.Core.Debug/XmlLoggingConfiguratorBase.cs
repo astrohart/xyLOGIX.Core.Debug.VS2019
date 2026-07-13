@@ -17,35 +17,34 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         /// <remarks>
-        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
-        /// due to the fact that this class is marked <see langword="abstract" />.
+        /// <strong>NOTE:</strong> This constructor is marked
+        /// <see langword="protected" /> due to the fact that this class is marked
+        /// <see langword="abstract" />.
         /// </remarks>
-        protected XmlLoggingConfiguratorBase() { }
+        protected XmlLoggingConfiguratorBase()
+        { }
 
         /// <summary>
         /// Gets or sets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType" /> enumeration
         /// values that specifies how the logging subsystem is to be configured.
         /// </summary>
-        public abstract XmlLoggingConfiguratorType Type
-        {
-            [DebuggerStepThrough] get;
-        }
+        public abstract XmlLoggingConfiguratorType Type { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Attempts to configure the logging subsystem, optionally with the settings that
-        /// are present in the configuration file having the specified
+        /// Attempts to configure the logging subsystem, optionally with the
+        /// settings that are present in the configuration file having the specified
         /// <paramref name="configurationFileName" />.
         /// </summary>
         /// <param name="repository">
-        /// (Required.) Reference to an instance of an object that implements the
-        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// </param>
         /// <param name="configurationFileName">
-        /// (Optional.) A <see cref="T:System.String" /> containing
-        /// the fully-qualified configurationFileName of the XML-formatted configuration
-        /// file containing
-        /// the necessary logging setting(s).
+        /// (Optional.) A
+        /// <see cref="T:System.String" /> containing the fully-qualified
+        /// configurationFileName of the XML-formatted configuration file containing the
+        /// necessary logging setting(s).
         /// <para />
         /// The default value of this parameter is the <see cref="F:System.String.Empty" />
         /// value.
@@ -55,18 +54,15 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="false" /> otherwise.
         /// </returns>
         /// <remarks>
-        /// The value of the <paramref name="configurationFileName" /> parameter is ignored
-        /// if
-        /// this is a <c>XML Logging Configurator</c> object of type
+        /// The value of the <paramref name="configurationFileName" /> parameter
+        /// is ignored if this is a <c>XML Logging Configurator</c> object of type
         /// <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.NoFile" />.
         /// <para />
         /// Otherwise, if this <c>XML Logging Configurator</c> is of type,
         /// <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.FileBased" />, then
         /// the <paramref name="configurationFileName" /> had better contain the
-        /// fully-qualified
-        /// configurationFileName of a <c>.config</c> file containing the logging settings,
-        /// or else this
-        /// method will fail.
+        /// fully-qualified configurationFileName of a <c>.config</c> file containing the
+        /// logging settings, or else this method will fail.
         /// </remarks>
         public abstract bool Configure(
             [NotLogged] ILoggerRepository repository,
