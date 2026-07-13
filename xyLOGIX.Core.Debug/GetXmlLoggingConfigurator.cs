@@ -12,12 +12,13 @@ namespace xyLOGIX.Core.Debug
     internal static class GetXmlLoggingConfigurator
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetXmlLoggingConfigurator" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetXmlLoggingConfigurator" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -30,9 +31,11 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.IXmlLoggingConfiguratorTypeValidator" />
         /// interface.
         /// </summary>
-        private static IXmlLoggingConfiguratorTypeValidator
-            XmlLoggingConfiguratorTypeValidator { [DebuggerStepThrough] get; } =
-            GetXmlLoggingConfiguratorTypeValidator.SoleInstance();
+        private static IXmlLoggingConfiguratorTypeValidator XmlLoggingConfiguratorTypeValidator
+        {
+            [DebuggerStepThrough]
+            get;
+        } = GetXmlLoggingConfiguratorTypeValidator.SoleInstance();
 
         /// <summary>
         /// Obtains a reference to an instance of an object that implements the
@@ -65,9 +68,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
-        internal static IXmlLoggingConfigurator For(
-            XmlLoggingConfiguratorType type
-        )
+        internal static IXmlLoggingConfigurator For(XmlLoggingConfiguratorType type)
         {
             IXmlLoggingConfigurator result = default;
 
@@ -78,11 +79,12 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see whether the XML Configurator Type is within the defined value set.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // If this is not the case, then write an error message to the log file, and then
+                // terminate the execution of this method.
                 if (!XmlLoggingConfiguratorTypeValidator.IsValid(type))
                 {
-                    // The XML Configurator Type is NOT within the defined value set.  This is not desirable.
+                    // The XML Configurator Type is NOT within the defined value set.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The XML Configurator Type, '{type}', is NOT within the defined value set.  Stopping..."
                     );
@@ -98,8 +100,7 @@ namespace xyLOGIX.Core.Debug
                 switch (type)
                 {
                     case XmlLoggingConfiguratorType.FileBased:
-                        result =
-                            GetFileBasedXmlLoggingConfigurator.SoleInstance();
+                        result = GetFileBasedXmlLoggingConfigurator.SoleInstance();
                         break;
 
                     case XmlLoggingConfiguratorType.NoFile:
