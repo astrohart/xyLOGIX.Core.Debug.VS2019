@@ -114,11 +114,7 @@
       <HintPath>..\packages\PostSharp.Patterns.Threading.Redist.2024.1.6\lib\net45\PostSharp.Patterns.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activate.cs" />
@@ -244,6 +240,7 @@
     <Compile Include="Validate.cs" />
     <Compile Include="VerbosityChangedEventArgs.cs" />
     <Compile Include="VerbosityChangedEventHandler.cs" />
+    <Compile Include="SpecialVisualStudioProcessNames.cs" />
     <Compile Include="VsixHosting.cs" />
     <Compile Include="Write.cs" />
     <Compile Include="XmlLoggingConfiguratorBase.cs" />
