@@ -2,9 +2,7 @@
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Values for command-line parameters.
-    /// </summary>
+    /// <summary>Values for command-line parameters.</summary>
     [Log(AttributeExclude = true)]
     internal static class CommandLineParameter
     {
@@ -20,8 +18,8 @@ namespace xyLOGIX.Core.Debug
         /// A <see cref="T:System.String" /> that contains the text of the
         /// <c>Suppress On Exception</c> command-line flag, which, if present, will stop us
         /// from calling the
-        /// <see cref="M:xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger" />
-        /// method when an exception is thrown.
+        /// <see cref="M:xyLOGIX.Core.Debug.ProgramFlowHelper.StartDebugger" /> method when
+        /// an exception is thrown.
         /// </summary>
         public const string SuppressOnException = "--soe";
     }
