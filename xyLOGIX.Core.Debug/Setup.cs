@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes <see langword="static" /> methods to perform setup tasks. </summary>
+    /// <summary>Exposes <see langword="static" /> methods to perform setup tasks.</summary>
     [Log(AttributeExclude = true)]
     internal static class Setup
     {
@@ -12,10 +12,8 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IEventLogManager" /> interface.
         /// </summary>
-        private static IEventLogManager EventLogManager
-        {
-            [DebuggerStepThrough] get;
-        } = GetEventLogManager.SoleInstance();
+        private static IEventLogManager EventLogManager { [DebuggerStepThrough] get; } =
+            GetEventLogManager.SoleInstance();
 
         /// <summary>
         /// Attempts to determine the proper value for the
@@ -23,10 +21,11 @@ namespace xyLOGIX.Core.Debug
         /// the specified <paramref name="applicationName" />.
         /// </summary>
         /// <param name="applicationName">
-        /// (Optional.) A <see cref="T:System.String" /> that contains the application name
-        /// that is to be used; if this value is blank, <see langword="null" />, or the
-        /// <see cref="F:System.String.Empty" /> value, then the result of attempting to
-        /// get the assembly <c>ProductName</c> value is used instead.
+        /// (Optional.) A <see cref="T:System.String" /> that
+        /// contains the application name that is to be used; if this value is blank,
+        /// <see langword="null" />, or the <see cref="F:System.String.Empty" /> value,
+        /// then the result of attempting to get the assembly <c>ProductName</c> value is
+        /// used instead.
         /// <para />
         /// The default value of this parameter is the <see cref="F:System.String.Empty" />
         /// value.
@@ -38,9 +37,7 @@ namespace xyLOGIX.Core.Debug
         /// otherwise, the <see cref="F:System.String.Empty" /> value is returned.
         /// </returns>
         [return: NotLogged]
-        private static string DetermineEventSourceName(
-            [NotLogged] string applicationName = ""
-        )
+        private static string DetermineEventSourceName([NotLogged] string applicationName = "")
         {
             var result = GetEvent.SourceName();
 
@@ -50,12 +47,13 @@ namespace xyLOGIX.Core.Debug
                     "Setup.DetermineEventSourceName *** INFO: Checking whether the value of the parameter, 'applicationName', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'applicationName', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'applicationName', is blank. If this is
+                // so, then emit an error message to the log file, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(applicationName))
                 {
-                    // The parameter, 'applicationName' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'applicationName' was either passed a null value, or it is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "Setup.DetermineEventSourceName: The parameter, 'applicationName' was either passed a null value, or it is blank. Stopping..."
                     );
@@ -95,18 +93,16 @@ namespace xyLOGIX.Core.Debug
         /// quote name that we automatically obtain.
         /// </summary>
         /// <param name="applicationName">
-        /// (Optional.) A <see cref="T:System.String" />
-        /// that provides a user-friendly version of the application's name for viewing in
-        /// the Windows Event Log Viewer; leave blank to use the default value.
+        /// (Optional.) A <see cref="T:System.String" /> that
+        /// provides a user-friendly version of the application's name for viewing in the
+        /// Windows Event Log Viewer; leave blank to use the default value.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation completed successfully;
         /// <see langword="false" /> otherwise.
         /// </returns>
         [DebuggerStepThrough]
-        internal static bool EventLogging(
-            [NotLogged] string applicationName = ""
-        )
+        internal static bool EventLogging([NotLogged] string applicationName = "")
         {
             var result = false;
 
@@ -116,8 +112,7 @@ namespace xyLOGIX.Core.Debug
                     "Setup.EventLogging: *** FYI *** Attempting to determine the value that is to be assigned to the 'DebugUtils.ApplicationName' parameter..."
                 );
 
-                DebugUtils.ApplicationName =
-                    DetermineEventSourceName(applicationName);
+                DebugUtils.ApplicationName = DetermineEventSourceName(applicationName);
 
                 System.Diagnostics.Debug.WriteLine(
                     $"Setup.EventLogging: *** FYI *** Set the value of the DebugUtils.ApplicationName property to '{DebugUtils.ApplicationName}'."
@@ -128,28 +123,26 @@ namespace xyLOGIX.Core.Debug
                     $"Setup.EventLogging: DebugUtils.ApplicationName = '{DebugUtils.ApplicationName}'"
                 );
 
-                // If we found a value for the ApplicationName, then initialize
-                // the name of the event source as such.  This is handy in the
-                // case where the user does not have write access to the
-                // C:\ProgramData directory, say.
+                // If we found a value for the ApplicationName, then initialize the name of the
+                // event source as such.  This is handy in the case where the user does not have
+                // write access to the C:\ProgramData directory, say.
 
                 System.Diagnostics.Debug.WriteLine(
                     "Setup.EventLogging: Checking whether the value of the 'DebugUtils.ApplicationName' property is blank..."
                 );
 
-                // Check whether the value of the DebugUtils.ApplicationName property is blank or null.  If this is the
-                // case, then write an error message to the log file, and then terminate the execution of this
-                // method.
+                // Check whether the value of the DebugUtils.ApplicationName property is blank or
+                // null.  If this is the case, then write an error message to the log file, and then
+                // terminate the execution of this method.
                 if (string.IsNullOrWhiteSpace(DebugUtils.ApplicationName))
                 {
-                    // A blank value seems to have been passed for the 'DebugUtils.ApplicationName' property.  This is not desirable.
+                    // A blank value seems to have been passed for the 'DebugUtils.ApplicationName'
+                    // property.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** A blank value seems to have been passed for the 'DebugUtils.ApplicationName' property. This property is required to have a non-blank value.  Stopping..."
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Setup.EventLogging: Result = {result}"
-                    );
+                    System.Diagnostics.Debug.WriteLine($"Setup.EventLogging: Result = {result}");
 
                     // stop.
                     return result;
@@ -167,12 +160,14 @@ namespace xyLOGIX.Core.Debug
                     "Setup.EventLogging: Checking whether the property, 'EventLogManager', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'EventLogManager', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
+                // Check to see if the required property, 'EventLogManager', has a null reference
+                // for a value. If that is the case, then we will write an error message to the
+                // Debug output, and then terminate the execution of this method, while returning
+                // the default return value.
                 if (EventLogManager == null)
                 {
-                    // The property, 'EventLogManager', has a null reference for a value.  This is not desirable.
+                    // The property, 'EventLogManager', has a null reference for a value.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "Setup.EventLogging: *** ERROR *** The property, 'EventLogManager', has a null reference for a value.  Stopping..."
                     );
@@ -193,9 +188,9 @@ namespace xyLOGIX.Core.Debug
                     "Setup.EventLogging: Checking whether the Event Log Manager has been initialized properly..."
                 );
 
-                // Check to see whether the Event Log Manager has been initialized properly.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the Event Log Manager has been initialized properly. If this
+                // is not the case, then write an error message to the log file, and then terminate
+                // the execution of this method.
                 if (!EventLogManager.Initialize(
                         DebugUtils.ApplicationName, EventLogType.Application
                     ))
@@ -217,10 +212,8 @@ namespace xyLOGIX.Core.Debug
                     $"Setup.EventLogging: *** SUCCESS *** The Event Log has been initialized with the name '{DebugUtils.ApplicationName}'."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -232,9 +225,7 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            System.Diagnostics.Debug.WriteLine(
-                $"Setup.EventLogging: Result = {result}"
-            );
+            System.Diagnostics.Debug.WriteLine($"Setup.EventLogging: Result = {result}");
 
             return result;
         }
