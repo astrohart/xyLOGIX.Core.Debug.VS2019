@@ -7,8 +7,8 @@ using System.Text.RegularExpressions;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides methods for splitting <see cref="T:System.String" /> value(s) into
-    /// array(s) of argument(s)
+    /// Provides methods for splitting <see cref="T:System.String" /> value(s)
+    /// into array(s) of argument(s)
     /// </summary>
     [Log(AttributeExclude = true)]
     internal static class Split
@@ -18,33 +18,30 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:System.Text.RegularExpressions.Regex" /> that is a regular
         /// expression used to split command-line arguments into individual parts.
         /// </summary>
-        private static Regex CommandLineRegex { [DebuggerStepThrough] get; } =
-            new Regex(
-                @"(?<quoted>\""(\""\""|[^\""])*\"")|(?<unquoted>[^ ]+)",
-                RegexOptions.Compiled | RegexOptions.ExplicitCapture
-            );
+        private static Regex CommandLineRegex { [DebuggerStepThrough] get; } = new Regex(
+            @"(?<quoted>\""(\""\""|[^\""])*\"")|(?<unquoted>[^ ]+)",
+            RegexOptions.Compiled | RegexOptions.ExplicitCapture
+        );
 
         /// <summary>
         /// Splits the specified command-line string into an array of arguments,
         /// respecting quoted segments and spaces.
         /// </summary>
         /// <param name="commandLine">
-        /// (Required.) A <see cref="T:System.String" /> containing the full command-line
-        /// input
-        /// to be split into arguments. If <see langword="null" /> or blank, an empty array
-        /// is returned.
+        /// (Required.) A <see cref="T:System.String" />
+        /// containing the full command-line input to be split into arguments. If
+        /// <see langword="null" /> or blank, an empty array is returned.
         /// </param>
         /// <returns>
         /// An enumerable collection of <see cref="T:System.String" /> value(s),
-        /// each representing an argument parsed from the command line.
-        /// The empty collection is returned if the <paramref name="commandLine" /> is
+        /// each representing an argument parsed from the command line. The empty
+        /// collection is returned if the <paramref name="commandLine" /> is
         /// <see langword="null" />, blank, or if a parsing error occurs.
         /// </returns>
         /// <remarks>
-        /// This method uses a regular expression to identify arguments based on quoted and
-        /// unquoted segments.
-        /// Quoted arguments retain their content without the surrounding quotes.
-        /// Unquoted arguments are split on spaces.
+        /// This method uses a regular expression to identify arguments based on
+        /// quoted and unquoted segments. Quoted arguments retain their content without the
+        /// surrounding quotes. Unquoted arguments are split on spaces.
         /// </remarks>
         [return: NotLogged]
         internal static string[] CommandLine([NotLogged] string commandLine)
@@ -57,19 +54,18 @@ namespace xyLOGIX.Core.Debug
                     "Split.CommandLine *** INFO: Checking whether the value of the parameter, 'commandLine', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'commandLine', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'commandLine', is blank. If this is so,
+                // then emit an error message to the log file, and then terminate the execution of
+                // this method.
                 if (string.IsNullOrWhiteSpace(commandLine))
                 {
-                    // The parameter, 'commandLine' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'commandLine' was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "Split.CommandLine: The parameter, 'commandLine' was either passed a null value, or it is blank. Stopping..."
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Split.CommandLine: Result = '{result}'"
-                    );
+                    System.Diagnostics.Debug.WriteLine($"Split.CommandLine: Result = '{result}'");
 
                     // stop.
                     return result;
@@ -97,9 +93,9 @@ namespace xyLOGIX.Core.Debug
                     "*** Split.CommandLine: Checking whether the 'args' collection contains greater than zero elements..."
                 );
 
-                // Check to see whether the 'args' collection contains greater than
-                // zero elements.  Otherwise, write an error message to the Debug output, return
-                // the default return value, and then terminate the execution of this method.
+                // Check to see whether the 'args' collection contains greater than zero elements.
+                // Otherwise, write an error message to the Debug output, return the default return
+                // value, and then terminate the execution of this method.
                 if (args.Count <= 0)
                 {
                     // The 'args' collection contains zero elements.  This is not desirable.
@@ -107,9 +103,7 @@ namespace xyLOGIX.Core.Debug
                         "*** ERROR *** The 'args' collection contains zero elements.  Stopping..."
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Split.CommandLine: Result = '{result}'"
-                    );
+                    System.Diagnostics.Debug.WriteLine($"Split.CommandLine: Result = '{result}'");
 
                     // stop.
                     return result;
@@ -126,9 +120,7 @@ namespace xyLOGIX.Core.Debug
                 result = Array.Empty<string>();
             }
 
-            System.Diagnostics.Debug.WriteLine(
-                $"Split.CommandLine: Result = '{result}'"
-            );
+            System.Diagnostics.Debug.WriteLine($"Split.CommandLine: Result = '{result}'");
 
             return result;
         }
