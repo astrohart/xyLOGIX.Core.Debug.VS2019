@@ -6,8 +6,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Validates whether certain value(s) are within the defined value set of the
-    /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration.
+    /// Validates whether certain value(s) are within the defined value set of
+    /// the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> enumeration.
     /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal class DebugLevelValidator : IDebugLevelValidator
@@ -19,22 +19,20 @@ namespace xyLOGIX.Core.Debug
         static DebugLevelValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private DebugLevelValidator() { }
+        private DebugLevelValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IDebugLevelValidator" /> interface.
         /// </summary>
-        internal static IDebugLevelValidator Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new DebugLevelValidator();
+        internal static IDebugLevelValidator Instance { [DebuggerStepThrough] get; } =
+            new DebugLevelValidator();
 
         /// <summary>
         /// Determines whether the debug <paramref name="level" /> value passed is
@@ -60,30 +58,25 @@ namespace xyLOGIX.Core.Debug
                     $"DebugLevelValidator.IsValid: level = '{level}'"
                 );
 
-                /*
-                 * For cybersecurity reasons, and to defeat reverse-engineering,
-                 * check the value of the 'level' parameter to ensure that it
-                 * is not set to a value outside the set of valid values defined
-                 * by the xyLOGIX.Core.Debug.DebugLevel
-                 * enumeration.
-                 *
-                 * In principle, since all C# enums devolve to integer values, a
-                 * hacker could insert a different value into the CPU register that the
-                 * 'level' parameter is read from and thereby make this application
-                 * do something it's not intended to do.
-                 */
+                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 the 'level' parameter to ensure that it is not set to a value outside the set of
+                 valid values defined by the xyLOGIX.Core.Debug.DebugLevel enumeration. In
+                 principle, since all C# enums devolve to integer values, a hacker could insert a
+                 different value into the CPU register that the 'level' parameter is read from and
+                 thereby make this application do something it's not intended to do. */
 
                 System.Diagnostics.Debug.WriteLine(
                     $"DebugLevelValidator.IsValid: Checking whether the value of the 'level' parameter, i.e., '{level}', is within the defined value set of its enumerated data type..."
                 );
 
-                // Check whether the value of the 'level' parameter is within the defined value set of its 
-                // enumeration data type.  If this is not the case, then write an error message to the log
-                // file, and then terminate the execution of this method while returning the default return
-                // value.
+                // Check whether the value of the 'level' parameter is within the defined value set
+                // of its  enumeration data type.  If this is not the case, then write an error
+                // message to the log file, and then terminate the execution of this method while
+                // returning the default return value.
                 if (!Enum.IsDefined(typeof(DebugLevel), level))
                 {
-                    // The value of the 'level' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
+                    // The value of the 'level' parameter is NOT within the defined value set for
+                    // its enumerated data type.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The value of the 'level' parameter, i.e., '{level}', is NOT within the defined value set of its enumerated data type.  Stopping..."
                     );
@@ -104,12 +97,14 @@ namespace xyLOGIX.Core.Debug
                     "DebugLevelValidator.IsValid: Checking whether the 'Unknown' value has NOT been specified for the 'level' parameter..."
                 );
 
-                // Check whether the 'Unknown' value has been specified for the 'level' parameter.  If this is the case, then
-                // write an error message to the log file, and then terminate the execution of this method, returning the default
-                // return value in order to indicate that this method failed.
+                // Check whether the 'Unknown' value has been specified for the 'level' parameter.
+                // If this is the case, then write an error message to the log file, and then
+                // terminate the execution of this method, returning the default return value in
+                // order to indicate that this method failed.
                 if (DebugLevel.Unknown.Equals(level))
                 {
-                    // The 'Unknown' value has been specified for the 'level' parameter.  This is not desirable.
+                    // The 'Unknown' value has been specified for the 'level' parameter.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The 'Unknown' value has been specified for the 'level' parameter.  Stopping..."
                     );
@@ -126,9 +121,7 @@ namespace xyLOGIX.Core.Debug
                     "DebugLevelValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'level' parameter.  Proceeding..."
                 );
 
-                /*
-                 * If we made it here, then assume that the input data is valid.
-                 */
+                /* If we made it here, then assume that the input data is valid. */
 
                 result = true;
             }
@@ -140,9 +133,7 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            System.Diagnostics.Debug.WriteLine(
-                $"DebugLevelValidator.IsValid: Result = {result}"
-            );
+            System.Diagnostics.Debug.WriteLine($"DebugLevelValidator.IsValid: Result = {result}");
 
             return result;
         }
