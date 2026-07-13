@@ -11,15 +11,15 @@ namespace xyLOGIX.Core.Debug
     public interface IRootLoggerProvisioner
     {
         /// <summary>
-        /// Gets the <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" />
-        /// enumeration value that indicates the strategy used to provision the
-        /// <c>Root Logger</c>.
+        /// Gets the
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
+        /// value that indicates the strategy used to provision the <c>Root Logger</c>.
         /// </summary>
         RootLoggerProvisioningStrategy Strategy { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Provisions the <c>Root Logger</c> for the application depending on the value of
-        /// the <paramref name="loggerRepository" /> parameter.
+        /// Provisions the <c>Root Logger</c> for the application depending on the
+        /// value of the <paramref name="loggerRepository" /> parameter.
         /// </summary>
         /// <remarks>
         /// If the provided <paramref name="loggerRepository" /> can be directly
@@ -31,16 +31,15 @@ namespace xyLOGIX.Core.Debug
         /// If a <see langword="null" /> reference is passed for the value of the
         /// <paramref name="loggerRepository" /> parameter, then this method attempts to
         /// find the default appender configuration and attempts to then return a reference
-        /// to that configuration's
-        /// <see cref="T:log4net.Repository.Hierarchy.Logger" />.
+        /// to that configuration's <see cref="T:log4net.Repository.Hierarchy.Logger" />.
         /// <para />
         /// If the first two attempts fail, then this method returns a
         /// <see langword="null" /> reference.
         /// <para />
         /// If this particular <c>Root Logger Provisioner</c> is configured to use the
         /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.FromLogManager" />
-        /// strategy, then this method attempts to find the default appender
-        /// configuration and attempts to then return a reference to that configuration's
+        /// strategy, then this method attempts to find the default appender configuration
+        /// and attempts to then return a reference to that configuration's
         /// <see cref="T:log4net.Repository.Hierarchy.Logger" />.
         /// <para />
         /// Failing that, a <see langword="null" /> reference is returned.
