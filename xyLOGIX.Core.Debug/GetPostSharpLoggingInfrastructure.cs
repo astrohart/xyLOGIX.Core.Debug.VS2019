@@ -5,8 +5,9 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
-    /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
+    /// Provides access to the one and only instance of the object that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />
+    /// interface for the
     /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
     /// infrastructure type value.
     /// </summary>
@@ -30,10 +31,10 @@ namespace xyLOGIX.Core.Debug
         /// returns a reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
-        /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
-        /// infrastructure type value.
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for
+        /// the <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" />
+        /// logging infrastructure type value.
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
