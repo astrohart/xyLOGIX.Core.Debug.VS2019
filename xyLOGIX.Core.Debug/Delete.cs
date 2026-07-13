@@ -4,7 +4,7 @@ using System.IO;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Methods to delete files and folders. </summary>
+    /// <summary>Methods to delete files and folders.</summary>
     public static class Delete
     {
         /// <summary>
@@ -36,8 +36,8 @@ namespace xyLOGIX.Core.Debug
         /// this method returns <see langword="false" />.
         /// <para />
         /// This method also returns <see langword="false" /> if the file having the
-        /// specified
-        /// <paramref name="pathname" /> does not already exist on the file system.
+        /// specified <paramref name="pathname" /> does not already exist on the file
+        /// system.
         /// </remarks>
         /// <returns>
         /// <see langword="true" /> if the file having the specified
@@ -60,20 +60,20 @@ namespace xyLOGIX.Core.Debug
                     "Delete.FileIfExists *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Info,
                         "Delete.FileIfExists: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
 
                     DebugUtils.WriteLine(
-                        DebugLevel.Info,
-                        $"Delete.FileIfExists: Result = {result}"
+                        DebugLevel.Info, $"Delete.FileIfExists: Result = {result}"
                     );
 
                     // stop.
@@ -90,9 +90,9 @@ namespace xyLOGIX.Core.Debug
                     $"Delete.FileIfExists *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an FYI message to the Debug output, and then
-                // terminate the execution of this method, but return TRUE.
+                // Check whether a file having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an FYI message to the Debug output, and then terminate
+                // the execution of this method, but return TRUE.
                 if (!File.Exists(pathname))
                 {
                     DebugUtils.WriteLine(
@@ -101,8 +101,7 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     DebugUtils.WriteLine(
-                        DebugLevel.Info,
-                        $"*** Delete.FileIfExists: Result = {true}"
+                        DebugLevel.Info, $"*** Delete.FileIfExists: Result = {true}"
                     );
 
                     // stop.
@@ -116,10 +115,8 @@ namespace xyLOGIX.Core.Debug
 
                 File.Delete(pathname);
 
-                /*
-                 * Base whether this method succeeded or failed on whether the file
-                 * was successfully deleted.
-                 */
+                /* Base whether this method succeeded or failed on whether the file was successfully
+                 deleted. */
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
@@ -200,19 +197,18 @@ namespace xyLOGIX.Core.Debug
                     "Delete.FileIfExists *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "Delete.FileIfExists: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Delete.FileIfExists: Result = {result}"
-                    );
+                    System.Diagnostics.Debug.WriteLine($"Delete.FileIfExists: Result = {result}");
 
                     // stop.
                     return result;
@@ -226,18 +222,16 @@ namespace xyLOGIX.Core.Debug
                     $"Delete.FileIfExists *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an FYI message to the Debug output, and then
-                // terminate the execution of this method, but return TRUE.
+                // Check whether a file having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an FYI message to the Debug output, and then terminate
+                // the execution of this method, but return TRUE.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
                         $"*** FYI *** The system could not locate the file having pathname, '{pathname}', on the file system.  There is nothing to do. Stopping..."
                     );
 
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** Delete.FileIfExists: Result = {true}"
-                    );
+                    System.Diagnostics.Debug.WriteLine($"*** Delete.FileIfExists: Result = {true}");
 
                     // stop.
                     return true;
@@ -249,10 +243,8 @@ namespace xyLOGIX.Core.Debug
 
                 File.Delete(pathname);
 
-                /*
-                 * Base whether this method succeeded or failed on whether the file
-                 * was successfully deleted.
-                 */
+                /* Base whether this method succeeded or failed on whether the file was successfully
+                 deleted. */
 
                 result = !File.Exists(pathname);
             }
@@ -281,8 +273,8 @@ namespace xyLOGIX.Core.Debug
         /// this method returns <see langword="false" />.
         /// <para />
         /// This method also returns <see langword="false" /> if the file having the
-        /// specified
-        /// <paramref name="pathname" /> does not already exist on the file system.
+        /// specified <paramref name="pathname" /> does not already exist on the file
+        /// system.
         /// </remarks>
         /// <returns>
         /// <see langword="true" /> if the file having the specified
@@ -301,10 +293,8 @@ namespace xyLOGIX.Core.Debug
 
                 File.Delete(pathname);
 
-                /*
-                 * Base whether this method succeeded or failed on whether the file
-                 * was successfully deleted.
-                 */
+                /* Base whether this method succeeded or failed on whether the file was successfully
+                 deleted. */
 
                 result = !File.Exists(pathname);
             }
@@ -316,10 +306,10 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary> Deletes a log file having the specified <paramref name="pathname" />. </summary>
+        /// <summary>Deletes a log file having the specified <paramref name="pathname" />.</summary>
         /// <param name="pathname">
-        /// (Required.) String containing the fully-qualified pathname
-        /// of the file that is to be deleted.
+        /// (Required.) String containing the fully-qualified
+        /// pathname of the file that is to be deleted.
         /// </param>
         /// <remarks>
         /// If the <paramref name="pathname" /> parameter is blank or
@@ -357,9 +347,9 @@ namespace xyLOGIX.Core.Debug
                     $"Delete.LogFile *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an FYI message to the Debug output, and then
-                // terminate the execution of this method.
+                // Check whether a file having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an FYI message to the Debug output, and then terminate
+                // the execution of this method.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
