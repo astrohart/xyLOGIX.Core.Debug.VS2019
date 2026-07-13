@@ -5,8 +5,9 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
-    /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationTypeValidator" /> interface.
+    /// Provides access to the one and only instance of the object that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationTypeValidator" />
+    /// interface.
     /// </summary>
     internal static class GetOutputLocationTypeValidator
     {
@@ -28,8 +29,8 @@ namespace xyLOGIX.Core.Debug
         /// returns a reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocationTypeValidator" /> interface.
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationTypeValidator" /> interface.
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
