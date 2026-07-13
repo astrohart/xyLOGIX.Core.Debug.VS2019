@@ -14,12 +14,13 @@ namespace xyLOGIX.Core.Debug
     internal static class MakeNewLog4NetLoggingBackend
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.MakeNewLog4NetLoggingBackend" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the
+        /// <see cref="T:xyLOGIX.Core.Debug.MakeNewLog4NetLoggingBackend" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -35,10 +36,10 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         /// <param name="relay">
-        /// (Required.) Reference to an instance of an object that implements the
-        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface that specifies
-        /// the relay to be used for sending logging to another destination, or in which
-        /// loggers are to be stored.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface
+        /// that specifies the relay to be used for sending logging to another destination,
+        /// or in which loggers are to be stored.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" /> reference is passed as the argument of
@@ -52,9 +53,7 @@ namespace xyLOGIX.Core.Debug
         /// initialized with the specified <paramref name="relay" />; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        internal static Log4NetLoggingBackend ForRelay(
-            [NotLogged] ILoggerRepository relay
-        )
+        internal static Log4NetLoggingBackend ForRelay([NotLogged] ILoggerRepository relay)
         {
             Log4NetLoggingBackend result = default;
 
@@ -64,9 +63,8 @@ namespace xyLOGIX.Core.Debug
                     "MakeNewLog4NetLoggingBackend.ForRelay: Checking whether the 'relay' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, relay, is null. If it is, send an 
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, relay, is null. If it is, send an  error
+                // to the Debug output and quit, returning the default return value of this method.
                 if (relay == null)
                 {
                     // The parameter, 'relay', is required and is not supposed to have a NULL value.
