@@ -5,7 +5,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
+    /// Provides access to the one and only instance of the object that
+    /// implements the
     /// <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.FileBased" />
     /// <c>XML Logging Configurator Type</c>.
     /// </summary>
@@ -18,8 +19,8 @@ namespace xyLOGIX.Core.Debug
         /// returns a reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.FileBased" />
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="F:xyLOGIX.Core.Debug.XmlLoggingConfiguratorType.FileBased" />
         /// <c>XML Logging Configurator Type</c>.
         /// </returns>
         [DebuggerStepThrough]
