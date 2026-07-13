@@ -14,52 +14,49 @@ namespace xyLOGIX.Core.Debug
     internal class DebugOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         static DebugOutputLocation() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private DebugOutputLocation() { }
+        private DebugOutputLocation()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
-        /// that
-        /// directs debugging output to the <b>Output</b> window in Visual Studio or
+        /// that directs debugging output to the <b>Output</b> window in Visual Studio or
         /// whichever other debugger can listen to the output of the
         /// <see cref="T:System.Diagnostics.Debug" /> class' methods.
         /// </summary>
-        internal static IOutputLocation
-            Instance { [DebuggerStepThrough] get; } = new DebugOutputLocation();
+        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
+            new DebugOutputLocation();
 
         /// <summary>
         /// Gets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
-        /// values
-        /// that indicates the final base of text strings that are fed to this
+        /// values that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
         public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Debug;
 
         /// <summary>
-        /// Writes the text representation of the specified object to the
-        /// output location.
+        /// Writes the text representation of the specified object to the output
+        /// location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
-        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
-        /// parameter to be a <see langword="null" /> reference.
+        /// <b>NOTE:</b> It is allowable for the argument of the
+        /// <paramref name="value" /> parameter to be a <see langword="null" /> reference.
         /// <para />
-        /// If a debugger is not attached, or if logging is not enabled on the
-        /// attached debugger, then this method does nothing.
+        /// If a debugger is not attached, or if logging is not enabled on the attached
+        /// debugger, then this method does nothing.
         /// </remarks>
         public override void Write([NotLogged] object value)
         {
@@ -68,9 +65,7 @@ namespace xyLOGIX.Core.Debug
                 if (!Debugger.IsAttached) return;
                 if (!Debugger.IsLogging()) return;
 
-                /*
-                 * The 'value' parameter is allowed to be set to a null reference, FYI.
-                 */
+                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
 
                 System.Diagnostics.Debug.Write(value);
             }
@@ -87,17 +82,14 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
         /// If <paramref name="format" /> is blank, or if a debugger is not
         /// attached and is not configured for logging, then this method does nothing.
         /// </remarks>
-        public override void Write(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        )
+        public override void Write([NotLogged] string format, [NotLogged] params object[] arg)
         {
             try
             {
@@ -121,11 +113,11 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
-        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
-        /// parameter to be a <see langword="null" /> reference.
+        /// <b>NOTE:</b> It is allowable for the argument of the
+        /// <paramref name="value" /> parameter to be a <see langword="null" /> reference.
         /// <para />
-        /// If a debugger is not attached, or if logging is not enabled on the
-        /// attached debugger, then this method does nothing.
+        /// If a debugger is not attached, or if logging is not enabled on the attached
+        /// debugger, then this method does nothing.
         /// </remarks>
         public override void WriteLine([NotLogged] object value)
         {
@@ -134,9 +126,7 @@ namespace xyLOGIX.Core.Debug
                 if (!Debugger.IsAttached) return;
                 if (!Debugger.IsLogging()) return;
 
-                /*
-                 * The 'value' parameter is allowed to be set to a null reference, FYI.
-                 */
+                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
 
                 System.Diagnostics.Debug.WriteLine(value);
             }
@@ -149,22 +139,19 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
         /// If <paramref name="format" /> is blank, or if a debugger is not
         /// attached and is not configured for logging, then this method does nothing.
         /// </remarks>
-        public override void WriteLine(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        )
+        public override void WriteLine([NotLogged] string format, [NotLogged] params object[] arg)
         {
             try
             {
