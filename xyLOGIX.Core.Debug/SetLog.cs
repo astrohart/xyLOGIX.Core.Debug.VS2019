@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Sets elements of the log. </summary>
+    /// <summary>Sets elements of the log.</summary>
     [Log(AttributeExclude = true)]
     internal static class SetLog
     {
@@ -13,8 +13,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static string ApplicationName
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
     }
 }
