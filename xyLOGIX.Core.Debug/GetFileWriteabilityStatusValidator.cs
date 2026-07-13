@@ -5,7 +5,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
+    /// Provides access to the one and only instance of the object that
+    /// implements the
     /// <see cref="T:xyLOGIX.Core.Debug.IFileWriteabilityStatusValidator" /> interface.
     /// </summary>
     [Log(AttributeExclude = true)]
@@ -17,8 +18,9 @@ namespace xyLOGIX.Core.Debug
         /// and returns a reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IFileWriteabilityStatusValidator" /> interface.
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.IFileWriteabilityStatusValidator" />
+        /// interface.
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
