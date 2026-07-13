@@ -20,8 +20,9 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="types" />.
         /// </summary>
         /// <param name="exception">
-        /// (Required.) Reference to an instance of <see cref="T:System.Exception" /> that
-        /// is the exception whose type is to be checked.
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Exception" /> that is the exception whose type is to be
+        /// checked.
         /// </param>
         /// <param name="types">
         /// (Required.) One or more <see cref="T:System.Type" />
@@ -32,10 +33,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="types" /> array matches the type of the specified
         /// <paramref name="exception" />; <see langword="false" /> otherwise.
         /// </returns>
-        public static bool IsAnyOf(
-            this Exception exception,
-            params Type[] types
-        )
+        public static bool IsAnyOf(this Exception exception, params Type[] types)
         {
             var result = false;
 
@@ -71,8 +69,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="M:xyLOGIX.Core.Debug.DebugUtils.LogException" /> method.
         /// </summary>
         /// <param name="exceptions">
-        /// (Required.) A collection of references to instances
-        /// of <see cref="T:System.Exception" /> that represents the exception(s) to be
+        /// (Required.) A collection of references to instances of
+        /// <see cref="T:System.Exception" /> that represents the exception(s) to be
         /// logged.
         /// </param>
         /// <remarks>
@@ -83,13 +81,9 @@ namespace xyLOGIX.Core.Debug
         /// If any element of the <paramref name="exceptions" /> collection is
         /// <see langword="null" />, then it is skipped.
         /// </remarks>
-        public static void LogAllExceptions(
-            this IEnumerable<Exception> exceptions
-        )
+        public static void LogAllExceptions(this IEnumerable<Exception> exceptions)
         {
-            /*
-             * Nothing to do if there are no exceptions to be logged.
-             */
+            /* Nothing to do if there are no exceptions to be logged. */
 
             if (exceptions == null) return;
 
@@ -97,13 +91,9 @@ namespace xyLOGIX.Core.Debug
 
             if (exceptionArray.Length <= 0) return;
 
-            /*
-             * Iterate through the collection of Exception objects passed,
-             * skipping over any elements which are null.
-             *
-             * If the InnerException property of a particular member of the
-             * collection is itself non-null, log that exception first.
-             */
+            /* Iterate through the collection of Exception objects passed, skipping over any
+             elements which are null. If the InnerException property of a particular member of the
+             collection is itself non-null, log that exception first. */
 
             foreach (var exception in exceptionArray)
             {
