@@ -8,16 +8,17 @@ using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Provides methods to access the log4net Repository. </summary>
+    /// <summary>Provides methods to access the log4net Repository.</summary>
     public static class LoggerRepositoryManager
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.LoggerRepositoryManager" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.LoggerRepositoryManager" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -32,8 +33,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static ILoggerRepository InitialRepository
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -74,9 +77,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggerRepositoryManager.GetHierarchyRepository: Checking whether the variable, 'repository', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, repository, is null.  If it is, send an error
-                // to the Debug output, and then terminate the execution of this method,
-                // returning the default return value.
+                // Check to see if the variable, repository, is null.  If it is, send an error to
+                // the Debug output, and then terminate the execution of this method, returning the
+                // default return value.
                 if (repository == null)
                 {
                     // the variable repository is required to have a valid object reference.
@@ -101,9 +104,9 @@ namespace xyLOGIX.Core.Debug
                     "*** LoggerRepositoryManager.GetHierarchyRepository: Checking whether the repository obtained is a Hierarchy..."
                 );
 
-                // Check to see whether the repository obtained is a Hierarchy.
-                // If this is not the case, then write an error message to the log file
-                // and then terminate the execution of this method.
+                // Check to see whether the repository obtained is a Hierarchy. If this is not the
+                // case, then write an error message to the log file and then terminate the
+                // execution of this method.
                 if (!(repository is Hierarchy hierarchy))
                 {
                     // The repository obtained is NOT a Hierarchy.  This is not desirable.
@@ -149,7 +152,7 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary> Wraps the <see cref="log4net.LogManager.GetRepository" /> method. </summary>
+        /// <summary>Wraps the <see cref="log4net.LogManager.GetRepository" /> method.</summary>
         /// <returns>
         /// Reference to an instance of an object that implements the
         /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface, or null if
