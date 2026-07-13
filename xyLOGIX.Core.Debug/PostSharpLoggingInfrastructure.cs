@@ -15,7 +15,7 @@ namespace xyLOGIX.Core.Debug
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal class PostSharpLoggingInfrastructure : DefaultLoggingInfrastructure
     {
-        /// <summary> Reference to the object that relays all logging to PostSharp. </summary>
+        /// <summary>Reference to the object that relays all logging to PostSharp.</summary>
         /// <remarks>
         /// This field can only be set to a reference to an instance of an object
         /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
@@ -24,39 +24,36 @@ namespace xyLOGIX.Core.Debug
         private ILoggerRepository _relay;
 
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         static PostSharpLoggingInfrastructure() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        internal PostSharpLoggingInfrastructure() { }
+        internal PostSharpLoggingInfrastructure()
+        { }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />
+        /// interface for the
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
         /// infrastructure type value.
         /// </summary>
-        internal static ILoggingInfrastructure Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new PostSharpLoggingInfrastructure();
+        internal static ILoggingInfrastructure Instance { [DebuggerStepThrough] get; } =
+            new PostSharpLoggingInfrastructure();
 
         /// <summary>
         /// Gets the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
-        /// that
-        /// corresponds to the type of infrastructure that is being utilized.
+        /// that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
-        public override LoggingInfrastructureType Type
-        {
-            [DebuggerStepThrough] get;
-        } = LoggingInfrastructureType.PostSharp;
+        public override LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
+            LoggingInfrastructureType.PostSharp;
 
         /// <summary>
         /// Attempts to fetch the <c>log4net</c> relay for PostSharp by calling the
@@ -85,10 +82,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.FetchRelay: Checking whether the relay is NULL currently..."
                 );
 
-                // Check to see whether the relay is NULL currently.
-                // If this is not the case, then write an FYI message
-                // to the Debug output, and then terminate the execution
-                // of this method.
+                // Check to see whether the relay is NULL currently. If this is not the case, then
+                // write an FYI message to the Debug output, and then terminate the execution of
+                // this method.
                 if (_relay != null)
                 {
                     // The relay is NOT already NULL.  Just use it.
@@ -119,17 +115,14 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.FetchRelay: Attempting to obtain the log relay for PostSharp..."
                 );
 
-                _relay = Log4NetCollectingRepositorySelector
-                    .RedirectLoggingToPostSharp();
+                _relay = Log4NetCollectingRepositorySelector.RedirectLoggingToPostSharp();
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.FetchRelay: *** SUCCESS *** Retrieved the relay from PostSharp.  Analyzing it..."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded, PROVIDED the '_relay' field
-                 * is NOT set to a NULL reference.
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded, PROVIDED the '_relay' field is NOT set to a NULL reference.
                  */
 
                 result = _relay != null;
@@ -138,7 +131,6 @@ namespace xyLOGIX.Core.Debug
             {
                 // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
-
 
                 result = false;
             }
@@ -157,8 +149,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </summary>
         /// <returns>
-        /// String containing the full path and file name of the file the
-        /// appender is writing to.
+        /// String containing the full path and file name of the file the appender
+        /// is writing to.
         /// </returns>
         /// <remarks>
         /// This method is solely utilized in order to implement the
@@ -174,8 +166,8 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the '_relay' field has a null reference for a value..."
                 );
 
-                // Check to see if the required field, _relay, is null. If it is, then send an
-                // error to the Debug output and then quit, returning the default value of the result
+                // Check to see if the required field, _relay, is null. If it is, then send an error
+                // to the Debug output and then quit, returning the default value of the result
                 // variable.
                 if (_relay == null)
                 {
@@ -210,9 +202,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the variable, 'firstAppender', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, firstAppender, is null.  If it is, send an error
-                // to the Debug output and terminate the execution of this method, returning
-                // the default return value.
+                // Check to see if the variable, firstAppender, is null.  If it is, send an error to
+                // the Debug output and terminate the execution of this method, returning the
+                // default return value.
                 if (firstAppender == null)
                 {
                     // the variable firstAppender is required to have a valid object reference.
@@ -254,21 +246,20 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary> Initializes the application's logging subsystem. </summary>
+        /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
         /// out "DEBUG" messages to the Debug output when in the Release mode. Set to false
-        /// if
-        /// all messages should always be logged.
+        /// if all messages should always be logged.
         /// </param>
         /// <param name="overwrite">
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
         /// <param name="configurationFileNamename">
-        /// Specifies the path to the
-        /// configuration file to be utilized for initializing log4net. If blank, the
-        /// system attempts to utilize the default App.config file.
+        /// Specifies the path to the configuration
+        /// file to be utilized for initializing log4net. If blank, the system attempts to
+        /// utilize the default App.config file.
         /// </param>
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the
@@ -277,8 +268,8 @@ namespace xyLOGIX.Core.Debug
         /// set to <see langword="true" />.
         /// </param>
         /// <param name="logFileName">
-        /// (Optional.) If blank, then the
-        /// <c>XMLConfigurator</c> object is used to configure logging.
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
         /// <para />
         /// Else, specify here the path to the Debug output to be created.
         /// </param>
@@ -302,10 +293,10 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object
-        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
-        /// interface. Supply a value for this parameter if your infrastructure is not
-        /// utilizing the default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default HierarchicalRepository.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem initialization
@@ -334,9 +325,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the logging subsystem has NOT been configured yet..."
                 );
 
-                // Check to see whether the logging subsystem has NOT been configured yet.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // Check to see whether the logging subsystem has NOT been configured yet. If this
+                // is not the case, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
                 if (Has.LoggingBeenSetUp())
                 {
                     // The logging subsystem has been configured.  There is nothing left to do.
@@ -364,9 +355,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the relay was fetched successfully..."
                 );
 
-                // Check to see whether the relay was fetched successfully.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the relay was fetched successfully. If this is not the case,
+                // then write an error message to the log file, and then terminate the execution of
+                // this method.
                 if (!FetchRelay())
                 {
                     // The relay was NOT fetched successfully.  This is not desirable.
@@ -390,7 +381,7 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the '_relay' field has a null reference for a value..."
                 );
 
-                // Check to see if the required field, _relay, is null. If it is, then send an 
+                // Check to see if the required field, _relay, is null. If it is, then send an
                 // error to the log file and then quit, returning the default value of the result
                 // variable.
                 if (_relay == null)
@@ -417,13 +408,11 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Dump the variable _relay.GetType().ToString() to the log
-                System.Diagnostics.Debug.WriteLine(
-                    $"_relay.GetType() = '{_relay.GetType()}'"
-                );
+                System.Diagnostics.Debug.WriteLine($"_relay.GetType() = '{_relay.GetType()}'");
 
-                // Check to see whether the relay is convertible to Hierarchy.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the relay is convertible to Hierarchy. If this is not the
+                // case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!(_relay is Hierarchy))
                 {
                     // The relay obtained is NOT convertible to Hierarchy.  This is not desirable.
@@ -453,16 +442,16 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the base-class version of this method succeeded..."
                 );
 
-                // Check to see whether the base-class version of this method succeeded.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the base-class version of this method succeeded. If this is
+                // not the case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!base.InitializeLogging(
-                        muteDebugLevelIfReleaseMode, overwrite,
-                        configurationFileNamename, muteConsole, logFileName,
-                        verbosity, applicationName, _relay
+                        muteDebugLevelIfReleaseMode, overwrite, configurationFileNamename,
+                        muteConsole, logFileName, verbosity, applicationName, _relay
                     ))
                 {
-                    // The base-class version of this method failed to execute.  This is not desirable.
+                    // The base-class version of this method failed to execute.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The base-class version of this method failed to execute.  Stopping..."
                     );
@@ -488,20 +477,19 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // set it as the default backend:
-                var backend = GetLoggingBackend.For(
-                    LoggingBackendType.Log4Net, _relay
-                );
+                var backend = GetLoggingBackend.For(LoggingBackendType.Log4Net, _relay);
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'backend', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'backend', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'backend', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (backend == null)
                 {
-                    // The variable, 'backend', has a null reference for a value.  This is not desirable.
+                    // The variable, 'backend', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "PostSharpLoggingInfrastructure.InitializeLogging: *** ERROR ***  The variable, 'backend', has a null reference for a value.  Stopping..."
                     );
@@ -563,8 +551,8 @@ namespace xyLOGIX.Core.Debug
         /// event.
         /// </summary>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object that implements the
-        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// <para />
         /// Supply a value for this parameter if your infrastructure is not utilizing the
         /// default <c>HierarchyRepository</c>.
@@ -580,15 +568,13 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Preparing the log file..."
-                );
+                System.Diagnostics.Debug.WriteLine("*** FYI *** Preparing the log file...");
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the '_relay' field has a null reference for a value..."
                 );
 
-                // Check to see if the required field, _relay, is null. If it is, then send an 
+                // Check to see if the required field, _relay, is null. If it is, then send an
                 // error to the log file and then quit, returning the default value of the result
                 // variable.
                 if (_relay == null)
@@ -614,9 +600,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the log file was prepared properly..."
                 );
 
-                // Check to see whether the log file was prepared properly.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the log file was prepared properly. If this is not the case,
+                // then write an error message to the log file, and then terminate the execution of
+                // this method.
                 if (!PrepareLogFile(_relay))
                 {
                     // The log file was prepared properly.  This is not desirable.
@@ -645,9 +631,9 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the existing log file is to be appended..."
                 );
 
-                // Check to see whether the existing log file is to be appended.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // Check to see whether the existing log file is to be appended. If this is not the
+                // case, then write an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (overwrite)
                 {
                     // The existing log file is to be overwritten.  This is not desirable.
@@ -657,9 +643,7 @@ namespace xyLOGIX.Core.Debug
 
                     Delete.LogFile(LogFileName);
 
-                    /*
-                     * Be sure to write the timestamp to a new log file before we finish.
-                     */
+                    /* Be sure to write the timestamp to a new log file before we finish. */
 
                     Write.LogFileTimestamp();
 
@@ -671,21 +655,15 @@ namespace xyLOGIX.Core.Debug
                     return true;
                 }
 
-                /*
-                 * If we are still here, then the caller wishes us to append to
-                 * an existing log file, not delete the existing one and start
-                 * anew.
-                 */
+                /* If we are still here, then the caller wishes us to append to an existing log
+                 file, not delete the existing one and start anew. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** The existing log file is to be appended.  Proceeding..."
                 );
 
-                /*
-                 * Write a line with the current date and time, to the log file.
-                 *
-                 * This will begin a new section.
-                 */
+                /* Write a line with the current date and time, to the log file. This will begin a
+                 new section. */
 
                 Write.LogFileTimestamp();
             }
