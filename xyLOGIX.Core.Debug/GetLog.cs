@@ -5,20 +5,20 @@ using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Gets data used for logging. </summary>
+    /// <summary>Gets data used for logging.</summary>
     internal static class GetLog
     {
-        /// <summary> String containing the pattern to use for the name of the log file. </summary>
+        /// <summary>String containing the pattern to use for the name of the log file.</summary>
         internal static readonly string FileName =
             $"dd_{SetLog.ApplicationName}_Run_{Guid.NewGuid():N}_{DateTime.Now:yyyyMMMddHHmmss}_log.txt";
 
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetLog" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetLog" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static GetLog() { }
