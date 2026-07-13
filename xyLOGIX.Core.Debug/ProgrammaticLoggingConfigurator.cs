@@ -13,26 +13,26 @@ namespace xyLOGIX.Core.Debug
     internal class ProgrammaticLoggingConfigurator : LoggingConfiguratorBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         static ProgrammaticLoggingConfigurator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private ProgrammaticLoggingConfigurator() { }
+        private ProgrammaticLoggingConfigurator()
+        { }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface.
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" />
+        /// interface.
         /// </summary>
-        internal static ILoggingConfigurator Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new ProgrammaticLoggingConfigurator();
+        internal static ILoggingConfigurator Instance { [DebuggerStepThrough] get; } =
+            new ProgrammaticLoggingConfigurator();
 
         /// <summary>
         /// Gets or sets one of the
@@ -40,17 +40,14 @@ namespace xyLOGIX.Core.Debug
         /// value(s) that indicates which type of configuration this
         /// <c>Logging Configurator</c> does.
         /// </summary>
-        public override LoggingConfiguratorType Type
-        {
-            [DebuggerStepThrough] get;
-        } = LoggingConfiguratorType.Programmatic;
+        public override LoggingConfiguratorType Type { [DebuggerStepThrough] get; } =
+            LoggingConfiguratorType.Programmatic;
 
-        /// <summary> Initializes the application's logging subsystem.</summary>
+        /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to <see langword="true" /> if we
         /// should not write out <c>DEBUG</c> messages to the <c>Debug</c> output when in
-        /// the
-        /// <c>Release</c> mode. Set to <see langword="false" /> if all messages should
+        /// the <c>Release</c> mode. Set to <see langword="false" /> if all messages should
         /// always be logged.
         /// </param>
         /// <param name="overwrite">
@@ -58,9 +55,9 @@ namespace xyLOGIX.Core.Debug
         /// the latest logging sent out by this instance.
         /// </param>
         /// <param name="configurationFileName">
-        /// Specifies the path to the
-        /// configuration file to be utilized for initializing log4net. If blank, the
-        /// system attempts to utilize the default App.config file.
+        /// Specifies the path to the configuration
+        /// file to be utilized for initializing log4net. If blank, the system attempts to
+        /// utilize the default App.config file.
         /// </param>
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the
@@ -69,8 +66,8 @@ namespace xyLOGIX.Core.Debug
         /// set to <see langword="true" />.
         /// </param>
         /// <param name="logFileName">
-        /// (Optional.) If blank, then the
-        /// <c>XMLConfigurator</c> object is used to configure logging.
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
         /// <para />
         /// Else, specify here the path to the <c>Debug</c> output to be created.
         /// </param>
@@ -94,10 +91,10 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object
-        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
-        /// interface. Supply a value for this parameter if your infrastructure is not
-        /// utilizing the default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default HierarchicalRepository.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the configuration operation(s) succeeded;
@@ -118,22 +115,21 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /*
-                 * In principle, the logFileName may be marked, syntactically, as optional,
-                 * but for this particular approach to work, it must have a value; we're simply
-                 * following convention(s) used elsewhere in this software system.
-                 */
+                /* In principle, the logFileName may be marked, syntactically, as optional, but for
+                 this particular approach to work, it must have a value; we're simply following
+                 convention(s) used elsewhere in this software system. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "ProgrammaticLoggingConfigurator.Configure *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'logFileName', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'logFileName', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(logFileName))
                 {
-                    // The parameter, 'logFileName', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'logFileName', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "ProgrammaticLoggingConfigurator.Configure: *** ERROR *** The parameter, 'logFileName', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -150,10 +146,8 @@ namespace xyLOGIX.Core.Debug
                     "*** SUCCESS *** The parameter, 'logFileName', is not blank.  Proceeding..."
                 );
 
-                /*
-                 * Likewise, the value of the parameter, 'repository', is marked as optional;
-                 * but, in reality, it's required to have a non-NULL value by THIS method.
-                 */
+                /* Likewise, the value of the parameter, 'repository', is marked as optional; but,
+                 in reality, it's required to have a non-NULL value by THIS method. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "ProgrammaticLoggingConfigurator.Configure: Checking whether the 'repository' method parameter has a null reference for a value..."
@@ -163,7 +157,8 @@ namespace xyLOGIX.Core.Debug
                 // error to the log file and quit, returning from this method.
                 if (repository == null)
                 {
-                    // The parameter, 'repository', is required and is not supposed to have a NULL value.
+                    // The parameter, 'repository', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "ProgrammaticLoggingConfigurator.Configure: *** *ERROR *** A null reference was passed for the 'repository' method parameter.  Stopping."
                     );
@@ -180,10 +175,8 @@ namespace xyLOGIX.Core.Debug
                     "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter."
                 );
 
-                /*
-                 * If we are here, then the caller of this method told us what pathname
-                 * to utilize for the logfile.
-                 */
+                /* If we are here, then the caller of this method told us what pathname to utilize
+                 for the logfile. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: The 'logFileName' parameter was initialized."
@@ -198,7 +191,8 @@ namespace xyLOGIX.Core.Debug
                 // the current value of the 'result' variable.
                 if (!Activate.LoggingForLogFileName(logFileName, repository))
                 {
-                    // Failed to set up logging for the file having the path specified in the 'logFileName' parameter.  This is not desirable.
+                    // Failed to set up logging for the file having the path specified in the
+                    // 'logFileName' parameter.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** Failed to set up logging for the log file name '{logFileName}'."
                     );
@@ -215,10 +209,8 @@ namespace xyLOGIX.Core.Debug
                     "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** The logging subsystem has been configured programmatically."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
