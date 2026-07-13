@@ -12,12 +12,12 @@ namespace xyLOGIX.Core.Debug
     internal abstract class OutputLocationBase : IOutputLocation
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.OutputLocationBase" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.OutputLocationBase" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static OutputLocationBase() { }
@@ -28,34 +28,31 @@ namespace xyLOGIX.Core.Debug
         /// to it.
         /// </summary>
         /// <remarks>
-        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
-        /// due to the fact that this class is marked <see langword="abstract" />.
+        /// <strong>NOTE:</strong> This constructor is marked
+        /// <see langword="protected" /> due to the fact that this class is marked
+        /// <see langword="abstract" />.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        protected OutputLocationBase() { }
+        protected OutputLocationBase()
+        { }
 
         /// <summary>
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
-        public bool MuteConsole
-        {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
-        }
+        public bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
-        /// values
-        /// that indicates the final base of text strings that are fed to this
+        /// values that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
         public abstract OutputLocationType Type { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Writes the text representation of the specified object to the
-        /// output location.
+        /// Writes the text representation of the specified object to the output
+        /// location.
         /// </summary>
         /// <param name="value">The value to write, or a <see langword="null" /> reference.</param>
         /// <remarks>
@@ -70,12 +67,12 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// This method takes no action if a <see langword="null" />, blank, or empty
-        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// This method takes no action if a <see langword="null" />, blank, or
+        /// empty <see cref="T:System.String" /> is supplied as the argument of the
         /// <paramref name="format" /> parameter.
         /// <para />
         /// This method will not work if the <paramref name="format" /> parameter has
@@ -84,10 +81,7 @@ namespace xyLOGIX.Core.Debug
         /// or if it contains element(s) whose value(s) do not match the format
         /// specifier(s) in the <paramref name="format" /> parameter.
         /// </remarks>
-        public abstract void Write(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        );
+        public abstract void Write([NotLogged] string format, [NotLogged] params object[] arg);
 
         /// <summary>
         /// Writes the text representation of the specified object, followed by
@@ -104,17 +98,17 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// This method takes no action if a <see langword="null" />, blank, or empty
-        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// This method takes no action if a <see langword="null" />, blank, or
+        /// empty <see cref="T:System.String" /> is supplied as the argument of the
         /// <paramref name="format" /> parameter.
         /// <para />
         /// This method will not work if the <paramref name="format" /> parameter has
@@ -123,10 +117,7 @@ namespace xyLOGIX.Core.Debug
         /// or if it contains element(s) whose value(s) do not match the format
         /// specifier(s) in the <paramref name="format" /> parameter.
         /// </remarks>
-        public abstract void WriteLine(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        );
+        public abstract void WriteLine([NotLogged] string format, [NotLogged] params object[] arg);
 
         /// <summary>Writes the current line terminator to the output location.</summary>
         /// <remarks>
