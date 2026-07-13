@@ -5,9 +5,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes <see langword="static" /> methods to multiplex debugging output; i.e.,
-    /// write it
-    /// to multiple locations at the same time.
+    /// Exposes <see langword="static" /> methods to multiplex debugging
+    /// output; i.e., write it to multiple locations at the same time.
     /// </summary>
     [Log(AttributeExclude = true)]
     public static class OutputMultiplexer
@@ -40,7 +39,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IOutputLocationProvider OutputLocationProvider
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
         /// If the value of the <paramref name="format" /> parameter is blank,
@@ -78,13 +78,13 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
         /// If the value of the <paramref name="format" /> parameter is blank,
@@ -94,10 +94,7 @@ namespace xyLOGIX.Core.Debug
         /// This method also takes no action if there are zero <c>Output Location</c>(s)
         /// defined.
         /// </remarks>
-        public static void WriteLine(
-            [NotLogged] string format,
-            params object[] arg
-        )
+        public static void WriteLine([NotLogged] string format, params object[] arg)
         {
             try
             {
