@@ -15,17 +15,13 @@ namespace xyLOGIX.Core.Debug
         /// value(s) that indicates which type of configuration this
         /// <c>Logging Configurator</c> does.
         /// </summary>
-        public abstract LoggingConfiguratorType Type
-        {
-            [DebuggerStepThrough] get;
-        }
+        public abstract LoggingConfiguratorType Type { [DebuggerStepThrough] get; }
 
-        /// <summary> Initializes the application's logging subsystem.</summary>
+        /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to <see langword="true" /> if we
         /// should not write out <c>DEBUG</c> messages to the <c>Debug</c> output when in
-        /// the
-        /// <c>Release</c> mode. Set to <see langword="false" /> if all messages should
+        /// the <c>Release</c> mode. Set to <see langword="false" /> if all messages should
         /// always be logged.
         /// </param>
         /// <param name="overwrite">
@@ -33,9 +29,9 @@ namespace xyLOGIX.Core.Debug
         /// the latest logging sent out by this instance.
         /// </param>
         /// <param name="configurationFileName">
-        /// Specifies the path to the
-        /// configuration file to be utilized for initializing log4net. If blank, the
-        /// system attempts to utilize the default App.config file.
+        /// Specifies the path to the configuration
+        /// file to be utilized for initializing log4net. If blank, the system attempts to
+        /// utilize the default App.config file.
         /// </param>
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the
@@ -44,8 +40,8 @@ namespace xyLOGIX.Core.Debug
         /// set to <see langword="true" />.
         /// </param>
         /// <param name="logFileName">
-        /// (Optional.) If blank, then the
-        /// <c>XMLConfigurator</c> object is used to configure logging.
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
         /// <para />
         /// Else, specify here the path to the <c>Debug</c> output to be created.
         /// </param>
@@ -69,10 +65,10 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object
-        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
-        /// interface. Supply a value for this parameter if your infrastructure is not
-        /// utilizing the default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default HierarchicalRepository.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the configuration operation(s) succeeded;
