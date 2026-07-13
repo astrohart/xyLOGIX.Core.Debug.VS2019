@@ -14,28 +14,28 @@ namespace xyLOGIX.Core.Debug
     internal class FromConfigFileLoggingConfigurator : LoggingConfiguratorBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         static FromConfigFileLoggingConfigurator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private FromConfigFileLoggingConfigurator() { }
+        private FromConfigFileLoggingConfigurator()
+        { }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface for the
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" />
+        /// interface for the
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
         /// <c>Logging Configurator Type</c>.
         /// </summary>
-        internal static ILoggingConfigurator Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new FromConfigFileLoggingConfigurator();
+        internal static ILoggingConfigurator Instance { [DebuggerStepThrough] get; } =
+            new FromConfigFileLoggingConfigurator();
 
         /// <summary>
         /// Gets or sets one of the
@@ -43,26 +43,25 @@ namespace xyLOGIX.Core.Debug
         /// value(s) that indicates which type of configuration this
         /// <c>Logging Configurator</c> does.
         /// </summary>
-        public override LoggingConfiguratorType Type
-        {
-            [DebuggerStepThrough] get;
-        } = LoggingConfiguratorType.FromConfigFile;
+        public override LoggingConfiguratorType Type { [DebuggerStepThrough] get; } =
+            LoggingConfiguratorType.FromConfigFile;
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IXmlLoggingConfiguratorTypeValidator" />
         /// interface.
         /// </summary>
-        private static IXmlLoggingConfiguratorTypeValidator
-            XmlLoggingConfiguratorTypeValidator { [DebuggerStepThrough] get; } =
-            GetXmlLoggingConfiguratorTypeValidator.SoleInstance();
+        private static IXmlLoggingConfiguratorTypeValidator XmlLoggingConfiguratorTypeValidator
+        {
+            [DebuggerStepThrough]
+            get;
+        } = GetXmlLoggingConfiguratorTypeValidator.SoleInstance();
 
-        /// <summary> Initializes the application's logging subsystem.</summary>
+        /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to <see langword="true" /> if we
         /// should not write out <c>DEBUG</c> messages to the <c>Debug</c> output when in
-        /// the
-        /// <c>Release</c> mode. Set to <see langword="false" /> if all messages should
+        /// the <c>Release</c> mode. Set to <see langword="false" /> if all messages should
         /// always be logged.
         /// </param>
         /// <param name="overwrite">
@@ -70,9 +69,9 @@ namespace xyLOGIX.Core.Debug
         /// the latest logging sent out by this instance.
         /// </param>
         /// <param name="configurationFileName">
-        /// Specifies the path to the
-        /// configuration file to be utilized for initializing log4net. If blank, the
-        /// system attempts to utilize the default App.config file.
+        /// Specifies the path to the configuration
+        /// file to be utilized for initializing log4net. If blank, the system attempts to
+        /// utilize the default App.config file.
         /// </param>
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the
@@ -81,8 +80,8 @@ namespace xyLOGIX.Core.Debug
         /// set to <see langword="true" />.
         /// </param>
         /// <param name="logFileName">
-        /// (Optional.) If blank, then the
-        /// <c>XMLConfigurator</c> object is used to configure logging.
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
         /// <para />
         /// Else, specify here the path to the <c>Debug</c> output to be created.
         /// </param>
@@ -106,10 +105,10 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object
-        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
-        /// interface. Supply a value for this parameter if your infrastructure is not
-        /// utilizing the default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default HierarchicalRepository.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the configuration operation(s) succeeded;
@@ -135,22 +134,19 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 var xmlLoggingConfiguratorType =
-                    Determine.XmlLoggingConfiguratorTypeToUse(
-                        configurationFileName
-                    );
+                    Determine.XmlLoggingConfiguratorTypeToUse(configurationFileName);
 
                 System.Diagnostics.Debug.WriteLine(
                     $"*** FromConfigFileLoggingConfigurator.Configure: Checking whether the particular XML Logging Configurator Type value, '{xmlLoggingConfiguratorType}', is within the defined value set..."
                 );
 
-                // Check to see whether the particular XML Logging Configurator Type value
-                // is within the defined value set.  If this is not the case, then write an
-                // error message to the Debug output and then terminate the execution of this method.
-                if (!XmlLoggingConfiguratorTypeValidator.IsValid(
-                        xmlLoggingConfiguratorType
-                    ))
+                // Check to see whether the particular XML Logging Configurator Type value is within
+                // the defined value set.  If this is not the case, then write an error message to
+                // the Debug output and then terminate the execution of this method.
+                if (!XmlLoggingConfiguratorTypeValidator.IsValid(xmlLoggingConfiguratorType))
                 {
-                    // The particular XML Logging Configurator Type value is NOT within the defined value set.  This is not desirable.
+                    // The particular XML Logging Configurator Type value is NOT within the defined
+                    // value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR: The particular XML Logging Configurator Type value, '{xmlLoggingConfiguratorType}', is NOT within the defined value set.  Stopping..."
                     );
@@ -174,11 +170,12 @@ namespace xyLOGIX.Core.Debug
                     "FromConfigFileLoggingConfigurator.Configure: Checking whether the variable 'xmlLoggingConfigurator' has a null reference for a value..."
                 );
 
-                // Check to see if the variable, xmlLoggingConfigurator, is null. If it is,
-                // send an error to the log file and quit, returning from the method.
+                // Check to see if the variable, xmlLoggingConfigurator, is null. If it is, send an
+                // error to the log file and quit, returning from the method.
                 if (xmlLoggingConfigurator == null)
                 {
-                    // the variable xmlLoggingConfigurator is required to have a valid object reference.
+                    // the variable xmlLoggingConfigurator is required to have a valid object
+                    // reference.
                     System.Diagnostics.Debug.WriteLine(
                         "FromConfigFileLoggingConfigurator.Configure: *** ERROR ***  The 'xmlLoggingConfigurator' variable has a null reference.  Stopping..."
                     );
@@ -191,14 +188,13 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, xmlLoggingConfigurator, because it's not set to a null reference.
+                // We can use the variable, xmlLoggingConfigurator, because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "FromConfigFileLoggingConfigurator.Configure: *** SUCCESS *** The 'xmlLoggingConfigurator' variable has a valid object reference for its value.  Proceeding..."
                 );
 
-                result = xmlLoggingConfigurator.Configure(
-                    repository, configurationFileName
-                );
+                result = xmlLoggingConfigurator.Configure(repository, configurationFileName);
             }
             catch (Exception ex)
             {
