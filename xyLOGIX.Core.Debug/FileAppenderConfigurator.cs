@@ -4,16 +4,17 @@ using System;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Provides methods for configurating log4net's FileAppender </summary>
+    /// <summary>Provides methods for configurating log4net's FileAppender</summary>
     public static class FileAppenderConfigurator
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.FileAppenderConfigurator" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.FileAppenderConfigurator" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -22,8 +23,8 @@ namespace xyLOGIX.Core.Debug
         static FileAppenderConfigurator() { }
 
         /// <summary>
-        /// Sets the option to get the minimal locking option set on the
-        /// specified <paramref name="appender" />.
+        /// Sets the option to get the minimal locking option set on the specified
+        /// <paramref name="appender" />.
         /// </summary>
         /// <param name="appender">
         /// Reference to an instance of an object of type
@@ -53,12 +54,13 @@ namespace xyLOGIX.Core.Debug
                     "FileAppenderConfigurator.SetMinimalLock: Checking whether the 'appender' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, appender, is null. If it is, send an 
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, appender, is null. If it is, send an
+                // error to the Debug output and quit, returning the default return value of this
+                // method.
                 if (appender == null)
                 {
-                    // The parameter, 'appender', is required and is not supposed to have a NULL value.
+                    // The parameter, 'appender', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "FileAppenderConfigurator.SetMinimalLock: *** ERROR *** A null reference was passed for the 'appender' method parameter.  Stopping..."
                     );
@@ -87,10 +89,8 @@ namespace xyLOGIX.Core.Debug
                     $"FileAppenderConfigurator.SetMinimalLock: *** SUCCESS *** The appender corresponding to the file, '{appender.File}', has been configured to use the minimal-lock option."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
