@@ -13,9 +13,9 @@ namespace xyLOGIX.Core.Debug
     internal static class MakeNewPatternLayout
     {
         /// <summary>
-        /// Creates a new instance of <see cref="T:log4net.Layout.PatternLayout" /> that is
-        /// initialized with the specified <paramref name="conversionPattern" />, and
-        /// returns a reference to it.
+        /// Creates a new instance of
+        /// <see cref="T:log4net.Layout.PatternLayout" /> that is initialized with the
+        /// specified <paramref name="conversionPattern" />, and returns a reference to it.
         /// </summary>
         /// <param name="conversionPattern">
         /// (Required.) A <see cref="T:System.String" />
@@ -36,9 +36,7 @@ namespace xyLOGIX.Core.Debug
         /// the specified <paramref name="conversionPattern" />; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        internal static PatternLayout HavingConversionPattern(
-            string conversionPattern
-        )
+        internal static PatternLayout HavingConversionPattern(string conversionPattern)
         {
             PatternLayout result = default;
 
@@ -48,12 +46,13 @@ namespace xyLOGIX.Core.Debug
                     "MakeNewPatternLayout.HavingConversionPattern *** INFO: Checking whether the value of the parameter, 'conversionPattern', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'conversionPattern', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'conversionPattern', is blank. If this
+                // is so, then emit an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (string.IsNullOrWhiteSpace(conversionPattern))
                 {
-                    // The parameter, 'conversionPattern' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'conversionPattern' was either passed a null value, or it is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "MakeNewPatternLayout.HavingConversionPattern: *** ERROR *** The parameter, 'conversionPattern' was either passed a null value, or it is blank. Stopping..."
                     );
@@ -74,10 +73,7 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Making a new Pattern Layout having the conversion pattern, '{conversionPattern}'..."
                 );
 
-                result = new PatternLayout
-                {
-                    ConversionPattern = conversionPattern
-                };
+                result = new PatternLayout { ConversionPattern = conversionPattern };
             }
             catch (Exception ex)
             {
