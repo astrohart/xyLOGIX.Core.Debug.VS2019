@@ -12,12 +12,12 @@ namespace xyLOGIX.Core.Debug
     public static class GetPatternLayout
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetPatternLayout" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetPatternLayout" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static GetPatternLayout() { }
@@ -39,9 +39,7 @@ namespace xyLOGIX.Core.Debug
         /// for the <paramref name="conversionPattern" /> parameter.
         /// </returns>
         [DebuggerStepThrough]
-        public static PatternLayout ForConversionPattern(
-            string conversionPattern
-        )
+        public static PatternLayout ForConversionPattern(string conversionPattern)
         {
             PatternLayout result = default;
 
@@ -52,20 +50,19 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 var newPatternLayout =
-                    MakeNewPatternLayout.HavingConversionPattern(
-                        conversionPattern
-                    );
+                    MakeNewPatternLayout.HavingConversionPattern(conversionPattern);
 
                 System.Diagnostics.Debug.WriteLine(
                     "GetPatternLayout.ForConversionPattern: Checking whether the variable, 'newPatternLayout', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'newPatternLayout', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'newPatternLayout', has a null reference for a
+                // value. If it does, then emit an error to the Debug output, and terminate the
+                // execution of this method, returning the default return value.
                 if (newPatternLayout == null)
                 {
-                    // The variable, 'newPatternLayout', has a null reference for a value.  This is not desirable.
+                    // The variable, 'newPatternLayout', has a null reference for a value.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "GetPatternLayout.ForConversionPattern: *** ERROR ***  The variable, 'newPatternLayout', has a null reference for a value.  Stopping..."
                     );
@@ -78,7 +75,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, 'newPatternLayout', because it's not set to a null reference.
+                // We can use the variable, 'newPatternLayout', because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetPatternLayout.ForConversionPattern: *** SUCCESS *** The variable, 'newPatternLayout', has a valid object reference for its value.  Proceeding..."
                 );
