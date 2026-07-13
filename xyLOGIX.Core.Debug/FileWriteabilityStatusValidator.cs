@@ -5,12 +5,11 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Validates whether certain value(s) are within the defined value set of the
-    /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration.
+    /// Validates whether certain value(s) are within the defined value set of
+    /// the <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration.
     /// </summary>
     [Log(AttributeExclude = true)]
-    internal class
-        FileWriteabilityStatusValidator : IFileWriteabilityStatusValidator
+    internal class FileWriteabilityStatusValidator : IFileWriteabilityStatusValidator
     {
         /// <summary>
         /// Empty, <see langword="static" /> constructor to prohibit direct
@@ -19,12 +18,12 @@ namespace xyLOGIX.Core.Debug
         static FileWriteabilityStatusValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private FileWriteabilityStatusValidator() { }
+        private FileWriteabilityStatusValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -32,10 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IFileWriteabilityStatusValidator" />
         /// interface.
         /// </summary>
-        internal static IFileWriteabilityStatusValidator Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new FileWriteabilityStatusValidator();
+        internal static IFileWriteabilityStatusValidator Instance { [DebuggerStepThrough] get; } =
+            new FileWriteabilityStatusValidator();
 
         /// <summary>
         /// Determines whether the file writeability <paramref name="status" />
@@ -45,8 +42,7 @@ namespace xyLOGIX.Core.Debug
         /// <param name="status">
         /// (Required.) One of the
         /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> value(s) that is to
-        /// be
-        /// examined.
+        /// be examined.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the file writeability
@@ -64,30 +60,25 @@ namespace xyLOGIX.Core.Debug
                     $"FileWriteabilityStatusValidator.IsValid: status = '{status}'"
                 );
 
-                /*
-                 * For cybersecurity reasons, and to defeat reverse-engineering,
-                 * check the value of the 'status' parameter to ensure that it
-                 * is not set to a value outside the set of valid values defined
-                 * by the xyLOGIX.Core.Debug.FileWriteabilityStatus
-                 * enumeration.
-                 *
-                 * In principle, since all C# enums devolve to integer values, a
-                 * hacker could insert a different value into the CPU register that the
-                 * 'status' parameter is read from and thereby make this application
-                 * do something it's not intended to do.
-                 */
+                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 the 'status' parameter to ensure that it is not set to a value outside the set of
+                 valid values defined by the xyLOGIX.Core.Debug.FileWriteabilityStatus enumeration.
+                 In principle, since all C# enums devolve to integer values, a hacker could insert a
+                 different value into the CPU register that the 'status' parameter is read from and
+                 thereby make this application do something it's not intended to do. */
 
                 System.Diagnostics.Debug.WriteLine(
                     $"FileWriteabilityStatusValidator.IsValid: Checking whether the value of the 'status' parameter, i.e., '{status}', is within the defined value set of its enumerated data type..."
                 );
 
-                // Check whether the value of the 'status' parameter is within the defined value set of its
-                // enumeration data type.  If this is not the case, then write an error message to the log
-                // file, and then terminate the execution of this method while returning the default return
-                // value.
+                // Check whether the value of the 'status' parameter is within the defined value set
+                // of its enumeration data type.  If this is not the case, then write an error
+                // message to the log file, and then terminate the execution of this method while
+                // returning the default return value.
                 if (!Enum.IsDefined(typeof(FileWriteabilityStatus), status))
                 {
-                    // The value of the 'status' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
+                    // The value of the 'status' parameter is NOT within the defined value set for
+                    // its enumerated data type.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The value of the 'status' parameter, i.e., '{status}', is NOT within the defined value set of its enumerated data type.  Stopping..."
                     );
@@ -108,12 +99,14 @@ namespace xyLOGIX.Core.Debug
                     "FileWriteabilityStatusValidator.IsValid: Checking whether the 'Unknown' value has NOT been specified for the 'status' parameter..."
                 );
 
-                // Check whether the 'Unknown' value has been specified for the 'status' parameter.  If this is the case, then
-                // write an error message to the log file, and then terminate the execution of this method, returning the default
-                // return value in order to indicate that this method failed.
+                // Check whether the 'Unknown' value has been specified for the 'status' parameter.
+                // If this is the case, then write an error message to the log file, and then
+                // terminate the execution of this method, returning the default return value in
+                // order to indicate that this method failed.
                 if (FileWriteabilityStatus.Unknown.Equals(status))
                 {
-                    // The 'Unknown' value has been specified for the 'status' parameter.  This is not desirable.
+                    // The 'Unknown' value has been specified for the 'status' parameter.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The 'Unknown' value has been specified for the 'status' parameter.  Stopping..."
                     );
@@ -130,9 +123,7 @@ namespace xyLOGIX.Core.Debug
                     "FileWriteabilityStatusValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'status' parameter.  Proceeding..."
                 );
 
-                /*
-                 * If we made it here, then assume that the input data is valid.
-                 */
+                /* If we made it here, then assume that the input data is valid. */
 
                 result = true;
             }
