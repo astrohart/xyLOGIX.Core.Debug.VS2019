@@ -1,9 +1,9 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Defines the publicly-exposed events, methods and properties of a validator of
-    /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
-    /// values.
+    /// Defines the publicly-exposed events, methods and properties of a
+    /// validator of <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" />
+    /// enumeration values.
     /// </summary>
     /// <remarks>
     /// Specifically, objects that implement this interface ascertain whether
@@ -21,8 +21,7 @@
         /// <param name="strategy">
         /// (Required.) One of the
         /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> value(s)
-        /// that
-        /// is to be examined.
+        /// that is to be examined.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the root-logger provisioning
