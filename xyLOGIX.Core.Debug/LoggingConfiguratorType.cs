@@ -1,8 +1,8 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Value(s) that indicate which type of <c>Logging Configurator</c> is being used
-    /// to configure the logging of the application.
+    /// Value(s) that indicate which type of <c>Logging Configurator</c> is
+    /// being used to configure the logging of the application.
     /// </summary>
     public enum LoggingConfiguratorType
     {
@@ -13,13 +13,12 @@
         FromConfigFile,
 
         /// <summary>
-        /// A <c>Logging Configurator</c> that programmatically configures logging.
+        /// A <c>Logging Configurator</c> that programmatically configures
+        /// logging.
         /// </summary>
         Programmatic,
 
-        /// <summary>
-        /// Unknown type of <c>Logging Configurator</c>.
-        /// </summary>
+        /// <summary>Unknown type of <c>Logging Configurator</c>.</summary>
         Unknown = -1
     }
 }
