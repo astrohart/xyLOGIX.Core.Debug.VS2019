@@ -1,8 +1,9 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Defines the publicly-exposed events, methods and properties of a validator of
-    /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration values.
+    /// Defines the publicly-exposed events, methods and properties of a
+    /// validator of <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" />
+    /// enumeration values.
     /// </summary>
     /// <remarks>
     /// Specifically, objects that implement this interface ascertain whether
@@ -19,8 +20,7 @@
         /// <param name="status">
         /// (Required.) One of the
         /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> value(s) that is to
-        /// be
-        /// examined.
+        /// be examined.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the file writeability
