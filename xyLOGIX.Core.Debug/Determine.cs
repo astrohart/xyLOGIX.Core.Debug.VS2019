@@ -8,8 +8,9 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static method(s) to determine whether program flow is to follow a given
-    /// path based on data, or other value(s) that are dependent on yet other data.
+    /// Exposes static method(s) to determine whether program flow is to
+    /// follow a given path based on data, or other value(s) that are dependent on yet
+    /// other data.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal static class Determine
@@ -18,10 +19,8 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </summary>
-        private static IAppenderManager AppenderManager
-        {
-            [DebuggerStepThrough] get;
-        } = GetAppenderManager.SoleInstance();
+        private static IAppenderManager AppenderManager { [DebuggerStepThrough] get; } =
+            GetAppenderManager.SoleInstance();
 
         /// <summary>
         /// Determines whether the application is to use a programmatic logging
@@ -44,9 +43,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
         /// value is returned.
         /// </returns>
-        internal static LoggingConfiguratorType LoggingConfiguratorTypeToUse(
-            string logFileName
-        )
+        internal static LoggingConfiguratorType LoggingConfiguratorTypeToUse(string logFileName)
         {
             var result = LoggingConfiguratorType.Unknown;
 
@@ -65,13 +62,14 @@ namespace xyLOGIX.Core.Debug
                     "Determine.LoggingConfiguratorTypeToUse *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'logFileName', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'logFileName', is blank. If this is so,
+                // then emit an error message to the log file, and then terminate the execution of
+                // this method.
                 if (string.IsNullOrWhiteSpace(logFileName))
                 {
-                    // The parameter, 'logFileName' was either passed a null value, or it is blank.  This means that
-                    // the output of this method is to be set to 'LoggingConfiguratorType.FromConfigFile'.
+                    // The parameter, 'logFileName' was either passed a null value, or it is blank.
+                    // This means that the output of this method is to be set to
+                    // 'LoggingConfiguratorType.FromConfigFile'.
                     System.Diagnostics.Debug.WriteLine(
                         "Determine.LoggingConfiguratorTypeToUse: The parameter, 'logFileName' was either passed a null value, or it is blank. Setting the result to 'LoggingConfiguratorType.FromConfigFile'..."
                     );
@@ -111,7 +109,8 @@ namespace xyLOGIX.Core.Debug
         /// value(s) most likely pertain to the situation at hand.
         /// </summary>
         /// <param name="loggerRepository">
-        /// (Optional.) Reference to an instance of an object that implements the
+        /// (Optional.) Reference to an instance of an
+        /// object that implements the
         /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
         /// <para />
         /// Can be set to a <see langword="null" /> reference.
@@ -125,10 +124,9 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.Unknown" /> if
         /// such a value cannot be ascertained.
         /// </returns>
-        internal static RootLoggerProvisioningStrategy
-            TheRootLoggerProvisioningStrategyToUse(
-                ILoggerRepository loggerRepository = null
-            )
+        internal static RootLoggerProvisioningStrategy TheRootLoggerProvisioningStrategyToUse(
+            ILoggerRepository loggerRepository = null
+        )
         {
             var result = RootLoggerProvisioningStrategy.FromLogManager;
 
@@ -142,12 +140,13 @@ namespace xyLOGIX.Core.Debug
                     "Determine.TheRootLoggerProvisioningStrategyToUse: Checking whether the required method parameter, 'loggerRepository', has a null reference for a value..."
                 );
 
-                // Check to see if the required method parameter, loggerRepository, is null. If it is, send an
-                // error to the log file and quit, returning the default return value of this
-                // method.
+                // Check to see if the required method parameter, loggerRepository, is null. If it
+                // is, send an error to the log file and quit, returning the default return value of
+                // this method.
                 if (loggerRepository == null)
                 {
-                    // The parameter, 'loggerRepository', is required and is not supposed to have a NULL value.
+                    // The parameter, 'loggerRepository', is required and is not supposed to have a
+                    // NULL value.
                     System.Diagnostics.Debug.WriteLine(
                         "Determine.TheRootLoggerProvisioningStrategyToUse: *** ERROR *** A null reference was passed for the required method parameter, 'loggerRepository'.  Stopping..."
                     );
@@ -168,9 +167,9 @@ namespace xyLOGIX.Core.Debug
                     "*** Determine.TheRootLoggerProvisioningStrategyToUse: Checking whether the provided Logger Repository is a Hierarchy..."
                 );
 
-                // Check to see whether the provided Logger Repository is a Hierarchy.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the provided Logger Repository is a Hierarchy. If this is
+                // not the case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!(loggerRepository is Hierarchy))
                 {
                     // The provided Logger Repository is NOT a Hierarchy.  This is not desirable.
@@ -190,8 +189,7 @@ namespace xyLOGIX.Core.Debug
                     "Determine.TheRootLoggerProvisioningStrategyToUse: *** SUCCESS *** The provided Logger Repository is a Hierarchy.  Proceeding..."
                 );
 
-                result = RootLoggerProvisioningStrategy
-                    .FromProvidedLoggingRepository;
+                result = RootLoggerProvisioningStrategy.FromProvidedLoggingRepository;
             }
             catch (Exception ex)
             {
@@ -234,24 +232,21 @@ namespace xyLOGIX.Core.Debug
         /// returned.
         /// </returns>
         [DebuggerStepThrough]
-        internal static XmlLoggingConfiguratorType
-            XmlLoggingConfiguratorTypeToUse(
-                [NotLogged] string configurationFileName
-            )
+        internal static XmlLoggingConfiguratorType XmlLoggingConfiguratorTypeToUse(
+            [NotLogged] string configurationFileName
+        )
         {
             var result = XmlLoggingConfiguratorType.Unknown;
 
             try
             {
-                // Check whether the path to the configuration file is blank; or, if
-                // it's not blank, whether the specified file actually exists at the
-                // path indicated. If the configuration file pathname is blank
-                // and/or it does not exist at the path indicated, then call the
-                // version of XmlConfigurator.Configure that does not take any
-                // arguments. On the other hand, if the configurationFileName
-                // parameter is not blank, and it specifies a file that actually
-                // does exist at the specified path, then pass that path to the
-                // XmlConfigurator.Configure method.
+                // Check whether the path to the configuration file is blank; or, if it's not blank,
+                // whether the specified file actually exists at the path indicated. If the
+                // configuration file pathname is blank and/or it does not exist at the path
+                // indicated, then call the version of XmlConfigurator.Configure that does not take
+                // any arguments. On the other hand, if the configurationFileName parameter is not
+                // blank, and it specifies a file that actually does exist at the specified path,
+                // then pass that path to the XmlConfigurator.Configure method.
                 if (string.IsNullOrWhiteSpace(configurationFileName) ||
                     !File.Exists(configurationFileName))
                 {
