@@ -10,19 +10,13 @@
     /// </remarks>
     public enum LoggingBackendType
     {
-        /// <summary>
-        /// The log messages are to be routed to the console.
-        /// </summary>
+        /// <summary>The log messages are to be routed to the console.</summary>
         Console,
 
-        /// <summary>
-        /// The log messages are to be sent to <c>log4net</c>.
-        /// </summary>
+        /// <summary>The log messages are to be sent to <c>log4net</c>.</summary>
         Log4Net,
 
-        /// <summary>
-        /// Unknown logging backend.
-        /// </summary>
+        /// <summary>Unknown logging backend.</summary>
         Unknown = -1
     }
 }
