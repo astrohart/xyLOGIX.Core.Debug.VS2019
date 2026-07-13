@@ -6,29 +6,28 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Validates whether certain value(s) are within the defined value set of the
-    /// <see cref="T:log4net.Appender.RollingFileAppender.RollingMode" /> enumeration.
+    /// Validates whether certain value(s) are within the defined value set of
+    /// the <see cref="T:log4net.Appender.RollingFileAppender.RollingMode" />
+    /// enumeration.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal class RollingModeValidator : IRollingModeValidator
     {
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private RollingModeValidator() { }
+        private RollingModeValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
         /// implements the
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IRollingModeValidator" /> interface.
         /// </summary>
-        internal static IRollingModeValidator Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new RollingModeValidator();
+        internal static IRollingModeValidator Instance { [DebuggerStepThrough] get; } =
+            new RollingModeValidator();
 
         /// <summary>
         /// Determines whether the rolling <paramref name="mode" /> value passed
@@ -55,32 +54,26 @@ namespace xyLOGIX.Core.Debug
                     $"RollingModeValidator.IsValid: mode = '{mode}'"
                 );
 
-                /*
-                 * For cybersecurity reasons, and to defeat reverse-engineering,
-                 * check the value of the 'mode' parameter to ensure that it
-                 * is not set to a value outside the set of valid values defined
-                 * by the log4net.Appender.RollingFileAppender.RollingMode
-                 * enumeration.
-                 *
-                 * In principle, since all C# enums devolve to integer values, a
-                 * hacker could insert a different value into the CPU register that the
-                 * 'mode' parameter is read from and thereby make this application
-                 * do something it's not intended to do.
+                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 the 'mode' parameter to ensure that it is not set to a value outside the set of
+                 valid values defined by the log4net.Appender.RollingFileAppender.RollingMode
+                 enumeration. In principle, since all C# enums devolve to integer values, a hacker
+                 could insert a different value into the CPU register that the 'mode' parameter is
+                 read from and thereby make this application do something it's not intended to do.
                  */
 
                 System.Diagnostics.Debug.WriteLine(
                     $"RollingModeValidator.IsValid: Checking whether the value of the 'mode' parameter, i.e., '{mode}', is within the defined value set of its enumerated data type..."
                 );
 
-                // Check whether the value of the 'mode' parameter is within the defined value set of its
-                // enumeration data type.  If this is not the case, then write an error message to the log
-                // file, and then terminate the execution of this method while returning the default return
-                // value.
-                if (!Enum.IsDefined(
-                        typeof(RollingFileAppender.RollingMode), mode
-                    ))
+                // Check whether the value of the 'mode' parameter is within the defined value set
+                // of its enumeration data type.  If this is not the case, then write an error
+                // message to the log file, and then terminate the execution of this method while
+                // returning the default return value.
+                if (!Enum.IsDefined(typeof(RollingFileAppender.RollingMode), mode))
                 {
-                    // The value of the 'mode' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
+                    // The value of the 'mode' parameter is NOT within the defined value set for its
+                    // enumerated data type.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The value of the 'mode' parameter, i.e., '{mode}', is NOT within the defined value set of its enumerated data type.  Stopping..."
                     );
@@ -97,9 +90,7 @@ namespace xyLOGIX.Core.Debug
                     $"RollingModeValidator.IsValid: *** SUCCESS *** The value of the 'mode' parameter, i.e., '{mode}', is within the defined value set of its enumerated data type.  Proceeding..."
                 );
 
-                /*
-                 * If we made it here, then assume that the input data is valid.
-                 */
+                /* If we made it here, then assume that the input data is valid. */
 
                 result = true;
             }
