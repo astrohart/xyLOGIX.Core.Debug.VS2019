@@ -37,10 +37,8 @@ namespace xyLOGIX.Core.Debug
                 // Get a reference to the currently-executing assembly.
                 var executingAssembly = Assembly.GetExecutingAssembly();
 
-                /*
-                 * NOTE: We do not need to check whether 'executingAssembly' is null.
-                 * The method we call next does that.
-                 */
+                /* NOTE: We do not need to check whether 'executingAssembly' is null. The method we
+                 call next does that. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "GetEvent.SourceAssembly: *** FYI *** Attempting to get a reference to the currently-executing assembly..."
@@ -87,12 +85,13 @@ namespace xyLOGIX.Core.Debug
                     "GetEvent.SourceName: Checking whether the variable, 'eventLoggingAssembly', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, eventLoggingAssembly, is null.  If it is, send an error
-                // to the log file and terminate the execution of this method, returning
-                // the default return value.
+                // Check to see if the variable, eventLoggingAssembly, is null.  If it is, send an
+                // error to the log file and terminate the execution of this method, returning the
+                // default return value.
                 if (eventLoggingAssembly == null)
                 {
-                    // the variable eventLoggingAssembly is required to have a valid object reference.
+                    // the variable eventLoggingAssembly is required to have a valid object
+                    // reference.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** Could not obtain a reference to the .NET assembly that contains the application entry-point.  Falling back to the calling assembly..."
                     );
@@ -105,7 +104,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, eventLoggingAssembly, because it's not set to a null reference.
+                // We can use the variable, eventLoggingAssembly, because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetEvent.SourceName: *** SUCCESS *** The variable, 'eventLoggingAssembly', has a valid object reference for its value.  Proceeding..."
                 );
@@ -114,16 +114,15 @@ namespace xyLOGIX.Core.Debug
                     "GetEvent.SourceName: *** FYI *** Attempting to obtain the fully-qualified pathname of the event-source assembly..."
                 );
 
-                var eventLoggingAssemblyPathname =
-                    GetAssembly.Pathname(eventLoggingAssembly);
+                var eventLoggingAssemblyPathname = GetAssembly.Pathname(eventLoggingAssembly);
 
                 System.Diagnostics.Debug.WriteLine(
                     "GetEvent.SourceName: Checking whether the variable, 'eventLoggingAssemblyPathname', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'eventLoggingAssemblyPathname', is null or blank. If it is,
-                // then send an  error to the log file and quit, returning the default value
-                // of the result variable.
+                // Check to see if the required variable, 'eventLoggingAssemblyPathname', is null or
+                // blank. If it is, then send an  error to the log file and quit, returning the
+                // default value of the result variable.
                 if (string.IsNullOrWhiteSpace(eventLoggingAssemblyPathname))
                 {
                     // the variable eventLoggingAssemblyPathname is required.
@@ -148,9 +147,9 @@ namespace xyLOGIX.Core.Debug
                     $"*** INFO: Checking whether the file with path, '{eventLoggingAssemblyPathname}', exists on the file system..."
                 );
 
-                // Check whether a folder having the path, 'eventLoggingAssemblyPathname', exists on the file system.
-                // If it does not, then write an error message to the log file, and then terminate
-                // the execution of this method, returning the default return value.
+                // Check whether a folder having the path, 'eventLoggingAssemblyPathname', exists on
+                // the file system. If it does not, then write an error message to the log file, and
+                // then terminate the execution of this method, returning the default return value.
                 if (!File.Exists(eventLoggingAssemblyPathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -173,18 +172,15 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Attempting to get the FileVersionInfo of the assembly, '{eventLoggingAssemblyPathname}'..."
                 );
 
-                var fileVersionInfo =
-                    FileVersionInfo.GetVersionInfo(
-                        eventLoggingAssemblyPathname
-                    );
+                var fileVersionInfo = FileVersionInfo.GetVersionInfo(eventLoggingAssemblyPathname);
 
                 System.Diagnostics.Debug.WriteLine(
                     "GetEvent.SourceName: Checking whether the variable, 'fileVersionInfo', has a null reference for a value..."
                 );
 
                 // Check to see if the variable, fileVersionInfo, is null.  If it is, send an error
-                // to the log file and terminate the execution of this method, returning
-                // the default return value.
+                // to the log file and terminate the execution of this method, returning the default
+                // return value.
                 if (fileVersionInfo == null)
                 {
                     // the variable fileVersionInfo is required to have a valid object reference.
@@ -200,7 +196,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, fileVersionInfo, because it's not set to a null reference.
+                // We can use the variable, fileVersionInfo, because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "GetEvent.SourceName: *** SUCCESS *** The variable, 'fileVersionInfo', has a valid object reference for its value.  Proceeding..."
                 );
@@ -219,9 +216,7 @@ namespace xyLOGIX.Core.Debug
                 result = string.Empty;
             }
 
-            System.Diagnostics.Debug.WriteLine(
-                $"GetEvent.SourceName: Result = '{result}'"
-            );
+            System.Diagnostics.Debug.WriteLine($"GetEvent.SourceName: Result = '{result}'");
 
             return result;
         }
