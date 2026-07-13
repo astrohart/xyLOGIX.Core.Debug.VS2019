@@ -19,24 +19,23 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         /// <remarks>
-        /// <strong>NOTE:</strong> This constructor is marked <see langword="protected" />
-        /// due to the fact that this class is marked <see langword="abstract" />.
+        /// <strong>NOTE:</strong> This constructor is marked
+        /// <see langword="protected" /> due to the fact that this class is marked
+        /// <see langword="abstract" />.
         /// </remarks>
-        protected RootLoggerProvisionerBase() { }
+        protected RootLoggerProvisionerBase()
+        { }
 
         /// <summary>
-        /// Gets the <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" />
-        /// enumeration value that indicates the strategy used to provision the
-        /// <c>Root Logger</c>.
+        /// Gets the
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
+        /// value that indicates the strategy used to provision the <c>Root Logger</c>.
         /// </summary>
-        public abstract RootLoggerProvisioningStrategy Strategy
-        {
-            [DebuggerStepThrough] get;
-        }
+        public abstract RootLoggerProvisioningStrategy Strategy { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Provisions the <c>Root Logger</c> for the application depending on the value of
-        /// the <paramref name="loggerRepository" /> parameter.
+        /// Provisions the <c>Root Logger</c> for the application depending on the
+        /// value of the <paramref name="loggerRepository" /> parameter.
         /// </summary>
         /// <remarks>
         /// If the provided <paramref name="loggerRepository" /> can be directly
@@ -48,16 +47,15 @@ namespace xyLOGIX.Core.Debug
         /// If a <see langword="null" /> reference is passed for the value of the
         /// <paramref name="loggerRepository" /> parameter, then this method attempts to
         /// find the default appender configuration and attempts to then return a reference
-        /// to that configuration's
-        /// <see cref="T:log4net.Repository.Hierarchy.Logger" />.
+        /// to that configuration's <see cref="T:log4net.Repository.Hierarchy.Logger" />.
         /// <para />
         /// If the first two attempts fail, then this method returns a
         /// <see langword="null" /> reference.
         /// <para />
         /// If this particular <c>Root Logger Provisioner</c> is configured to use the
         /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.FromLogManager" />
-        /// strategy, then this method attempts to find the default appender
-        /// configuration and attempts to then return a reference to that configuration's
+        /// strategy, then this method attempts to find the default appender configuration
+        /// and attempts to then return a reference to that configuration's
         /// <see cref="T:log4net.Repository.Hierarchy.Logger" />.
         /// <para />
         /// Failing that, a <see langword="null" /> reference is returned.
@@ -65,12 +63,11 @@ namespace xyLOGIX.Core.Debug
         /// <param name="loggerRepository"></param>
         /// <returns></returns>
         [return: NotLogged]
-        public abstract Logger Provision(
-            [NotLogged] ILoggerRepository loggerRepository = null
-        );
+        public abstract Logger Provision([NotLogged] ILoggerRepository loggerRepository = null);
 
         /// <summary>
-        /// Executes the fallback provisioning strategy for the <c>Root Logger</c>.
+        /// Executes the fallback provisioning strategy for the <c>Root Logger</c>
+        /// .
         /// </summary>
         /// <returns>
         /// If successful, a reference to an instance of
@@ -90,16 +87,15 @@ namespace xyLOGIX.Core.Debug
 
                 // Attempt to get the default appender configuration and return a reference to that
                 // configuration's RootLogger.
-                var hierarchyRepository =
-                    LoggerRepositoryManager.GetHierarchyRepository();
+                var hierarchyRepository = LoggerRepositoryManager.GetHierarchyRepository();
 
                 System.Diagnostics.Debug.WriteLine(
                     $"*** INFO: The variable, 'hierarchyRepository', has a value of {hierarchyRepository}."
                 );
 
-                // Check whether the variable, 'hierarchyRepository', is NOT set to a null reference for a value.
-                // If it is set to a null reference, then echo an error message to the Debug output, and then stop,
-                // returning the default return value of this method.
+                // Check whether the variable, 'hierarchyRepository', is NOT set to a null reference
+                // for a value. If it is set to a null reference, then echo an error message to the
+                // Debug output, and then stop, returning the default return value of this method.
                 if (hierarchyRepository != null)
                 {
                     System.Diagnostics.Debug.WriteLine(
