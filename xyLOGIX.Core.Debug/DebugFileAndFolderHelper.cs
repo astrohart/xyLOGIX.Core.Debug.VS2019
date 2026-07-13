@@ -7,10 +7,10 @@ using System.Security.Principal;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Methods to work with files and folders in a robust way. </summary>
+    /// <summary>Methods to work with files and folders in a robust way.</summary>
     /// <remarks>
-    /// These methods are here in order to assist applications in working
-    /// with log files and prepping for application startup and first-time use.
+    /// These methods are here in order to assist applications in working with
+    /// log files and prepping for application startup and first-time use.
     /// </remarks>
     [Log(AttributeExclude = true)]
     internal static class DebugFileAndFolderHelper
@@ -20,24 +20,25 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.IDirectoryWriteabilityStatusValidator" />
         /// interface.
         /// </summary>
-        private static IDirectoryWriteabilityStatusValidator
-            DirectoryWriteabilityStatusValidator
+        private static IDirectoryWriteabilityStatusValidator DirectoryWriteabilityStatusValidator
         {
-            [DebuggerStepThrough] get;
-        } =
-            GetDirectoryWriteabilityStatusValidator.SoleInstance();
+            [DebuggerStepThrough]
+            get;
+        } = GetDirectoryWriteabilityStatusValidator.SoleInstance();
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IFileWriteabilityStatusValidator" /> interface.
         /// </summary>
-        private static IFileWriteabilityStatusValidator
-            FileWriteabilityStatusValidator { [DebuggerStepThrough] get; } =
-            GetFileWriteabilityStatusValidator.SoleInstance();
+        private static IFileWriteabilityStatusValidator FileWriteabilityStatusValidator
+        {
+            [DebuggerStepThrough]
+            get;
+        } = GetFileWriteabilityStatusValidator.SoleInstance();
 
         /// <summary>
-        /// Gets a <see cref="T:System.String" /> that contains the fully-qualified
-        /// username of the currently-logged-in OS user.
+        /// Gets a <see cref="T:System.String" /> that contains the
+        /// fully-qualified username of the currently-logged-in OS user.
         /// </summary>
         internal static string FullyQualifiedUserName
         {
@@ -48,8 +49,7 @@ namespace xyLOGIX.Core.Debug
 
                 try
                 {
-                    result =
-                        $@"{Environment.UserDomainName}\{Environment.UserName}";
+                    result = $@"{Environment.UserDomainName}\{Environment.UserName}";
                 }
                 catch (Exception ex)
                 {
@@ -71,21 +71,17 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine(
-                    "Clearing the temp folder..."
-                );
+                System.Diagnostics.Debug.WriteLine("Clearing the temp folder...");
 
                 var psi = new ProcessStartInfo
                 {
                     FileName =
                         Path.Combine(
-                            Environment.GetFolderPath(
-                                Environment.SpecialFolder.Windows
-                            ), @"System32\cmd.exe"
+                            Environment.GetFolderPath(Environment.SpecialFolder.Windows),
+                            @"System32\cmd.exe"
                         ),
                     Arguments =
-                        "/C rd /S /Q \"" +
-                        Environment.ExpandEnvironmentVariables("%TEMP%") +
+                        "/C rd /S /Q \"" + Environment.ExpandEnvironmentVariables("%TEMP%") +
                         "\"",
                     UseShellExecute = false,
                     WindowStyle = ProcessWindowStyle.Hidden,
@@ -106,7 +102,7 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary> Creates a folder if the folder does not already exist. </summary>
+        /// <summary>Creates a folder if the folder does not already exist.</summary>
         /// <param name="directoryPath">
         /// (Required.) Path to the folder that you want to
         /// create.
@@ -120,9 +116,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="directoryPath" />, is passed a blank or <see langword="null" />
         /// value.
         /// </exception>
-        internal static void CreateDirectoryIfNotExists(
-            [NotLogged] string directoryPath
-        )
+        internal static void CreateDirectoryIfNotExists([NotLogged] string directoryPath)
         {
             try
             {
@@ -130,12 +124,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.CreateDirectoryIfNotExists *** INFO: Checking whether the value of the parameter, 'directoryPath', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'directoryPath', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'directoryPath', is blank. If this is
+                // so, then emit an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (string.IsNullOrWhiteSpace(directoryPath))
                 {
-                    // The parameter, 'directoryPath' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'directoryPath' was either passed a null value, or it is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.CreateDirectoryIfNotExists: *** ERROR *** The parameter, 'directoryPath' was either passed a null value, or it is blank. Stopping..."
                     );
@@ -152,9 +147,8 @@ namespace xyLOGIX.Core.Debug
                     $"*** DebugFileAndFolderHelper.CreateDirectoryIfNotExists: Checking whether the folder, '{directoryPath}', already exists..."
                 );
 
-                // Check to see whether the folder already exists.
-                // Otherwise, write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the folder already exists. Otherwise, write an error message
+                // to the log file, and then terminate the execution of this method.
                 if (Directory.Exists(directoryPath))
                 {
                     // The folder already exists.  There is nothing else to be done.
@@ -217,12 +211,11 @@ namespace xyLOGIX.Core.Debug
         /// if the <c>Directory Writeability Status</c> value could not be ascertained from
         /// the information available.
         /// </returns>
-        private static DirectoryWriteabilityStatus
-            DetermineDirectoryWriteabilityStatus(
-                FileSystemAccessRule r,
-                IdentityReferenceCollection groups,
-                string sidCurrentUser
-            )
+        private static DirectoryWriteabilityStatus DetermineDirectoryWriteabilityStatus(
+            FileSystemAccessRule r,
+            IdentityReferenceCollection groups,
+            string sidCurrentUser
+        )
         {
             var result = DirectoryWriteabilityStatus.NoDetermination;
 
@@ -232,9 +225,8 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'r' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, r, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, r, is null. If it is, send an error to
+                // the Debug output and quit, returning the default return value of this method.
                 if (r == null)
                 {
                     // The parameter, 'r', is required and is not supposed to have a NULL value.
@@ -258,12 +250,12 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'groups' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, groups, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, groups, is null. If it is, send an error
+                // to the Debug output and quit, returning the default return value of this method.
                 if (groups == null)
                 {
-                    // The parameter, 'groups', is required and is not supposed to have a NULL value.
+                    // The parameter, 'groups', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** A null reference was passed for the 'groups' method parameter.  Stopping..."
                     );
@@ -284,9 +276,9 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the 'groups' collection contains greater than zero elements..."
                 );
 
-                // Check to see whether the 'groups' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the log system, return the default
-                // return value, and then terminate the execution of this method.
+                // Check to see whether the 'groups' collection contains greater than zero elements.
+                // Otherwise, write an error message to the log system, return the default return
+                // value, and then terminate the execution of this method.
                 if (groups.Count <= 0)
                 {
                     // The 'groups' collection contains zero elements.  This is not desirable.
@@ -310,12 +302,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus *** INFO: Checking whether the value of the parameter, 'sidCurrentUser', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'sidCurrentUser', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'sidCurrentUser', is blank. If this is
+                // so, then emit an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (string.IsNullOrWhiteSpace(sidCurrentUser))
                 {
-                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** The parameter, 'sidCurrentUser', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -336,12 +329,14 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
+                // Check to see if the required property, 'r.IdentityReference', has a null
+                // reference for a value. If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
                 if (r.IdentityReference == null)
                 {
-                    // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
+                    // The property, 'r.IdentityReference', has a null reference for a value.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
                     );
@@ -362,12 +357,13 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the current user is a member of any of the group(s)..."
                 );
 
-                // Check to see whether the current user is a member of any of the group(s).
-                // If this is not the case, then write an error message to the log system,
-                // and then terminate the execution of this method.
+                // Check to see whether the current user is a member of any of the group(s). If this
+                // is not the case, then write an error message to the log system, and then
+                // terminate the execution of this method.
                 if (!groups.Contains(r.IdentityReference))
                 {
-                    // The current user is NOT a member of ANY of the group(s).  This is not desirable.
+                    // The current user is NOT a member of ANY of the group(s).  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The current user is NOT a member of ANY of the group(s).  Stopping..."
                     );
@@ -388,12 +384,13 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.DetermineDirectoryWriteabilityStatus: Checking whether the current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity..."
                 );
 
-                // Check to see whether the current user SID is equal to that of the current Windows identity.
-                // If this is not the case, then write an error message to the log system,
+                // Check to see whether the current user SID is equal to that of the current Windows
+                // identity. If this is not the case, then write an error message to the log system,
                 // and then terminate the execution of this method.
                 if (!sidCurrentUser.Equals(r.IdentityReference.Value))
                 {
-                    // The current user SID is NOT equal to that of the current Windows identity.  This means the system is writeable.
+                    // The current user SID is NOT equal to that of the current Windows identity.
+                    // This means the system is writeable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** SUCCESS *** The current user SID, '{sidCurrentUser}', is NOT equal to that of the current Windows identity.  This means the system is writeable."
                     );
@@ -414,11 +411,10 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Determining whether the user has 'Write Data' privileges on the current system..."
                 );
 
-                result =
-                    AccessControlType.Allow.Equals(r.AccessControlType) &
-                    ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
-                        ? DirectoryWriteabilityStatus.Writeable
-                        : DirectoryWriteabilityStatus.NotWriteable;
+                result = AccessControlType.Allow.Equals(r.AccessControlType) &
+                         ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
+                    ? DirectoryWriteabilityStatus.Writeable
+                    : DirectoryWriteabilityStatus.NotWriteable;
             }
             catch (Exception ex)
             {
@@ -436,10 +432,10 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines whether a file system entry having the <c>FileSystemAccessRule</c>,
-        /// <paramref name="r" />, is NOT writeable by the user having the SID specified in
-        /// <paramref name="sidCurrentUser" />, who is a member of the specified
-        /// <paramref name="groups" />.
+        /// Determines whether a file system entry having the
+        /// <c>FileSystemAccessRule</c>, <paramref name="r" />, is NOT writeable by the
+        /// user having the SID specified in <paramref name="sidCurrentUser" />, who is a
+        /// member of the specified <paramref name="groups" />.
         /// </summary>
         /// <param name="r">
         /// (Required.) Reference to an instance of
@@ -456,12 +452,11 @@ namespace xyLOGIX.Core.Debug
         /// contains the SID of the currently-logged-in user.
         /// </param>
         /// <returns>
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" /> enumeration
-        /// value(s) that indicates the results of the determination, or
-        /// <see cref="F:xyLOGIX.Core.Debug.FileWriteabilityStatus.NoDetermination" />
-        /// if the <c>File Writeability Status</c> value could not be ascertained from
-        /// the information available.
+        /// One of the <see cref="T:xyLOGIX.Core.Debug.FileWriteabilityStatus" />
+        /// enumeration value(s) that indicates the results of the determination, or
+        /// <see cref="F:xyLOGIX.Core.Debug.FileWriteabilityStatus.NoDetermination" /> if
+        /// the <c>File Writeability Status</c> value could not be ascertained from the
+        /// information available.
         /// </returns>
         private static FileWriteabilityStatus DetermineFileWriteabilityStatus(
             FileSystemAccessRule r,
@@ -477,9 +472,8 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'r' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, r, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, r, is null. If it is, send an error to
+                // the Debug output and quit, returning the default return value of this method.
                 if (r == null)
                 {
                     // The parameter, 'r', is required and is not supposed to have a NULL value.
@@ -503,12 +497,12 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'groups' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, groups, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, groups, is null. If it is, send an error
+                // to the Debug output and quit, returning the default return value of this method.
                 if (groups == null)
                 {
-                    // The parameter, 'groups', is required and is not supposed to have a NULL value.
+                    // The parameter, 'groups', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** A null reference was passed for the 'groups' method parameter.  Stopping..."
                     );
@@ -529,9 +523,9 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the 'groups' collection contains greater than zero elements..."
                 );
 
-                // Check to see whether the 'groups' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the log file, return the default
-                // return value, and then terminate the execution of this method.
+                // Check to see whether the 'groups' collection contains greater than zero elements.
+                // Otherwise, write an error message to the log file, return the default return
+                // value, and then terminate the execution of this method.
                 if (groups.Count <= 0)
                 {
                     // The 'groups' collection contains zero elements.  This is not desirable.
@@ -555,12 +549,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus *** INFO: Checking whether the value of the parameter, 'sidCurrentUser', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'sidCurrentUser', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'sidCurrentUser', is blank. If this is
+                // so, then emit an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (string.IsNullOrWhiteSpace(sidCurrentUser))
                 {
-                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'sidCurrentUser', was either passed a null value, or it is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** The parameter, 'sidCurrentUser', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -581,12 +576,14 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
+                // Check to see if the required property, 'r.IdentityReference', has a null
+                // reference for a value. If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
                 if (r.IdentityReference == null)
                 {
-                    // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
+                    // The property, 'r.IdentityReference', has a null reference for a value.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
                     );
@@ -607,12 +604,13 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the current user is a member of any of the group(s)..."
                 );
 
-                // Check to see whether the current user is a member of any of the group(s).
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the current user is a member of any of the group(s). If this
+                // is not the case, then write an error message to the log file, and then terminate
+                // the execution of this method.
                 if (!groups.Contains(r.IdentityReference))
                 {
-                    // The current user is NOT a member of ANY of the group(s).  This is not desirable.
+                    // The current user is NOT a member of ANY of the group(s).  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The current user is NOT a member of ANY of the group(s).  Stopping..."
                     );
@@ -633,12 +631,13 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.DetermineFileWriteabilityStatus: Checking whether the current user SID, '{sidCurrentUser}', is equal to that of the current Windows identity..."
                 );
 
-                // Check to see whether the current user SID is equal to that of the current Windows identity.
-                // If this is not the case, then write an error message to the log file,
+                // Check to see whether the current user SID is equal to that of the current Windows
+                // identity. If this is not the case, then write an error message to the log file,
                 // and then terminate the execution of this method.
                 if (!sidCurrentUser.Equals(r.IdentityReference.Value))
                 {
-                    // The current user SID is NOT equal to that of the current Windows identity.  This means the file is writeable.
+                    // The current user SID is NOT equal to that of the current Windows identity.
+                    // This means the file is writeable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** SUCCESS *** The current user SID, '{sidCurrentUser}', is NOT equal to that of the current Windows identity.  This means the file is writeable."
                     );
@@ -659,11 +658,10 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Determining whether the user has 'Write Data' privileges on the current file..."
                 );
 
-                result =
-                    AccessControlType.Allow.Equals(r.AccessControlType) &
-                    ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
-                        ? FileWriteabilityStatus.Writeable
-                        : FileWriteabilityStatus.NotWriteable;
+                result = AccessControlType.Allow.Equals(r.AccessControlType) &
+                         ((r.FileSystemRights & FileSystemRights.WriteData) != 0)
+                    ? FileWriteabilityStatus.Writeable
+                    : FileWriteabilityStatus.NotWriteable;
             }
             catch (Exception ex)
             {
@@ -687,10 +685,9 @@ namespace xyLOGIX.Core.Debug
         /// <returns>
         /// This method returns <see langword="true" /> if the file with path
         /// specified by the <paramref name="fileName" /> parameter exists on the
-        /// filesystem in
-        /// the specified location or <see langword="false" /> if either the file is not
-        /// found or if it does exist but an operating system error occurs (such as
-        /// insufficient permissions) during the search.
+        /// filesystem in the specified location or <see langword="false" /> if either the
+        /// file is not found or if it does exist but an operating system error occurs
+        /// (such as insufficient permissions) during the search.
         /// </returns>
         internal static bool InsistPathExists([NotLogged] string fileName)
         {
@@ -702,12 +699,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.InsistPathExists *** INFO: Checking whether the value of the parameter, 'fileName', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'fileName', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'fileName', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(fileName))
                 {
-                    // The parameter, 'fileName' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'fileName' was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.InsistPathExists: *** ERROR *** The parameter, 'fileName' was either passed a null value, or it is blank. Stopping..."
                     );
@@ -728,9 +726,9 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.InsistPathExists *** INFO: Checking whether the file having pathname, '{fileName}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'fileName', exists on the file system.
-                // If it does not, then write an error message to the Debug output, and then
-                // terminate the execution of this method.
+                // Check whether a file having pathname, 'fileName', exists on the file system. If
+                // it does not, then write an error message to the Debug output, and then terminate
+                // the execution of this method.
                 if (!File.Exists(fileName))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -749,10 +747,8 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.InsistPathExists *** SUCCESS *** The file having pathname, '{fileName}', was found on the file system.  Proceeding..."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -768,8 +764,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines whether the file having the <paramref name="pathname" /> is marked
-        /// with the 'Read-Only' attribute.
+        /// Determines whether the file having the <paramref name="pathname" /> is
+        /// marked with the 'Read-Only' attribute.
         /// </summary>
         /// <param name="pathname">
         /// (Required.) A <see cref="T:System.String" /> containing
@@ -777,8 +773,9 @@ namespace xyLOGIX.Core.Debug
         /// checked.
         /// </param>
         /// <returns>
-        /// <see langword="true" /> if the file having the <paramref name="pathname" /> is
-        /// marked with the 'Read-Only' attribute; otherwise, <see langword="false" />.
+        /// <see langword="true" /> if the file having the
+        /// <paramref name="pathname" /> is marked with the 'Read-Only' attribute;
+        /// otherwise, <see langword="false" />.
         /// </returns>
         internal static bool IsFileReadOnly([NotLogged] string pathname)
         {
@@ -790,12 +787,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileReadOnly *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileReadOnly: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -816,9 +814,9 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.IsFileReadOnly *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an error message to the Debug output, and then
-                // terminate the execution of this method.
+                // Check whether a file having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an error message to the Debug output, and then terminate
+                // the execution of this method.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -837,9 +835,8 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.IsFileReadOnly *** SUCCESS *** The file having pathname, '{pathname}', was found on the file system.  Proceeding..."
                 );
 
-                result =
-                    (File.GetAttributes(pathname) & FileAttributes.ReadOnly) ==
-                    FileAttributes.ReadOnly;
+                result = (File.GetAttributes(pathname) & FileAttributes.ReadOnly) ==
+                         FileAttributes.ReadOnly;
             }
             catch (Exception ex)
             {
@@ -856,14 +853,14 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary> Checks for write access for the given file. </summary>
+        /// <summary>Checks for write access for the given file.</summary>
         /// <param name="pathname">
-        /// (Required.) String containing the full pathname for which
-        /// write permissions should be checked.
+        /// (Required.) String containing the full pathname for
+        /// which write permissions should be checked.
         /// </param>
         /// <returns>
-        /// This method returns <see langword="true" /> if write access is
-        /// allowed to the file with the specified <paramref name="pathname" />, otherwise
+        /// This method returns <see langword="true" /> if write access is allowed
+        /// to the file with the specified <paramref name="pathname" />, otherwise
         /// <see langword="false" />.
         /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
@@ -889,12 +886,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -915,9 +913,9 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.IsFileWriteable *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an error message to the Debug output, and then
-                // terminate the execution of this method.
+                // Check whether a file having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an error message to the Debug output, and then terminate
+                // the execution of this method.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -940,9 +938,9 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.IsFileWriteable: Checking whether the file, '{pathname}', does NOT have the 'Read-Only' attribute set..."
                 );
 
-                // Check to see whether the file does NOT have the 'Read-Only' attribute set.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // Check to see whether the file does NOT have the 'Read-Only' attribute set. If
+                // this is not the case, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
                 if (IsFileReadOnly(pathname))
                 {
                     // The file has the 'Read-Only' attribute set.  This is not desirable.
@@ -972,12 +970,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the variable, 'acl', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'acl', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'acl', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (acl == null)
                 {
-                    // The variable, 'acl', has a null reference for a value.  This is not desirable.
+                    // The variable, 'acl', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** ERROR ***  The variable, 'acl', has a null reference for a value.  Stopping..."
                     );
@@ -999,22 +998,21 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Attempting to retrieve the ACL rule(s) for the file, '{pathname}'..."
                 );
 
-                // Get the access rules of the specified files (user groups and
-                // usernames that have access to the file)
-                var rules = acl.GetAccessRules(
-                    true, true, typeof(SecurityIdentifier)
-                );
+                // Get the access rules of the specified files (user groups and usernames that have
+                // access to the file)
+                var rules = acl.GetAccessRules(true, true, typeof(SecurityIdentifier));
 
                 System.Diagnostics.Debug.WriteLine(
                     "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the variable, 'rules', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'rules', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'rules', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (rules == null)
                 {
-                    // The variable, 'rules', has a null reference for a value.  This is not desirable.
+                    // The variable, 'rules', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** ERROR ***  The variable, 'rules', has a null reference for a value.  Stopping..."
                     );
@@ -1042,12 +1040,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the variable, 'windowsIdentity', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'windowsIdentity', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'windowsIdentity', has a null reference for a
+                // value. If it does, then emit an error to the Debug output, and terminate the
+                // execution of this method, returning the default return value.
                 if (windowsIdentity == null)
                 {
-                    // The variable, 'windowsIdentity', has a null reference for a value.  This is not desirable.
+                    // The variable, 'windowsIdentity', has a null reference for a value.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** ERROR ***  The variable, 'windowsIdentity', has a null reference for a value.  Stopping..."
                     );
@@ -1060,7 +1059,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, 'windowsIdentity', because it's not set to a null reference.
+                // We can use the variable, 'windowsIdentity', because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "DebugFileAndFolderHelper.IsFileWriteable: *** SUCCESS *** The variable, 'windowsIdentity', has a valid object reference for its value.  Proceeding..."
                 );
@@ -1075,12 +1075,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the variable, 'groups', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'groups', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'groups', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (groups == null)
                 {
-                    // The variable, 'groups', has a null reference for a value.  This is not desirable.
+                    // The variable, 'groups', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** ERROR ***  The variable, 'groups', has a null reference for a value.  Stopping..."
                     );
@@ -1102,9 +1103,9 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.IsFileWriteable: Checking whether the 'groups' collection contains greater than zero elements..."
                 );
 
-                // Check to see whether the 'groups' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the log file, return the default
-                // return value, and then terminate the execution of this method.
+                // Check to see whether the 'groups' collection contains greater than zero elements.
+                // Otherwise, write an error message to the log file, return the default return
+                // value, and then terminate the execution of this method.
                 if (groups.Count <= 0)
                 {
                     // The 'groups' collection contains zero elements.  This is not desirable.
@@ -1132,12 +1133,14 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the property, 'windowsIdentity.User', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'windowsIdentity.User', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
+                // Check to see if the required property, 'windowsIdentity.User', has a null
+                // reference for a value. If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
                 if (windowsIdentity.User == null)
                 {
-                    // The property, 'windowsIdentity.User', has a null reference for a value.  This is not desirable.
+                    // The property, 'windowsIdentity.User', has a null reference for a value.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** ERROR *** The property, 'windowsIdentity.User', has a null reference for a value.  Stopping..."
                     );
@@ -1164,12 +1167,14 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the ACL contains at least one rule that pertains to the current user..."
                 );
 
-                // Check to see whether the ACL contains at least one rule that pertains to the current user.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method, and ASSUME that the file is writeable.
+                // Check to see whether the ACL contains at least one rule that pertains to the
+                // current user. If this is not the case, then write an error message to the log
+                // file, and then terminate the execution of this method, and ASSUME that the file
+                // is writeable.
                 if (!RulesFoundForUser(rules, sidCurrentUser))
                 {
-                    // The ACL contains NO rule(s) that pertain to the current user.  This is not desirable.
+                    // The ACL contains NO rule(s) that pertain to the current user.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFileWriteable: *** FYI *** The ACL contains NO rule(s) that pertain to the current user.  Stopping..."
                     );
@@ -1190,8 +1195,8 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFileWriteable: *** SUCCESS *** The ACL contains at least one rule that pertains to the current user.  Proceeding..."
                 );
 
-                // Check if writing to the file is explicitly denied for this
-                // user or a group the user is in.
+                // Check if writing to the file is explicitly denied for this user or a group the
+                // user is in.
                 System.Diagnostics.Debug.WriteLine(
                     $"*** FYI *** Going over the access-control list rule(s) for the file, '{pathname}' for the user, '{FullyQualifiedUserName}'..."
                 );
@@ -1206,7 +1211,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFileWriteable: Checking whether the variable 'rule' has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, rule, is null. If it is, send an error to the log file and continue to the next loop iteration.
+                    // Check to see if the variable, rule, is null. If it is, send an error to the
+                    // log file and continue to the next loop iteration.
                     if (rule == null)
                     {
                         // the variable rule is required to have a valid object reference.
@@ -1228,11 +1234,12 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the current ACL rule is a FileSystemAccessRule (FSAR).
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next loop iteration.
+                    // If this is not the case, then write an error message to the log file, and
+                    // then skip to the next loop iteration.
                     if (!(rule is FileSystemAccessRule r))
                     {
-                        // The current ACL rule is NOT a FileSystemAccessRule (FSAR).  This is not desirable.
+                        // The current ACL rule is NOT a FileSystemAccessRule (FSAR).  This is not
+                        // desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR: The current ACL rule is NOT a FileSystemAccessRule (FSAR).  Skipping to the next rule..."
                         );
@@ -1250,8 +1257,8 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the writeability status of the file could be determined.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next iteration of the loop.
+                    // If this is not the case, then write an error message to the log file, and
+                    // then skip to the next iteration of the loop.
                     var writeabilityStatus = DetermineFileWriteabilityStatus(
                         r, groups, sidCurrentUser
                     );
@@ -1261,13 +1268,12 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the writeability status is within the defined value set.
-                    // If this is not the case, then write an error message to the Debug output,
-                    // and then skip to the next loop iteration.
-                    if (!FileWriteabilityStatusValidator.IsValid(
-                            writeabilityStatus
-                        ))
+                    // If this is not the case, then write an error message to the Debug output, and
+                    // then skip to the next loop iteration.
+                    if (!FileWriteabilityStatusValidator.IsValid(writeabilityStatus))
                     {
-                        // The writeability status is NOT within the defined value set.  This is not desirable.
+                        // The writeability status is NOT within the defined value set.  This is not
+                        // desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR: The writeability status is NOT within the defined value set.  Skipping to the next rule..."
                         );
@@ -1285,13 +1291,12 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the writeability status of the file could be determined.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next iteration of the loop.
-                    if (FileWriteabilityStatus.NoDetermination.Equals(
-                            writeabilityStatus
-                        ))
+                    // If this is not the case, then write an error message to the log file, and
+                    // then skip to the next iteration of the loop.
+                    if (FileWriteabilityStatus.NoDetermination.Equals(writeabilityStatus))
                     {
-                        // The writeability status of the file could NOT be determined from the current rule.  This is not desirable.
+                        // The writeability status of the file could NOT be determined from the
+                        // current rule.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR *** The writeability status of the file could NOT be determined from the current rule.  Skipping to the next rule..."
                         );
@@ -1304,11 +1309,10 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFileWriteable: *** SUCCESS *** The writeability status of the file could be determined.  Proceeding..."
                     );
 
-                    if (FileWriteabilityStatus.NoDetermination.Equals(
-                            writeabilityStatus
-                        ))
+                    if (FileWriteabilityStatus.NoDetermination.Equals(writeabilityStatus))
                     {
-                        // The writeability status of the file could NOT be determined from the current rule.  This is not desirable.
+                        // The writeability status of the file could NOT be determined from the
+                        // current rule.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR *** The writeability status of the file could NOT be determined from the current rule.  Skipping to the next rule..."
                         );
@@ -1321,12 +1325,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFileWriteable: *** SUCCESS *** The writeability status of the file could be determined.  Proceeding..."
                     );
 
-                    result =
-                        FileWriteabilityStatusValidator.IsValid(
-                            writeabilityStatus
-                        ) && FileWriteabilityStatus.Writeable.Equals(
-                            writeabilityStatus
-                        );
+                    result = FileWriteabilityStatusValidator.IsValid(writeabilityStatus) &&
+                             FileWriteabilityStatus.Writeable.Equals(writeabilityStatus);
                     break;
                 }
             }
@@ -1352,8 +1352,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines whether the folder having the <paramref name="pathname" /> is marked
-        /// with the 'Read-Only' attribute.
+        /// Determines whether the folder having the <paramref name="pathname" />
+        /// is marked with the 'Read-Only' attribute.
         /// </summary>
         /// <param name="pathname">
         /// (Required.) A <see cref="T:System.String" /> containing
@@ -1361,8 +1361,9 @@ namespace xyLOGIX.Core.Debug
         /// checked.
         /// </param>
         /// <returns>
-        /// <see langword="true" /> if the folder having the <paramref name="pathname" />
-        /// is marked with the 'Read-Only' attribute; otherwise, <see langword="false" />.
+        /// <see langword="true" /> if the folder having the
+        /// <paramref name="pathname" /> is marked with the 'Read-Only' attribute;
+        /// otherwise, <see langword="false" />.
         /// </returns>
         internal static bool IsFolderReadOnly([NotLogged] string pathname)
         {
@@ -1374,12 +1375,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugDirectoryAndFolderHelper.IsFolderReadOnly *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugDirectoryAndFolderHelper.IsFolderReadOnly: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -1421,9 +1423,8 @@ namespace xyLOGIX.Core.Debug
                     $"DebugDirectoryAndFolderHelper.IsFolderReadOnly *** SUCCESS *** The folder having pathname, '{pathname}', was found on the folder system.  Proceeding..."
                 );
 
-                result =
-                    (File.GetAttributes(pathname) & FileAttributes.ReadOnly) ==
-                    FileAttributes.ReadOnly;
+                result = (File.GetAttributes(pathname) & FileAttributes.ReadOnly) ==
+                         FileAttributes.ReadOnly;
             }
             catch (Exception ex)
             {
@@ -1440,15 +1441,14 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary> Checks for write access for the given folder. </summary>
+        /// <summary>Checks for write access for the given folder.</summary>
         /// <param name="pathname">
-        /// (Required.) String containing the full pathname for which
-        /// write permissions should be checked.
+        /// (Required.) String containing the full pathname for
+        /// which write permissions should be checked.
         /// </param>
         /// <returns>
-        /// This method returns <see langword="true" /> if write access is
-        /// allowed to the folder with the specified <paramref name="pathname" />,
-        /// otherwise
+        /// This method returns <see langword="true" /> if write access is allowed
+        /// to the folder with the specified <paramref name="pathname" />, otherwise
         /// <see langword="false" />.
         /// <para />
         /// The value <see langword="false" /> is also returned in the event that the
@@ -1474,12 +1474,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the Debug output, and then terminate the execution
+                // of this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname', was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** ERROR *** The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -1500,9 +1501,9 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.IsFolderWriteable *** INFO: Checking whether the folder having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a folder having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an error message to the Debug output, and then
-                // terminate the execution of this method.
+                // Check whether a folder having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an error message to the Debug output, and then terminate
+                // the execution of this method.
                 if (!Directory.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -1525,9 +1526,9 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the folder, '{pathname}', does NOT have the 'Read-Only' attribute set..."
                 );
 
-                // Check to see whether the folder does NOT have the 'Read-Only' attribute set.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // Check to see whether the folder does NOT have the 'Read-Only' attribute set. If
+                // this is not the case, then write an error message to the Debug output, and then
+                // terminate the execution of this method.
                 if (IsFolderReadOnly(pathname))
                 {
                     // The folder has the 'Read-Only' attribute set.  This is not desirable.
@@ -1557,12 +1558,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the variable, 'acl', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'acl', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'acl', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (acl == null)
                 {
-                    // The variable, 'acl', has a null reference for a value.  This is not desirable.
+                    // The variable, 'acl', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** ERROR ***  The variable, 'acl', has a null reference for a value.  Stopping..."
                     );
@@ -1584,22 +1586,21 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Attempting to retrieve the ACL rule(s) for the folder, '{pathname}'..."
                 );
 
-                // Get the access rules of the specified folders (user groups and
-                // usernames that have access to the folder)
-                var rules = acl.GetAccessRules(
-                    true, true, typeof(SecurityIdentifier)
-                );
+                // Get the access rules of the specified folders (user groups and usernames that
+                // have access to the folder)
+                var rules = acl.GetAccessRules(true, true, typeof(SecurityIdentifier));
 
                 System.Diagnostics.Debug.WriteLine(
                     "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the variable, 'rules', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'rules', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'rules', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (rules == null)
                 {
-                    // The variable, 'rules', has a null reference for a value.  This is not desirable.
+                    // The variable, 'rules', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** ERROR ***  The variable, 'rules', has a null reference for a value.  Stopping..."
                     );
@@ -1627,12 +1628,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the variable, 'windowsIdentity', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'windowsIdentity', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'windowsIdentity', has a null reference for a
+                // value. If it does, then emit an error to the Debug output, and terminate the
+                // execution of this method, returning the default return value.
                 if (windowsIdentity == null)
                 {
-                    // The variable, 'windowsIdentity', has a null reference for a value.  This is not desirable.
+                    // The variable, 'windowsIdentity', has a null reference for a value.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** ERROR ***  The variable, 'windowsIdentity', has a null reference for a value.  Stopping..."
                     );
@@ -1645,7 +1647,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, 'windowsIdentity', because it's not set to a null reference.
+                // We can use the variable, 'windowsIdentity', because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "DebugFileAndFolderHelper.IsFolderWriteable: *** SUCCESS *** The variable, 'windowsIdentity', has a valid object reference for its value.  Proceeding..."
                 );
@@ -1660,12 +1663,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the variable, 'groups', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'groups', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'groups', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (groups == null)
                 {
-                    // The variable, 'groups', has a null reference for a value.  This is not desirable.
+                    // The variable, 'groups', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** ERROR ***  The variable, 'groups', has a null reference for a value.  Stopping..."
                     );
@@ -1687,9 +1691,9 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the 'groups' collection contains greater than zero elements..."
                 );
 
-                // Check to see whether the 'groups' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the log folder, return the default
-                // return value, and then terminate the execution of this method.
+                // Check to see whether the 'groups' collection contains greater than zero elements.
+                // Otherwise, write an error message to the log folder, return the default return
+                // value, and then terminate the execution of this method.
                 if (groups.Count <= 0)
                 {
                     // The 'groups' collection contains zero elements.  This is not desirable.
@@ -1717,12 +1721,14 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the property, 'windowsIdentity.User', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'windowsIdentity.User', has a null reference for a value.
-                // If that is the case, then we will write an error message to the Debug output, and then
-                // terminate the execution of this method, while returning the default return value.
+                // Check to see if the required property, 'windowsIdentity.User', has a null
+                // reference for a value. If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
                 if (windowsIdentity.User == null)
                 {
-                    // The property, 'windowsIdentity.User', has a null reference for a value.  This is not desirable.
+                    // The property, 'windowsIdentity.User', has a null reference for a value.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** ERROR *** The property, 'windowsIdentity.User', has a null reference for a value.  Stopping..."
                     );
@@ -1749,9 +1755,10 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the ACL contains at least one rule that pertains to the current user..."
                 );
 
-                // Check to see whether the ACL contains at least one rule that pertains to the current user.
-                // If this is not the case, then write an error message to the log folder,
-                // and then terminate the execution of this method --- and ASSUME that the folder is writeable.
+                // Check to see whether the ACL contains at least one rule that pertains to the
+                // current user. If this is not the case, then write an error message to the log
+                // folder, and then terminate the execution of this method --- and ASSUME that the
+                // folder is writeable.
                 if (!RulesFoundForUser(rules, sidCurrentUser))
                 {
                     // The ACL contains NO rule(s) that pertain to the current user.  This is fine.
@@ -1775,8 +1782,8 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsFolderWriteable: *** SUCCESS *** The ACL contains at least one rule that pertains to the current user.  Proceeding..."
                 );
 
-                // Check if writing to the folder is explicitly denied for this
-                // user or a group the user is in.
+                // Check if writing to the folder is explicitly denied for this user or a group the
+                // user is in.
                 System.Diagnostics.Debug.WriteLine(
                     $"*** FYI *** Going over the access-control list rule(s) for the folder, '{pathname}' for the user, '{FullyQualifiedUserName}'..."
                 );
@@ -1791,7 +1798,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the variable 'rule' has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, rule, is null. If it is, send an error to the log folder and continue to the next loop iteration.
+                    // Check to see if the variable, rule, is null. If it is, send an error to the
+                    // log folder and continue to the next loop iteration.
                     if (rule == null)
                     {
                         // the variable rule is required to have a valid object reference.
@@ -1813,11 +1821,12 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the current ACL rule is a FileSystemAccessRule (FSAR).
-                    // If this is not the case, then write an error message to the log folder,
-                    // and then skip to the next loop iteration.
+                    // If this is not the case, then write an error message to the log folder, and
+                    // then skip to the next loop iteration.
                     if (!(rule is FileSystemAccessRule r))
                     {
-                        // The current ACL rule is NOT a FileSystemAccessRule (FSAR).  This is not desirable.
+                        // The current ACL rule is NOT a FileSystemAccessRule (FSAR).  This is not
+                        // desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR: The current ACL rule is NOT a FileSystemAccessRule (FSAR).  Skipping to the next rule..."
                         );
@@ -1834,26 +1843,23 @@ namespace xyLOGIX.Core.Debug
                         "*** DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the writeability status of the folder could be determined..."
                     );
 
-                    // Check to see whether the writeability status of the folder could be determined.
-                    // If this is not the case, then write an error message to the log folder,
-                    // and then skip to the next iteration of the loop.
+                    // Check to see whether the writeability status of the folder could be
+                    // determined. If this is not the case, then write an error message to the log
+                    // folder, and then skip to the next iteration of the loop.
                     var writeabilityStatus =
-                        DetermineDirectoryWriteabilityStatus(
-                            r, groups, sidCurrentUser
-                        );
+                        DetermineDirectoryWriteabilityStatus(r, groups, sidCurrentUser);
 
                     System.Diagnostics.Debug.WriteLine(
                         "*** DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the writeability status is within the defined value set..."
                     );
 
                     // Check to see whether the writeability status is within the defined value set.
-                    // If this is not the case, then write an error message to the Debug output,
-                    // and then skip to the next loop iteration.
-                    if (!DirectoryWriteabilityStatusValidator.IsValid(
-                            writeabilityStatus
-                        ))
+                    // If this is not the case, then write an error message to the Debug output, and
+                    // then skip to the next loop iteration.
+                    if (!DirectoryWriteabilityStatusValidator.IsValid(writeabilityStatus))
                     {
-                        // The writeability status is NOT within the defined value set.  This is not desirable.
+                        // The writeability status is NOT within the defined value set.  This is not
+                        // desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR: The writeability status is NOT within the defined value set.  Skipping to the next rule..."
                         );
@@ -1870,14 +1876,13 @@ namespace xyLOGIX.Core.Debug
                         "*** DebugFileAndFolderHelper.IsFolderWriteable: Checking whether the writeability status of the folder could be determined..."
                     );
 
-                    // Check to see whether the writeability status of the folder could be determined.
-                    // If this is not the case, then write an error message to the log folder,
-                    // and then skip to the next iteration of the loop.
-                    if (DirectoryWriteabilityStatus.NoDetermination.Equals(
-                            writeabilityStatus
-                        ))
+                    // Check to see whether the writeability status of the folder could be
+                    // determined. If this is not the case, then write an error message to the log
+                    // folder, and then skip to the next iteration of the loop.
+                    if (DirectoryWriteabilityStatus.NoDetermination.Equals(writeabilityStatus))
                     {
-                        // The writeability status of the folder could NOT be determined from the current rule.  This is not desirable.
+                        // The writeability status of the folder could NOT be determined from the
+                        // current rule.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR *** The writeability status of the folder could NOT be determined from the current rule.  Skipping to the next rule..."
                         );
@@ -1890,11 +1895,10 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** SUCCESS *** The writeability status of the folder could be determined.  Proceeding..."
                     );
 
-                    if (DirectoryWriteabilityStatus.NoDetermination.Equals(
-                            writeabilityStatus
-                        ))
+                    if (DirectoryWriteabilityStatus.NoDetermination.Equals(writeabilityStatus))
                     {
-                        // The writeability status of the folder could NOT be determined from the current rule.  This is not desirable.
+                        // The writeability status of the folder could NOT be determined from the
+                        // current rule.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR *** The writeability status of the folder could NOT be determined from the current rule.  Skipping to the next rule..."
                         );
@@ -1907,12 +1911,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.IsFolderWriteable: *** SUCCESS *** The writeability status of the folder could be determined.  Proceeding..."
                     );
 
-                    result =
-                        DirectoryWriteabilityStatusValidator.IsValid(
-                            writeabilityStatus
-                        ) && DirectoryWriteabilityStatus.Writeable.Equals(
-                            writeabilityStatus
-                        );
+                    result = DirectoryWriteabilityStatusValidator.IsValid(writeabilityStatus) &&
+                             DirectoryWriteabilityStatus.Writeable.Equals(writeabilityStatus);
                     break;
                 }
             }
@@ -1943,8 +1943,8 @@ namespace xyLOGIX.Core.Debug
         /// according to operating-system-specific rules.
         /// </summary>
         /// <param name="fullyQualifiedPath">
-        /// (Required.) String containing the path that
-        /// is to be validated.
+        /// (Required.) String containing the path that is
+        /// to be validated.
         /// </param>
         /// <returns>
         /// If the path provided in <paramref name="fullyQualifiedPath" /> is a
@@ -1962,12 +1962,13 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.IsValidPath *** INFO: Checking whether the value of the parameter, 'fullyQualifiedPath', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'fullyQualifiedPath', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'fullyQualifiedPath', is blank. If this
+                // is so, then emit an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (string.IsNullOrWhiteSpace(fullyQualifiedPath))
                 {
-                    // The parameter, 'fullyQualifiedPath', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'fullyQualifiedPath', was either passed a null value, or it is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DebugFileAndFolderHelper.IsValidPath: *** ERROR *** The parameter, 'fullyQualifiedPath', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -1984,18 +1985,14 @@ namespace xyLOGIX.Core.Debug
                     "*** SUCCESS *** The parameter, 'fullyQualifiedPath', is not blank.  Proceeding..."
                 );
 
-                /*
-                 * Attempt to call the Path.GetFullPath method on the input.  If no
-                 * Exception(s) are caught, then we can return TRUE (for success) meaning
-                 * that the path provided is a valid one.
-                 */
+                /* Attempt to call the Path.GetFullPath method on the input. If no Exception(s) are
+                 caught, then we can return TRUE (for success) meaning that the path provided is a
+                 valid one. */
 
                 _ = Path.GetFullPath(fullyQualifiedPath);
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -2052,9 +2049,8 @@ namespace xyLOGIX.Core.Debug
                     "DebugFileAndFolderHelper.RulesFoundForUser: Checking whether the 'rules' method parameter has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, rules, is null. If it is, send an
-                // error to the Debug output and quit, returning the default return value of
-                // this method.
+                // Check to see if the required parameter, rules, is null. If it is, send an error
+                // to the Debug output and quit, returning the default return value of this method.
                 if (rules == null)
                 {
                     // The parameter, 'rules', is required and is not supposed to have a NULL value.
@@ -2078,9 +2074,9 @@ namespace xyLOGIX.Core.Debug
                     "*** DebugFileAndFolderHelper.RulesFoundForUser: Checking whether the 'rules' collection contains greater than zero elements..."
                 );
 
-                // Check to see whether the 'rules' collection contains greater than zero
-                // elements.  Otherwise, write an error message to the Debug output, return the default
-                // return value, and then terminate the execution of this method.
+                // Check to see whether the 'rules' collection contains greater than zero elements.
+                // Otherwise, write an error message to the Debug output, return the default return
+                // value, and then terminate the execution of this method.
                 if (rules.Count <= 0)
                 {
                     // The 'rules' collection contains zero elements.  This is not desirable.
@@ -2100,10 +2096,8 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.RulesFoundForUser: *** SUCCESS *** {rules.Count} element(s) were found in the 'rules' collection.  Proceeding..."
                 );
 
-                /*
-                 * This method is to return TRUE if at least ONE ACL rule for a
-                 * given file applies to the currently-logged-in user.
-                 */
+                /* This method is to return TRUE if at least ONE ACL rule for a given file applies
+                 to the currently-logged-in user. */
 
                 foreach (var rule in rules)
                 {
@@ -2111,8 +2105,8 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.RulesFoundForUser: Checking whether the variable 'rule' has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, 'rule', is null. If it is, send an error to
-                    // the Debug output and continue to the next loop iteration.
+                    // Check to see if the variable, 'rule', is null. If it is, send an error to the
+                    // Debug output and continue to the next loop iteration.
                     if (rule == null)
                     {
                         // the variable rule is required to have a valid object reference.
@@ -2134,11 +2128,12 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the current ACL rule is a FileSystemAccessRule (FSAR).
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next loop iteration.
+                    // If this is not the case, then write an error message to the log file, and
+                    // then skip to the next loop iteration.
                     if (!(rule is FileSystemAccessRule r))
                     {
-                        // The current ACL rule is NOT a FileSystemAccessRule (FSAR).  This is not desirable.
+                        // The current ACL rule is NOT a FileSystemAccessRule (FSAR).  This is not
+                        // desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR: The current ACL rule is NOT a FileSystemAccessRule (FSAR).  Skipping to the next rule..."
                         );
@@ -2155,12 +2150,14 @@ namespace xyLOGIX.Core.Debug
                         "DebugFileAndFolderHelper.RulesFoundForUser: Checking whether the property, 'r.IdentityReference', has a null reference for a value..."
                     );
 
-                    // Check to see if the required property, 'r.IdentityReference', has a null reference for a value.
-                    // If that is the case, then we will write an error message to the Debug output, and then
-                    // terminate the execution of this method, while returning the default return value.
+                    // Check to see if the required property, 'r.IdentityReference', has a null
+                    // reference for a value. If that is the case, then we will write an error
+                    // message to the Debug output, and then terminate the execution of this method,
+                    // while returning the default return value.
                     if (r.IdentityReference == null)
                     {
-                        // The property, 'r.IdentityReference', has a null reference for a value.  This is not desirable.
+                        // The property, 'r.IdentityReference', has a null reference for a value.
+                        // This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "DebugFileAndFolderHelper.RulesFoundForUser: *** ERROR *** The property, 'r.IdentityReference', has a null reference for a value.  Stopping..."
                         );
@@ -2181,12 +2178,13 @@ namespace xyLOGIX.Core.Debug
                         "*** DebugFileAndFolderHelper.RulesFoundForUser: Checking whether the current rule applies to the current user..."
                     );
 
-                    // Check to see whether the current rule applies to the current user.
-                    // If this is not the case, then write an error message to the Debug output,
-                    // and then skip to the next loop iteration.
+                    // Check to see whether the current rule applies to the current user. If this is
+                    // not the case, then write an error message to the Debug output, and then skip
+                    // to the next loop iteration.
                     if (!sidCurrentUser.Equals(r.IdentityReference.Value))
                     {
-                        // The current rule does NOT apply to the current user.  This is not desirable.
+                        // The current rule does NOT apply to the current user.  This is not
+                        // desirable.
                         System.Diagnostics.Debug.WriteLine(
                             "*** ERROR: The current rule does NOT apply to the current user.  Skipping to the next rule..."
                         );
