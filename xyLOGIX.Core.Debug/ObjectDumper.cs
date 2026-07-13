@@ -20,18 +20,18 @@ namespace xyLOGIX.Core.Debug
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class ObjectDumper
     {
-        /// <summary> Integer specifying the current position in the output stream. </summary>
+        /// <summary>Integer specifying the current position in the output stream.</summary>
         private int _currentStreamPosition;
 
         /// <summary>
         /// Integer specifying the depth (inheritance levels) to which to dump
         /// object data.
         /// </summary>
-        /// <remarks> Must be zero or greater. </remarks>
+        /// <remarks>Must be zero or greater.</remarks>
         private readonly int _depth;
 
-        /// <summary> Integer specifying the indentation level of the logged data. </summary>
-        /// <remarks> Must be 1 or greater. </remarks>
+        /// <summary>Integer specifying the indentation level of the logged data.</summary>
+        /// <remarks>Must be 1 or greater.</remarks>
         private int _indentLevel;
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.ObjectDumper" /> and returns a reference to it.
         /// </summary>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth (in terms
-        /// of inheritance levels) to which to dump object data.
+        /// (Required.) Integer value specifying the depth (in terms of
+        /// inheritance levels) to which to dump object data.
         /// </param>
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown if the
@@ -62,18 +62,19 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Raises the <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" />
-        /// event.
+        /// Raises the
+        /// <see cref="E:xyLOGIX.Core.Debug.ObjectDumper.TextWritten" /> event.
         /// </summary>
         /// <param name="e">
-        /// A <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" />
-        /// that contains the event data.
+        /// A
+        /// <see cref="T:xyLOGIX.Core.Debug.Events.TextWrittenEventArgs" /> that contains
+        /// the event data.
         /// </param>
         [Yielder]
         protected static void OnTextWritten([NotLogged] TextWrittenEventArgs e)
             => TextWritten?.Invoke(e);
 
-        /// <summary> Occurs when text is written to an output stream. </summary>
+        /// <summary>Occurs when text is written to an output stream.</summary>
         public static event TextWrittenEventHandler TextWritten;
 
         /// <summary>
@@ -101,10 +102,8 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * Because these methods are, themselves, called to write logging,
-                 * do not add logging and/or trace statement(s) here.
-                 */
+                /* Because these methods are, themselves, called to write logging, do not add
+                 logging and/or trace statement(s) here. */
 
                 if (element == null) return;
                 if (depth < 0) return;
@@ -173,7 +172,7 @@ namespace xyLOGIX.Core.Debug
         /// Writes the content in the string, <paramref name="s" />, to the
         /// <see cref="T:System.IO.TextWriter" /> wrapped by this object.
         /// </summary>
-        /// <param name="s"> (Required.) String containing the content to be written. </param>
+        /// <param name="s">(Required.) String containing the content to be written.</param>
         /// <remarks>
         /// This method does nothing if <paramref name="s" /> is a blank string.
         /// <para />
@@ -201,16 +200,14 @@ namespace xyLOGIX.Core.Debug
         /// Writes an indent -- a 4 space tab -- to the
         /// <see cref="T:System.IO.TextWriter" /> that is wrapped by this object in the
         /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._writer" /> field at the indent
-        /// level
-        /// given by the value of the
+        /// level given by the value of the
         /// <see cref="F:xyLOGIX.Core.Debug.ObjectDumper._indentLevel" /> field.
         /// </summary>
         private void WriteIndent()
         {
             if (_indentLevel < 0)
                 throw new ArgumentOutOfRangeException(
-                    nameof(_indentLevel),
-                    "Value of the indent level must be zero or greater."
+                    nameof(_indentLevel), "Value of the indent level must be zero or greater."
                 );
 
             for (var i = 0; i < _indentLevel; i++)
@@ -317,8 +314,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Outputs a blank line to the <see cref="T:System.IO.TextWriter" />
-        /// that is wrapped by this object.
+        /// Outputs a blank line to the <see cref="T:System.IO.TextWriter" /> that
+        /// is wrapped by this object.
         /// </summary>
         /// <remarks>
         /// This method does nothing if the
@@ -353,15 +350,14 @@ namespace xyLOGIX.Core.Debug
         /// be blank or <see langword="null" />.
         /// </param>
         /// <param name="element">
-        /// (Required.) Reference to the instance of the object to
-        /// be dumped to the output stream.
+        /// (Required.) Reference to the instance of the object to be
+        /// dumped to the output stream.
         /// </param>
         private void WriteObject(string prefix, [NotLogged] object element)
         {
             try
             {
-                if (element == null || element is ValueType ||
-                    element is string)
+                if (element == null || element is ValueType || element is string)
                 {
                     WriteIndent();
                     Write(prefix);
@@ -393,8 +389,7 @@ namespace xyLOGIX.Core.Debug
                     {
                         var members = element.GetType()
                                              .GetMembers(
-                                                 BindingFlags.Public |
-                                                 BindingFlags.Instance
+                                                 BindingFlags.Public | BindingFlags.Instance
                                              );
                         if (members == null || !members.Any())
                             return;
@@ -416,16 +411,10 @@ namespace xyLOGIX.Core.Debug
                             var t = f != null ? f.FieldType : p.PropertyType;
                             if (t.IsValueType || t == typeof(string))
                                 WriteValue(
-                                    f != null
-                                        ? f.GetValue(element)
-                                        : p.GetValue(element, null)
+                                    f != null ? f.GetValue(element) : p.GetValue(element, null)
                                 );
                             else
-                                Write(
-                                    typeof(IEnumerable).IsAssignableFrom(t)
-                                        ? "..."
-                                        : "{ }"
-                                );
+                                Write(typeof(IEnumerable).IsAssignableFrom(t) ? "..." : "{ }");
                         }
 
                         if (propWritten) WriteLine();
@@ -438,9 +427,7 @@ namespace xyLOGIX.Core.Debug
                             if (f == null && p == null) continue;
                             var t = f != null ? f.FieldType : p.PropertyType;
                             if (t.IsValueType || t == typeof(string)) continue;
-                            var value = f != null
-                                ? f.GetValue(element)
-                                : p.GetValue(element, null);
+                            var value = f != null ? f.GetValue(element) : p.GetValue(element, null);
                             if (value == null) continue;
                             _indentLevel++;
                             WriteObject(m.Name + ": ", value);
@@ -467,18 +454,14 @@ namespace xyLOGIX.Core.Debug
         /// be blank or <see langword="null" />.
         /// </param>
         /// <param name="element">
-        /// (Required.) Reference to the instance of the object to
-        /// be dumped to the output stream.
+        /// (Required.) Reference to the instance of the object to be
+        /// dumped to the output stream.
         /// </param>
-        private void WriteObjectToLines(
-            string prefix,
-            [NotLogged] object element
-        )
+        private void WriteObjectToLines(string prefix, [NotLogged] object element)
         {
             try
             {
-                if (element == null || element is ValueType ||
-                    element is string)
+                if (element == null || element is ValueType || element is string)
                 {
                     WriteLine();
                     Write(prefix);
@@ -510,8 +493,7 @@ namespace xyLOGIX.Core.Debug
                     {
                         var members = element.GetType()
                                              .GetMembers(
-                                                 BindingFlags.Public |
-                                                 BindingFlags.Instance
+                                                 BindingFlags.Public | BindingFlags.Instance
                                              );
                         if (members == null || !members.Any()) return;
 
@@ -532,16 +514,10 @@ namespace xyLOGIX.Core.Debug
                             var t = f != null ? f.FieldType : p.PropertyType;
                             if (t.IsValueType || t == typeof(string))
                                 WriteValue(
-                                    f != null
-                                        ? f.GetValue(element)
-                                        : p.GetValue(element, null)
+                                    f != null ? f.GetValue(element) : p.GetValue(element, null)
                                 );
                             else
-                                Write(
-                                    typeof(IEnumerable).IsAssignableFrom(t)
-                                        ? "..."
-                                        : "{ }"
-                                );
+                                Write(typeof(IEnumerable).IsAssignableFrom(t) ? "..." : "{ }");
                         }
 
                         if (propWritten) WriteLine();
@@ -554,9 +530,7 @@ namespace xyLOGIX.Core.Debug
                             if (f == null && p == null) continue;
                             var t = f != null ? f.FieldType : p.PropertyType;
                             if (t.IsValueType || t == typeof(string)) continue;
-                            var value = f != null
-                                ? f.GetValue(element)
-                                : p.GetValue(element, null);
+                            var value = f != null ? f.GetValue(element) : p.GetValue(element, null);
                             if (value == null) continue;
                             _indentLevel++;
                             WriteObjectToLines(m.Name + ": ", value);
