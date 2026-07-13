@@ -2,7 +2,7 @@
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Represents a handler for a <c>MuteConsoleChanged</c> event. </summary>
+    /// <summary>Represents a handler for a <c>MuteConsoleChanged</c> event.</summary>
     /// <param name="sender">
     /// Reference to the instance of the object that raised the
     /// event.
