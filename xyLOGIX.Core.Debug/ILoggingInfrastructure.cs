@@ -7,22 +7,20 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Defines the methods and properties of a custom object to which the
     /// <see cref="T:xyLOGIX.Core.Debug.LoggingSubsystemManager" /> delegates the
-    /// implementation
-    /// of its properties and methods.
+    /// implementation of its properties and methods.
     /// </summary>
     public interface ILoggingInfrastructure
     {
         /// <summary>
-        /// Gets a <see cref="T:System.String" /> containing the fully-qualified pathname
-        /// of the log file of this application.
+        /// Gets a <see cref="T:System.String" /> containing the fully-qualified
+        /// pathname of the log file of this application.
         /// </summary>
         string LogFileName { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
-        /// that
-        /// corresponds to the type of infrastructure that is being utilized.
+        /// that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         LoggingInfrastructureType Type { [DebuggerStepThrough] get; }
 
@@ -33,8 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:log4net.Appender.FileAppender" />.
         /// </summary>
         /// <returns>
-        /// String containing the full path and file name of the file the
-        /// appender is writing to.
+        /// String containing the full path and file name of the file the appender
+        /// is writing to.
         /// </returns>
         /// <remarks>
         /// This method is solely utilized in order to implement the
@@ -42,7 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         string GetRootFileAppenderFileName();
 
-        /// <summary> Initializes the application's logging subsystem. </summary>
+        /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
         /// out "DEBUG" messages to the log file when in the Release mode. Set to false if
@@ -53,9 +51,9 @@ namespace xyLOGIX.Core.Debug
         /// the latest logging sent out by this instance.
         /// </param>
         /// <param name="configurationFileNamename">
-        /// Specifies the path to the
-        /// configuration file to be utilized for initializing log4net. If blank, the
-        /// system attempts to utilize the default App.config file.
+        /// Specifies the path to the configuration
+        /// file to be utilized for initializing log4net. If blank, the system attempts to
+        /// utilize the default App.config file.
         /// </param>
         /// <param name="muteConsole">
         /// Set to <see langword="true" /> to suppress the
@@ -64,8 +62,8 @@ namespace xyLOGIX.Core.Debug
         /// set to <see langword="true" />.
         /// </param>
         /// <param name="logFileName">
-        /// (Optional.) If blank, then the
-        /// <c>XMLConfigurator</c> object is used to configure logging.
+        /// (Optional.) If blank, then the <c>XMLConfigurator</c>
+        /// object is used to configure logging.
         /// <para />
         /// Else, specify here the path to the log file to be created.
         /// </param>
@@ -89,10 +87,10 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object
-        /// that implements the <see cref="T:log4net.Repository.ILoggerRepository" />
-        /// interface. Supply a value for this parameter if your infrastructure is not
-        /// utilizing the default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default HierarchicalRepository.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem initialization
@@ -111,19 +109,20 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Occurs when the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFileName" />
-        /// property has been updated.
+        /// <see cref="P:xyLOGIX.Core.Debug.ILoggingInfrastructure.LogFileName" /> property
+        /// has been updated.
         /// </summary>
         event EventHandler LogFileNameChanged;
 
         /// <summary>
-        /// Occurs when the initialization of the logging subsystem has been completed.
+        /// Occurs when the initialization of the logging subsystem has been
+        /// completed.
         /// </summary>
         event EventHandler LoggingInitializationFinished;
 
         /// <summary>
-        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to initialize
-        /// its functionality.
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
+        /// initialize its functionality.
         /// </summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any
