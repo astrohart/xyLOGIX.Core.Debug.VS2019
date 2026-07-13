@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Provides access to a list of output locations for debugging. </summary>
+    /// <summary>Provides access to a list of output locations for debugging.</summary>
     /// <remarks>
     /// This class must be exposed as part of the public API of the library,
     /// so we are not marking it as having <see langword="internal" /> visibility here.
@@ -18,18 +18,19 @@ namespace xyLOGIX.Core.Debug
     public class OutputLocationProvider : IOutputLocationProvider
     {
         /// <summary>
-        /// A <see cref="T:System.Boolean" /> value indicating whether the
-        /// console output location is turned on or off.
+        /// A <see cref="T:System.Boolean" /> value indicating whether the console
+        /// output location is turned on or off.
         /// </summary>
         private bool _muteConsole;
 
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.OutputLocationProvider" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.OutputLocationProvider" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         static OutputLocationProvider() { }
 
@@ -42,8 +43,8 @@ namespace xyLOGIX.Core.Debug
             => InitializeInternalOutputLocationList();
 
         /// <summary>
-        /// Gets a value indicating whether greater than zero output location(s) are
-        /// currently configured.
+        /// Gets a value indicating whether greater than zero output location(s)
+        /// are currently configured.
         /// </summary>
         /// <returns>
         /// <see langword="true" /> if greater than zero output location(s) are
@@ -61,7 +62,7 @@ namespace xyLOGIX.Core.Debug
                     if (InternalOutputLocationList == null) return result;
 
                     result = InternalOutputLocationList.ToArray()
-                        .Length > 0;
+                                                       .Length > 0;
                 }
                 catch (Exception ex)
                 {
@@ -80,23 +81,20 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocationProvider" />
         /// interface.
         /// </summary>
-        public static IOutputLocationProvider Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new OutputLocationProvider();
+        public static IOutputLocationProvider Instance { [DebuggerStepThrough] get; } =
+            new OutputLocationProvider();
 
         /// <summary>
-        /// Gets a reference to a collection, each element of which implements
-        /// the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
+        /// Gets a reference to a collection, each element of which implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface.
         /// </summary>
         [Child]
-        private IList<IOutputLocation> InternalOutputLocationList
-        {
-            [DebuggerStepThrough] get;
-        } = new AdvisableCollection<IOutputLocation>();
+        private IList<IOutputLocation> InternalOutputLocationList { [DebuggerStepThrough] get; } =
+            new AdvisableCollection<IOutputLocation>();
 
         /// <summary>
-        /// Gets the count of <c>Output Location</c>(s) that are currently defined.
+        /// Gets the count of <c>Output Location</c>(s) that are currently
+        /// defined.
         /// </summary>
         /// <remarks>
         /// If an exception is caught during the execution of the getter of this
@@ -118,7 +116,7 @@ namespace xyLOGIX.Core.Debug
                     if (InternalOutputLocationList == null) return result;
 
                     result = InternalOutputLocationList.ToArray()
-                        .Length;
+                                                       .Length;
                 }
                 catch (Exception ex)
                 {
@@ -139,27 +137,25 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// This property raises the
         /// <see cref="E:xyLOGIX.Core.Debug.OutputLocationProvider.MuteConsoleChanged" />
-        /// event
-        /// when its value is updated.
+        /// event when its value is updated.
         /// </remarks>
         public bool MuteConsole
         {
-            [DebuggerStepThrough] get => _muteConsole;
+            [DebuggerStepThrough]
+            get => _muteConsole;
             [DebuggerStepThrough]
             set
             {
                 var changed = _muteConsole != value;
                 _muteConsole = value;
                 if (changed)
-                    OnMuteConsoleChanged(
-                        new MuteConsoleChangedEventArgs(value)
-                    );
+                    OnMuteConsoleChanged(new MuteConsoleChangedEventArgs(value));
             }
         }
 
         /// <summary>
-        /// Adds the specified output <paramref name="location" /> to the
-        /// public list maintained by this object.
+        /// Adds the specified output <paramref name="location" /> to the public
+        /// list maintained by this object.
         /// </summary>
         /// <param name="location">
         /// (Required.) Reference to an instance of an object that
@@ -185,7 +181,8 @@ namespace xyLOGIX.Core.Debug
                 // error to the log file and quit, returning from this method.
                 if (location == null)
                 {
-                    // The parameter, 'location', is required and is not supposed to have a NULL value.
+                    // The parameter, 'location', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.AddOutputLocation: *** *ERROR *** A null reference was passed for the 'location' method parameter.  Stopping."
                     );
@@ -202,12 +199,13 @@ namespace xyLOGIX.Core.Debug
                     "OutputLocationProvider.AddOutputLocation: Checking whether the property, 'InternalOutputLocationList', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'InternalOutputLocationList', has a null reference for a value.
-                // If that is the case, then we will write an error message to the log file, and then
-                // terminate the execution of this method.
+                // Check to see if the required property, 'InternalOutputLocationList', has a null
+                // reference for a value. If that is the case, then we will write an error message
+                // to the log file, and then terminate the execution of this method.
                 if (InternalOutputLocationList == null)
                 {
-                    // The property, 'InternalOutputLocationList', has a null reference for a value.  This is not desirable.
+                    // The property, 'InternalOutputLocationList', has a null reference for a value.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.AddOutputLocation: *** ERROR *** The property, 'InternalOutputLocationList', has a null reference for a value.  Stopping..."
                     );
@@ -224,13 +222,13 @@ namespace xyLOGIX.Core.Debug
                     "*** OutputLocationProvider.AddOutputLocation: Checking whether the Output Location specified is already a member of the public collection..."
                 );
 
-                // Check to see whether the Output Location specified
-                // is already a member of the public collection.
-                // Otherwise, write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the Output Location specified is already a member of the
+                // public collection. Otherwise, write an error message to the log file, and then
+                // terminate the execution of this method.
                 if (InternalOutputLocationList.Contains(location))
                 {
-                    // The Output Location specified is already a member of the public collection.  This is not desirable.
+                    // The Output Location specified is already a member of the public collection.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** The Output Location specified is already a member of the public collection.  Stopping..."
                     );
@@ -260,7 +258,7 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary> Clears the public list of output locations. </summary>
+        /// <summary>Clears the public list of output locations.</summary>
         public void Clear()
         {
             try
@@ -273,12 +271,13 @@ namespace xyLOGIX.Core.Debug
                     "OutputLocationProvider.Clear: Checking whether the property, 'InternalOutputLocationList', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'InternalOutputLocationList', has a null reference for a
-                // value. If that is the case, then we will write an error message to the Debug
-                // output, and then terminate the execution of this method.
+                // Check to see if the required property, 'InternalOutputLocationList', has a null
+                // reference for a value. If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method.
                 if (InternalOutputLocationList == null)
                 {
-                    // The property, 'InternalOutputLocationList', has a null reference for a value.  This is not desirable.
+                    // The property, 'InternalOutputLocationList', has a null reference for a value.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.Clear: *** ERROR *** The property, 'InternalOutputLocationList', has a null reference for a value.  Stopping..."
                     );
@@ -295,13 +294,14 @@ namespace xyLOGIX.Core.Debug
                     "OutputLocationProvider.Clear *** INFO: Checking whether the 'InternalOutputLocationList' list has greater than zero elements..."
                 );
 
-                // Check if the list, 'InternalOutputLocationList', has greater than zero elements.  If this is not
-                // the case, then write an error message to the log file, and then terminate the execution
-                // of this method.
+                // Check if the list, 'InternalOutputLocationList', has greater than zero elements.
+                // If this is not the case, then write an error message to the log file, and then
+                // terminate the execution of this method.
                 if (InternalOutputLocationList.ToArray()
                                               .Length <= 0)
                 {
-                    // The list, 'InternalOutputLocationList', has zero elements, but we can't proceed if this is so.
+                    // The list, 'InternalOutputLocationList', has zero elements, but we can't
+                    // proceed if this is so.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.Clear *** ERROR *** The list, 'InternalOutputLocationList', has zero elements.  Stopping..."
                     );
@@ -332,14 +332,13 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Occurs when the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.IOutputLocationProvider.MuteConsole" />
-        /// property is
-        /// updated.
+        /// property is updated.
         /// </summary>
         public event MuteConsoleChangedEventHandler MuteConsoleChanged;
 
         /// <summary>
-        /// Writes the text representation of the specified object to the
-        /// output location.
+        /// Writes the text representation of the specified object to the output
+        /// location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
@@ -351,20 +350,15 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * NOTE: We should refrain from doing any logging during the
-                 * execution of this method.
-                 */
+                /* NOTE: We should refrain from doing any logging during the execution of this
+                 method. */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
 
-                foreach (var location in InternalOutputLocationList.Where(l
-                             => l != null
-                         ))
+                foreach (var location in InternalOutputLocationList.Where(l => l != null))
                 {
-                    if (MuteConsole &&
-                        OutputLocationType.Console.Equals(location.Type))
+                    if (MuteConsole && OutputLocationType.Console.Equals(location.Type))
                         continue;
 
                     location.Write(value);
@@ -383,8 +377,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <exception cref="T:System.IO.IOException">An I/O error occurred.</exception>
         /// <exception cref="T:System.ArgumentNullException">
@@ -400,24 +394,18 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * NOTE: We should refrain from doing any logging during the
-                 * execution of this method.
-                 */
+                /* NOTE: We should refrain from doing any logging during the execution of this
+                 method. */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
 
-                if (string.IsNullOrWhiteSpace(format) &
-                    ((arg == null) | (arg.Length <= 0)))
+                if (string.IsNullOrWhiteSpace(format) & ((arg == null) | (arg.Length <= 0)))
                     return;
 
-                foreach (var location in InternalOutputLocationList.Where(l
-                             => l != null
-                         ))
+                foreach (var location in InternalOutputLocationList.Where(l => l != null))
                 {
-                    if (MuteConsole &&
-                        OutputLocationType.Console.Equals(location.Type))
+                    if (MuteConsole && OutputLocationType.Console.Equals(location.Type))
                         continue;
 
                     location.Write(format, arg);
@@ -441,20 +429,15 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * NOTE: We should refrain from doing any logging during the
-                 * execution of this method.
-                 */
+                /* NOTE: We should refrain from doing any logging during the execution of this
+                 method. */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
 
-                foreach (var location in InternalOutputLocationList.Where(l
-                             => l != null
-                         ))
+                foreach (var location in InternalOutputLocationList.Where(l => l != null))
                 {
-                    if (MuteConsole &&
-                        OutputLocationType.Console.Equals(location.Type))
+                    if (MuteConsole && OutputLocationType.Console.Equals(location.Type))
                         continue;
 
                     location.WriteLine(value);
@@ -469,8 +452,8 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="args">
@@ -491,24 +474,18 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * NOTE: We should refrain from doing any logging during the
-                 * execution of this method.
-                 */
+                /* NOTE: We should refrain from doing any logging during the execution of this
+                 method. */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
 
-                if (string.IsNullOrWhiteSpace(format) &
-                    ((args == null) | (args.Length <= 0)))
+                if (string.IsNullOrWhiteSpace(format) & ((args == null) | (args.Length <= 0)))
                     return;
 
-                foreach (var location in InternalOutputLocationList.Where(l
-                             => l != null
-                         ))
+                foreach (var location in InternalOutputLocationList.Where(l => l != null))
                 {
-                    if (MuteConsole &&
-                        OutputLocationType.Console.Equals(location.Type))
+                    if (MuteConsole && OutputLocationType.Console.Equals(location.Type))
                         continue;
 
                     location.WriteLine(format, args);
@@ -528,20 +505,15 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * NOTE: We should refrain from doing any logging during the
-                 * execution of this method.
-                 */
+                /* NOTE: We should refrain from doing any logging during the execution of this
+                 method. */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
 
-                foreach (var location in InternalOutputLocationList.Where(l
-                             => l != null
-                         ))
+                foreach (var location in InternalOutputLocationList.Where(l => l != null))
                 {
-                    if (MuteConsole &&
-                        OutputLocationType.Console.Equals(location.Type))
+                    if (MuteConsole && OutputLocationType.Console.Equals(location.Type))
                         continue;
 
                     location.WriteLine();
@@ -573,18 +545,18 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Attempting to obtain a reference to the Console output location..."
                 );
 
-                var consoleOutputLocation =
-                    GetOutputLocation.OfType(OutputLocationType.Console);
+                var consoleOutputLocation = GetOutputLocation.OfType(OutputLocationType.Console);
 
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: Checking whether the variable 'consoleOutputLocation' has a null reference for a value..."
                 );
 
-                // Check to see if the variable, consoleOutputLocation, is null. If it is, send an error to the
-                // Debug output and quit, returning from the method.
+                // Check to see if the variable, consoleOutputLocation, is null. If it is, send an
+                // error to the Debug output and quit, returning from the method.
                 if (consoleOutputLocation == null)
                 {
-                    // the variable consoleOutputLocation is required to have a valid object reference.
+                    // the variable consoleOutputLocation is required to have a valid object
+                    // reference.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.InitializeInternalOutputLocationList: *** ERROR ***  The 'consoleOutputLocation' variable has a null reference.  Stopping..."
                     );
@@ -593,7 +565,8 @@ namespace xyLOGIX.Core.Debug
                     return;
                 }
 
-                // We can use the variable, consoleOutputLocation, because it's not set to a null reference.
+                // We can use the variable, consoleOutputLocation, because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: *** SUCCESS *** The 'consoleOutputLocation' variable has a valid object reference for its value.  Proceeding..."
                 );
@@ -608,18 +581,18 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Attempting to obtain a reference to the Debug output location..."
                 );
 
-                var debugOutputLocation =
-                    GetOutputLocation.OfType(OutputLocationType.Debug);
+                var debugOutputLocation = GetOutputLocation.OfType(OutputLocationType.Debug);
 
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: Checking whether the variable 'debugOutputLocation' has a null reference for a value..."
                 );
 
-                // Check to see if the variable, debugOutputLocation, is null. If it is, send an error to the
-                // Debug output and quit, returning from the method.
+                // Check to see if the variable, debugOutputLocation, is null. If it is, send an
+                // error to the Debug output and quit, returning from the method.
                 if (debugOutputLocation == null)
                 {
-                    // the variable debugOutputLocation is required to have a valid object reference.
+                    // the variable debugOutputLocation is required to have a valid object
+                    // reference.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.InitializeInternalOutputLocationList: *** ERROR ***  The 'debugOutputLocation' variable has a null reference.  Stopping..."
                     );
@@ -628,7 +601,8 @@ namespace xyLOGIX.Core.Debug
                     return;
                 }
 
-                // We can use the variable, debugOutputLocation, because it's not set to a null reference.
+                // We can use the variable, debugOutputLocation, because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: *** SUCCESS *** The 'debugOutputLocation' variable has a valid object reference for its value.  Proceeding..."
                 );
@@ -643,18 +617,18 @@ namespace xyLOGIX.Core.Debug
                     "*** FYI *** Attempting to obtain a reference to the Trace output location..."
                 );
 
-                var traceOutputLocation =
-                    GetOutputLocation.OfType(OutputLocationType.Trace);
+                var traceOutputLocation = GetOutputLocation.OfType(OutputLocationType.Trace);
 
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: Checking whether the variable 'traceOutputLocation' has a null reference for a value..."
                 );
 
-                // Check to see if the variable, traceOutputLocation, is null. If it is, send an error to the
-                // Debug output and quit, returning from the method.
+                // Check to see if the variable, traceOutputLocation, is null. If it is, send an
+                // error to the Debug output and quit, returning from the method.
                 if (traceOutputLocation == null)
                 {
-                    // the variable traceOutputLocation is required to have a valid object reference.
+                    // the variable traceOutputLocation is required to have a valid object
+                    // reference.
                     System.Diagnostics.Debug.WriteLine(
                         "OutputLocationProvider.InitializeInternalOutputLocationList: *** ERROR ***  The 'traceOutputLocation' variable has a null reference.  Stopping..."
                     );
@@ -663,7 +637,8 @@ namespace xyLOGIX.Core.Debug
                     return;
                 }
 
-                // We can use the variable, traceOutputLocation, because it's not set to a null reference.
+                // We can use the variable, traceOutputLocation, because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "OutputLocationProvider.InitializeInternalOutputLocationList: *** SUCCESS *** The 'traceOutputLocation' variable has a valid object reference for its value.  Proceeding..."
                 );
@@ -693,12 +668,9 @@ namespace xyLOGIX.Core.Debug
         /// <param name="e">
         /// A
         /// <see cref="T:xyLOGIX.Core.Debug.Events.MuteConsoleChangedEventArgs" /> that
-        /// contains
-        /// the event data.
+        /// contains the event data.
         /// </param>
-        protected virtual void OnMuteConsoleChanged(
-            [NotLogged] MuteConsoleChangedEventArgs e
-        )
+        protected virtual void OnMuteConsoleChanged([NotLogged] MuteConsoleChangedEventArgs e)
             => MuteConsoleChanged?.Invoke(this, e);
     }
 }
