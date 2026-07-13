@@ -7,18 +7,17 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Obtains references to instance(s) of object(s) that implement the
     /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that change
-    /// depending
-    /// on the strategy desired.
+    /// depending on the strategy desired.
     /// </summary>
     internal static class GetOutputLocation
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.GetOutputLocation" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.GetOutputLocation" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static GetOutputLocation() { }
@@ -29,26 +28,24 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IOutputLocationTypeValidator OutputLocationTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetOutputLocationTypeValidator.SoleInstance();
 
         /// <summary>
         /// Obtains a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds
-        /// to
-        /// the specified meeting <paramref name="type" />.
+        /// to the specified meeting <paramref name="type" />.
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
-        /// values
-        /// that describes the type of output location to be created.
+        /// values that describes the type of output location to be created.
         /// </param>
         /// <returns>
         /// Reference to the instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface which corresponds
-        /// to
-        /// the specific enumeration value that is specified for the argument of the
+        /// to the specific enumeration value that is specified for the argument of the
         /// <paramref name="type" /> parameter.
         /// </returns>
         /// <remarks>
@@ -60,9 +57,8 @@ namespace xyLOGIX.Core.Debug
         /// Thrown if there is no
         /// corresponding concrete type defined that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface and which
-        /// corresponds
-        /// to the specific enumeration value that was passed for the argument of the
-        /// <paramref name="type" /> parameter, if it is not supported.
+        /// corresponds to the specific enumeration value that was passed for the argument
+        /// of the <paramref name="type" /> parameter, if it is not supported.
         /// </exception>
         [DebuggerStepThrough]
         [return: NotLogged]
@@ -77,11 +73,12 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see whether the type of output location is within the defined value set.
-                // If this is not the case, then write an error message to the Debug output,
-                // and then terminate the execution of this method.
+                // If this is not the case, then write an error message to the Debug output, and
+                // then terminate the execution of this method.
                 if (!OutputLocationTypeValidator.IsValid(type))
                 {
-                    // The type of output location specified was NOT within the defined value set.  This is not desirable.
+                    // The type of output location specified was NOT within the defined value set.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The type of output location, '{type}', was NOT within the defined value set.  Stopping..."
                     );
