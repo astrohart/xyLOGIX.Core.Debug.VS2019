@@ -1,8 +1,9 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Defines the publicly-exposed events, methods and properties of a validator of
-    /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration values.
+    /// Defines the publicly-exposed events, methods and properties of a
+    /// validator of <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration
+    /// values.
     /// </summary>
     /// <remarks>
     /// Specifically, objects that implement this interface ascertain whether
