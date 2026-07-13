@@ -14,12 +14,13 @@ namespace xyLOGIX.Core.Debug
     public static class MakeNewRollingFileAppender
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.MakeNewRollingFileAppender" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the
+        /// <see cref="T:xyLOGIX.Core.Debug.MakeNewRollingFileAppender" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -31,10 +32,8 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IRollingModeValidator" /> interface.
         /// </summary>
-        private static IRollingModeValidator RollingModeValidator
-        {
-            [DebuggerStepThrough] get;
-        } = GetRollingModeValidator.SoleInstance();
+        private static IRollingModeValidator RollingModeValidator { [DebuggerStepThrough] get; } =
+            GetRollingModeValidator.SoleInstance();
 
         /// <summary>
         /// Builder extension method that initializes the
@@ -65,9 +64,9 @@ namespace xyLOGIX.Core.Debug
         ///     <see cref="P:log4net.Appender.RollingFileAppender.MaxFileSize" />.
         ///     </para>
         ///     <para>
-        ///     If a negative number is supplied then no deletions will be made.
-        ///     Note that this could result in very slow performance as a large number of
-        ///     files are rolled over unless
+        ///     If a negative number is supplied then no deletions will be made. Note
+        ///     that this could result in very slow performance as a large number of files
+        ///     are rolled over unless
         ///     <see cref="P:log4net.Appender.RollingFileAppender.CountDirection" /> is
         ///     used.
         ///     </para>
@@ -114,7 +113,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         /// <remarks>
         ///     <para>
-        ///     By default, file.log is always the current file.  Optionally
+        ///     By default, file.log is always the current file. Optionally
         ///     file.log.yyyy-mm-dd for current formatted datePattern can by the currently
         ///     logging file (or file.log.curSizeRollBackup or even
         ///     file.log.yyyy-mm-dd.curSizeRollBackup).
@@ -150,7 +149,7 @@ namespace xyLOGIX.Core.Debug
         /// <returns>
         /// If successful, a new instance of
         /// <see cref="T:log4net.Appender.RollingFileAppender" /> and initializes it with
-        /// the specified rolling <paramref name="rollingStyle" />.  Otherwise,
+        /// the specified rolling <paramref name="rollingStyle" />. Otherwise,
         /// <see langword="null" /> is returned.
         /// </returns>
         [DebuggerStepThrough]
@@ -167,9 +166,9 @@ namespace xyLOGIX.Core.Debug
                     $"MakeNewRollingFileAppender.ForRollingStyle: Checking whether the specified rolling style, '{rollingStyle}', is valid..."
                 );
 
-                // Check to see whether the specified rolling style, is valid.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the specified rolling style, is valid. If this is not the
+                // case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!RollingModeValidator.IsValid(rollingStyle))
                 {
                     // The specified rolling style is NOT valid.  This is not desirable.
@@ -193,8 +192,7 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Making a new Rolling File Appender having the '{rollingStyle}' rolling style..."
                 );
 
-                result =
-                    new RollingFileAppender { RollingStyle = rollingStyle };
+                result = new RollingFileAppender { RollingStyle = rollingStyle };
             }
             catch (Exception ex)
             {
@@ -246,9 +244,7 @@ namespace xyLOGIX.Core.Debug
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
             if (string.IsNullOrWhiteSpace(file))
-                throw new ArgumentException(
-                    "Value cannot be null or whitespace.", nameof(file)
-                );
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(file));
 
             self.File = file;
             return self;
@@ -296,8 +292,8 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:log4net.Appender.RollingFileAppender" /> interface.
         /// </param>
         /// <param name="maximumFileSize">
-        /// (Required.) A <see cref="T:System.String" />
-        /// that describes the maximum size that the output file is allowed to reach before
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// describes the maximum size that the output file is allowed to reach before
         /// being rolled over to back up files.
         /// </param>
         /// <returns>
@@ -319,8 +315,8 @@ namespace xyLOGIX.Core.Debug
         ///     suffixes "KB", "MB" or "GB" so that the size is interpreted being expressed
         ///     respectively in kilobytes, megabytes or gigabytes.
         ///     </para>
-        ///     <para> OfType example, the value "10KB" will be interpreted as 10240 bytes. </para>
-        ///     <para> The default maximum file size is 10MB. </para>
+        ///     <para>OfType example, the value "10KB" will be interpreted as 10240 bytes.</para>
+        ///     <para>The default maximum file size is 10MB.</para>
         ///     <para>
         ///     If you have the option to set the maximum file size programmatically
         ///     consider using the
@@ -338,8 +334,7 @@ namespace xyLOGIX.Core.Debug
             if (self == null) throw new ArgumentNullException(nameof(self));
             if (string.IsNullOrWhiteSpace(maximumFileSize))
                 throw new ArgumentException(
-                    "Value cannot be null or whitespace.",
-                    nameof(maximumFileSize)
+                    "Value cannot be null or whitespace.", nameof(maximumFileSize)
                 );
 
             self.MaximumFileSize = maximumFileSize;
@@ -375,8 +370,7 @@ namespace xyLOGIX.Core.Debug
         )
         {
             if (self == null) throw new ArgumentNullException(nameof(self));
-            self.Layout =
-                layout ?? throw new ArgumentNullException(nameof(layout));
+            self.Layout = layout ?? throw new ArgumentNullException(nameof(layout));
             return self;
         }
     }
