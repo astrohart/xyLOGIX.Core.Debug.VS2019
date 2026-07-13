@@ -18,8 +18,8 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are
-        /// to be dumped.
+        /// (Required.) Reference to the object whose contents are to
+        /// be dumped.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" /> reference is passed for
@@ -45,12 +45,12 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are
-        /// to be dumped.
+        /// (Required.) Reference to the object whose contents are to
+        /// be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which
-        /// the object should be dumped.
+        /// (Required.) Integer value specifying the depth to which the
+        /// object should be dumped.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" /> reference is passed for
@@ -78,12 +78,12 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are
-        /// to be dumped.
+        /// (Required.) Reference to the object whose contents are to
+        /// be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which
-        /// the object should be dumped.
+        /// (Required.) Integer value specifying the depth to which the
+        /// object should be dumped.
         /// </param>
         /// <param name="log">
         /// (Required.) Reference to an instance of
@@ -92,7 +92,7 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// If a <see langword="null" /> reference is passed for either
         /// <paramref name="element" /> or <paramref name="log" />, or if
-        /// <paramref name="depth" />  is negative, then this method does nothing.
+        /// <paramref name="depth" /> is negative, then this method does nothing.
         /// </remarks>
         public static void Dump(this object element, int depth, TextWriter log)
         {
@@ -117,8 +117,8 @@ namespace xyLOGIX.Core.Debug
         /// character.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are
-        /// to be dumped.
+        /// (Required.) Reference to the object whose contents are to
+        /// be dumped.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" /> reference is passed for
@@ -145,12 +145,12 @@ namespace xyLOGIX.Core.Debug
         /// character.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are
-        /// to be dumped.
+        /// (Required.) Reference to the object whose contents are to
+        /// be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which
-        /// the object should be dumped.
+        /// (Required.) Integer value specifying the depth to which the
+        /// object should be dumped.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" /> reference is passed for
@@ -186,12 +186,12 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="element" /> parameter, to the log.
         /// </summary>
         /// <param name="element">
-        /// (Required.) Reference to the object whose contents are
-        /// to be dumped.
+        /// (Required.) Reference to the object whose contents are to
+        /// be dumped.
         /// </param>
         /// <param name="depth">
-        /// (Required.) Integer value specifying the depth to which
-        /// the object should be dumped.
+        /// (Required.) Integer value specifying the depth to which the
+        /// object should be dumped.
         /// </param>
         /// <param name="log">
         /// (Required.) Reference to an instance of
@@ -200,13 +200,9 @@ namespace xyLOGIX.Core.Debug
         /// <remarks>
         /// If a <see langword="null" /> reference is passed for either
         /// <paramref name="element" /> or <paramref name="log" />, or if
-        /// <paramref name="depth" />  is negative, then this method does nothing.
+        /// <paramref name="depth" /> is negative, then this method does nothing.
         /// </remarks>
-        public static void DumpLines(
-            this object element,
-            int depth,
-            TextWriter log
-        )
+        public static void DumpLines(this object element, int depth, TextWriter log)
         {
             try
             {
