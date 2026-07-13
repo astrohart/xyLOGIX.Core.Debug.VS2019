@@ -12,15 +12,15 @@
         /// </summary>
         Console,
 
-        /// <summary> Output is directed to the Output window in Visual Studio. </summary>
-        /// <remarks> This location works even in Release mode. </remarks>
+        /// <summary>Output is directed to the Output window in Visual Studio.</summary>
+        /// <remarks>This location works even in Release mode.</remarks>
         Debug,
 
-        /// <summary> Output is directed to trace listeners. </summary>
+        /// <summary>Output is directed to trace listeners.</summary>
         /// <remarks>This output location does not work in Release mode.</remarks>
         Trace,
 
-        /// <summary> Unknown output location. </summary>
+        /// <summary>Unknown output location.</summary>
         Unknown = -1
     }
 }
