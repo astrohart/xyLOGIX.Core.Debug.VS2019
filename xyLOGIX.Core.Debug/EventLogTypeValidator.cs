@@ -5,8 +5,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Validates whether certain value(s) are within the defined value set of the
-    /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> enumeration.
+    /// Validates whether certain value(s) are within the defined value set of
+    /// the <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> enumeration.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal class EventLogTypeValidator : IEventLogTypeValidator
@@ -18,12 +18,12 @@ namespace xyLOGIX.Core.Debug
         static EventLogTypeValidator() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private EventLogTypeValidator() { }
+        private EventLogTypeValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -31,10 +31,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.Interfaces.IEventLogTypeValidator" />
         /// interface.
         /// </summary>
-        internal static IEventLogTypeValidator Instance
-        {
-            [DebuggerStepThrough] get;
-        } = new EventLogTypeValidator();
+        internal static IEventLogTypeValidator Instance { [DebuggerStepThrough] get; } =
+            new EventLogTypeValidator();
 
         /// <summary>
         /// Determines whether the event log <paramref name="type" /> value passed
@@ -61,30 +59,25 @@ namespace xyLOGIX.Core.Debug
                     $"EventLogTypeValidator.IsValid: type = '{type}'"
                 );
 
-                /*
-                 * For cybersecurity reasons, and to defeat reverse-engineering,
-                 * check the value of the 'type' parameter to ensure that it
-                 * is not set to a value outside the set of valid values defined
-                 * by the xyLOGIX.Core.Debug.EventLogType
-                 * enumeration.
-                 *
-                 * In principle, since all C# enums devolve to integer values, a
-                 * hacker could insert a different value into the CPU register that the
-                 * 'type' parameter is read from and thereby make this application
-                 * do something it's not intended to do.
-                 */
+                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 the 'type' parameter to ensure that it is not set to a value outside the set of
+                 valid values defined by the xyLOGIX.Core.Debug.EventLogType enumeration. In
+                 principle, since all C# enums devolve to integer values, a hacker could insert a
+                 different value into the CPU register that the 'type' parameter is read from and
+                 thereby make this application do something it's not intended to do. */
 
                 System.Diagnostics.Debug.WriteLine(
                     $"EventLogTypeValidator.IsValid: Checking whether the value of the 'type' parameter, i.e., '{type}', is within the defined value set of its enumerated data type..."
                 );
 
-                // Check whether the value of the 'type' parameter is within the defined value set of its 
-                // enumeration data type.  If this is not the case, then write an error message to the log
-                // file, and then terminate the execution of this method while returning the default return
-                // value.
+                // Check whether the value of the 'type' parameter is within the defined value set
+                // of its  enumeration data type.  If this is not the case, then write an error
+                // message to the log file, and then terminate the execution of this method while
+                // returning the default return value.
                 if (!Enum.IsDefined(typeof(EventLogType), type))
                 {
-                    // The value of the 'type' parameter is NOT within the defined value set for its enumerated data type.  This is not desirable.
+                    // The value of the 'type' parameter is NOT within the defined value set for its
+                    // enumerated data type.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The value of the 'type' parameter, i.e., '{type}', is NOT within the defined value set of its enumerated data type.  Stopping..."
                     );
@@ -105,15 +98,15 @@ namespace xyLOGIX.Core.Debug
                     "EventLogTypeValidator.IsValid: Checking whether neither the 'Unknown' nor the 'None' value has been specified for the 'type' parameter..."
                 );
 
-                // Check whether either the 'Unknown' or the 'None' value(s) have been specified
-                // for the argument of the 'type' parameter.  If either of these values are the
+                // Check whether either the 'Unknown' or the 'None' value(s) have been specified for
+                // the argument of the 'type' parameter.  If either of these values are the
                 // specified argument, then this is unacceptable -- we will write an error message
                 // to the Debug output, and then terminate the execution of this method while
                 // returning FALSE, in this event.  Otherwise, the method execution will proceed.
-                if (EventLogType.Unknown.Equals(type) ||
-                    EventLogType.None.Equals(type))
+                if (EventLogType.Unknown.Equals(type) || EventLogType.None.Equals(type))
                 {
-                    // Either the 'Unknown' or the 'None' value has been specified for the 'type' parameter.  This is not desirable.
+                    // Either the 'Unknown' or the 'None' value has been specified for the 'type'
+                    // parameter.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR *** Either the 'Unknown' or the 'None' value has been specified for the 'type' parameter.  Stopping..."
                     );
@@ -130,9 +123,7 @@ namespace xyLOGIX.Core.Debug
                     "EventLogTypeValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'type' parameter.  Proceeding..."
                 );
 
-                /*
-                 * If we made it here, then assume that the input data is valid.
-                 */
+                /* If we made it here, then assume that the input data is valid. */
 
                 result = true;
             }
