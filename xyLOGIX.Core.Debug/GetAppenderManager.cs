@@ -5,8 +5,8 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
-    /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+    /// Provides access to the one and only instance of the object that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
     /// </summary>
     [Log(AttributeExclude = true)]
     public static class GetAppenderManager
@@ -17,8 +17,8 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </returns>
         [DebuggerStepThrough]
         [return: NotLogged]
