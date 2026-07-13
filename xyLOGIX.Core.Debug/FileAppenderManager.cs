@@ -28,9 +28,9 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" /> reference.
         /// </remarks>
         /// <returns>
-        /// If a suitable configuration file entry is found, this method returns
-        /// a <see cref="T:log4net.Appender.FileAppender" /> instance that corresponds to
-        /// the entry; otherwise, <see langword="null" /> is returned.
+        /// If a suitable configuration file entry is found, this method returns a
+        /// <see cref="T:log4net.Appender.FileAppender" /> instance that corresponds to the
+        /// entry; otherwise, <see langword="null" /> is returned.
         /// </returns>
         internal static FileAppender GetAppenderByName([NotLogged] string name)
         {
@@ -46,12 +46,13 @@ namespace xyLOGIX.Core.Debug
                     "FileAppenderManager.GetAppenderByName *** INFO: Checking whether the value of the parameter, 'name', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'name', is blank.
-                // If this is so, then emit an error message to the Debug output, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'name', is blank. If this is so, then
+                // emit an error message to the Debug output, and then terminate the execution of
+                // this method.
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    // The parameter, 'name', was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'name', was either passed a null value, or it is blank.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "FileAppenderManager.GetAppenderByName: *** ERROR *** The parameter, 'name', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -74,12 +75,13 @@ namespace xyLOGIX.Core.Debug
                     "FileAppenderManager.GetAppenderByName: Checking whether the variable, 'root', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'root', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'root', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (root == null)
                 {
-                    // The variable, 'root', has a null reference for a value.  This is not desirable.
+                    // The variable, 'root', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "FileAppenderManager.GetAppenderByName: *** ERROR ***  The variable, 'root', has a null reference for a value.  Stopping..."
                     );
@@ -120,7 +122,7 @@ namespace xyLOGIX.Core.Debug
         /// If the root logger's appenders list contains appenders, returns a
         /// reference to the first one in the list.
         /// </summary>
-        /// <param name="loggerRepository"> </param>
+        /// <param name="loggerRepository"></param>
         /// <returns>
         /// Reference to an instance of
         /// <see cref="T:log4net.Appender.FileAppender" /> , or <see langword="null" /> if
@@ -162,9 +164,9 @@ namespace xyLOGIX.Core.Debug
                     "FileAppenderManager.GetFirstAppender: Checking whether the variable, 'root', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, root, is null.  If it is, send an error
-                // to the log file, and then terminate the execution of this method,
-                // returning the default return value.
+                // Check to see if the variable, root, is null.  If it is, send an error to the log
+                // file, and then terminate the execution of this method, returning the default
+                // return value.
                 if (root == null)
                 {
                     // the variable root is required to have a valid object reference.
@@ -220,9 +222,7 @@ namespace xyLOGIX.Core.Debug
         /// entry in the specified <paramref name="appenders" /> collection; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        private static FileAppender GetFirstFileAppender(
-            [NotLogged] AppenderCollection appenders
-        )
+        private static FileAppender GetFirstFileAppender([NotLogged] AppenderCollection appenders)
         {
             FileAppender result = default;
 
@@ -241,7 +241,8 @@ namespace xyLOGIX.Core.Debug
                 // method.
                 if (appenders == null)
                 {
-                    // The parameter, 'appenders', is required and is not supposed to have a NULL value.
+                    // The parameter, 'appenders', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "FileAppenderManager.GetFirstFileAppender: *** ERROR *** A null reference was passed for the 'appenders' method parameter.  Stopping..."
                     );
@@ -286,7 +287,8 @@ namespace xyLOGIX.Core.Debug
                         "FileAppenderManager.GetFirstFileAppender: Checking whether the variable 'appender' has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, appender, is null. If it is, send an error to the log file and continue to the next loop iteration.
+                    // Check to see if the variable, appender, is null. If it is, send an error to
+                    // the log file and continue to the next loop iteration.
                     if (appender == null)
                     {
                         // the variable appender is required to have a valid object reference.
@@ -307,9 +309,9 @@ namespace xyLOGIX.Core.Debug
                         "*** FileAppenderManager.GetFirstFileAppender: Checking whether the current Appender is a FileAppender..."
                     );
 
-                    // Check to see whether the current Appender is a FileAppender.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next loop iteration.
+                    // Check to see whether the current Appender is a FileAppender. If this is not
+                    // the case, then write an error message to the log file, and then skip to the
+                    // next loop iteration.
                     if (!(appender is FileAppender fileAppender))
                     {
                         // The current Appender is NOT a FileAppender.  This is not desirable.
@@ -343,7 +345,7 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Attempts to obtain a reference to the first instance of
         /// <see cref="T:log4net.Appender.FileAppender" /> that is configured under a
-        /// certain <paramref name="name" />  in the application configuration file.
+        /// certain <paramref name="name" /> in the application configuration file.
         /// </summary>
         /// <param name="appenders">
         /// (Required.) Reference to an instance of
@@ -382,12 +384,13 @@ namespace xyLOGIX.Core.Debug
                     "FileAppenderManager.GetFirstFileAppenderByName *** INFO: Checking whether the value of the parameter, 'name', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'name', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'name', is blank. If this is so, then
+                // emit an error message to the log file, and then terminate the execution of this
+                // method.
                 if (string.IsNullOrWhiteSpace(name))
                 {
-                    // The parameter, 'name' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'name' was either passed a null value, or it is blank.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "FileAppenderManager.GetFirstFileAppenderByName: The parameter, 'name' was either passed a null value, or it is blank. Stopping..."
                     );
@@ -413,7 +416,8 @@ namespace xyLOGIX.Core.Debug
                 // method.
                 if (appenders == null)
                 {
-                    // The parameter, 'appenders', is required and is not supposed to have a NULL value.
+                    // The parameter, 'appenders', is required and is not supposed to have a NULL
+                    // value.
                     System.Diagnostics.Debug.WriteLine(
                         "FileAppenderManager.GetFirstFileAppenderByName: *** ERROR *** A null reference was passed for the 'appenders' method parameter.  Stopping..."
                     );
@@ -458,7 +462,8 @@ namespace xyLOGIX.Core.Debug
                         "FileAppenderManager.GetFirstFileAppenderByName: Checking whether the variable 'appender' has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, appender, is null. If it is, send an error to the log file and continue to the next loop iteration.
+                    // Check to see if the variable, appender, is null. If it is, send an error to
+                    // the log file and continue to the next loop iteration.
                     if (appender == null)
                     {
                         // the variable appender is required to have a valid object reference.
@@ -479,9 +484,9 @@ namespace xyLOGIX.Core.Debug
                         "*** FileAppenderManager.GetFirstFileAppenderByName: Checking whether the current Appender is a FileAppender..."
                     );
 
-                    // Check to see whether the current Appender is a FileAppender.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then skip to the next loop iteration.
+                    // Check to see whether the current Appender is a FileAppender. If this is not
+                    // the case, then write an error message to the log file, and then skip to the
+                    // next loop iteration.
                     if (!(appender is FileAppender fileAppender))
                     {
                         // The current Appender is NOT a FileAppender.  This is not desirable.
@@ -506,7 +511,8 @@ namespace xyLOGIX.Core.Debug
                     // Debug log, and then skip to the next loop iteration.
                     if (!name.Equals(appender.Name))
                     {
-                        // The name of the current Appender does NOT match the name we were provided.  This is not desirable.
+                        // The name of the current Appender does NOT match the name we were
+                        // provided.  This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
                             $"*** ERROR: The name of the current Appender does NOT match '{name}'.  Skipping to the next Appender..."
                         );
