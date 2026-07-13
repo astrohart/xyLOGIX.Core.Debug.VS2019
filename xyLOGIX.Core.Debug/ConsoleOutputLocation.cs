@@ -13,18 +13,19 @@ namespace xyLOGIX.Core.Debug
     internal class ConsoleOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
         /// </summary>
         static ConsoleOutputLocation() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// the
-        /// <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" /> class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of the <see cref="T:xyLOGIX.Core.Debug.ConsoleOutputLocation" />
+        /// class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private ConsoleOutputLocation() { }
+        private ConsoleOutputLocation()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -32,31 +33,29 @@ namespace xyLOGIX.Core.Debug
         /// that directs debugging output to the standard output of the application and/or
         /// a console window, if present.
         /// </summary>
-        internal static IOutputLocation
-            Instance { [DebuggerStepThrough] get; } =
+        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
             new ConsoleOutputLocation();
 
         /// <summary>
         /// Gets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
-        /// values
-        /// that indicates the final base of text strings that are fed to this
+        /// values that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
         public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Console;
 
         /// <summary>
-        /// Writes the text representation of the specified object to the
-        /// output location.
+        /// Writes the text representation of the specified object to the output
+        /// location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
-        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
-        /// parameter to be a <see langword="null" /> reference.
+        /// <b>NOTE:</b> It is allowable for the argument of the
+        /// <paramref name="value" /> parameter to be a <see langword="null" /> reference.
         /// <para />
-        /// This method does nothing if the value of the
-        /// <see cref="P:MuteConsole" /> property is set to <see langword="true" />.
+        /// This method does nothing if the value of the <see cref="P:MuteConsole" />
+        /// property is set to <see langword="true" />.
         /// </remarks>
         [Log(AttributeExclude = true)]
         public override void Write([NotLogged] object value)
@@ -80,12 +79,12 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// This method takes no action if a <see langword="null" />, blank, or empty
-        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// This method takes no action if a <see langword="null" />, blank, or
+        /// empty <see cref="T:System.String" /> is supplied as the argument of the
         /// <paramref name="format" /> parameter.
         /// <para />
         /// This method will not work if the <paramref name="format" /> parameter has
@@ -94,10 +93,7 @@ namespace xyLOGIX.Core.Debug
         /// or if it contains element(s) whose value(s) do not match the format
         /// specifier(s) in the <paramref name="format" /> parameter.
         /// </remarks>
-        public override void Write(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        )
+        public override void Write([NotLogged] string format, [NotLogged] params object[] arg)
         {
             try
             {
@@ -120,8 +116,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
-        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
-        /// parameter to be a <see langword="null" /> reference.
+        /// <b>NOTE:</b> It is allowable for the argument of the
+        /// <paramref name="value" /> parameter to be a <see langword="null" /> reference.
         /// <para />
         /// This method takes no action if the value of the
         /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
@@ -144,17 +140,17 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// This method takes no action if a <see langword="null" />, blank, or empty
-        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// This method takes no action if a <see langword="null" />, blank, or
+        /// empty <see cref="T:System.String" /> is supplied as the argument of the
         /// <paramref name="format" /> parameter.
         /// <para />
         /// This method will not work if the <paramref name="format" /> parameter has
@@ -167,10 +163,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.OutputLocationBase.MuteConsole" /> property is
         /// set to <see langword="true" />.
         /// </remarks>
-        public override void WriteLine(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        )
+        public override void WriteLine([NotLogged] string format, [NotLogged] params object[] arg)
         {
             try
             {
