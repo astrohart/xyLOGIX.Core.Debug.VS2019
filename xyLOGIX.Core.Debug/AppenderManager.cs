@@ -10,36 +10,35 @@ using System.Linq;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Manages the collection of <c>Appender</c>s that are currently in use with the
-    /// logging subsystem.
+    /// Manages the collection of <c>Appender</c>s that are currently in use
+    /// with the logging subsystem.
     /// </summary>
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
     internal class AppenderManager : IAppenderManager
     {
         /// <summary>
-        /// Collection mapping a <see cref="T:System.String" /> containing a log file
-        /// pathname, to a reference to an instance(s) of object(s) that each implement the
-        /// <see cref="T:log4net.Appender.IAppender" /> interface.
+        /// Collection mapping a <see cref="T:System.String" /> containing a log
+        /// file pathname, to a reference to an instance(s) of object(s) that each
+        /// implement the <see cref="T:log4net.Appender.IAppender" /> interface.
         /// </summary>
         private readonly IDictionary<string, IAppender> _appenders =
             new AdvisableDictionary<string, IAppender>();
 
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         static AppenderManager() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        private AppenderManager() { }
+        private AppenderManager()
+        { }
 
-        /// <summary>
-        /// Gets the count of appenders in the internal collection.
-        /// </summary>
+        /// <summary>Gets the count of appenders in the internal collection.</summary>
         public int AppenderCount
         {
             [DebuggerStepThrough]
@@ -64,9 +63,9 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to an instance of to an array of instances of objects that
-        /// implement the <see cref="T:log4net.Appender.IAppender" /> interface, that are
-        /// configured for use by the application.
+        /// Gets a reference to an instance of to an array of instances of objects
+        /// that implement the <see cref="T:log4net.Appender.IAppender" /> interface, that
+        /// are configured for use by the application.
         /// </summary>
         public IAppender[] Appenders
         {
@@ -95,8 +94,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a value indicating whether the internal collection has more than zero
-        /// element(s).
+        /// Gets a value indicating whether the internal collection has more than
+        /// zero element(s).
         /// </summary>
         public bool HasAppenders
         {
@@ -122,11 +121,11 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </summary>
-        internal static IAppenderManager
-            Instance { [DebuggerStepThrough] get; } = new AppenderManager();
+        internal static IAppenderManager Instance { [DebuggerStepThrough] get; } =
+            new AppenderManager();
 
         /// <summary>
         /// Adds a reference to an instance of an object that implements the
@@ -134,9 +133,9 @@ namespace xyLOGIX.Core.Debug
         /// appenders.
         /// </summary>
         /// <param name="appender">
-        /// (Required.) Reference to an instance of an object that implements the
-        /// <see cref="T:log4net.Appender.IAppender" /> interface that is to be added to
-        /// the internal collection.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.IAppender" /> interface that is to
+        /// be added to the internal collection.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" /> reference is passed as the argument of
@@ -163,7 +162,8 @@ namespace xyLOGIX.Core.Debug
                 // error to the log file and quit, returning from this method.
                 if (appender == null)
                 {
-                    // The parameter, 'appender', is required and is not supposed to have a NULL value.
+                    // The parameter, 'appender', is required and is not supposed to have a NULL
+                    // value.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "AppenderManager.AddAppender: *** *ERROR *** A null reference was passed for the 'appender' method parameter.  Stopping."
@@ -183,9 +183,9 @@ namespace xyLOGIX.Core.Debug
                     "*** AppenderManager.AddAppender: Checking whether the specified Appender is a FileAppender..."
                 );
 
-                // Check to see whether the specified Appender is a FileAppender.
-                // If this is not the case, then write an error message to the log file
-                // and then terminate the execution of this method.
+                // Check to see whether the specified Appender is a FileAppender. If this is not the
+                // case, then write an error message to the log file and then terminate the
+                // execution of this method.
                 if (!(appender is FileAppender fileAppender))
                 {
                     // The specified Appender is NOT a FileAppender.  This is not desirable.
@@ -208,9 +208,9 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.AddAppender: Checking whether the value of the property, 'fileAppender.File', is blank..."
                 );
 
-                // Check whether the value of the fileAppender.File property is blank or null.  If this is the
-                // case, then write an error message to the log file, and then terminate the execution of this
-                // method.
+                // Check whether the value of the fileAppender.File property is blank or null.  If
+                // this is the case, then write an error message to the log file, and then terminate
+                // the execution of this method.
                 if (string.IsNullOrWhiteSpace(fileAppender.File))
                 {
                     DebugUtils.WriteLine(
@@ -232,12 +232,13 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.AddAppender: Checking whether the internal collection already has an element corresponding to the specified file..."
                 );
 
-                // Check to see whether the internal collection already has an element corresponding to the specified file.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the internal collection already has an element corresponding
+                // to the specified file. If this is not the case, then write an error message to
+                // the log file, and then terminate the execution of this method.
                 if (HasAppenderWithFilePath(fileAppender.File))
                 {
-                    // The internal collection already has an element corresponding to the specified file.  This is not desirable.
+                    // The internal collection already has an element corresponding to the specified
+                    // file.  This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "*** ERROR *** The internal collection already has an element corresponding to the specified file.  Stopping..."
@@ -267,12 +268,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Attempts to look up the <c>Appender</c> whose <c>File</c> property matches the
-        /// specified <paramref name="logFilePath" /> (ignoring case).
+        /// Attempts to look up the <c>Appender</c> whose <c>File</c> property
+        /// matches the specified <paramref name="logFilePath" /> (ignoring case).
         /// </summary>
         /// <param name="logFilePath">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file that is to be used to log messages.
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the fully-qualified pathname of a file that is to be used to log
+        /// messages.
         /// </param>
         /// <returns>
         /// If successful, a reference to an instance of an object that implements
@@ -291,12 +293,13 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.GetFileAppenderByPath *** INFO: Checking whether the value of the parameter, 'logFilePath', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'logFilePath', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'logFilePath', is blank. If this is so,
+                // then emit an error message to the log file, and then terminate the execution of
+                // this method.
                 if (string.IsNullOrWhiteSpace(logFilePath))
                 {
-                    // The parameter, 'logFilePath' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'logFilePath' was either passed a null value, or it is blank.
+                    // This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "AppenderManager.GetFileAppenderByPath: The parameter, 'logFilePath', was either passed a null value, or it is blank. Stopping..."
@@ -321,12 +324,13 @@ namespace xyLOGIX.Core.Debug
                     "*** AppenderManager.GetFileAppenderByPath: Checking whether the Appender Manager has greater than zero Appender(s) in its internal collection..."
                 );
 
-                // Check to see whether the Appender Manager has greater than zero Appender(s) in its internal collection.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the Appender Manager has greater than zero Appender(s) in
+                // its internal collection. If this is not the case, then write an error message to
+                // the log file, and then terminate the execution of this method.
                 if (!HasAppenders)
                 {
-                    // The Appender Manager currently has zero Appender(s) in its internal collection.  This is not desirable.
+                    // The Appender Manager currently has zero Appender(s) in its internal
+                    // collection.  This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "*** ERROR *** The Appender Manager currently has zero Appender(s) in its internal collection.  Stopping..."
@@ -372,12 +376,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines whether an <c>Appender</c> is present that corresponds to the
-        /// specified <paramref name="filePath" />.
+        /// Determines whether an <c>Appender</c> is present that corresponds to
+        /// the specified <paramref name="filePath" />.
         /// </summary>
         /// <param name="filePath">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file for which to search.
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the fully-qualified pathname of a file for which to search.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" />, blank, or
@@ -389,7 +393,7 @@ namespace xyLOGIX.Core.Debug
         /// currently empty.
         /// </remarks>
         /// <returns>
-        /// <see langword="true" /> if an  <c>Appender</c> is present that
+        /// <see langword="true" /> if an <c>Appender</c> is present that
         /// corresponds to the specified <paramref name="filePath" />;
         /// <see langword="false" /> otherwise.
         /// </returns>
@@ -404,12 +408,13 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.HasAppenderWithFilePath *** INFO: Checking whether the value of the parameter, 'filePath', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'filePath', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'filePath', is blank. If this is so,
+                // then emit an error message to the log file, and then terminate the execution of
+                // this method.
                 if (string.IsNullOrWhiteSpace(filePath))
                 {
-                    // The parameter, 'filePath' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'filePath' was either passed a null value, or it is blank.
+                    // This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "AppenderManager.HasAppenderWithFilePath: The parameter, 'filePath', was either passed a null value, or it is blank. Stopping..."
@@ -434,12 +439,13 @@ namespace xyLOGIX.Core.Debug
                     "*** AppenderManager.HasAppenderWithFilePath: Checking whether the Appender Manager has greater than zero entry(ies) in its internal collection..."
                 );
 
-                // Check to see whether the Appender Manager has greater than zero entry(ies) in its internal collection.
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the Appender Manager has greater than zero entry(ies) in its
+                // internal collection. If this is not the case, then write an error message to the
+                // log file, and then terminate the execution of this method.
                 if (!HasAppenders)
                 {
-                    // The Appender Manager currently has zero entry(ies) in its internal collection.  This is not desirable.
+                    // The Appender Manager currently has zero entry(ies) in its internal
+                    // collection.  This is not desirable.
                     DebugUtils.WriteLine(
                         DebugLevel.Error,
                         "*** ERROR *** The Appender Manager currently has zero entry(ies) in its internal collection.  Stopping..."
@@ -459,11 +465,8 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.HasAppenderWithFilePath: *** SUCCESS *** The Appender Manager has greater than zero entry(ies) in its internal collection.  Proceeding..."
                 );
 
-                /*
-                 * We are not actually interested in obtaining the value corresponding
-                 * to the specified filePath, we simply want to know if such a key
-                 * exists.
-                 */
+                /* We are not actually interested in obtaining the value corresponding to the
+                 specified filePath, we simply want to know if such a key exists. */
 
                 result = _appenders.ContainsKey(filePath);
             }
@@ -476,8 +479,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             DebugUtils.WriteLine(
-                DebugLevel.Debug,
-                $"AppenderManager.HasAppenderWithFilePath: Result = {result}"
+                DebugLevel.Debug, $"AppenderManager.HasAppenderWithFilePath: Result = {result}"
             );
 
             return result;
