@@ -5,8 +5,9 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
-    /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface for the
+    /// Provides access to the one and only instance of the object that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" />
+    /// interface for the
     /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
     /// <c>Logging Configurator Type</c>.
     /// </summary>
@@ -19,8 +20,8 @@ namespace xyLOGIX.Core.Debug
         /// a reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface for the
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.ILoggingConfigurator" /> interface for the
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingConfiguratorType.FromConfigFile" />
         /// <c>Logging Configurator Type</c>.
         /// </returns>
