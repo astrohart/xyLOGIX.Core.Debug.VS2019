@@ -11,21 +11,19 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     public interface IAppenderManager
     {
-        /// <summary>
-        /// Gets the count of appenders in the internal collection.
-        /// </summary>
+        /// <summary>Gets the count of appenders in the internal collection.</summary>
         int AppenderCount { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Gets a reference to an instance of to an array of instances of objects that
-        /// implement the <see cref="T:log4net.Appender.IAppender" /> interface, that are
-        /// configured for use by the application.
+        /// Gets a reference to an instance of to an array of instances of objects
+        /// that implement the <see cref="T:log4net.Appender.IAppender" /> interface, that
+        /// are configured for use by the application.
         /// </summary>
         IAppender[] Appenders { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Gets a value indicating whether the internal collection has more than zero
-        /// element(s).
+        /// Gets a value indicating whether the internal collection has more than
+        /// zero element(s).
         /// </summary>
         bool HasAppenders { [DebuggerStepThrough] get; }
 
@@ -35,19 +33,20 @@ namespace xyLOGIX.Core.Debug
         /// appenders.
         /// </summary>
         /// <param name="appender">
-        /// (Required.) Reference to an instance of an object that implements the
-        /// <see cref="T:log4net.Appender.IAppender" /> interface that is to be added to
-        /// the internal collection.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Appender.IAppender" /> interface that is to
+        /// be added to the internal collection.
         /// </param>
         void AddAppender([NotLogged] IAppender appender);
 
         /// <summary>
-        /// Attempts to look up the <c>Appender</c> whose <c>File</c> property matches the
-        /// specified <paramref name="logFilePath" /> (ignoring case).
+        /// Attempts to look up the <c>Appender</c> whose <c>File</c> property
+        /// matches the specified <paramref name="logFilePath" /> (ignoring case).
         /// </summary>
         /// <param name="logFilePath">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file that is to be used to log messages.
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the fully-qualified pathname of a file that is to be used to log
+        /// messages.
         /// </param>
         /// <returns>
         /// If successful, a reference to an instance of an object that implements
@@ -58,12 +57,12 @@ namespace xyLOGIX.Core.Debug
         IAppender GetFileAppenderByPath([NotLogged] string logFilePath);
 
         /// <summary>
-        /// Determines whether an <c>Appender</c> is present that corresponds to the
-        /// specified <paramref name="filePath" />.
+        /// Determines whether an <c>Appender</c> is present that corresponds to
+        /// the specified <paramref name="filePath" />.
         /// </summary>
         /// <param name="filePath">
-        /// (Required.) A <see cref="T:System.String" /> that contains the fully-qualified
-        /// pathname of a file for which to search.
+        /// (Required.) A <see cref="T:System.String" /> that
+        /// contains the fully-qualified pathname of a file for which to search.
         /// </param>
         /// <remarks>
         /// If a <see langword="null" />, blank, or
@@ -75,7 +74,7 @@ namespace xyLOGIX.Core.Debug
         /// currently empty.
         /// </remarks>
         /// <returns>
-        /// <see langword="true" /> if an  <c>Appender</c> is present that
+        /// <see langword="true" /> if an <c>Appender</c> is present that
         /// corresponds to the specified <paramref name="filePath" />;
         /// <see langword="false" /> otherwise.
         /// </returns>
