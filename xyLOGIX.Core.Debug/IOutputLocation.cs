@@ -13,24 +13,19 @@ namespace xyLOGIX.Core.Debug
         /// Gets or sets a value indicating whether the console multiplexer is
         /// turned on or off.
         /// </summary>
-        bool MuteConsole
-        {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
-        }
+        bool MuteConsole { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
         /// Gets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
-        /// values
-        /// that indicates the final base of text strings that are fed to this
+        /// values that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
         OutputLocationType Type { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Writes the text representation of the specified object to the
-        /// output location.
+        /// Writes the text representation of the specified object to the output
+        /// location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
@@ -47,12 +42,12 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// This method takes no action if a <see langword="null" />, blank, or empty
-        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// This method takes no action if a <see langword="null" />, blank, or
+        /// empty <see cref="T:System.String" /> is supplied as the argument of the
         /// <paramref name="format" /> parameter.
         /// <para />
         /// This method will not work if the <paramref name="format" /> parameter has
@@ -78,17 +73,17 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// This method takes no action if a <see langword="null" />, blank, or empty
-        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// This method takes no action if a <see langword="null" />, blank, or
+        /// empty <see cref="T:System.String" /> is supplied as the argument of the
         /// <paramref name="format" /> parameter.
         /// <para />
         /// This method will not work if the <paramref name="format" /> parameter has
@@ -97,10 +92,7 @@ namespace xyLOGIX.Core.Debug
         /// or if it contains element(s) whose value(s) do not match the format
         /// specifier(s) in the <paramref name="format" /> parameter.
         /// </remarks>
-        void WriteLine(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        );
+        void WriteLine([NotLogged] string format, [NotLogged] params object[] arg);
 
         /// <summary>Writes the current line terminator to the output location.</summary>
         /// <remarks>
