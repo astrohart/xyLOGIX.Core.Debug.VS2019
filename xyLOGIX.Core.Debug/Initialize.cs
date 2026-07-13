@@ -6,16 +6,16 @@ using System.Text.RegularExpressions;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Exposes <see langword="static" /> methods to initialize data. </summary>
+    /// <summary>Exposes <see langword="static" /> methods to initialize data.</summary>
     internal static class Initialize
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.Initialize" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.Initialize" /> class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -23,10 +23,10 @@ namespace xyLOGIX.Core.Debug
         [Log(AttributeExclude = true)]
         static Initialize() { }
 
-        /// <summary> Called once per application to initialize the logging subsystem. </summary>
+        /// <summary>Called once per application to initialize the logging subsystem.</summary>
         /// <param name="applicationName">
-        /// (Required.) String containing the name to be
-        /// used for the application in the log file's pathname.
+        /// (Required.) String containing the name to be used
+        /// for the application in the log file's pathname.
         /// <para />
         /// All whitespace will be removed.
         /// </param>
@@ -45,24 +45,18 @@ namespace xyLOGIX.Core.Debug
 
             if (string.IsNullOrWhiteSpace(applicationName))
                 throw new ArgumentException(
-                    "Value cannot be null or whitespace.",
-                    nameof(applicationName)
+                    "Value cannot be null or whitespace.", nameof(applicationName)
                 );
 
             SetLog.ApplicationName = string.Empty;
 
             try
             {
-                /*
-                 * The value of the SetLog.ApplicationName property
-                 * should be whatever is passed to the applicationName
-                 * parameter of this method, without a company name and
-                 * without spaces.
-                 */
+                /* The value of the SetLog.ApplicationName property should be whatever is passed to
+                 the applicationName parameter of this method, without a company name and without
+                 spaces. */
 
-                SetLog.ApplicationName = Regex.Replace(
-                    applicationName, @"\s+", ""
-                );
+                SetLog.ApplicationName = Regex.Replace(applicationName, @"\s+", "");
 
                 if (!Directory.Exists(GetLog.FileFolder))
                     Directory.CreateDirectory(GetLog.FileFolder);
