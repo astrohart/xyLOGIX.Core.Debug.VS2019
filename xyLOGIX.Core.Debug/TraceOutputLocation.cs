@@ -14,48 +14,46 @@ namespace xyLOGIX.Core.Debug
     internal class TraceOutputLocation : OutputLocationBase
     {
         /// <summary>
-        /// Empty, <see langword="static" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
         static TraceOutputLocation() { }
 
         /// <summary>
-        /// Empty, <see langword="private" /> constructor to prohibit direct allocation of
-        /// this
-        /// class.
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected TraceOutputLocation() { }
+        protected TraceOutputLocation()
+        { }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface that directs
-        /// debugging output to the <b>Output</b> window in Visual Studio when running in
-        /// Release mode.
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.IOutputLocation" /> interface
+        /// that directs debugging output to the <b>Output</b> window in Visual Studio when
+        /// running in Release mode.
         /// </summary>
-        internal static IOutputLocation
-            Instance { [DebuggerStepThrough] get; } = new TraceOutputLocation();
+        internal static IOutputLocation Instance { [DebuggerStepThrough] get; } =
+            new TraceOutputLocation();
 
         /// <summary>
         /// Gets one of the
         /// <see cref="T:xyLOGIX.Core.Debug.Constants.OutputLocationType" /> enumeration
-        /// values
-        /// that indicates the final base of text strings that are fed to this
+        /// values that indicates the final base of text strings that are fed to this
         /// location.
         /// </summary>
         public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Trace;
 
         /// <summary>
-        /// Writes the text representation of the specified object to the
-        /// output location.
+        /// Writes the text representation of the specified object to the output
+        /// location.
         /// </summary>
         /// <param name="value">The value to write, or <see langword="null" />.</param>
         /// <remarks>
-        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
-        /// parameter to be a <see langword="null" /> reference.
+        /// <b>NOTE:</b> It is allowable for the argument of the
+        /// <paramref name="value" /> parameter to be a <see langword="null" /> reference.
         /// <para />
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
@@ -63,17 +61,13 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * This particular Output Listener is designed to output messages
-                 * only in Release mode.
-                 */
+                /* This particular Output Listener is designed to output messages only in Release
+                 mode. */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
 
-                /*
-                 * The 'value' parameter is allowed to be set to a null reference, FYI.
-                 */
+                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
 
                 Trace.Write(value);
             }
@@ -90,27 +84,22 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// If a <see langword="null" />, blank, or empty <see cref="T:System.String" /> is
-        /// supplied as the argument of the <paramref name="format" /> paramreter, then
-        /// this method does nothing.
+        /// If a <see langword="null" />, blank, or empty
+        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// <paramref name="format" /> paramreter, then this method does nothing.
         /// <para />
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
-        public override void Write(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        )
+        public override void Write([NotLogged] string format, [NotLogged] params object[] arg)
         {
             try
             {
-                /*
-                 * This particular Output Listener is designed to output messages
-                 * only in Release mode.
-                 */
+                /* This particular Output Listener is designed to output messages only in Release
+                 mode. */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
@@ -132,8 +121,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <remarks>
-        /// <b>NOTE:</b> It is allowable for the argument of the <paramref name="value" />
-        /// parameter to be a <see langword="null" /> reference.
+        /// <b>NOTE:</b> It is allowable for the argument of the
+        /// <paramref name="value" /> parameter to be a <see langword="null" /> reference.
         /// <para />
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
@@ -141,17 +130,13 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * This particular Output Listener is designed to output messages
-                 * only in Release mode.
-                 */
+                /* This particular Output Listener is designed to output messages only in Release
+                 mode. */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
 
-                /*
-                 * The 'value' parameter is allowed to be set to a null reference, FYI.
-                 */
+                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
 
                 Trace.WriteLine(value);
             }
@@ -164,32 +149,27 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Writes the text representation of the specified array of objects,
-        /// followed by the current line terminator, to the output location using
-        /// the specified format information.
+        /// followed by the current line terminator, to the output location using the
+        /// specified format information.
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">
-        /// An array of objects to write using
-        /// <paramref name="format" /> .
+        /// An array of objects to write using <paramref name="format" />
+        /// .
         /// </param>
         /// <remarks>
-        /// If a <see langword="null" />, blank, or empty <see cref="T:System.String" /> is
-        /// supplied as the argument of the <paramref name="format" /> paramreter, then
-        /// this method does nothing.
+        /// If a <see langword="null" />, blank, or empty
+        /// <see cref="T:System.String" /> is supplied as the argument of the
+        /// <paramref name="format" /> paramreter, then this method does nothing.
         /// <para />
         /// This method also takes no action if a debugger is listening or attached.
         /// </remarks>
-        public override void WriteLine(
-            [NotLogged] string format,
-            [NotLogged] params object[] arg
-        )
+        public override void WriteLine([NotLogged] string format, [NotLogged] params object[] arg)
         {
             try
             {
-                /*
-                 * This particular Output Listener is designed to output messages
-                 * only in Release mode.
-                 */
+                /* This particular Output Listener is designed to output messages only in Release
+                 mode. */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
@@ -211,10 +191,8 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * This particular Output Listener is designed to output messages
-                 * only in Release mode.
-                 */
+                /* This particular Output Listener is designed to output messages only in Release
+                 mode. */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
