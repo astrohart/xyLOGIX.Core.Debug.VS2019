@@ -4,9 +4,7 @@ using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>
-    /// Exposes static method(s) to validate information and settings.
-    /// </summary>
+    /// <summary>Exposes static method(s) to validate information and settings.</summary>
     [Log(AttributeExclude = true)]
     internal static class Validate
     {
@@ -15,9 +13,11 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructureTypeValidator" />
         /// interface.
         /// </summary>
-        private static ILoggingInfrastructureTypeValidator
-            LoggingInfrastructureTypeValidator { [DebuggerStepThrough] get; } =
-            GetLoggingInfrastructureTypeValidator.SoleInstance();
+        private static ILoggingInfrastructureTypeValidator LoggingInfrastructureTypeValidator
+        {
+            [DebuggerStepThrough]
+            get;
+        } = GetLoggingInfrastructureTypeValidator.SoleInstance();
 
         /// <summary>
         /// Determines whether the specified logging infrastructure
@@ -32,9 +32,7 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="true" /> if the specified logging infrastructure
         /// <paramref name="type" /> is in the set of valid values.
         /// </returns>
-        internal static bool LoggingInfrastructureType(
-            LoggingInfrastructureType type
-        )
+        internal static bool LoggingInfrastructureType(LoggingInfrastructureType type)
         {
             var result = false;
 
@@ -48,13 +46,13 @@ namespace xyLOGIX.Core.Debug
                     $"*** Validate.LoggingInfrastructureType: Checking whether the specified Logging Infrastructure Type value, '{type}', is within the defined value set..."
                 );
 
-                // Check to see whether the specified Logging Infrastructure Type value is
-                // within the defined value set.  If this is not the case, then write an
-                // error message to the Debug output, and then terminate the execution of
-                // this method.
+                // Check to see whether the specified Logging Infrastructure Type value is within
+                // the defined value set.  If this is not the case, then write an error message to
+                // the Debug output, and then terminate the execution of this method.
                 if (!LoggingInfrastructureTypeValidator.IsValid(type))
                 {
-                    // The specified Logging Infrastructure Type value is NOT within the defined value set.  This is not desirable.
+                    // The specified Logging Infrastructure Type value is NOT within the defined
+                    // value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"*** ERROR *** The specified Logging Infrastructure Type value, '{type}', is NOT within the defined value set.  Stopping..."
                     );
@@ -71,10 +69,8 @@ namespace xyLOGIX.Core.Debug
                     $"Validate.LoggingInfrastructureType: *** SUCCESS *** The specified Logging Infrastructure Type value, '{type}', is within the defined value set.  Proceeding..."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
