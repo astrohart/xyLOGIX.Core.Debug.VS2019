@@ -5,25 +5,27 @@ using System.IO;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Exposes static method(s) that truncate an existing file(s) to zero bytes.
+    /// Exposes static method(s) that truncate an existing file(s) to zero
+    /// bytes.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal static class Truncate
     {
         /// <summary>
-        /// Truncates the file identified by <paramref name="pathname" /> so its length
-        /// becomes zero bytes while leaving the file entry itself on the file system.
-        /// If the file does not exist, the method returns <see langword="true" /> because
-        /// there is nothing to do.
-        /// If <paramref name="pathname" /> is <see langword="null" />, empty, or contains
-        /// only whitespace, the method returns <see langword="false" />.
+        /// Truncates the file identified by <paramref name="pathname" /> so its
+        /// length becomes zero bytes while leaving the file entry itself on the file
+        /// system. If the file does not exist, the method returns <see langword="true" />
+        /// because there is nothing to do. If <paramref name="pathname" /> is
+        /// <see langword="null" />, empty, or contains only whitespace, the method returns
+        /// <see langword="false" />.
         /// </summary>
         /// <param name="pathname">
-        /// (Required.) The fully-qualified path of the file to truncate.
+        /// (Required.) The fully-qualified path of the file to
+        /// truncate.
         /// </param>
         /// <returns>
-        /// <see langword="true" /> when the operation succeeds or when the target file
-        /// is absent; <see langword="false" /> when the path is invalid or an error
+        /// <see langword="true" /> when the operation succeeds or when the target
+        /// file is absent; <see langword="false" /> when the path is invalid or an error
         /// occurs while truncating.
         /// </returns>
         internal static bool FileHavingPath([NotLogged] string pathname)
@@ -36,12 +38,13 @@ namespace xyLOGIX.Core.Debug
                     "Truncate.FileHavingPath *** INFO: Checking whether the value of the parameter, 'pathname', is blank..."
                 );
 
-                // Check whether the value of the parameter, 'pathname', is blank.
-                // If this is so, then emit an error message to the log file, and
-                // then terminate the execution of this method.
+                // Check whether the value of the parameter, 'pathname', is blank. If this is so,
+                // then emit an error message to the log file, and then terminate the execution of
+                // this method.
                 if (string.IsNullOrWhiteSpace(pathname))
                 {
-                    // The parameter, 'pathname' was either passed a null value, or it is blank.  This is not desirable.
+                    // The parameter, 'pathname' was either passed a null value, or it is blank.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "Truncate.FileHavingPath: The parameter, 'pathname', was either passed a null value, or it is blank. Stopping..."
                     );
@@ -63,9 +66,9 @@ namespace xyLOGIX.Core.Debug
                     $"Truncate.FileHavingPath *** INFO: Checking whether the file having pathname, '{pathname}', exists on the file system..."
                 );
 
-                // Check whether a file having pathname, 'pathname', exists on the file system.
-                // If it does not, then write an FYI message to the log file, and then terminate
-                // the execution of this method, returning true.
+                // Check whether a file having pathname, 'pathname', exists on the file system. If
+                // it does not, then write an FYI message to the log file, and then terminate the
+                // execution of this method, returning true.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -85,17 +88,14 @@ namespace xyLOGIX.Core.Debug
 
                 // Opening with FileMode.Truncate sets the length to zero immediately.
                 using (_ = new FileStream(
-                           pathname, FileMode.Truncate, FileAccess.Write,
-                           FileShare.Read
+                           pathname, FileMode.Truncate, FileAccess.Write, FileShare.Read
                        ))
                 {
                     // No additional work required.
                 }
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -107,9 +107,7 @@ namespace xyLOGIX.Core.Debug
                 result = false;
             }
 
-            System.Diagnostics.Debug.WriteLine(
-                $"Truncate.FileHavingPath: Result = {result}"
-            );
+            System.Diagnostics.Debug.WriteLine($"Truncate.FileHavingPath: Result = {result}");
 
             return result;
         }
