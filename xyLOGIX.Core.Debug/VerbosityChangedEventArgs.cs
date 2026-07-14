@@ -5,17 +5,18 @@ using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary> Provides information for <c>VerbosityChanged</c> event handlers. </summary>
+    /// <summary>Provides information for <c>VerbosityChanged</c> event handlers.</summary>
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
     public class VerbosityChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed once only
-        /// for the <see cref="T:xyLOGIX.Core.Debug.VerbosityChangedEventArgs" /> class.
+        /// Initializes static data or performs actions that need to be performed
+        /// once only for the <see cref="T:xyLOGIX.Core.Debug.VerbosityChangedEventArgs" />
+        /// class.
         /// </summary>
         /// <remarks>
-        /// This constructor is called automatically prior to the first instance being
-        /// created or before any static members are referenced.
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any static members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -39,10 +40,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.DebugUtils.Verbosity" /> property.
         /// </param>
         [Log(AttributeExclude = true)]
-        public VerbosityChangedEventArgs(
-            [NotLogged] int oldValue,
-            [NotLogged] int newValue
-        )
+        public VerbosityChangedEventArgs([NotLogged] int oldValue, [NotLogged] int newValue)
         {
             OldValue = oldValue;
             NewValue = newValue;
