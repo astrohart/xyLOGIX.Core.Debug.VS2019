@@ -2,6 +2,7 @@
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
 {
@@ -74,8 +75,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientAssemblyRegistry" />
-        /// interface.
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientAssemblyRegistry" /> interface.
         /// </summary>
         private static ILoggingClientAssemblyRegistry ClientAssemblyRegistry
         {
@@ -83,9 +83,8 @@ namespace xyLOGIX.Core.Debug
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
 
         /// <summary>
-        /// Gets or sets the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
-        /// that represents the type of infrastructure currently in use by this
+        /// Gets or sets the <see cref="T:LoggingInfrastructureType" /> value that
+        /// represents the type of infrastructure currently in use by this
         /// <see cref="T:xyLOGIX.Core.Debug.LoggingSubsystemManager" />.
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
@@ -128,8 +127,7 @@ namespace xyLOGIX.Core.Debug
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface that
-        /// corresponds to the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.LoggingSubsystemManager.Type" /> property.
+        /// corresponds to the value of the <see cref="P:Type" /> property.
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
         {
@@ -194,9 +192,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" />
-        /// value(s) that indicates what type of logging infrastructure is to be utilized
-        /// (default or PostSharp, for example).
+        /// <see cref="T:LoggingInfrastructureType" /> value(s) that indicates what type of
+        /// logging infrastructure is to be utilized (default or PostSharp, for example).
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem has been initialized
@@ -301,8 +298,8 @@ namespace xyLOGIX.Core.Debug
                 // returning the default return value.
                 if (LoggingInfrastructure == null)
                 {
-                    // The property, 'LoggingInfrastructure', has a null reference for a value.
-                    // This is not desirable.
+                    // The property, 'LoggingInfrastructure', has a null reference for a value. This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingSubsystemManager.InitializeLogging: *** ERROR *** The property, 'LoggingInfrastructure', has a null reference for a value.  Stopping..."
                     );
@@ -343,6 +340,132 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
+        /// <summary>Registers an assembly that is requesting logging services.</summary>
+        /// <param name="assembly">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Reflection.Assembly" /> that is requesting logging
+        /// services.
+        /// </param>
+        /// <returns>
+        /// A <see cref="T:System.Guid" /> value that uniquely identifies the
+        /// registered assembly; otherwise, <see cref="F:System.Guid.Empty" />.
+        /// </returns>
+        /// <remarks>
+        /// This method is primarily intended for logging-subsystem adapter(s),
+        /// such as <c>WizardLoggingSubsystemManager</c>.
+        /// <para />
+        /// If <paramref name="assembly" /> is <see langword="null" />, the registry is
+        /// unavailable, or registration fails, then this method returns
+        /// <see cref="F:System.Guid.Empty" />.
+        /// <para />
+        /// Because this method may execute before the logging subsystem has been
+        /// initialized, exception information is written directly to the Debug output.
+        /// </remarks>
+        [return: NotLogged]
+        public static Guid RegisterClientAssembly([NotLogged] Assembly assembly)
+        {
+            var result = Guid.Empty;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: Checking whether the method parameter, 'assembly', has a null reference for a value..."
+                );
+
+                // Check whether the method parameter, 'assembly', has a null reference for a value.
+                // If this is the case, then write an error message to the Debug output, and then
+                // terminate the execution of this method, returning the default return value.
+                if (assembly == null)
+                {
+                    // The method parameter, 'assembly', has a null reference for a value.  This is
+                    // not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.RegisterClientAssembly: *** ERROR *** A null reference was passed for the method parameter, 'assembly'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The method parameter, 'assembly', refers to a valid object.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: Checking whether the 'ClientAssemblyRegistry' property has a null reference for a value..."
+                );
+
+                // Check whether the 'ClientAssemblyRegistry' property has a null reference for a
+                // value.  If this is the case, then write an error message to the Debug output, and
+                // then terminate the execution of this method, returning the default return value.
+                if (ClientAssemblyRegistry == null)
+                {
+                    // The 'ClientAssemblyRegistry' property has a null reference for a value.  This
+                    // is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.RegisterClientAssembly: *** ERROR *** The 'ClientAssemblyRegistry' property has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The 'ClientAssemblyRegistry' property refers to a valid object.  Proceeding..."
+                );
+
+                result = ClientAssemblyRegistry.Register(assembly);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: Checking whether the logging-client assembly was successfully registered..."
+                );
+
+                // Check whether the logging-client assembly was successfully registered.  If this
+                // is not the case, then write an error message to the Debug output, and then
+                // terminate the execution of this method, returning the default return value.
+                if (Guid.Empty.Equals(result))
+                {
+                    // The logging-client assembly could NOT be successfully registered.  This is
+                    // not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingSubsystemManager.RegisterClientAssembly: *** ERROR *** The logging-client assembly, '{assembly.FullName}', could NOT be successfully registered.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The logging-client assembly, '{assembly.FullName}', was successfully registered with the ticket, '{result}'.  Proceeding..."
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = Guid.Empty;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingSubsystemManager.RegisterClientAssembly: Result = '{result}'"
+            );
+
+            return result;
+        }
+
         /// <summary>
         /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> to
         /// initialize its functionality.
@@ -378,9 +501,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="infrastructureType">
         /// (Optional.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" />
-        /// value(s) that indicates what type of logging infrastructure is to be utilized
-        /// (default or PostSharp).
+        /// <see cref="T:LoggingInfrastructureType" /> value(s) that indicates what type of
+        /// logging infrastructure is to be utilized (default or PostSharp).
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation(s) completed successfully;
