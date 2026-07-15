@@ -46,7 +46,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientSessionRegistry() { }
+        private LoggingClientSessionRegistry()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
