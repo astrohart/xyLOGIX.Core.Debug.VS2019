@@ -213,6 +213,7 @@
     <Compile Include="IRollingModeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
+    <Compile Include="ISessionLoggerFetcher.cs" />
     <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="ILoggingConfigurator.cs" />
     <Compile Include="ILoggingConfiguratorTypeValidator.cs" />
