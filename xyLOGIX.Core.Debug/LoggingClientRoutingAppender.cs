@@ -70,6 +70,12 @@ namespace xyLOGIX.Core.Debug
         /// A <see langword="null" /> value for <paramref name="fallbackRepository" /> is
         /// permitted.
         /// </remarks>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// Thrown if any of the required
+        /// parameters, <paramref name="routingRepository" /> or
+        /// <paramref name="fallbackRepository" />, are passed a <see langword="null" />
+        /// reference for a value.
+        /// </exception>
         internal LoggingClientRoutingAppender(
             [NotLogged] ILoggerRepository routingRepository,
             [NotLogged] ILoggerRepository fallbackRepository
@@ -77,8 +83,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                RoutingRepository = routingRepository;
-                FallbackRepository = fallbackRepository;
+                RoutingRepository = routingRepository ??
+                                    throw new ArgumentNullException(nameof(routingRepository));
+                FallbackRepository = fallbackRepository ??
+                                     throw new ArgumentNullException(nameof(fallbackRepository));
             }
             catch (Exception ex)
             {
