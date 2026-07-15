@@ -271,7 +271,7 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         [return: NotLogged]
         [Log(AttributeExclude = true), DebuggerStepThrough]
-        private static ILog GetSessionLogger(
+        private ILog GetSessionLogger(
             [NotLogged] string repositoryName,
             [NotLogged] Type sourceType
         )
@@ -280,6 +280,56 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.GetSessionLogger: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
+                if (sourceType == null)
+                {
+                    // The method parameter, 'sourceType', is required and is not supposed to have a
+                    // NULL value.  There is nothing more to be done.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLogProvider.GetSessionLogger: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.GetSessionLogger: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine($"LoggingClientLogProvider.GetSessionLogger: *** FYI *** Getting a reference to an instance of the logger that corresponds to the source type, '{sourceType.FullName}' from the internal cache...");
+
+                var logger = TryGetLoggerFromInternalCache(sourceType);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.GetSessionLogger: Checking whether the variable, 'logger', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'logger', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
+                if (logger == null)
+                {
+                    // The variable, 'logger', has a null reference for a value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLogProvider.GetSessionLogger: *** ERROR ***  The variable, 'logger', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'logger', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.GetSessionLogger: *** SUCCESS *** The variable, 'logger', has a valid object reference for its value.  Proceeding..."
+                );
+
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingClientLogProvider.GetSessionLogger: *** FYI *** Getting a reference to an instance of the logger that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}' from the repository, '{repositoryName ?? "<null>"}'..."
                 );
@@ -308,29 +358,6 @@ namespace xyLOGIX.Core.Debug
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
                     "*** SUCCESS *** The parameter, 'repositoryName', is not blank.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLogProvider.GetSessionLogger: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, 'sourceType', is null. If it is, then
-                // write an error message to the Debug output and then terminate the execution of
-                // this method, returning the default return value.
-                if (sourceType == null)
-                {
-                    // The method parameter, 'sourceType', is required and is not supposed to have a
-                    // NULL value.  There is nothing more to be done.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLogProvider.GetSessionLogger: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLogProvider.GetSessionLogger: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
