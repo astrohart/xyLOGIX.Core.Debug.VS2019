@@ -68,7 +68,7 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Calling LogManager.GetRepository with the Assembly: {Assembly.GetAssembly(typeof(LoggingSubsystemManager))}..."
                 );
 
-                // Get the log4net repository
+                // GetLogForType the log4net repository
                 var repository = LogManager.GetRepository(
                     Assembly.GetAssembly(typeof(LoggingSubsystemManager))
                 );
