@@ -128,143 +128,32 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: Checking whether the method parameter, 'loggingEvent', has a null reference for a value..."
-                );
+                /*
+                 * We will refrain from any diagnostics here, as it is expected that this method
+                 * will be called quite frequently, and we don't want to flood the Debug output with
+                 * messages.
+                 */
 
-                // Check to see if the required parameter, loggingEvent, is null. If it is, then
-                // write an error message to the log file and then terminate the execution of this
-                // method.
-                if (loggingEvent == null)
-                {
-                    // The method parameter, 'loggingEvent', is required and is not supposed to have
-                    // a NULL value.  It does, and this is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientRoutingAppender.Append: *** ERROR *** A null reference was passed for the method parameter, 'loggingEvent'.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'loggingEvent.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** LoggingClientRoutingAppender.Append: Checking whether the appender is already set to the 'Routing' state..."
-                );
-
-                // Check to see whether the appender is already set to the 'Routing' state.
-                // Otherwise, write a FYI message to the Debug output, and then terminate the
-                // execution of this method.
-                if (_isRouting)
-                {
-                    // The appender is already set to the 'Routing' state.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** FYI *** The appender is already set to the 'Routing' state.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: *** SUCCESS *** The appender is NOT already set to the 'Routing' state.  Setting it to that state..."
-                );
+                if (loggingEvent == null) return;
+                if (_isRouting) return;
 
                 _isRouting = true;
 
-                System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientRoutingAppender.Append: *** FYI *** Getting a reference to the target instance of an object implementing '{nameof(ILoggerRepository)}' that is to receive the logging event..."
-                );
-
                 var targetRepository = GetTargetRepository();
 
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: Checking whether the variable 'targetRepository' has a null reference for a value..."
-                );
+                if (targetRepository == null) return;
+                if (RoutingRepository == null) return;
 
-                // Check to see if the variable, targetRepository, is null. If it is, send an error
-                // to the Debug output and quit, returning from the method.
-                if (targetRepository == null)
-                {
-                    // the variable targetRepository is required to have a valid object reference.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientRoutingAppender.Append: *** ERROR *** No target logging repository could be resolved.  The logging event will not be forwarded."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                // We can use the variable, targetRepository, because it's not set to a null
-                // reference.
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: *** SUCCESS *** The 'targetRepository' variable has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: Checking whether the property, 'RoutingRepository', has a null reference for a value..."
-                );
-
-                // Check to see if the required property, 'RoutingRepository', has a null reference
-                // for a value. If that is the case, then we will write an error message to the
-                // Debug output, and then terminate the execution of this method.
-                if (RoutingRepository == null)
-                {
-                    // The property, 'RoutingRepository', has a null reference for a value.  This is
-                    // not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientRoutingAppender.Append: *** ERROR *** The 'RoutingRepository' property has a null reference for a value.  The logging event will not be forwarded."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientRoutingAppender.Append: *** SUCCESS *** The property, 'RoutingRepository', has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientRoutingAppender.Append: *** FYI *** Making sure that the target repository is NOT the same as the routing repository, which is '{RoutingRepository?.Name ?? "<null>"}'..."
-                );
-
-                // Make sure that the target repository is NOT the same as the routing repository.
-                // If it is, then write an error message to the Debug output and then terminate the
-                // execution of this method.
-                if (ReferenceEquals(targetRepository, RoutingRepository))
-                {
-                    // The target repository is the same as the routing repository.  This is not
-                    // desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientRoutingAppender.Append: *** ERROR *** The target repository is the routing repository itself.  Recursive routing has been prevented."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Forwarding the logging event to the target repository, which is '{targetRepository.Name ?? "<null>"}'..."
-                );
+                if (ReferenceEquals(targetRepository, RoutingRepository)) return;
 
                 targetRepository.Log(loggingEvent);
             }
-            catch (Exception ex)
+            catch
             {
-                /* Do not call DebugUtils.LogException here. Doing so could recursively re-enter
-                 this appender. */
-
-                System.Diagnostics.Debug.WriteLine(ex);
+                //Ignored.
             }
             finally
             {
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Moving this object out of the 'Routing' state..."
-                );
-
                 _isRouting = false;
             }
         }
