@@ -81,7 +81,7 @@ namespace xyLOGIX.Core.Debug
                     $"LoggerManager.GetRootLogger: *** SUCCESS *** The Root Logger Provisioning Strategy, '{strategy}', is within the defined value set.  Proceeding..."
                 );
 
-                // Get a reference to the appropriate Root Logger Provisioner.
+                // GetLogForType a reference to the appropriate Root Logger Provisioner.
 
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggerManager.GetRootLogger: Obtaining a reference to the Root Logger Provisioner for the Root Logger Provisioning Strategy, '{strategy}'..."
