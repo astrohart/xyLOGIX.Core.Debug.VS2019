@@ -1,4 +1,5 @@
 ﻿using Alphaleonis.Win32.Filesystem;
+using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
@@ -166,6 +167,112 @@ namespace xyLOGIX.Core.Debug
                     System.Diagnostics.Debug.WriteLine(ex);
 
                     result = Guid.Empty;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets a reference to the PostSharp logging backend assigned to the current
+        /// logging-client session.
+        /// </summary>
+        /// <remarks>
+        /// If no current logging-client session exists, this property returns
+        /// <see langword="null" />.
+        /// </remarks>
+        internal static LoggingBackend CurrentClientBackend
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = default(LoggingBackend);
+
+                try
+                {
+                    var session = CurrentClientSession;
+
+                    if (session == null) return result;
+
+                    result = session.Backend;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = default;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets a reference to the log4net repository assigned to the current
+        /// logging-client
+        /// session.
+        /// </summary>
+        /// <remarks>
+        /// If no current logging-client session exists, this property returns
+        /// <see langword="null" />.
+        /// </remarks>
+        internal static ILoggerRepository CurrentClientRepository
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                ILoggerRepository result = default;
+
+                try
+                {
+                    var session = CurrentClientSession;
+
+                    if (session == null) return result;
+
+                    result = session.Repository;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = null;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the logging-client session associated with the current logical execution
+        /// flow.
+        /// </summary>
+        /// <remarks>
+        /// If no logging-client assembly is currently selected, or no session has been
+        /// created
+        /// for the selected ticket, this property returns <see langword="null" />.
+        /// </remarks>
+        internal static ILoggingClientSession CurrentClientSession
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                ILoggingClientSession result = default;
+
+                try
+                {
+                    if (Guid.Empty.Equals(CurrentClientAssemblyTicket)) return result;
+                    if (ClientSessionRegistry == null) return result;
+
+                    result = ClientSessionRegistry.Get(CurrentClientAssemblyTicket);
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = default;
                 }
 
                 return result;
