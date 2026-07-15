@@ -16,11 +16,113 @@ namespace xyLOGIX.Core.Debug
     internal static class Determine
     {
         /// <summary>
+        /// Initializes <see langword="static" /> data or performs actions that
+        /// need to be performed once only for the
+        /// <see cref="T:xyLOGIX.Core.Debug.Determine" /> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is called automatically prior to the first instance
+        /// being created or before any <see langword="static" /> members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
+        /// </remarks>
+        [Log(AttributeExclude = true)]
+        static Determine() { }
+
+        /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IAppenderManager" /> interface.
         /// </summary>
         private static IAppenderManager AppenderManager { [DebuggerStepThrough] get; } =
             GetAppenderManager.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientAssemblyContext" /> interface.
+        /// </summary>
+        private static ILoggingClientAssemblyContext ClientAssemblyContext
+        {
+            [DebuggerStepThrough] get;
+        } = GetLoggingClientAssemblyContext.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientSessionRegistry" /> interface.
+        /// </summary>
+        private static ILoggingClientSessionRegistry ClientSessionRegistry
+        {
+            [DebuggerStepThrough] get;
+        } = GetLoggingClientSessionRegistry.SoleInstance();
+
+        /// <summary>
+        /// Gets the ticket that identifies the logging-client assembly associated
+        /// with the current logical execution flow.
+        /// </summary>
+        /// <remarks>
+        /// If no logging-client assembly is currently selected, the
+        /// client-assembly context is unavailable, or the property cannot be evaluated,
+        /// then this property returns <see cref="F:System.Guid.Empty" />.
+        /// </remarks>
+        internal static Guid CurrentClientAssemblyTicket
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = Guid.Empty;
+
+                try
+                {
+                    if (ClientAssemblyContext == null) return result;
+
+                    result = ClientAssemblyContext.CurrentTicket;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = Guid.Empty;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the logging-client session associated with the current logical
+        /// execution flow.
+        /// </summary>
+        /// <remarks>
+        /// If no logging-client assembly is currently selected, or no session has
+        /// been created for the selected ticket, this property returns
+        /// <see langword="null" />.
+        /// </remarks>
+        internal static ILoggingClientSession CurrentClientSession
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                ILoggingClientSession result = default;
+
+                try
+                {
+                    if (Guid.Empty.Equals(CurrentClientAssemblyTicket)) return result;
+                    if (ClientSessionRegistry == null) return result;
+
+                    result = ClientSessionRegistry.Get(CurrentClientAssemblyTicket);
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = default;
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Determines whether the application is to use a programmatic logging
@@ -98,6 +200,212 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"Determine.LoggingConfiguratorTypeToUse: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the correct
+        /// <see cref="T:xyLOGIX.Core.Debug.SessionLoggerFetchApproach" /> enumeration
+        /// value that is to be returned, that corresponds to the correct approach that is
+        /// to be utilized in getting a logger for the specified
+        /// <paramref name="sourceType" />.
+        /// </summary>
+        /// <param name="sourceType">
+        /// (Required.) A <see cref="T:System.Type" /> that contains the type of the object
+        /// for which a logger is to be fetched.
+        /// </param>
+        /// <returns>
+        /// If successful, returns one of the
+        /// <see cref="T:xyLOGIX.Core.Debug.SessionLoggerFetchApproach" /> value(s) that
+        /// indicates the correct approach for fetching a logger that is to be used for the
+        /// specified <paramref name="sourceType" />; otherwise, the
+        /// <see cref="F:xyLOGIX.Core.Debug.SessionLoggerFetchApproach.Unknown" /> value is
+        /// returned if such an approach cannot be determined otherwise.
+        /// </returns>
+        public static SessionLoggerFetchApproach TheCorrectSessionLoggerFetchApproachToUse(
+            [NotLogged] Type sourceType
+        )
+        {
+            var result = SessionLoggerFetchApproach.Unknown;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TheCorrectSessionLoggerFetchApproachToUse: *** FYI *** Determining the correct session logger fetch approach to use for the specified sourceType, '{sourceType?.FullName ?? "<null>"}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectSessionLoggerFetchApproachToUse: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
+                if (sourceType == null)
+                {
+                    // The method parameter, 'sourceType', is required and is not supposed to have a
+                    // NULL value.  There is nothing more to be done.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
+                    );
+
+                    result = SessionLoggerFetchApproach.Unknown;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectSessionLoggerFetchApproachToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'sourceType.FullName', appears to have a
+                // null
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(sourceType.FullName))
+                {
+                    // The property, 'sourceType.FullName', appears to have a null or blank value.
+                    // This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    result = SessionLoggerFetchApproach.Unknown;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectSessionLoggerFetchApproachToUse: Result = '{result}'"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'sourceType.FullName', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectSessionLoggerFetchApproachToUse: Checking whether the property, 'CurrentClientSession', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'CurrentClientSession', has a null
+                // reference for a value.  If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
+                if (CurrentClientSession == null)
+                {
+                    // The property, 'CurrentClientSession', has a null reference for a value.  This
+                    // is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** WARNING *** The property, 'CurrentClientSession', has a null reference for a value.  Using the legacy logging infrastructure..."
+                    );
+
+                    /*
+                     * When there is no active client session, the default behavior of this library
+                     * must prevail; therefore, get the legacy logger.
+                     */
+
+                    result = SessionLoggerFetchApproach.FetchLegacyLogger;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectSessionLoggerFetchApproachToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** SUCCESS *** The property, 'CurrentClientSession', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectSessionLoggerFetchApproachToUse: Checking whether the current logging-client session has valid setting(s)..."
+                );
+
+                // Check to see whether the current logging-client session has valid setting(s).
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!CurrentClientSession.IsValid())
+                {
+                    // The current logging-client session does NOT appear to have valid setting(s).
+                    // Using the legacy logging infrastructure.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** ERROR *** The current logging-client session does NOT appear to have valid setting(s).  Using the legacy logging infrastructure..."
+                    );
+
+                    result = SessionLoggerFetchApproach.FetchLegacyLogger;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectSessionLoggerFetchApproachToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** SUCCESS *** The current logging-client session has valid setting(s).  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'CurrentClientSession.RepositoryName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'CurrentClientSession.RepositoryName',
+                // appears to have a null
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(CurrentClientSession.RepositoryName))
+                {
+                    // The property, 'CurrentClientSession.RepositoryName', appears to have a null
+                    // or blank value.  Using the legacy logging infrastructure.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** ERROR: The property, 'CurrentClientSession.RepositoryName', appears to have a null or blank value.  Using the cached logger for the current type, '{sourceType.FullName}', if available..."
+                    );
+
+                    result = SessionLoggerFetchApproach.FetchFromCache;
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectSessionLoggerFetchApproachToUse: Result = '{result}'"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'CurrentClientSession.RepositoryName', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Determining that the correct logger should be fetched by the repository name, '{CurrentClientSession.RepositoryName}', and source type, '{sourceType.FullName}..."
+                );
+
+                result = SessionLoggerFetchApproach.FetchByRepositoryNameAndSourceType;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = SessionLoggerFetchApproach.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TheCorrectSessionLoggerFetchApproachToUse: Result = '{result}'"
             );
 
             return result;
