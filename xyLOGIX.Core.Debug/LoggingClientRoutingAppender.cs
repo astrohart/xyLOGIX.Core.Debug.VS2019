@@ -247,7 +247,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Forwarding the logging event to the target repository, which is '{targetRepository?.Name ?? "<null>"}'..."
+                    $"*** FYI *** Forwarding the logging event to the target repository, which is '{targetRepository.Name ?? "<null>"}'..."
                 );
 
                 targetRepository.Log(loggingEvent);
