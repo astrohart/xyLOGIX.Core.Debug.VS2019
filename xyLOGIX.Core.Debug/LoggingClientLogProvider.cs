@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -16,20 +17,9 @@ namespace xyLOGIX.Core.Debug
     /// Logger object(s) are not cached globally because the current logging-client
     /// session may vary between logical execution flow(s).
     /// </remarks>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal sealed class LoggingClientLogProvider : ILoggingClientLogProvider
     {
-        /// <summary>
-        /// Reference to the sole instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLogProvider" /> interface.
-        /// </summary>
-        /// <remarks>
-        /// <b>NOTE:</b> The purpose of this field is to cache the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLogProvider.Instance" /> property.
-        /// </remarks>
-        private static readonly ILoggingClientLogProvider _instance =
-            new LoggingClientLogProvider();
-
         /// <summary>
         /// Initializes <see langword="static" /> data or performs actions that
         /// need to be performed once only for the
@@ -37,7 +27,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <remarks>
         /// This constructor is called automatically prior to the first instance
-        /// being created or before any <see langword="static" /> member is referenced.
+        /// being created or before any <see langword="static" /> members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -46,28 +36,26 @@ namespace xyLOGIX.Core.Debug
         static LoggingClientLogProvider() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLogProvider" /> class and returns
-        /// a reference to it.
+        /// Constructs a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLogProvider" /> and returns a
+        /// reference to it.
         /// </summary>
         /// <remarks>
-        /// This empty, <see langword="private" /> constructor prohibits callers
-        /// from directly allocating instance(s) of this Singleton class.
-        /// <para />
-        /// Callers obtain its sole instance through the
-        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLogProvider.Instance" /> property.
+        /// This is an empty, <see langword="private" /> constructor to prohibit
+        /// direct allocation of this class, as it is a <c>Singleton</c> object accessible
+        /// via the <see cref="P:xyLOGIX.Core.Debug.LoggingClientLogProvider.Instance" />
+        /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
         private LoggingClientLogProvider() { }
 
         /// <summary>
-        /// Gets a reference to the sole instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLogProvider" /> interface.
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLogProvider" />
+        /// interface.
         /// </summary>
-        internal static ILoggingClientLogProvider Instance
-        {
-            [DebuggerStepThrough] get => _instance;
-        }
+        internal static ILoggingClientLogProvider Instance { [DebuggerStepThrough] get; } =
+            new LoggingClientLogProvider();
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
