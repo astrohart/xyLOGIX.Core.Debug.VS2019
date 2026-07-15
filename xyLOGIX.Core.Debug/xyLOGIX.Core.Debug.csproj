@@ -200,6 +200,7 @@
     <Compile Include="ILoggingClientAssemblyContext.cs" />
     <Compile Include="ILoggingClientAssemblyRegistry.cs" />
     <Compile Include="ILoggingClientSession.cs" />
+    <Compile Include="ILoggingClientSessionRegistry.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="InvalidClientAssemblyNames.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
