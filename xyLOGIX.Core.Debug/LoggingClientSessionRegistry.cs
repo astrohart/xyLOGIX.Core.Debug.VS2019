@@ -87,11 +87,11 @@ namespace xyLOGIX.Core.Debug
             {
                 // Dump the argument of the parameter, ticket, to the Debug output
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientSessionRegistry.Get: ticket = '{ticket}'"
+                    $"LoggingClientSessionRegistry.GetLogForType: ticket = '{ticket}'"
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientSessionRegistry.Get: *** INFO *** Checking whether the specified logging-client session ticket, '{ticket}', is set to the Zero GUID..."
+                    $"LoggingClientSessionRegistry.GetLogForType: *** INFO *** Checking whether the specified logging-client session ticket, '{ticket}', is set to the Zero GUID..."
                 );
 
                 // Check whether the value of the specified logging-client session ticket  is set to
@@ -111,7 +111,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientSessionRegistry.Get: *** SUCCESS *** The value of the specified logging-client session ticket, '{ticket}', is NOT set to the Zero GUID.  Proceeding..."
+                    $"LoggingClientSessionRegistry.GetLogForType: *** SUCCESS *** The value of the specified logging-client session ticket, '{ticket}', is NOT set to the Zero GUID.  Proceeding..."
                 );
 
                 lock (SyncRoot)
