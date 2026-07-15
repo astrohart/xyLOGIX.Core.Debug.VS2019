@@ -201,6 +201,7 @@
     <Compile Include="ILoggingBackendTypeValidator.cs" />
     <Compile Include="ILoggingClientAssemblyContext.cs" />
     <Compile Include="ILoggingClientAssemblyRegistry.cs" />
+    <Compile Include="ILoggingClientLogProvider.cs" />
     <Compile Include="ILoggingClientSession.cs" />
     <Compile Include="ILoggingClientSessionRegistry.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
