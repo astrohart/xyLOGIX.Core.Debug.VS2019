@@ -1,4 +1,5 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +18,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientAssemblyRegistry.Instance" />
     /// property.
     /// </remarks>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal sealed class LoggingClientAssemblyRegistry : ILoggingClientAssemblyRegistry
     {
         /// <summary>
