@@ -43,6 +43,6 @@ namespace xyLOGIX.Core.Debug
         /// owned by another in-process software component.
         /// </remarks>
         [return: NotLogged]
-        ILog Get([NotLogged] Type sourceType);
+        ILog GetLogForType([NotLogged] Type sourceType);
     }
 }
