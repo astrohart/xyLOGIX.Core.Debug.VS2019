@@ -199,6 +199,7 @@
     <Compile Include="ILoggingBackendTypeValidator.cs" />
     <Compile Include="ILoggingClientAssemblyContext.cs" />
     <Compile Include="ILoggingClientAssemblyRegistry.cs" />
+    <Compile Include="ILoggingClientSession.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="InvalidClientAssemblyNames.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
