@@ -89,8 +89,9 @@ namespace xyLOGIX.Core.Debug
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that
         /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
         /// Supply a value for this parameter if your infrastructure is not utilizing the
-        /// default HierarchicalRepository.
+        /// default <c>HierarchicalRepository</c>.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem initialization
