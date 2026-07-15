@@ -65,5 +65,10 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" />, or the repository name is blank.
         /// </remarks>
         bool IsValid();
+
+        /// <summary>
+        /// Resets the property(ies) of this session to their default value(s).
+        /// </summary>
+        void Clear();
     }
 }
