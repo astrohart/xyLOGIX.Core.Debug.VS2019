@@ -1,5 +1,6 @@
 ﻿using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -14,7 +15,7 @@ namespace xyLOGIX.Core.Debug
     /// Each instance associates one registered assembly ticket with one
     /// dedicated log4net repository and one PostSharp logging backend.
     /// </remarks>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal sealed class LoggingClientSession : ILoggingClientSession
     {
         /// <summary>
@@ -88,8 +89,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public LoggingBackend Backend
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
@@ -98,8 +101,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public Assembly ClientAssembly
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
@@ -109,8 +114,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public ILoggerRepository Repository
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
@@ -119,8 +126,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public string RepositoryName
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
