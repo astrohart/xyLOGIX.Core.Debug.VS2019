@@ -34,7 +34,7 @@ namespace xyLOGIX.Core.Debug
                     "GetEvent.SourceAssembly: *** FYI *** Attempting to get a reference to the currently-executing assembly..."
                 );
 
-                // Get a reference to the currently-executing assembly.
+                // GetLogForType a reference to the currently-executing assembly.
                 var executingAssembly = Assembly.GetExecutingAssembly();
 
                 /* NOTE: We do not need to check whether 'executingAssembly' is null. The method we
