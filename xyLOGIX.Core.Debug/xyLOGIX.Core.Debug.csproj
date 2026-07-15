@@ -208,6 +208,7 @@
     <Compile Include="IOutputLocationProvider.cs" />
     <Compile Include="IXmlLoggingConfigurator.cs" />
     <Compile Include="LoggingBackendTypeValidator.cs" />
+    <Compile Include="LoggingClientAssemblyRegistry.cs" />
     <Compile Include="LoggingConfiguratorBase.cs" />
     <Compile Include="LoggingConfiguratorType.cs" />
     <Compile Include="LoggingConfiguratorTypeValidator.cs" />
