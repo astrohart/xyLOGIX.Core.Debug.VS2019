@@ -12,39 +12,80 @@ using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace xyLOGIX.Core.Debug
 {
-    /// <summary>Default implementation details for the <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />.</summary>
+    /// <summary>
+    /// Default implementation details for the
+    /// <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />.
+    /// </summary>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal class DefaultLoggingInfrastructure : ILoggingInfrastructure
     {
         /// <summary>Represents the first file appender used for logging operations.</summary>
-        /// <remarks>This field is intended for internal use only and holds a reference to the primary <see cref="T:log4net.Appender.FileAppender" /> instance. It is initialized to its default value.</remarks>
+        /// <remarks>
+        /// This field is intended for internal use only and holds a reference to
+        /// the primary <see cref="T:log4net.Appender.FileAppender" /> instance. It is
+        /// initialized to its default value.
+        /// </remarks>
         private FileAppender _firstFileAppender;
 
-        /// <summary>A <see cref="T:System.String" /> that contains the fully-qualified pathname of the log file.</summary>
+        /// <summary>
+        /// A <see cref="T:System.String" /> that contains the fully-qualified
+        /// pathname of the log file.
+        /// </summary>
         private string _logFilePathnameToUse = "";
 
-        /// <summary>Empty, <see langword="static" /> constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>
+        /// Empty, <see langword="static" /> constructor to prohibit direct
+        /// allocation of this class.
+        /// </summary>
         [Log(AttributeExclude = true)]
         static DefaultLoggingInfrastructure() { }
 
-        /// <summary>Empty, <see langword="private" /> constructor to prohibit direct allocation of this class.</summary>
+        /// <summary>
+        /// Empty, <see langword="private" /> constructor to prohibit direct
+        /// allocation of this class.
+        /// </summary>
         [Log(AttributeExclude = true)]
-        internal DefaultLoggingInfrastructure() { }
+        internal DefaultLoggingInfrastructure()
+        { }
 
-        /// <summary>Gets a reference to an instance of <see cref="T:log4net.Appender.FileAppender" /> that represents the first file appender in the list of appenders maintained by the logging infrastructure.</summary>
+        /// <summary>
+        /// Gets a reference to an instance of
+        /// <see cref="T:log4net.Appender.FileAppender" /> that represents the first file
+        /// appender in the list of appenders maintained by the logging infrastructure.
+        /// </summary>
         protected FileAppender Appender
         {
-            [DebuggerStepThrough] get => _firstFileAppender;
-            [DebuggerStepThrough] set => _firstFileAppender = value;
+            [DebuggerStepThrough]
+            get => _firstFileAppender;
+            [DebuggerStepThrough]
+            set => _firstFileAppender = value;
         }
 
-        /// <summary>Gets a reference to the one and only instance of the object that implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" /> interface for the <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.Default" /> logging infrastructure type value.</summary>
+        /// <summary>
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingInfrastructure" />
+        /// interface for the
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.Default" /> logging
+        /// infrastructure type value.
+        /// </summary>
         internal static ILoggingInfrastructure Instance { [DebuggerStepThrough] get; } =
             new DefaultLoggingInfrastructure();
 
-        /// <summary>Gets a value indicating whether the current application is a console application.</summary>
-        /// <remarks>This property determines if the application has an associated console window by invoking the <see cref="GetConsoleWindow" /> method. If the method returns a non-zero pointer, the application is considered a console application. If an exception occurs during this process, the exception is logged, and the property returns <see langword="false" />.</remarks>
-        /// <value><see langword="true" /> if the application is a console application; otherwise, <see langword="false" />.</value>
+        /// <summary>
+        /// Gets a value indicating whether the current application is a console
+        /// application.
+        /// </summary>
+        /// <remarks>
+        /// This property determines if the application has an associated console
+        /// window by invoking the <see cref="GetConsoleWindow" /> method. If the method
+        /// returns a non-zero pointer, the application is considered a console
+        /// application. If an exception occurs during this process, the exception is
+        /// logged, and the property returns <see langword="false" />.
+        /// </remarks>
+        /// <value>
+        /// <see langword="true" /> if the application is a console application;
+        /// otherwise, <see langword="false" />.
+        /// </value>
         private bool IsConsoleApp
         {
             [DebuggerStepThrough]
@@ -68,7 +109,10 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>Gets a <see cref="T:System.String" /> containing the fully-qualified pathname of the log file of this application.</summary>
+        /// <summary>
+        /// Gets a <see cref="T:System.String" /> containing the fully-qualified
+        /// pathname of the log file of this application.
+        /// </summary>
         public virtual string LogFileName
         {
             get
@@ -100,19 +144,39 @@ namespace xyLOGIX.Core.Debug
             }
         }
 
-        /// <summary>Gets a reference to an instance of an object that implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingConfiguratorTypeValidator" /> interface.</summary>
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingConfiguratorTypeValidator" />
+        /// interface.
+        /// </summary>
         private static ILoggingConfiguratorTypeValidator LoggingConfiguratorTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingConfiguratorTypeValidator.SoleInstance();
 
-        /// <summary>Gets the <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value that corresponds to the type of infrastructure that is being utilized.</summary>
+        /// <summary>
+        /// Gets the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
+        /// that corresponds to the type of infrastructure that is being utilized.
+        /// </summary>
         public virtual LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
             LoggingInfrastructureType.Default;
 
-        /// <summary>Gets the value of the <see cref="P:log4net.Appender.FileAppender.File" /> property from the first appender in the list of appenders that is of type <see cref="T:log4net.Appender.FileAppender" />.</summary>
-        /// <returns>String containing the full path and file name of the file the appender is writing to.</returns>
-        /// <remarks>This method is solely utilized in order to implement the <see cref="P:Core.Debug.ILoggingInfrastructure.LogFileName" /> property.</remarks>
+        /// <summary>
+        /// Gets the value of the
+        /// <see cref="P:log4net.Appender.FileAppender.File" /> property from the first
+        /// appender in the list of appenders that is of type
+        /// <see cref="T:log4net.Appender.FileAppender" />.
+        /// </summary>
+        /// <returns>
+        /// String containing the full path and file name of the file the appender
+        /// is writing to.
+        /// </returns>
+        /// <remarks>
+        /// This method is solely utilized in order to implement the
+        /// <see cref="P:Core.Debug.ILoggingInfrastructure.LogFileName" /> property.
+        /// </remarks>
         public virtual string GetRootFileAppenderFileName()
         {
             var result = string.Empty;
@@ -133,7 +197,9 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.GetRootFileAppenderFileName: Checking whether the variable, 'fileAppender', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, fileAppender, is null.  If it is, send an error to the Debug output and terminate the execution of this method, returning the default return value.
+                // Check to see if the variable, fileAppender, is null.  If it is, send an error to
+                // the Debug output and terminate the execution of this method, returning the
+                // default return value.
                 if (fileAppender == null)
                 {
                     // the variable fileAppender is required to have a valid object reference.
@@ -172,15 +238,63 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>Initializes the application's logging subsystem.</summary>
-        /// <param name="muteDebugLevelIfReleaseMode">Set to true if we should not write out "DEBUG" messages to the Debug output when in the Release mode. Set to false if all messages should always be logged.</param>
-        /// <param name="overwrite">Overwrites any existing logs for the application with the latest logging sent out by this instance.</param>
-        /// <param name="configurationFileName">Specifies the path to the configuration file to be utilized for initializing log4net. If blank, the system attempts to utilize the default App.config file.</param>
-        /// <param name="muteConsole">Set to <see langword="true" /> to suppress the display of logging messages to the console if a log file is being used. If a log file is not used, then no logging at all will occur if this parameter is set to <see langword="true" />.</param>
-        /// <param name="logFilePathnameToUse">(Optional.) If blank, then the <c>XMLConfigurator</c> object is used to configure logging. <para /> Else, specify here the path to the Debug output to be created.</param>
-        /// <param name="verbosity">(Optional.) An <see cref="T:System.Int32" /> whose value must be <c>0</c> or greater. <para /> Indicates the verbosity level. <para /> Higher values mean more verbose. <para /> if the <paramref name="verbosity" /> parameter is negative, it will be ignored. <para /> The default value of this parameter is <c>1</c>.</param>
-        /// <param name="applicationName">(Required.) A <see cref="T:System.String" /> containing a user-friendly display name of the application that is using this logging library. <para /> Leave blank to use the default value.</param>
-        /// <param name="repository">(Optional.) Reference to an instance of <see cref="T:log4net.Repository.ILoggerRepository" /> that is to be configured for the current specialized logging-client session. <para /> If <see langword="null" />, the implementation utilizes its existing legacy repository-selection behavior.</param>
-        /// <returns><see langword="true" /> if the logging subsystem initialization process completed successfully; <see langword="false" /> otherwise.</returns>
+        /// <param name="muteDebugLevelIfReleaseMode">
+        /// Set to true if we should not write
+        /// out "DEBUG" messages to the Debug output when in the Release mode. Set to false
+        /// if all messages should always be logged.
+        /// </param>
+        /// <param name="overwrite">
+        /// Overwrites any existing logs for the application with
+        /// the latest logging sent out by this instance.
+        /// </param>
+        /// <param name="configurationFileName">
+        /// Specifies the path to the configuration
+        /// file to be utilized for initializing log4net. If blank, the system attempts to
+        /// utilize the default App.config file.
+        /// </param>
+        /// <param name="muteConsole">
+        /// Set to <see langword="true" /> to suppress the
+        /// display of logging messages to the console if a log file is being used. If a
+        /// log file is not used, then no logging at all will occur if this parameter is
+        /// set to <see langword="true" />.
+        /// </param>
+        /// <param name="logFilePathnameToUse">
+        /// (Optional.) If blank, then the
+        /// <c>XMLConfigurator</c> object is used to configure logging.
+        /// <para />
+        /// Else, specify here the path to the Debug output to be created.
+        /// </param>
+        /// <param name="verbosity">
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
+        /// </param>
+        /// <param name="applicationName">
+        /// (Required.) A <see cref="T:System.String" />
+        /// containing a user-friendly display name of the application that is using this
+        /// logging library.
+        /// <para />
+        /// Leave blank to use the default value.
+        /// </param>
+        /// <param name="repository">
+        /// (Optional.) Reference to an instance of
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> that is to be configured
+        /// for the current specialized logging-client session.
+        /// <para />
+        /// If <see langword="null" />, the implementation utilizes its existing legacy
+        /// repository-selection behavior.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the logging subsystem initialization
+        /// process completed successfully; <see langword="false" /> otherwise.
+        /// </returns>
         public virtual bool InitializeLogging(
             bool muteDebugLevelIfReleaseMode = true,
             bool overwrite = true,
@@ -209,7 +323,9 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the event log was configured properly..."
                 );
 
-                // Check to see whether the event log was configured properly. If this is not the case, then write an error message to the log file, and then terminate the execution of this method.
+                // Check to see whether the event log was configured properly. If this is not the
+                // case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!Setup.EventLogging(applicationName))
                 {
                     // The event log could NOT be configured properly.  This is not desirable.
@@ -244,10 +360,13 @@ namespace xyLOGIX.Core.Debug
                     $"*** DefaultLoggingInfrastructure.InitializeLogging: Checking whether the configurator type, '{configuratorType}', is within the defined value set..."
                 );
 
-                // Check to see whether the configurator type is within the defined value set. If this is not the case, then write an error message to the Debug output and then terminate the execution of this method.
+                // Check to see whether the configurator type is within the defined value set. If
+                // this is not the case, then write an error message to the Debug output and then
+                // terminate the execution of this method.
                 if (!LoggingConfiguratorTypeValidator.IsValid(configuratorType))
                 {
-                    // The configurator type is NOT within the defined value set.  This is not desirable.
+                    // The configurator type is NOT within the defined value set.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"DefaultLoggingInfrastructure.InitializeLogging: *** ERROR: The configurator type, '{configuratorType}', is NOT within the defined value set.  Stopping..."
                     );
@@ -274,10 +393,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the variable, 'configurator', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'configurator', has a null reference for a value. If it does, then emit an error to the Debug output, and terminate the execution of this method, returning the default return value.
+                // Check to see if the variable, 'configurator', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
                 if (configurator == null)
                 {
-                    // The variable, 'configurator', has a null reference for a value.  This is not desirable.
+                    // The variable, 'configurator', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR ***  The variable, 'configurator', has a null reference for a value.  Stopping..."
                     );
@@ -290,7 +412,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, 'configurator', because it's not set to a null reference.
+                // We can use the variable, 'configurator', because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The variable, 'configurator', has a valid object reference for its value.  Proceeding..."
                 );
@@ -299,13 +422,16 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the logging subsystem was configured properly..."
                 );
 
-                // Check to see whether the logging subsystem was configured properly. If this is not the case, then write an error message to the log file, and then terminate the execution of this method.
+                // Check to see whether the logging subsystem was configured properly. If this is
+                // not the case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!configurator.Configure(
                         muteDebugLevelIfReleaseMode, overwrite, effectiveConfigurationFileName,
                         muteConsole, logFilePathnameToUse, verbosity, applicationName, repository
                     ))
                 {
-                    // The logging subsystem could NOT be configured properly.  This is not desirable.
+                    // The logging subsystem could NOT be configured properly.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR *** The logging subsystem could NOT be configured properly.  Stopping..."
                     );
@@ -330,12 +456,15 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: Checking whether the debug utilities object could be properly configured..."
                 );
 
-                // Check to see whether the debug utilities object could be properly configured. If this is not the case, then write an error message to the log file, and then terminate the execution of this method.
+                // Check to see whether the debug utilities object could be properly configured. If
+                // this is not the case, then write an error message to the log file, and then
+                // terminate the execution of this method.
                 if (!SetUpDebugUtils(
                         muteDebugLevelIfReleaseMode, true, false, verbosity, muteConsole
                     ))
                 {
-                    // The debug utilities object was NOT properly configured.  This is not desirable.
+                    // The debug utilities object was NOT properly configured.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.InitializeLogging: *** ERROR *** The debug utilities object was NOT properly configured.  Stopping..."
                     );
@@ -352,9 +481,11 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The debug utilities object was properly configured.  Proceeding..."
                 );
 
-                /* NOTE: DO NOT call OnLoggingInitializationFinished from here. ALWAYS call such a method in the OVERRIDES of this method, ONLY. */
+                /* NOTE: DO NOT call OnLoggingInitializationFinished from here. ALWAYS call such a
+                 method in the OVERRIDES of this method, ONLY. */
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the operation(s) succeeded. */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -373,19 +504,58 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Occurs when the value of the <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" /> property has been updated.</summary>
+        /// <summary>
+        /// Occurs when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" />
+        /// property has been updated.
+        /// </summary>
         public event EventHandler LogFileNameChanged;
 
-        /// <summary>Occurs when the initialization of the logging subsystem has been completed.</summary>
+        /// <summary>
+        /// Occurs when the initialization of the logging subsystem has been
+        /// completed.
+        /// </summary>
         public event EventHandler LoggingInitializationFinished;
 
-        /// <summary>Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class to initialize its functionality.</summary>
-        /// <param name="muteDebugLevelIfReleaseMode">If set to true, does not echo any logging statements that are set to the <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> level.</param>
-        /// <param name="isLogging">True to activate the functionality of writing to a log file; false to suppress. Usually used with the <paramref name="consoleOnly" /> parameter set to true.</param>
-        /// <param name="consoleOnly">True to only write messages to the console; false to write them both to the console and to the Debug output.</param>
-        /// <param name="verbosity">(Optional.) An <see cref="T:System.Int32" /> whose value must be <c>0</c> or greater. <para /> Indicates the verbosity level. <para /> Higher values mean more verbose. <para /> if the <paramref name="verbosity" /> parameter is negative, it will be ignored. <para /> The default value of this parameter is <c>1</c>.</param>
-        /// <param name="muteConsole">If set to <see langword="true" />, suppresses all console output.</param>
-        /// <returns><see langword="true" /> if the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class could be configured properly; <see langword="false" /> otherwise.</returns>
+        /// <summary>
+        /// Sets up the <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class to
+        /// initialize its functionality.
+        /// </summary>
+        /// <param name="muteDebugLevelIfReleaseMode">
+        /// If set to true, does not echo any
+        /// logging statements that are set to the
+        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> level.
+        /// </param>
+        /// <param name="isLogging">
+        /// True to activate the functionality of writing to a log
+        /// file; false to suppress. Usually used with the <paramref name="consoleOnly" />
+        /// parameter set to true.
+        /// </param>
+        /// <param name="consoleOnly">
+        /// True to only write messages to the console; false to
+        /// write them both to the console and to the Debug output.
+        /// </param>
+        /// <param name="verbosity">
+        /// (Optional.) An <see cref="T:System.Int32" /> whose
+        /// value must be <c>0</c> or greater.
+        /// <para />
+        /// Indicates the verbosity level.
+        /// <para />
+        /// Higher values mean more verbose.
+        /// <para />
+        /// if the <paramref name="verbosity" /> parameter is negative, it will be ignored.
+        /// <para />
+        /// The default value of this parameter is <c>1</c>.
+        /// </param>
+        /// <param name="muteConsole">
+        /// If set to <see langword="true" />, suppresses all
+        /// console output.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugUtils" /> class could be configured
+        /// properly; <see langword="false" /> otherwise.
+        /// </returns>
         public virtual bool SetUpDebugUtils(
             bool muteDebugLevelIfReleaseMode,
             bool isLogging = true,
@@ -453,7 +623,8 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Verbosity = {DebugUtils.Verbosity}"
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the operation(s) succeeded. */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -472,10 +643,26 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Retrieves the handle to the console window used by the calling process.</summary>
-        /// <remarks>If the calling process is not attached to a console, the return value is <see cref="F:System.IntPtr.Zero" />. This function is useful for determining whether the current application is a console application and for interacting with the console window, such as resizing or hiding it.</remarks>
-        /// <returns>A handle to the console window associated with the calling process, or <see cref="F:System.IntPtr.Zero" /> if the process does not have a console window.</returns>
-        /// <seealso href="https://learn.microsoft.com/en-us/windows/console/getconsolewindow">MSDN Documentation for GetConsoleWindow</seealso>
+        /// <summary>
+        /// Retrieves the handle to the console window used by the calling
+        /// process.
+        /// </summary>
+        /// <remarks>
+        /// If the calling process is not attached to a console, the return value
+        /// is <see cref="F:System.IntPtr.Zero" />. This function is useful for determining
+        /// whether the current application is a console application and for interacting
+        /// with the console window, such as resizing or hiding it.
+        /// </remarks>
+        /// <returns>
+        /// A handle to the console window associated with the calling process, or
+        /// <see cref="F:System.IntPtr.Zero" /> if the process does not have a console
+        /// window.
+        /// </returns>
+        /// <seealso
+        ///     href="https://learn.microsoft.com/en-us/windows/console/getconsolewindow">
+        /// MSDN
+        /// Documentation for GetConsoleWindow
+        /// </seealso>
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
 
@@ -522,13 +709,35 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Raises the <see cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileNameChanged" /> event.</summary>
-        /// <remarks>This method is called when the value of the <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" /> property is updated.</remarks>
+        /// <summary>
+        /// Raises the
+        /// <see
+        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileNameChanged" />
+        /// event.
+        /// </summary>
+        /// <remarks>
+        /// This method is called when the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LogFileName" />
+        /// property is updated.
+        /// </remarks>
         protected virtual void OnLogFileNameChanged()
             => LogFileNameChanged?.Invoke(this, EventArgs.Empty);
 
-        /// <summary>Raises the <see cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LoggingInitializationFinished" /> event.</summary>
-        /// <param name="repository">(Optional.) Reference to an instance of an object that implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface. <para /> Supply a value for this parameter if your infrastructure is not utilizing the default <c>HierarchyRepository</c>. <para /> The default value of this parameter is a <see langword="null" /> reference.</param>
+        /// <summary>
+        /// Raises the
+        /// <see
+        ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LoggingInitializationFinished" />
+        /// event.
+        /// </summary>
+        /// <param name="repository">
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default <c>HierarchyRepository</c>.
+        /// <para />
+        /// The default value of this parameter is a <see langword="null" /> reference.
+        /// </param>
         protected virtual bool OnLoggingInitializationFinished(
             bool overwrite = true,
             [NotLogged] ILoggerRepository repository = null
@@ -546,7 +755,8 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** Checking whether we're using PostSharp..."
                 );
 
-                // Check whether we're using PostSharp.  If this is NOT the case, then prepare the log file, raise the LoggingInitializationFinished event, and then stop.
+                // Check whether we're using PostSharp.  If this is NOT the case, then prepare the
+                // log file, raise the LoggingInitializationFinished event, and then stop.
                 if (!Type.Equals(LoggingInfrastructureType.PostSharp))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -569,7 +779,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                /* If we are here, then we've detected that PostSharp is being used. Override(s) of this method should take it from here. */
+                /* If we are here, then we've detected that PostSharp is being used. Override(s) of
+                 this method should take it from here. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** We're using PostSharp.  Proceeding..."
@@ -581,7 +792,8 @@ namespace xyLOGIX.Core.Debug
 
                 LoggingInitializationFinished?.Invoke(this, EventArgs.Empty);
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the operation(s) succeeded. */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -600,9 +812,21 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Prepares the log file by ensuring that the containing folder is writeable by the current user and by then, if specified to overwrite, deleting the current log file.</summary>
-        /// <param name="repository">(Optional.) Reference to an instance of an object that implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface. Supply a value for this parameter if your infrastructure is not utilizing the default HierarchicalRepository.</param>
-        /// <returns><see langword="true" /> if the log file has been prepared successfully; <see langword="false" /> otherwise.</returns>
+        /// <summary>
+        /// Prepares the log file by ensuring that the containing folder is
+        /// writeable by the current user and by then, if specified to overwrite, deleting
+        /// the current log file.
+        /// </summary>
+        /// <param name="repository">
+        /// (Optional.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// Supply a value for this parameter if your infrastructure is not utilizing the
+        /// default HierarchicalRepository.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the log file has been prepared
+        /// successfully; <see langword="false" /> otherwise.
+        /// </returns>
         protected virtual bool PrepareLogFile([NotLogged] ILoggerRepository repository)
         {
             var result = false;
@@ -613,13 +837,18 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Preparing to write the log file to the file system..."
                 );
 
-                /* This method is primarily concerned with deleting the previous log file and then starting a new one (for a subsequent execution, or user interaction session, with the same app. Therefore, if we are logging to the console only, then there is nothing for us to do here -- but return TRUE all the same, to indicate success. */
+                /* This method is primarily concerned with deleting the previous log file and then
+                 starting a new one (for a subsequent execution, or user interaction session, with
+                 the same app. Therefore, if we are logging to the console only, then there is
+                 nothing for us to do here -- but return TRUE all the same, to indicate success. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the logging backend is NOT the console..."
                 );
 
-                // Check to see whether the logging backend is NOT the console. If this is not the case, then write an error message to the Debug output, and then terminate the execution of this method.
+                // Check to see whether the logging backend is NOT the console. If this is not the
+                // case, then write an error message to the Debug output, and then terminate the
+                // execution of this method.
                 if (LoggingServices.DefaultBackend is ConsoleLoggingBackend)
                 {
                     // The logging backend is the console.  There is nothing to do.
@@ -643,10 +872,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Checking whether the property, 'LogFileName', appears to have a null or blank value..."
                 );
 
-                // Check to see if the required property, 'LogFileName', appears to have a null  or blank value. If it does, then send an error to the log file and quit, returning the default value of the result variable.
+                // Check to see if the required property, 'LogFileName', appears to have a null  or
+                // blank value. If it does, then send an error to the log file and quit, returning
+                // the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(LogFileName))
                 {
-                    // The property, 'LogFileName', appears to have a null or blank value.  This is not desirable.
+                    // The property, 'LogFileName', appears to have a null or blank value.  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The property, 'LogFileName', appears to have a null or blank value.  Stopping..."
                     );
@@ -679,10 +911,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'logFileDirectoryPath', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'logFileDirectoryPath', is null or blank. If it is,  then send an  error to the log file and quit, returning the default value  of the result variable.
+                // Check to see if the required variable, 'logFileDirectoryPath', is null or blank.
+                // If it is,  then send an  error to the log file and quit, returning the default
+                // value  of the result variable.
                 if (string.IsNullOrWhiteSpace(logFileDirectoryPath))
                 {
-                    // The variable, 'logFileDirectoryPath', has a null reference for a value, or is blank.  This is not desirable.
+                    // The variable, 'logFileDirectoryPath', has a null reference for a value, or is
+                    // blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The variable, 'logFileDirectoryPath', has a null reference for a value, or is blank.  Stopping..."
                     );
@@ -715,10 +950,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'logFileDirectoryParent', has a null reference for a value, or is blank..."
                 );
 
-                // Check to see if the required variable, 'logFileDirectoryParent', is null or blank. If it is,  then send an  error to the log file and quit, returning the default value  of the result variable.
+                // Check to see if the required variable, 'logFileDirectoryParent', is null or
+                // blank. If it is,  then send an  error to the log file and quit, returning the
+                // default value  of the result variable.
                 if (string.IsNullOrWhiteSpace(logFileDirectoryParent))
                 {
-                    // The variable, 'logFileDirectoryParent', has a null reference for a value, or is blank.  This is not desirable.
+                    // The variable, 'logFileDirectoryParent', has a null reference for a value, or
+                    // is blank.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The variable, 'logFileDirectoryParent', has a null reference for a value, or is blank.  Stopping..."
                     );
@@ -744,7 +982,9 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.PrepareLogFile *** INFO: Checking whether the folder having pathname, '{logFileDirectoryParent}', exists on the file system..."
                 );
 
-                // Check whether a folder having pathname, 'logFileDirectoryParent', exists on the file system. If it does not, then write an error message to the log file, and then terminate the execution of this method, returning the default return value.
+                // Check whether a folder having pathname, 'logFileDirectoryParent', exists on the
+                // file system. If it does not, then write an error message to the log file, and
+                // then terminate the execution of this method, returning the default return value.
                 if (!Directory.Exists(logFileDirectoryParent))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -759,7 +999,9 @@ namespace xyLOGIX.Core.Debug
                             : $"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** FAILED to create the folder, '{logFileDirectoryParent}', on the file system.  Stopping..."
                     );
 
-                    // Check whether a folder having pathname, 'logFileDirectoryParent', exists on the file system. If it does not, then terminate the execution of this method, returning the default return value.
+                    // Check whether a folder having pathname, 'logFileDirectoryParent', exists on
+                    // the file system. If it does not, then terminate the execution of this method,
+                    // returning the default return value.
                     if (!Directory.Exists(logFileDirectoryParent))
                     {
                         System.Diagnostics.Debug.WriteLine(
@@ -783,10 +1025,13 @@ namespace xyLOGIX.Core.Debug
                     $@"DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the user, '{Environment.UserDomainName}\{Environment.UserName}', has write privileges to the folder, '{logFileDirectoryParent}'..."
                 );
 
-                // Check to see whether the user has write access to the folder, 'logFileDirectoryParent'.  If this is not the case, then write an error message to the Debug output, and then throw UnauthorizedAccessException.
+                // Check to see whether the user has write access to the folder,
+                // 'logFileDirectoryParent'.  If this is not the case, then write an error message
+                // to the Debug output, and then throw UnauthorizedAccessException.
                 if (!DebugFileAndFolderHelper.IsFolderWriteable(logFileDirectoryParent))
                 {
-                    // The current user does NOT have write access to the folder.  This is not desirable.
+                    // The current user does NOT have write access to the folder.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $@"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** The user, '{Environment.UserDomainName}\{Environment.UserName}', does NOT have write privileges to the folder, '{logFileDirectoryParent}'.  Stopping..."
                     );
@@ -804,7 +1049,10 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.PrepareLogFile *** INFO: Checking whether the folder having pathname, '{logFileDirectoryPath}', exists on the file system..."
                 );
 
-                // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the file system. If it does not, then write an error message to the log file, and then attempt to create it. After we attempt to create it, we will check again whether it exists.
+                // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the
+                // file system. If it does not, then write an error message to the log file, and
+                // then attempt to create it. After we attempt to create it, we will check again
+                // whether it exists.
                 if (!Directory.Exists(logFileDirectoryPath))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -819,7 +1067,9 @@ namespace xyLOGIX.Core.Debug
                             : $"DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR *** FAILED to create the folder, '{logFileDirectoryPath}', on the file system.  Stopping..."
                     );
 
-                    // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the file system. If it does not, then terminate the execution of this method, returning the default return value.
+                    // Check whether a folder having pathname, 'logFileDirectoryPath', exists on the
+                    // file system. If it does not, then terminate the execution of this method,
+                    // returning the default return value.
                     if (!Directory.Exists(logFileDirectoryPath))
                     {
                         System.Diagnostics.Debug.WriteLine(
@@ -845,10 +1095,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the variable, 'firstAppender', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'firstAppender', has a null reference for a value. If it does, then emit an error to the Debug output, and terminate the execution of this method, returning the default return value.
+                // Check to see if the variable, 'firstAppender', has a null reference for a value.
+                // If it does, then emit an error to the Debug output, and terminate the execution
+                // of this method, returning the default return value.
                 if (firstAppender == null)
                 {
-                    // The variable, 'firstAppender', has a null reference for a value.  This is not desirable.
+                    // The variable, 'firstAppender', has a null reference for a value.  This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.PrepareLogFile: *** ERROR ***  The variable, 'firstAppender', has a null reference for a value.  Stopping..."
                     );
@@ -861,7 +1114,8 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                // We can use the variable, 'firstAppender', because it's not set to a null reference.
+                // We can use the variable, 'firstAppender', because it's not set to a null
+                // reference.
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.PrepareLogFile: *** SUCCESS *** The variable, 'firstAppender', has a valid object reference for its value.  Proceeding..."
                 );
@@ -888,11 +1142,49 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Attempts to ascertain the fully-qualified pathname of a VSIX-specific log4net configuration file, if any, using the provided <paramref name="defaultConfigFilePath" /> as a starting point.</summary>
-        /// <param name="defaultConfigFilePath">(Optional.) A <see cref="T:System.String" /> that is set to the fully-qualified pathname of the default log4net configuration file. <para /> If this parameter is <see langword="null" />, blank, or the <see cref="F:System.String.Empty" /> value, then the method will attempt to locate a VSIX-specific log4net configuration file.</param>
-        /// <param name="effectiveConfigurationFileName">(Output.) If found, receives the fully-qualified pathname of a VSIX-specific log4net configuration file; otherwise, receives the <see cref="F:System.String.Empty" /> value.</param>
-        /// <remarks>If this code is not being called from within a hosted VSIX package, then the method returns <see langword="false" />, and the value of the <paramref name="effectiveConfigurationFileName" /> parameter is set to the <see cref="F:System.String.Empty" /> value. <para /> This method attempts to ascertain whether this code is running inside an instance of Visual Studio (i.e., with <c>devenv</c> as the parent process) and, if so, then looks in the folder on the file system from which the current extension is presently running for a log4net configuration file. <para /> If one is found, then the <paramref name="effectiveConfigurationFileName" /> parameter is set to the fully-qualified pathname of such a file. <para /> If a non-blank value is passed for the argument of the <paramref name="defaultConfigFilePath" /> parameter, then the method simply sets the <paramref name="effectiveConfigurationFileName" /> parameter to be identically equal to the value of the <paramref name="defaultConfigFilePath" /> parameter.</remarks>
-        /// <returns><see langword="true" /> if a VSIX-specific log4net configuration file was found; otherwise, <see langword="false" />.</returns>
+        /// <summary>
+        /// Attempts to ascertain the fully-qualified pathname of a VSIX-specific
+        /// log4net configuration file, if any, using the provided
+        /// <paramref name="defaultConfigFilePath" /> as a starting point.
+        /// </summary>
+        /// <param name="defaultConfigFilePath">
+        /// (Optional.) A
+        /// <see cref="T:System.String" /> that is set to the fully-qualified pathname of
+        /// the default log4net configuration file.
+        /// <para />
+        /// If this parameter is <see langword="null" />, blank, or the
+        /// <see cref="F:System.String.Empty" /> value, then the method will attempt to
+        /// locate a VSIX-specific log4net configuration file.
+        /// </param>
+        /// <param name="effectiveConfigurationFileName">
+        /// (Output.) If found, receives the
+        /// fully-qualified pathname of a VSIX-specific log4net configuration file;
+        /// otherwise, receives the <see cref="F:System.String.Empty" /> value.
+        /// </param>
+        /// <remarks>
+        /// If this code is not being called from within a hosted VSIX package,
+        /// then the method returns <see langword="false" />, and the value of the
+        /// <paramref name="effectiveConfigurationFileName" /> parameter is set to the
+        /// <see cref="F:System.String.Empty" /> value.
+        /// <para />
+        /// This method attempts to ascertain whether this code is running inside an
+        /// instance of Visual Studio (i.e., with <c>devenv</c> as the parent process) and,
+        /// if so, then looks in the folder on the file system from which the current
+        /// extension is presently running for a log4net configuration file.
+        /// <para />
+        /// If one is found, then the <paramref name="effectiveConfigurationFileName" />
+        /// parameter is set to the fully-qualified pathname of such a file.
+        /// <para />
+        /// If a non-blank value is passed for the argument of the
+        /// <paramref name="defaultConfigFilePath" /> parameter, then the method simply
+        /// sets the <paramref name="effectiveConfigurationFileName" /> parameter to be
+        /// identically equal to the value of the <paramref name="defaultConfigFilePath" />
+        /// parameter.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if a VSIX-specific log4net configuration file
+        /// was found; otherwise, <see langword="false" />.
+        /// </returns>
         private static bool TryAscertainVsixSpecificLog4NetConfigFilePath(
             string defaultConfigFilePath,
             out string effectiveConfigurationFileName
@@ -907,10 +1199,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.TryAscertainVsixSpecificLog4NetConfigFilePath: Checking whether the currently-running code is being hosted within a VSIX package..."
                 );
 
-                // Check to see whether the currently-running code is being hosted within a VSIX package. If this is not the case, then write an error message to the log file, and then terminate the execution of this method.
+                // Check to see whether the currently-running code is being hosted within a VSIX
+                // package. If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
                 if (!VsixHosting.IsVsixHost())
                 {
-                    // The currently-running code does NOT appear to be hosted within a VSIX package.  This is not desirable.
+                    // The currently-running code does NOT appear to be hosted within a VSIX
+                    // package.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.TryAscertainVsixSpecificLog4NetConfigFilePath: *** ERROR *** The currently-running code does NOT appear to be hosted within a VSIX package.  Stopping..."
                     );
@@ -933,10 +1228,13 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.TryAscertainVsixSpecificLog4NetConfigFilePath: Checking whether the default configuration file pathname is null, blank, or the empty string..."
                 );
 
-                // Check to see whether the default configuration file pathname is null, blank, or the empty string. If this is not the case, then write a FYI message to the log file, and then terminate the execution of this method.
+                // Check to see whether the default configuration file pathname is null, blank, or
+                // the empty string. If this is not the case, then write a FYI message to the log
+                // file, and then terminate the execution of this method.
                 if (!string.IsNullOrWhiteSpace(defaultConfigFilePath))
                 {
-                    // The specified default configuration file pathname appears to be non-blank and non-empty.  This is not desirable.
+                    // The specified default configuration file pathname appears to be non-blank and
+                    // non-empty.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "DefaultLoggingInfrastructure.TryAscertainVsixSpecificLog4NetConfigFilePath: *** FYI *** The specified default configuration file pathname appears to be non-blank and non-empty.  Stopping..."
                     );
@@ -970,7 +1268,12 @@ namespace xyLOGIX.Core.Debug
                 result = !string.IsNullOrWhiteSpace(effectiveConfigurationFileName) &&
                          File.Exists(effectiveConfigurationFileName);
 
-                /* If the value of 'false' is set for the 'result' variable, then the file whose fully-qualified pathname is stored in the value of the 'effectiveConfigurationFileName' parameter does not exist on the file system. In this case, we will set the value of the 'effectiveConfigurationFileName' parameter to the empty string, and then return 'false' to indicate that we could not locate a VSIX-specific log4net configuration file. */
+                /* If the value of 'false' is set for the 'result' variable, then the file whose
+                 fully-qualified pathname is stored in the value of the
+                 'effectiveConfigurationFileName' parameter does not exist on the file system. In
+                 this case, we will set the value of the 'effectiveConfigurationFileName' parameter
+                 to the empty string, and then return 'false' to indicate that we could not locate a
+                 VSIX-specific log4net configuration file. */
 
                 if (!result)
                 {
