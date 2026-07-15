@@ -81,8 +81,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough]
-            get => GetLoggingClientAssemblyContext.SoleInstance();
+            [DebuggerStepThrough] get => GetLoggingClientAssemblyContext.SoleInstance();
         }
 
         /// <summary>
@@ -91,8 +90,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyRegistry ClientAssemblyRegistry
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
 
         /// <summary>
@@ -101,8 +99,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -288,10 +285,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>Gets the full path and filename to the log file for this application.</summary>
@@ -332,8 +327,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
         {
-            [DebuggerStepThrough]
-            get => GetLoggingInfrastructure.OfType(InfrastructureType);
+            [DebuggerStepThrough] get => GetLoggingInfrastructure.OfType(InfrastructureType);
         }
 
         /// <summary>
@@ -343,8 +337,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructureTypeValidator LoggingInfrastructureTypeValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingInfrastructureTypeValidator.SoleInstance();
 
         /// <summary>
@@ -638,6 +631,103 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
+        /// <summary>
+        /// Gets a reference to the log4net repository that should be configured for the
+        /// current logging operation.
+        /// </summary>
+        /// <returns>
+        /// Reference to an instance of
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> associated with the
+        /// current specialized logging-client session; otherwise, <see langword="null" />.
+        /// </returns>
+        /// <remarks>
+        /// If no specialized logging-client session is active, this method returns
+        /// <see langword="null" />.
+        /// <para />
+        /// A <see langword="null" /> return value instructs the existing logging
+        /// infrastructure to utilize its legacy repository-selection behavior.
+        /// <para />
+        /// If the current session is invalid or the operation fails, this method returns
+        /// <see langword="null" />.
+        /// </remarks>
+        [return: NotLogged]
+        private static ILoggerRepository GetRepositoryToConfigure()
+        {
+            ILoggerRepository result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetRepositoryToConfigure: Checking whether the property, 'CurrentClientSession', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'CurrentClientSession', has a null
+                // reference for a value. 
+                // If that is the case, then we will write an error message to the Debug output, and
+                // then
+                // terminate the execution of this method, while returning the default return value.
+                if (CurrentClientSession == null)
+                {
+                    // The property, 'CurrentClientSession', has a null reference for a value.  This
+                    // is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.GetRepositoryToConfigure: *** ERROR *** The property, 'CurrentClientSession', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetRepositoryToConfigure: *** SUCCESS *** The property, 'CurrentClientSession', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetRepositoryToConfigure: Checking whether the current logging-client session has valid setting(s)..."
+                );
+
+                // Check to see whether the current logging-client session has valid setting(s).  If
+                // this is not the case, then write an error message to the log file, and then
+                // terminate the execution of this method.
+                if (!CurrentClientSession.IsValid())
+                {
+                    // The current logging-client session does NOT appear to have valid setting(s).
+                    // There is nothing to do.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.GetRepositoryToConfigure: *** ERROR *** The current logging-client session does NOT appear to have valid setting(s).  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetRepositoryToConfigure: *** SUCCESS *** The current logging-client session has valid setting(s).  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Getting a reference to an instance of the log4net repository that should be configured for the current logging operation..."
+                );
+
+                result = CurrentClientSession.Repository;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? "*** SUCCESS *** Obtained a reference to an instance of the log4net repository that should be configured for the current logging session.  Proceeding..."
+                    : "*** ERROR *** FAILED to obtain a reference to an instance of the log4net repository that should be configured for the current logging session.  Stopping..."
+            );
+
+            return result;
+        }
+
         /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
         /// Set to true if we should not write
@@ -716,7 +806,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggingSubsystemManager.InitializeLogging: Checking whether the current logging-client session is available..."
                 );
 
-                // Check to see whether the current logging-client session is available. If it is not, then write an error message to the Debug output, and then terminate the execution of this method, returning the default return value.
+                // Check to see whether the current logging-client session is available. If it is
+                // not, then write an error message to the Debug output, and then terminate the
+                // execution of this method, returning the default return value.
                 if (!EnsureCurrentClientSession())
                 {
                     // The current logging-client session is NOT available.  This is not desirable.
