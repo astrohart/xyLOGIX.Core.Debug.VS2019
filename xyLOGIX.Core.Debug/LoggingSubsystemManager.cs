@@ -12,13 +12,13 @@ namespace xyLOGIX.Core.Debug
     public static class LoggingSubsystemManager
     {
         /// <summary>
-        /// Initializes static data or performs actions that need to be performed
-        /// once only for the <see cref="T:xyLOGIX.Core.Debug.LoggingSubsystemManager" />
-        /// class.
+        /// Initializes <see langword="static" /> data or performs actions that
+        /// need to be performed once only for the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingSubsystemManager" /> class.
         /// </summary>
         /// <remarks>
         /// This constructor is called automatically prior to the first instance
-        /// being created or before any static members are referenced.
+        /// being created or before any <see langword="static" /> members are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -93,14 +93,22 @@ namespace xyLOGIX.Core.Debug
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
 
         /// <summary>
-        /// Gets the logging-client assembly associated with the current logical execution
-        /// flow.
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientSessionRegistry" /> interface.
+        /// </summary>
+        private static ILoggingClientSessionRegistry ClientSessionRegistry
+        {
+            [DebuggerStepThrough] get;
+        } = GetLoggingClientSessionRegistry.SoleInstance();
+
+        /// <summary>
+        /// Gets the logging-client assembly associated with the current logical
+        /// execution flow.
         /// </summary>
         /// <remarks>
         /// If no logging-client assembly is currently selected, the corresponding
-        /// registration
-        /// cannot be found, or the operation fails, then this property returns
-        /// <see langword="null" />.
+        /// registration cannot be found, or the operation fails, then this property
+        /// returns <see langword="null" />.
         /// </remarks>
         internal static Assembly CurrentClientAssembly
         {
@@ -131,14 +139,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets the ticket that identifies the logging-client assembly associated with the
-        /// current logical execution flow.
+        /// Gets the ticket that identifies the logging-client assembly associated
+        /// with the current logical execution flow.
         /// </summary>
         /// <remarks>
-        /// If no logging-client assembly is currently selected, the client-assembly
-        /// context is
-        /// unavailable, or the property cannot be evaluated, then this property returns
-        /// <see cref="F:System.Guid.Empty" />.
+        /// If no logging-client assembly is currently selected, the
+        /// client-assembly context is unavailable, or the property cannot be evaluated,
+        /// then this property returns <see cref="F:System.Guid.Empty" />.
         /// </remarks>
         internal static Guid CurrentClientAssemblyTicket
         {
@@ -460,13 +467,13 @@ namespace xyLOGIX.Core.Debug
                     "LoggingSubsystemManager.RegisterAndSelectClientAssembly: Checking whether the method parameter, 'assembly', has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, 'assembly', is null. If it is,
-                // then write an error message to the log file and then terminate the
-                // execution of this method, returning the default return value.
+                // Check to see if the required parameter, 'assembly', is null. If it is, then write
+                // an error message to the log file and then terminate the execution of this method,
+                // returning the default return value.
                 if (assembly == null)
                 {
-                    // The method parameter, 'assembly', is required and is not supposed
-                    // to have a NULL value.  It does, and this is not desirable.
+                    // The method parameter, 'assembly', is required and is not supposed to have a
+                    // NULL value.  It does, and this is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** ERROR *** A null reference was passed for the method parameter, 'assembly'.  Stopping..."
                     );
@@ -519,14 +526,13 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'ClientAssemblyContext', has a null
-                // reference for a value. 
-                // If that is the case, then we will write an error message to the Debug output, and
-                // then
-                // terminate the execution of this method, while returning the default return value.
+                // reference for a value.  If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
                 if (ClientAssemblyContext == null)
                 {
-                    // The property, 'ClientAssemblyContext', has a null reference for a value.
-                    // This is not desirable.
+                    // The property, 'ClientAssemblyContext', has a null reference for a value. This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** ERROR *** The property, 'ClientAssemblyContext', has a null reference for a value.  Stopping..."
                     );
