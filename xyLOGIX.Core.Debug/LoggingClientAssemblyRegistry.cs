@@ -301,7 +301,7 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the specified .NET assembly is NOT already registered.
-                    // If this is not the case, then write a FYI message to the Debug output, and
+                    // If this is the case, then write a FYI message to the Debug output, and
                     // then return its ticket.
                     if (_ticketsByAssembly.TryGetValue(assembly, out result))
                     {
