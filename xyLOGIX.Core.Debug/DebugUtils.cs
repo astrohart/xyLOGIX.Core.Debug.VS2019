@@ -50,11 +50,16 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static string ApplicationName
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLogProvider" /> interface.
+        /// </summary>
+        private static ILoggingClientLogProvider ClientLogProvider { [DebuggerStepThrough] get; } =
+            GetLoggingClientLogProvider.SoleInstance();
 
         /// <summary>
         /// Gets or sets a value indicating whether the logging produced by this
@@ -72,10 +77,8 @@ namespace xyLOGIX.Core.Debug
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -101,10 +104,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>Gets or sets a value that turns logging as a whole on or off.</summary>
@@ -126,10 +127,8 @@ namespace xyLOGIX.Core.Debug
         /// <summary>Gets or sets a value telling us to mute all console output.</summary>
         public static bool MuteConsole
         {
-            [DebuggerStepThrough]
-            get => _muteConsole;
-            [DebuggerStepThrough]
-            set => OutputLocationProvider.MuteConsole = _muteConsole = value;
+            [DebuggerStepThrough] get => _muteConsole;
+            [DebuggerStepThrough] set => OutputLocationProvider.MuteConsole = _muteConsole = value;
         }
 
         /// <summary>
@@ -138,10 +137,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool MuteDebugLevelIfReleaseMode
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>
@@ -156,16 +153,14 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IOutputLocationProvider OutputLocationProvider
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary>Gets or sets the verbosity level.</summary>
         /// <remarks>Typically, applications set this to 1.</remarks>
         public static int Verbosity
         {
-            [DebuggerStepThrough]
-            get => _verbosity;
+            [DebuggerStepThrough] get => _verbosity;
             [DebuggerStepThrough]
             set
             {
@@ -1002,6 +997,105 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         [WeakEvent]
         public static event TextEmittedEventHandler TextEmitted;
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:log4net.ILog" /> interface for the current logging-client session.
+        /// </summary>
+        /// <param name="sourceType">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Type" /> that identifies the source of the logging
+        /// record(s).
+        /// </param>
+        /// <returns>
+        /// Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.ILog" /> interface; otherwise, <see langword="null" />.
+        /// </returns>
+        /// <remarks>
+        /// If <paramref name="sourceType" /> is <see langword="null" />, or the
+        /// logging-client log provider is unavailable, then this method returns
+        /// <see langword="null" />.
+        /// <para />
+        /// When no specialized session is active, the ordinary legacy log4net repository
+        /// is utilized.
+        /// </remarks>
+        [return: NotLogged]
+        [Log(AttributeExclude = true), DebuggerStepThrough]
+        internal static ILog TryGetLogForCurrentClient([NotLogged] Type sourceType)
+        {
+            ILog result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.TryGetLogForCurrentClient: *** FYI *** Attempting to get a reference to an instance of an object that implements the 'log4net.ILog' interface for the current logging-client session..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.TryGetLogForCurrentClient: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
+                if (sourceType == null)
+                {
+                    // The method parameter, 'sourceType', is required and is not supposed to have a
+                    // NULL value.  There is nothing more to be done.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.TryGetLogForCurrentClient: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.TryGetLogForCurrentClient: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.TryGetLogForCurrentClient: Checking whether the property, 'ClientLogProvider', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'ClientLogProvider', has a null reference
+                // for a value.  If that is the case, then we will write an error message to the
+                // Debug output, and then terminate the execution of this method, while returning
+                // the default return value.
+                if (ClientLogProvider == null)
+                {
+                    // The property, 'ClientLogProvider', has a null reference for a value.  There
+                    // is nothing to do.
+                    System.Diagnostics.Debug.WriteLine(
+                        "DebugUtils.TryGetLogForCurrentClient: *** ERROR *** The property, 'ClientLogProvider', has a null reference for a value.  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "DebugUtils.TryGetLogForCurrentClient: *** SUCCESS *** The property, 'ClientLogProvider', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Getting the reference to an instance of an object that implements the 'log4net.ILog' interface for the current logging-client session that corresponds to the source type, '{sourceType}'..."
+                );
+
+                result = ClientLogProvider.GetLogForType(sourceType);
+            }
+            catch (Exception ex)
+            {
+                /* Do not call DebugUtils.LogException here because this method is itself part of
+                 the DebugUtils logger-resolution path. */
+
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Occurs when the value of the
