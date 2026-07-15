@@ -221,6 +221,7 @@
     <Compile Include="LoggingBackendTypeValidator.cs" />
     <Compile Include="LoggingClientAssemblyContext.cs" />
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
+    <Compile Include="LoggingClientLogProvider.cs" />
     <Compile Include="LoggingClientRoutingAppender.cs" />
     <Compile Include="LoggingClientSession.cs" />
     <Compile Include="LoggingClientSessionRegistry.cs" />
