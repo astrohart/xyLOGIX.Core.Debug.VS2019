@@ -238,6 +238,7 @@
     <Compile Include="OutputLocationType.cs" />
     <Compile Include="OutputLocationTypeValidator.cs" />
     <Compile Include="OutputMultiplexer.cs" />
+    <Compile Include="PostSharpLoggingBackendRouter.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
     <Compile Include="RollingModeValidator.cs" />
     <Compile Include="RootLoggerProvisionerBase.cs" />
