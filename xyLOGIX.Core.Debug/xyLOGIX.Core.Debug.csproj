@@ -205,6 +205,7 @@
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
     <Compile Include="InvalidClientAssemblyNames.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
+    <Compile Include="IPostSharpLoggingBackendRouter.cs" />
     <Compile Include="IRollingFileAppenderConfiguration.cs" />
     <Compile Include="IRollingModeValidator.cs" />
     <Compile Include="IRootLoggerProvisioner.cs" />
