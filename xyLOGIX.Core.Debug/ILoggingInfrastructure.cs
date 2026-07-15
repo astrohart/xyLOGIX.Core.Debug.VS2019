@@ -87,11 +87,12 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object that
-        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// (Optional.) Reference to an instance of
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> that is to be configured
+        /// for the current specialized logging-client session.
         /// <para />
-        /// Supply a value for this parameter if your infrastructure is not utilizing the
-        /// default <c>HierarchicalRepository</c>.
+        /// If <see langword="null" />, the implementation utilizes its existing legacy
+        /// repository-selection behavior.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem initialization
