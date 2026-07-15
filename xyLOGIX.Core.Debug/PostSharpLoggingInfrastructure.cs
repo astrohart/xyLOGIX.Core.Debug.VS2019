@@ -293,10 +293,12 @@ namespace xyLOGIX.Core.Debug
         /// Leave blank to use the default value.
         /// </param>
         /// <param name="repository">
-        /// (Optional.) Reference to an instance of an object that
-        /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
-        /// Supply a value for this parameter if your infrastructure is not utilizing the
-        /// default HierarchicalRepository.
+        /// (Optional.) Reference to an instance of
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> that is to be configured
+        /// for the current specialized logging-client session.
+        /// <para />
+        /// If <see langword="null" />, the implementation utilizes its existing legacy
+        /// repository-selection behavior.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the logging subsystem initialization
@@ -381,8 +383,8 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.InitializeLogging: Checking whether the '_relay' field has a null reference for a value..."
                 );
 
-                // Check to see if the required field, _relay, is null. If it is, then send an
-                // error to the log file and then quit, returning the default value of the result
+                // Check to see if the required field, _relay, is null. If it is, then send an error
+                // to the log file and then quit, returning the default value of the result
                 // variable.
                 if (_relay == null)
                 {
@@ -574,8 +576,8 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: Checking whether the '_relay' field has a null reference for a value..."
                 );
 
-                // Check to see if the required field, _relay, is null. If it is, then send an
-                // error to the log file and then quit, returning the default value of the result
+                // Check to see if the required field, _relay, is null. If it is, then send an error
+                // to the log file and then quit, returning the default value of the result
                 // variable.
                 if (_relay == null)
                 {
