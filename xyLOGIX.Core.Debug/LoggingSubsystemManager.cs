@@ -76,12 +76,94 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientAssemblyContext" /> interface.
+        /// </summary>
+        private static ILoggingClientAssemblyContext ClientAssemblyContext
+        {
+            [DebuggerStepThrough] get => GetLoggingClientAssemblyContext.SoleInstance();
+        }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientAssemblyRegistry" /> interface.
         /// </summary>
         private static ILoggingClientAssemblyRegistry ClientAssemblyRegistry
         {
             [DebuggerStepThrough] get;
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
+
+        /// <summary>
+        /// Gets the logging-client assembly associated with the current logical execution
+        /// flow.
+        /// </summary>
+        /// <remarks>
+        /// If no logging-client assembly is currently selected, the corresponding
+        /// registration
+        /// cannot be found, or the operation fails, then this property returns
+        /// <see langword="null" />.
+        /// </remarks>
+        internal static Assembly CurrentClientAssembly
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = default(Assembly);
+
+                try
+                {
+                    var ticket = CurrentClientAssemblyTicket;
+
+                    if (Guid.Empty.Equals(ticket)) return result;
+                    if (ClientAssemblyRegistry == null) return result;
+
+                    result = ClientAssemblyRegistry.GetAssembly(ticket);
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = default;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ticket that identifies the logging-client assembly associated with the
+        /// current logical execution flow.
+        /// </summary>
+        /// <remarks>
+        /// If no logging-client assembly is currently selected, the client-assembly
+        /// context is
+        /// unavailable, or the property cannot be evaluated, then this property returns
+        /// <see cref="F:System.Guid.Empty" />.
+        /// </remarks>
+        internal static Guid CurrentClientAssemblyTicket
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                var result = Guid.Empty;
+
+                try
+                {
+                    if (ClientAssemblyContext == null) return result;
+
+                    result = ClientAssemblyContext.CurrentTicket;
+                }
+                catch (Exception ex)
+                {
+                    // dump all the exception info to the Debug output
+                    System.Diagnostics.Debug.WriteLine(ex);
+
+                    result = Guid.Empty;
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="T:LoggingInfrastructureType" /> value that
@@ -336,6 +418,169 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"LoggingSubsystemManager.InitializeLogging: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Registers the specified assembly as a logging client and selects it
+        /// for the current logical execution flow.
+        /// </summary>
+        /// <param name="assembly">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Reflection.Assembly" /> that is requesting logging
+        /// services.
+        /// </param>
+        /// <returns>
+        /// A <see cref="T:System.Guid" /> value that identifies the registered
+        /// and selected logging-client assembly; otherwise,
+        /// <see cref="F:System.Guid.Empty" />.
+        /// </returns>
+        /// <remarks>
+        /// If <paramref name="assembly" /> is <see langword="null" />, the
+        /// assembly cannot be registered, or its ticket cannot be selected for the current
+        /// logical execution flow, then this method returns
+        /// <see cref="F:System.Guid.Empty" />.
+        /// <para />
+        /// Registering an assembly that has already been registered reuses its existing
+        /// ticket.
+        /// <para />
+        /// Because this method may execute before the logging subsystem has been
+        /// initialized, exception information is written directly to the Debug output.
+        /// </remarks>
+        [return: NotLogged]
+        public static Guid RegisterAndSelectClientAssembly([NotLogged] Assembly assembly)
+        {
+            var result = Guid.Empty;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterAndSelectClientAssembly: Checking whether the method parameter, 'assembly', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'assembly', is null. If it is,
+                // then write an error message to the log file and then terminate the
+                // execution of this method, returning the default return value.
+                if (assembly == null)
+                {
+                    // The method parameter, 'assembly', is required and is not supposed
+                    // to have a NULL value.  It does, and this is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** ERROR *** A null reference was passed for the method parameter, 'assembly'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterAndSelectClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'assembly'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to register the assembly, '{assembly.FullName}', as a logging-client assembly..."
+                );
+
+                result = RegisterClientAssembly(assembly);
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterAndSelectClientAssembly: Checking whether the specified assembly was successfully registered..."
+                );
+
+                // Check whether the specified assembly was successfully registered.  If this is not
+                // the case, then write an error message to the Debug output, and then terminate the
+                // execution of this method, returning the default return value.
+                if (Guid.Empty.Equals(result))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** ERROR *** The assembly, '{assembly.FullName}', could NOT be successfully registered.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterAndSelectClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** SUCCESS *** The assembly, '{assembly.FullName}', was successfully registered with the ticket, '{result}'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterAndSelectClientAssembly: Checking whether the property, 'ClientAssemblyContext', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'ClientAssemblyContext', has a null
+                // reference for a value. 
+                // If that is the case, then we will write an error message to the Debug output, and
+                // then
+                // terminate the execution of this method, while returning the default return value.
+                if (ClientAssemblyContext == null)
+                {
+                    // The property, 'ClientAssemblyContext', has a null reference for a value.
+                    // This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** ERROR *** The property, 'ClientAssemblyContext', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterAndSelectClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** SUCCESS *** The property, 'ClientAssemblyContext', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.RegisterAndSelectClientAssembly: Attempting to select the logging-client assembly ticket, '{result}', for the current logical execution flow..."
+                );
+
+                // Attempt to select the logging-client assembly ticket for the current logical
+                // execution flow.  If this is not successful, then write an error message to the
+                // Debug output, and then terminate the execution of this method, returning the
+                // default return value.
+                if (!ClientAssemblyContext.Select(result))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** ERROR *** The logging-client assembly ticket, '{result}', could NOT be selected for the current logical execution flow.  Stopping..."
+                    );
+
+                    result = Guid.Empty;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterAndSelectClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.RegisterAndSelectClientAssembly: *** SUCCESS *** The logging-client assembly ticket, '{result}', was selected for the current logical execution flow.  Proceeding..."
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = Guid.Empty;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingSubsystemManager.RegisterAndSelectClientAssembly: Result = '{result}'"
             );
 
             return result;
