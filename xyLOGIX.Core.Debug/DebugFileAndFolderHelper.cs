@@ -998,7 +998,7 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Attempting to retrieve the ACL rule(s) for the file, '{pathname}'..."
                 );
 
-                // Get the access rules of the specified files (user groups and usernames that have
+                // GetLogForType the access rules of the specified files (user groups and usernames that have
                 // access to the file)
                 var rules = acl.GetAccessRules(true, true, typeof(SecurityIdentifier));
 
@@ -1586,7 +1586,7 @@ namespace xyLOGIX.Core.Debug
                     $"*** FYI *** Attempting to retrieve the ACL rule(s) for the folder, '{pathname}'..."
                 );
 
-                // Get the access rules of the specified folders (user groups and usernames that
+                // GetLogForType the access rules of the specified folders (user groups and usernames that
                 // have access to the folder)
                 var rules = acl.GetAccessRules(true, true, typeof(SecurityIdentifier));
 
