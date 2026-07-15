@@ -25,18 +25,6 @@ namespace xyLOGIX.Core.Debug
     internal sealed class PostSharpLoggingBackendRouter : IPostSharpLoggingBackendRouter
     {
         /// <summary>
-        /// Reference to the sole instance of an object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.IPostSharpLoggingBackendRouter" /> interface.
-        /// </summary>
-        /// <remarks>
-        /// <b>NOTE:</b> The purpose of this field is to cache the value of the
-        /// <see cref="P:xyLOGIX.Core.Debug.PostSharpLoggingBackendRouter.Instance" />
-        /// property.
-        /// </remarks>
-        private static readonly IPostSharpLoggingBackendRouter _instance =
-            new PostSharpLoggingBackendRouter();
-
-        /// <summary>
         /// A <see cref="T:System.String" /> containing the unique name assigned
         /// to the process-wide PostSharp routing repository.
         /// </summary>
@@ -73,19 +61,23 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <remarks>
         /// This constructor is called automatically prior to the first instance
-        /// being created or before any <see langword="static" /> member is referenced.
+        /// being created or before any <see langword="static" /> members are referenced.
+        /// <para />
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static PostSharpLoggingBackendRouter() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// <see cref="T:xyLOGIX.Core.Debug.PostSharpLoggingBackendRouter" /> class and
-        /// returns a reference to it.
+        /// Constructs a new instance of
+        /// <see cref="T:xyLOGIX.Core.Debug.PostSharpLoggingBackendRouter" /> and returns a
+        /// reference to it.
         /// </summary>
         /// <remarks>
-        /// This empty, <see langword="private" /> constructor prohibits direct
-        /// allocation because this class is a Singleton accessible through its
+        /// This is an empty, <see langword="private" /> constructor to prohibit
+        /// direct allocation of this class, as it is a <c>Singleton</c> object accessible
+        /// via the
         /// <see cref="P:xyLOGIX.Core.Debug.PostSharpLoggingBackendRouter.Instance" />
         /// property.
         /// </remarks>
@@ -121,13 +113,12 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to the sole instance of an object that implements the
+        /// Gets a reference to the one and only instance of the object that
+        /// implements the
         /// <see cref="T:xyLOGIX.Core.Debug.IPostSharpLoggingBackendRouter" /> interface.
         /// </summary>
-        internal static IPostSharpLoggingBackendRouter Instance
-        {
-            [DebuggerStepThrough] get => _instance;
-        }
+        internal static IPostSharpLoggingBackendRouter Instance { [DebuggerStepThrough] get; } =
+            new PostSharpLoggingBackendRouter();
 
         /// <summary>
         /// Gets a value indicating whether the process-wide PostSharp logging
