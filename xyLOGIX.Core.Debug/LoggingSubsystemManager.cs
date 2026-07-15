@@ -2,6 +2,7 @@
 using PostSharp.Patterns.Diagnostics;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 namespace xyLOGIX.Core.Debug
@@ -393,6 +394,40 @@ namespace xyLOGIX.Core.Debug
 
                 System.Diagnostics.Debug.WriteLine(
                     "LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The method parameter, 'assembly', refers to a valid object.  Proceeding..."
+                );
+
+                /*
+                 * Reject assembly(ies) whose names are 'xyLOGIX.Core.TemplateWizard.Logging'.
+                 */
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: Checking whether the name of the assembly that is to be registered is in the list of invalid value(s)..."
+                );
+
+                // Check to see whether the name of the assembly that is to be registered is in the
+                // list of invalid value(s).  If this is not the case, then write an error message
+                // to the Debug output, and then terminate the execution of this method.
+                if (InvalidClientAssemblyNames.All.Contains(
+                        assembly.GetName()
+                                .Name, StringComparer.OrdinalIgnoreCase
+                    ))
+                {
+                    // The name of the assembly that is to be registered appears to be an element of
+                    // the list of invalid value(s).  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The name of the assembly that is to be registered appears to be an element of the list of invalid value(s).  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.RegisterClientAssembly: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The name of the assembly that is to be registered is in the list of invalid value(s).  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
