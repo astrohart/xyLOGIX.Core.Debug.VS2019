@@ -81,7 +81,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough] get => GetLoggingClientAssemblyContext.SoleInstance();
+            [DebuggerStepThrough]
+            get => GetLoggingClientAssemblyContext.SoleInstance();
         }
 
         /// <summary>
@@ -90,7 +91,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyRegistry ClientAssemblyRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
 
         /// <summary>
@@ -99,7 +101,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -285,8 +288,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>Gets the full path and filename to the log file for this application.</summary>
@@ -327,7 +332,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
         {
-            [DebuggerStepThrough] get => GetLoggingInfrastructure.OfType(InfrastructureType);
+            [DebuggerStepThrough]
+            get => GetLoggingInfrastructure.OfType(InfrastructureType);
         }
 
         /// <summary>
@@ -337,7 +343,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructureTypeValidator LoggingInfrastructureTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingInfrastructureTypeValidator.SoleInstance();
 
         /// <summary>
