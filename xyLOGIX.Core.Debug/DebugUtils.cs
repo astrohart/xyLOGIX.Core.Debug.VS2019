@@ -1055,6 +1055,35 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'sourceType.FullName', appears to have a
+                // null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(sourceType.FullName))
+                {
+                    // The property, 'sourceType.FullName', appears to have a null or blank value.
+                    // This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"DebugUtils.TryGetLogForCurrentClient: Result = {result}"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'sourceType.FullName', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
                     "DebugUtils.TryGetLogForCurrentClient: Checking whether the property, 'ClientLogProvider', has a null reference for a value..."
                 );
 
@@ -1093,6 +1122,13 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    // ReSharper disable once ConstantConditionalAccessQualifier
+                    ? $"*** SUCCESS *** Obtained a reference to the logger for the type, '{sourceType?.FullName ?? "<null>"}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the logger for the type, '{sourceType?.FullName ?? "<null>"}'.  Stopping..."
+            );
 
             return result;
         }
