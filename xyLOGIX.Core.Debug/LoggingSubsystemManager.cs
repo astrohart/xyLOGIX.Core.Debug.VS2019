@@ -713,6 +713,30 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.InitializeLogging: Checking whether the current logging-client session is available..."
+                );
+
+                // Check to see whether the current logging-client session is available. If it is not, then write an error message to the Debug output, and then terminate the execution of this method, returning the default return value.
+                if (!EnsureCurrentClientSession())
+                {
+                    // The current logging-client session is NOT available.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.InitializeLogging: *** ERROR *** A specialized logging client is selected, but its logging session could NOT be created.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.InitializeLogging: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.InitializeLogging: *** SUCCESS *** Either no specialized logging client is selected, or its logging session is available.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
                     $"LoggingSubsystemManager.InitializeLogging: *** FYI *** Attempting to delete the file, '{DebugUtils.ExceptionLogPathname}', if it exists..."
                 );
 
