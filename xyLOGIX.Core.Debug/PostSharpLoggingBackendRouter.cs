@@ -82,7 +82,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private PostSharpLoggingBackendRouter() { }
+        private PostSharpLoggingBackendRouter()
+        { }
 
         /// <summary>
         /// Gets a reference to the log4net repository that receives logging
