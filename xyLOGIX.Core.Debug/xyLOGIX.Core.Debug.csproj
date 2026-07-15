@@ -216,6 +216,7 @@
     <Compile Include="LoggingBackendTypeValidator.cs" />
     <Compile Include="LoggingClientAssemblyContext.cs" />
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
+    <Compile Include="LoggingClientSession.cs" />
     <Compile Include="LoggingConfiguratorBase.cs" />
     <Compile Include="LoggingConfiguratorType.cs" />
     <Compile Include="LoggingConfiguratorTypeValidator.cs" />
