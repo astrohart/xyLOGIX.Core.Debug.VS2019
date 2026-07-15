@@ -174,8 +174,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to the PostSharp logging backend assigned to the current
-        /// logging-client session.
+        /// Gets a reference to the PostSharp logging backend assigned to the
+        /// current logging-client session.
         /// </summary>
         /// <remarks>
         /// If no current logging-client session exists, this property returns
@@ -210,8 +210,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to the log4net repository assigned to the current
-        /// logging-client
-        /// session.
+        /// logging-client session.
         /// </summary>
         /// <remarks>
         /// If no current logging-client session exists, this property returns
@@ -245,13 +244,13 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets the logging-client session associated with the current logical execution
-        /// flow.
+        /// Gets the logging-client session associated with the current logical
+        /// execution flow.
         /// </summary>
         /// <remarks>
-        /// If no logging-client assembly is currently selected, or no session has been
-        /// created
-        /// for the selected ticket, this property returns <see langword="null" />.
+        /// If no logging-client assembly is currently selected, or no session has
+        /// been created for the selected ticket, this property returns
+        /// <see langword="null" />.
         /// </remarks>
         internal static ILoggingClientSession CurrentClientSession
         {
@@ -340,6 +339,297 @@ namespace xyLOGIX.Core.Debug
         {
             [DebuggerStepThrough] get;
         } = GetLoggingInfrastructureTypeValidator.SoleInstance();
+
+        /// <summary>
+        /// Ensures that a logging-client session exists when a logging-client
+        /// assembly has been selected.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if no specialized logging client is selected,
+        /// or a valid logging-client session exists; otherwise, <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// Applications that do not register a specialized in-process logging
+        /// client continue through the legacy initialization path.
+        /// <para />
+        /// If a specialized logging client has been selected but its session cannot be
+        /// created, this method returns <see langword="false" /> so initialization does
+        /// not silently fall back to another component's repository.
+        /// </remarks>
+        private static bool EnsureCurrentClientSession()
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.EnsureCurrentClientSession: *** FYI *** Ensuring that a logging-client session exists for the currently selected logging-client assembly..."
+                );
+
+                result = true;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.EnsureCurrentClientSession: *** INFO *** Checking whether the Current Client Assembly Ticket property, 'CurrentClientAssemblyTicket', is set to the Zero GUID..."
+                );
+
+                // Check whether the value of the Current Client Assembly Ticket property,
+                // 'CurrentClientAssemblyTicket', is set to the Zero GUID.  If this is the case,
+                // then write an error message to the Debug output, and then terminate the execution
+                // of this method, returning the default return value.
+                if (Guid.Empty.Equals(CurrentClientAssemblyTicket))
+                {
+                    // The value of the Current Client Assembly Ticket property,
+                    // 'CurrentClientAssemblyTicket', is set to the Zero GUID.  This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The value of the Current Client Assembly Ticket property, 'CurrentClientAssemblyTicket', is set to the Zero GUID.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.EnsureCurrentClientSession: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.EnsureCurrentClientSession: *** SUCCESS *** The value of the Current Client Assembly Ticket property, 'CurrentClientAssemblyTicket', is NOT set to the Zero GUID; in fact, it is set to '{CurrentClientAssemblyTicket}'.  Proceeding..."
+                );
+
+                result = false;
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to get or create the logging-client session for the ticket, '{CurrentClientAssemblyTicket}'..."
+                );
+
+                var session = GetOrCreateCurrentClientSession();
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.EnsureCurrentClientSession: Checking whether the variable, 'session', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'session', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
+                if (session == null)
+                {
+                    // The variable, 'session', has a null reference for a value.  This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.EnsureCurrentClientSession: *** ERROR ***  The variable, 'session', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.EnsureCurrentClientSession: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'session', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.EnsureCurrentClientSession: *** SUCCESS *** The variable, 'session', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Checking whether the logging-client session for the current client assembly ticket, '{CurrentClientAssemblyTicket}', is valid..."
+                );
+
+                result = session.IsValid();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result
+                    ? "*** SUCCESS *** Ensured that a current logging-client session is in place.  Proceeding..."
+                    : "*** ERROR *** FAILED to ensure that a current logging-client session is in place.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets or creates the logging-client session associated with the
+        /// currently selected logging-client assembly.
+        /// </summary>
+        /// <returns>
+        /// Reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientSession" /> interface; otherwise,
+        /// <see langword="null" />.
+        /// </returns>
+        /// <remarks>
+        /// If no logging-client assembly is currently selected, its registration
+        /// cannot be resolved, or session creation fails, this method returns
+        /// <see langword="null" />.
+        /// <para />
+        /// This method does not assign the session backend to
+        /// <see cref="P:PostSharp.Patterns.Diagnostics.LoggingServices.DefaultBackend" />.
+        /// </remarks>
+        [return: NotLogged]
+        private static ILoggingClientSession GetOrCreateCurrentClientSession()
+        {
+            ILoggingClientSession result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** FYI *** Attempting to get or create the logging-client session for the " +
+                    $"ticket, '{CurrentClientAssemblyTicket}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** INFO *** Checking whether the current client assembly ticket property, 'CurrentClientAssemblyTicket', is set to the Zero GUID..."
+                );
+
+                // Check whether the value of the current client assembly ticket property,
+                // 'CurrentClientAssemblyTicket', is set to the Zero GUID.  If this is the case,
+                // then write an error message to the Debug output, and then terminate the execution
+                // of this method, returning the default return value.
+                if (Guid.Empty.Equals(CurrentClientAssemblyTicket))
+                {
+                    // The value of the current client assembly ticket property,
+                    // 'CurrentClientAssemblyTicket', is set to the Zero GUID.  This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The value of the current client assembly ticket property, 'CurrentClientAssemblyTicket', is set to the Zero GUID.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** SUCCESS *** The value of the current client assembly ticket property, 'CurrentClientAssemblyTicket', is NOT set to the Zero GUID; in fact, it is set to '{CurrentClientAssemblyTicket}'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: Checking whether the property, 'CurrentClientAssembly', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'CurrentClientAssembly', has a null
+                // reference for a value.  If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
+                if (CurrentClientAssembly == null)
+                {
+                    // The property, 'CurrentClientAssembly', has a null reference for a value. This
+                    // is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** ERROR *** The property, 'CurrentClientAssembly', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** SUCCESS *** The property, 'CurrentClientAssembly', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: Checking whether the property, 'ClientSessionRegistry', has a null reference for a value..."
+                );
+
+                // Check to see if the required property, 'ClientSessionRegistry', has a null
+                // reference for a value.  If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
+                if (ClientSessionRegistry == null)
+                {
+                    // The property, 'ClientSessionRegistry', has a null reference for a value. This
+                    // is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** ERROR *** The property, 'ClientSessionRegistry', has a null reference for a value.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingSubsystemManager.GetOrCreateCurrentClientSession: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** SUCCESS *** The property, 'ClientSessionRegistry', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Getting or creating the logging-client session for the current client assembly ticket, '{CurrentClientAssemblyTicket}'..."
+                );
+
+                result = ClientSessionRegistry.GetOrCreate(
+                    CurrentClientAssemblyTicket, CurrentClientAssembly
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: Checking whether the variable, 'result', has a null reference for a value..."
+                );
+
+                // Check to see if the variable, 'result', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
+                if (result == null)
+                {
+                    // The variable, 'result', has a null reference for a value.  This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** ERROR ***  The variable, 'result', has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                // We can use the variable, 'result', because it's not set to a null reference.
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** SUCCESS *** The variable, 'result', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Checking whether the logging-client session for the current client assembly ticket, '{CurrentClientAssemblyTicket}', is valid..."
+                );
+
+                // Check to see whether the logging-client session for the current client assembly
+                // ticket is valid. If it is not, then write an error message to the Debug output,
+                // and then terminate the execution of this method, returning the default return
+                // value.
+                if (!result.IsValid())
+                {
+                    // The logging-client session for the current client assembly ticket is NOT
+                    // valid.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingSubsystemManager.GetOrCreateCurrentClientSession: *** ERROR *** The logging-client session for the current client assembly ticket, '{CurrentClientAssemblyTicket}', is NOT valid.  Stopping..."
+                    );
+
+                    // set the return value of this method to a null reference.
+                    result = default;
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to the logging-client session that corresponds to the specified assembly ticket, '{CurrentClientAssemblyTicket}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to the logging-client session that corresponds to the specified assembly ticket, '{CurrentClientAssemblyTicket}'.  Stopping..."
+            );
+
+            return result;
+        }
 
         /// <summary>Initializes the application's logging subsystem.</summary>
         /// <param name="muteDebugLevelIfReleaseMode">
