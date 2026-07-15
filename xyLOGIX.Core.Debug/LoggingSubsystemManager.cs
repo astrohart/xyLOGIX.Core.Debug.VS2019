@@ -82,8 +82,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough]
-            get => GetLoggingClientAssemblyContext.SoleInstance();
+            [DebuggerStepThrough] get => GetLoggingClientAssemblyContext.SoleInstance();
         }
 
         /// <summary>
@@ -92,8 +91,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyRegistry ClientAssemblyRegistry
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
 
         /// <summary>
@@ -102,8 +100,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -289,10 +286,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] set;
         }
 
         /// <summary>Gets the full path and filename to the log file for this application.</summary>
@@ -333,8 +328,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
         {
-            [DebuggerStepThrough]
-            get => GetLoggingInfrastructure.OfType(InfrastructureType);
+            [DebuggerStepThrough] get => GetLoggingInfrastructure.OfType(InfrastructureType);
         }
 
         /// <summary>
@@ -344,8 +338,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructureTypeValidator LoggingInfrastructureTypeValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingInfrastructureTypeValidator.SoleInstance();
 
         /// <summary>
@@ -354,8 +347,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IPostSharpLoggingBackendRouter PostSharpBackendRouter
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetPostSharpLoggingBackendRouter.SoleInstance();
 
         /// <summary>
@@ -930,6 +922,18 @@ namespace xyLOGIX.Core.Debug
                     "LoggingSubsystemManager.InitializeLogging: *** SUCCESS *** Either no specialized logging client is selected, or its logging session is available.  Proceeding..."
                 );
 
+                var selectedSession = CurrentClientSession;
+
+                var specializedSessionWasActive = false;
+
+                if (selectedSession != null)
+                {
+                    specializedSessionWasActive = selectedSession.IsValid();
+                }
+
+                var legacyRepositoryBeforeInitialization =
+                    GetLegacyRepositoryBeforeInitialization();
+
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingSubsystemManager.InitializeLogging: *** FYI *** Attempting to delete the file, '{DebugUtils.ExceptionLogPathname}', if it exists..."
                 );
@@ -1036,6 +1040,29 @@ namespace xyLOGIX.Core.Debug
                     muteDebugLevelIfReleaseMode, overwrite, configurationFileName, muteConsole,
                     logFileName, verbosity, applicationName
                 );
+
+                if (!result) return result;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.InitializeLogging: Reconciling the process-wide PostSharp logging-backend routing state..."
+                );
+
+                if (!ReconcilePostSharpBackendRouting(
+                        specializedSessionWasActive, legacyRepositoryBeforeInitialization
+                    ))
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingSubsystemManager.InitializeLogging: *** ERROR *** The process-wide PostSharp logging-backend routing state could NOT be reconciled.  Stopping..."
+                    );
+
+                    result = false;
+
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingSubsystemManager.InitializeLogging: *** SUCCESS *** The process-wide PostSharp logging-backend routing state was successfully reconciled.  Proceeding..."
+                );
             }
             catch (Exception ex)
             {
@@ -1048,6 +1075,95 @@ namespace xyLOGIX.Core.Debug
             System.Diagnostics.Debug.WriteLine(
                 $"LoggingSubsystemManager.InitializeLogging: Result = {result}"
             );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Reconciles the process-wide PostSharp backend after logging
+        /// initialization completes.
+        /// </summary>
+        /// <param name="specializedSessionWasActive">
+        /// (Required.) A
+        /// <see cref="T:System.Boolean" /> value indicating whether a valid specialized
+        /// logging-client session was active when initialization began.
+        /// </param>
+        /// <param name="legacyRepositoryBeforeInitialization">
+        /// (Optional.) Reference to the
+        /// ordinary log4net repository that was active before initialization began.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if no routing work was required, or the
+        /// PostSharp routing backend was successfully installed or updated; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// If no specialized session has ever been selected and the router has
+        /// not been installed, this method returns <see langword="true" /> without
+        /// changing
+        /// <see cref="P:PostSharp.Patterns.Diagnostics.LoggingServices.DefaultBackend" />.
+        /// <para />
+        /// Once the router has been installed, ordinary initialization updates its
+        /// fallback repository and restores the routing backend if another initializer
+        /// replaced it.
+        /// </remarks>
+        private static bool ReconcilePostSharpBackendRouting(
+            bool specializedSessionWasActive,
+            [NotLogged] ILoggerRepository legacyRepositoryBeforeInitialization
+        )
+        {
+            var result = false;
+
+            try
+            {
+                if (PostSharpBackendRouter == null)
+                {
+                    if (!specializedSessionWasActive)
+                    {
+                        result = true;
+                    }
+
+                    return result;
+                }
+
+                if (!specializedSessionWasActive)
+                {
+                    if (!PostSharpBackendRouter.IsInstalled)
+                    {
+                        result = true;
+
+                        return result;
+                    }
+
+                    result = PostSharpBackendRouter.InstallOrUpdate(GetDefaultBackendRepository());
+
+                    return result;
+                }
+
+                if (CurrentClientSession == null) return result;
+                if (!CurrentClientSession.IsValid()) return result;
+
+                if (legacyRepositoryBeforeInitialization != null)
+                {
+                    if (ReferenceEquals(
+                            legacyRepositoryBeforeInitialization, CurrentClientSession.Repository
+                        ))
+                    {
+                        legacyRepositoryBeforeInitialization = default;
+                    }
+                }
+
+                result = PostSharpBackendRouter.InstallOrUpdate(
+                    legacyRepositoryBeforeInitialization
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = false;
+            }
 
             return result;
         }
