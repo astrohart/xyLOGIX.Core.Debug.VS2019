@@ -9,6 +9,14 @@ using System.Reflection;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>Creates logging-client session object(s).</summary>
+    /// <remarks>
+    /// Logging-client object(s) are created for a specific assembly and ticket.
+    /// <para />
+    /// A named log4net repository and a corresponding
+    /// <see
+    ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+    /// are created for the session.
+    /// </remarks>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal static class MakeNewLoggingClientSession
     {
@@ -527,8 +535,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required variable, 'repositoryName', is null or blank. If it
-                // is,  then send an  error to the log file and quit, returning the default value
-                // of the result variable.
+                // is,  then send an  error to the log file and quit, returning the default value of
+                // the result variable.
                 if (string.IsNullOrWhiteSpace(repositoryName))
                 {
                     // The variable, 'repositoryName', has a null reference for a value, or is
