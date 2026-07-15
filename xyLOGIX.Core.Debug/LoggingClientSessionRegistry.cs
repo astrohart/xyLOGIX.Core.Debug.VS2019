@@ -80,7 +80,7 @@ namespace xyLOGIX.Core.Debug
         [return: NotLogged]
         public ILoggingClientSession Get([NotLogged] Guid ticket)
         {
-            var result = default(ILoggingClientSession);
+            ILoggingClientSession result = default;
 
             try
             {
@@ -135,7 +135,6 @@ namespace xyLOGIX.Core.Debug
 
                 result = default;
             }
-
 
             return result;
         }
