@@ -262,13 +262,10 @@ namespace xyLOGIX.Core.Debug
                         return result;
                     }
 
-                    /*
-                     * If we are here, then there was no corresponding logging-client session found
-                     * that corresponds to the specified 'ticket'. Therefore, attempt to create a
-                     * new
-                     * logging-client session and add it to the collection of registered
-                     * logging-client sessions.
-                     */
+                    /* If we are here, then there was no corresponding logging-client session found
+                     that corresponds to the specified 'ticket'. Therefore, attempt to create a new
+                     logging-client session and add it to the collection of registered
+                     logging-client sessions. */
 
                     System.Diagnostics.Debug.WriteLine(
                         $"*** FYI *** Making a new logging-client session for the specified ticket, '{ticket}', and assembly, '{clientAssembly.FullName}'..."
