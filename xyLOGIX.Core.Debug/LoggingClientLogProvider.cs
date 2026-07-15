@@ -574,69 +574,6 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        private ILog TryGetLoggerFromInternalCache([NotLogged] Type sourceType)
-        {
-            ILog result = default;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLogProvider.TryGetLoggerFromInternalCache: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, 'sourceType', is null. If it is, then write an error message to the Debug output and then terminate the execution of this method, returning the default return value.
-                if (sourceType == null)
-                {
-                    // The method parameter, 'sourceType', is required and is not supposed to have a NULL value.  There is nothing more to be done.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
-                );
-
-                // Check to see if the required property, 'sourceType.FullName', appears to have a null 
-                // or blank value. If it does, then send an error to the log file and quit,
-                // returning the default value of the result variable.
-                if (string.IsNullOrWhiteSpace(sourceType.FullName))
-                {
-                    // The property, 'sourceType.FullName', appears to have a null or blank value.  There is nothing to do.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Nothing to do..."
-                    );
-
-                    // Emit the result to the Debug output.
-                    System.Diagnostics.Debug.WriteLine($"LoggingClientLogProvider.TryGetLoggerFromInternalCache: Result = {result}");
-
-                    // Stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The property, 'sourceType.FullName', seems to have a non-blank value.  Proceeding..."
-                );
-                
-            }
-            catch (Exception ex)
-            {
-                 // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = default;
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:log4net.ILog" /> interface from the ordinary log4net repository.
@@ -709,6 +646,128 @@ namespace xyLOGIX.Core.Debug
                     // ReSharper disable once ConstantConditionalAccessQualifier
                     ? $"*** SUCCESS *** Obtained a reference to an instance of the legacy logger that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}'.  Proceeding..."
                     : $"*** ERROR *** FAILED to obtain a reference to an instance of the legacy logger that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}'.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Looks up the specified <paramref name="sourceType" /> in the internal cache; if
+        /// found, returns a reference to an instance of an object that implements the
+        /// <see cref="T:log4net.ILog" /> interface that can be utilized for logging.
+        /// </summary>
+        /// <param name="sourceType">
+        /// (Required.) Reference to an instance of <see cref="T:System.Type" /> that
+        /// identifies the source of the logging record(s).
+        /// </param>
+        /// <returns>
+        /// If successful, a reference to an instance of an object that implements
+        /// the <see cref="T:log4net.ILog" /> interface; otherwise, a
+        /// <see langword="null" /> reference is returned.
+        /// </returns>
+        private ILog TryGetLoggerFromInternalCache([NotLogged] Type sourceType)
+        {
+            ILog result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** FYI *** Getting a logger from the internal cache that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.TryGetLoggerFromInternalCache: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
+                if (sourceType == null)
+                {
+                    // The method parameter, 'sourceType', is required and is not supposed to have a
+                    // NULL value.  There is nothing more to be done.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'sourceType.FullName', appears to have a
+                // null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(sourceType.FullName))
+                {
+                    // The property, 'sourceType.FullName', appears to have a null or blank value.
+                    // There is nothing to do.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Nothing to do..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingClientLogProvider.TryGetLoggerFromInternalCache: Result = {result}"
+                    );
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'sourceType.FullName', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingClientLogProvider.TryGetLoggerFromInternalCache: Checking whether the specified source type, '{sourceType.FullName}', has a logger available..."
+                );
+
+                // Check to see whether the specified source type has a logger available.
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!IsLogAvailableForType(sourceType))
+                {
+                    // The specified source type does NOT appear to have a logger available.  This
+                    // is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** ERROR *** The specified source type, '{sourceType.FullName}', does NOT appear to have a logger available.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLogProvider.TryGetLoggerFromInternalCache: *** SUCCESS *** The specified source type has a logger available.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Attempting to get a reference to an instance of the logger that corresponds to the source type, '{sourceType.FullName}', from the internal cache..."
+                );
+
+                result = _sourceTypeFQNToLogMap[sourceType.FullName];
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? $"*** SUCCESS *** Obtained a reference to a logger that corresponds to the specified source type, '{sourceType?.FullName ?? "<null>"}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to a logger that corresponds to the specified source type, '{sourceType?.FullName ?? "<null>"}'.  Stopping..."
             );
 
             return result;
