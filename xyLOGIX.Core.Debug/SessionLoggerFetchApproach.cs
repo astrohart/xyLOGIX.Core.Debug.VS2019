@@ -18,7 +18,7 @@
         /// of the repository that is associated with the logger and the type of the source
         /// that is requesting the logger.
         /// </summary>
-        FetchByRepositoryName,
+        FetchByRepositoryNameAndSourceType,
 
         /// <summary>
         /// Attempt to fetch the logger by the legacy method.
