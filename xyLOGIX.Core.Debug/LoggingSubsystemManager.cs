@@ -1,6 +1,7 @@
 ﻿using Alphaleonis.Win32.Filesystem;
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -81,7 +82,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough] get => GetLoggingClientAssemblyContext.SoleInstance();
+            [DebuggerStepThrough]
+            get => GetLoggingClientAssemblyContext.SoleInstance();
         }
 
         /// <summary>
@@ -90,7 +92,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyRegistry ClientAssemblyRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientAssemblyRegistry.SoleInstance();
 
         /// <summary>
@@ -99,7 +102,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -285,8 +289,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>Gets the full path and filename to the log file for this application.</summary>
@@ -327,7 +333,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructure LoggingInfrastructure
         {
-            [DebuggerStepThrough] get => GetLoggingInfrastructure.OfType(InfrastructureType);
+            [DebuggerStepThrough]
+            get => GetLoggingInfrastructure.OfType(InfrastructureType);
         }
 
         /// <summary>
@@ -337,8 +344,19 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingInfrastructureTypeValidator LoggingInfrastructureTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingInfrastructureTypeValidator.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.IPostSharpLoggingBackendRouter" /> interface.
+        /// </summary>
+        private static IPostSharpLoggingBackendRouter PostSharpBackendRouter
+        {
+            [DebuggerStepThrough]
+            get;
+        } = GetPostSharpLoggingBackendRouter.SoleInstance();
 
         /// <summary>
         /// Ensures that a logging-client session exists when a logging-client
@@ -452,6 +470,91 @@ namespace xyLOGIX.Core.Debug
                     ? "*** SUCCESS *** Ensured that a current logging-client session is in place.  Proceeding..."
                     : "*** ERROR *** FAILED to ensure that a current logging-client session is in place.  Stopping..."
             );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the log4net repository associated with the current process-wide
+        /// PostSharp default backend.
+        /// </summary>
+        /// <returns>
+        /// Reference to the repository associated with the current
+        /// <see
+        ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+        /// ; otherwise, <see langword="null" />.
+        /// </returns>
+        /// <remarks>
+        /// If the current PostSharp default backend is not a
+        /// <see
+        ///     cref="T:PostSharp.Patterns.Diagnostics.Backends.Log4Net.Log4NetLoggingBackend" />
+        /// , this method returns <see langword="null" />.
+        /// </remarks>
+        [return: NotLogged]
+        private static ILoggerRepository GetDefaultBackendRepository()
+        {
+            ILoggerRepository result = default;
+
+            try
+            {
+                if (!(LoggingServices.DefaultBackend is Log4NetLoggingBackend backend))
+                    return result;
+                if (backend.Repository == null) return result;
+
+                result = backend.Repository;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the ordinary log4net repository that should be retained while a
+        /// specialized logging-client session is initialized.
+        /// </summary>
+        /// <returns>
+        /// Reference to the ordinary fallback repository; otherwise,
+        /// <see langword="null" />.
+        /// </returns>
+        /// <remarks>
+        /// If the PostSharp routing backend is already installed, its existing
+        /// fallback repository is returned.
+        /// <para />
+        /// Otherwise, the repository associated with the current PostSharp default backend
+        /// is returned.
+        /// </remarks>
+        [return: NotLogged]
+        private static ILoggerRepository GetLegacyRepositoryBeforeInitialization()
+        {
+            ILoggerRepository result;
+
+            try
+            {
+                if (PostSharpBackendRouter != null)
+                {
+                    if (PostSharpBackendRouter.IsInstalled)
+                    {
+                        result = PostSharpBackendRouter.FallbackRepository;
+
+                        return result;
+                    }
+                }
+
+                result = GetDefaultBackendRepository();
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = default;
+            }
 
             return result;
         }
@@ -632,8 +735,8 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Gets a reference to the log4net repository that should be configured for the
-        /// current logging operation.
+        /// Gets a reference to the log4net repository that should be configured
+        /// for the current logging operation.
         /// </summary>
         /// <returns>
         /// Reference to an instance of
@@ -641,8 +744,8 @@ namespace xyLOGIX.Core.Debug
         /// current specialized logging-client session; otherwise, <see langword="null" />.
         /// </returns>
         /// <remarks>
-        /// If no specialized logging-client session is active, this method returns
-        /// <see langword="null" />.
+        /// If no specialized logging-client session is active, this method
+        /// returns <see langword="null" />.
         /// <para />
         /// A <see langword="null" /> return value instructs the existing logging
         /// infrastructure to utilize its legacy repository-selection behavior.
@@ -662,10 +765,9 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'CurrentClientSession', has a null
-                // reference for a value. 
-                // If that is the case, then we will write an error message to the Debug output, and
-                // then
-                // terminate the execution of this method, while returning the default return value.
+                // reference for a value.  If that is the case, then we will write an error message
+                // to the Debug output, and then terminate the execution of this method, while
+                // returning the default return value.
                 if (CurrentClientSession == null)
                 {
                     // The property, 'CurrentClientSession', has a null reference for a value.  This
