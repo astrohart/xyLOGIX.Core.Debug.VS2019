@@ -181,6 +181,7 @@
     <Compile Include="GetOutputLocationProvider.cs" />
     <Compile Include="GetOutputLocationTypeValidator.cs" />
     <Compile Include="GetPatternLayout.cs" />
+    <Compile Include="GetPostSharpLoggingBackendRouter.cs" />
     <Compile Include="GetPostSharpLoggingInfrastructure.cs" />
     <Compile Include="GetProgrammaticLoggingConfigurator.cs" />
     <Compile Include="GetRollingModeValidator.cs" />
