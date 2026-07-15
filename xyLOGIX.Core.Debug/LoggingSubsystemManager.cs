@@ -396,9 +396,7 @@ namespace xyLOGIX.Core.Debug
                     "LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The method parameter, 'assembly', refers to a valid object.  Proceeding..."
                 );
 
-                /*
-                 * Reject assembly(ies) whose names are 'xyLOGIX.Core.TemplateWizard.Logging'.
-                 */
+                /* Reject assembly(ies) whose names are 'xyLOGIX.Core.TemplateWizard.Logging'. */
 
                 System.Diagnostics.Debug.WriteLine(
                     "LoggingSubsystemManager.RegisterClientAssembly: Checking whether the name of the assembly that is to be registered is in the list of invalid value(s)..."
