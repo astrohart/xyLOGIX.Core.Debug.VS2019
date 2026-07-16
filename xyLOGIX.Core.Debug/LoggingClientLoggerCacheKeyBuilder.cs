@@ -51,10 +51,7 @@ namespace xyLOGIX.Core.Debug
         [Log(AttributeExclude = true)]
         internal LoggingClientLoggerCacheKeyBuilder([NotLogged] ILoggerRepository repository)
         {
-            if (repository == null)
-                throw new ArgumentNullException(nameof(repository));
-
-            Repository = repository;
+            Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         /// <summary>
