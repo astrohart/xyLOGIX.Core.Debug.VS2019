@@ -1,9 +1,19 @@
 ﻿using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
 {
-    internal class LoggingClientLoggerCacheAddResult : ILoggingClientLoggerCacheAddResult
+    /// <summary>
+    /// Describes the result of an attempt to add a logger to the
+    /// logging-client logger cache.
+    /// </summary>
+    /// <remarks>
+    /// This object is immutable after construction and can therefore be
+    /// safely shared among multiple thread(s).
+    /// </remarks>
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
+    internal sealed class LoggingClientLoggerCacheAddResult : ILoggingClientLoggerCacheAddResult
     {
         /// <summary>
         /// Initializes <see langword="static" /> data or performs actions that
@@ -12,7 +22,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <remarks>
         /// This constructor is called automatically prior to the first instance
-        /// being created or before any <see langword="static" /> members are referenced.
+        /// being created or before any <see langword="static" /> member(s) are referenced.
         /// <para />
         /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
         /// attribute in order to simplify the logging output.
@@ -25,22 +35,46 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddResult" /> and
         /// returns a reference to it.
         /// </summary>
+        /// <param name="handlerType">
+        /// (Required.) A
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// enumeration value that identifies the Handler Chain link that accepted
+        /// responsibility for the cache-add operation.
+        /// </param>
+        /// <param name="outcome">
+        /// (Required.) A
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome" />
+        /// enumeration value that describes the final outcome of the cache-add operation.
+        /// </param>
         /// <remarks>
-        /// This is an empty, <see langword="private" /> constructor to prohibit direct
-        /// allocation of this class, as it is a <c>Singleton</c> object accessible via the
-        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddResult.Instance" />
-        /// property.
+        /// The supplied value(s) are retained without modification.
+        /// <para />
+        /// Validation that the handler type and outcome form a permitted combination is
+        /// the responsibility of the factory that constructs this object.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCacheAddResult() { }
+        internal LoggingClientLoggerCacheAddResult(
+            [NotLogged] LoggingClientLoggerCacheAddHandlerType handlerType,
+            [NotLogged] LoggingClientLoggerCacheAddOutcome outcome
+        )
+        {
+            HandlerType = handlerType;
+            Outcome = outcome;
+        }
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that
-        /// implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheAddResult" />
-        /// interface.
+        /// Gets a
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// enumeration value that identifies the Handler Chain link that accepted
+        /// responsibility for the cache-add operation.
         /// </summary>
-        internal static ILoggingClientLoggerCacheAddResult Instance { [DebuggerStepThrough] get; } =
-            new LoggingClientLoggerCacheAddResult();
+        public LoggingClientLoggerCacheAddHandlerType HandlerType { [DebuggerStepThrough] get; }
+
+        /// <summary>
+        /// Gets a
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome" />
+        /// enumeration value that describes the final outcome of the cache-add operation.
+        /// </summary>
+        public LoggingClientLoggerCacheAddOutcome Outcome { [DebuggerStepThrough] get; }
     }
 }
