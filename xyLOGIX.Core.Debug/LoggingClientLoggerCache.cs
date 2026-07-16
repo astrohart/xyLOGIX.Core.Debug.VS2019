@@ -364,53 +364,44 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCache.TryAdd: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'logger'.  Proceeding..."
                 );
 
-                if (_loggerMap == null)
-                    return result;
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAdd: Checking whether the field, '_loggerMap', has a null reference for a value..."
+                );
 
-                if (SyncRoot == null)
+                // Check to see if the required field, '_loggerMap', is null.  If it is, then send
+                // an error to the log file and then quit, returning the default value of the result
+                // variable.
+                if (_loggerMap == null)
+                {
+                    // The field, '_loggerMap' is required to be set to a valid object reference,
+                    // but it's not.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryAdd: *** ERROR *** The field, '_loggerMap', has a null reference.  Stopping..."
+                    );
+
+                    // stop.
                     return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAdd: *** SUCCESS *** The field, '_loggerMap', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Adding the logger to the cache with the corresponding cache key."
+                );
 
                 lock (SyncRoot)
                 {
-                    var loggerWasFound = _loggerMap.TryGetValue(cacheKey, out var cachedLogger);
-
-                    var cachedLoggerIsUsable = loggerWasFound;
-
-                    if (cachedLogger == null)
-                        cachedLoggerIsUsable = false;
-
-                    // A valid logger is already cached for this key.
-                    if (cachedLoggerIsUsable)
-                    {
-                        /* If we made it this far with no Exception(s) getting caught, then assume
-                         that the operation(s) succeeded. */
-
-                        result = true;
-                    }
-
-                    if (!result)
-                    {
-                        _loggerMap[cacheKey] = logger;
-
-                        var loggerWasFoundAfterAdd = _loggerMap.TryGetValue(
-                            cacheKey, out cachedLogger
-                        );
-
-                        var loggerWasCachedSuccessfully = loggerWasFoundAfterAdd;
-
-                        if (cachedLogger == null)
-                            loggerWasCachedSuccessfully = false;
-
-                        if (!ReferenceEquals(logger, cachedLogger))
-                            loggerWasCachedSuccessfully = false;
-
-                        /* If we made it this far with no Exception(s) getting caught, then assume
-                         that the operation(s) succeeded. */
-
-                        if (loggerWasCachedSuccessfully)
-                            result = true;
-                    }
+                    _loggerMap[cacheKey] = logger;
                 }
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
             }
             catch (Exception ex)
             {
@@ -466,41 +457,18 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLoggerCache.TryGet: Checking whether the method parameter, 'cacheKey', has a null reference for a value..."
+                    "LoggingClientLoggerCache.TryGet: Checking whether the specified cache key has valid setting(s)..."
                 );
 
-                // Check to see if the required parameter, 'cacheKey', is null. If it is, then write
-                // an error message to the Debug output and terminate the execution of this method.
-                if (cacheKey == null)
+                // Check to see whether the specified cache key has valid setting(s).
+                // If this is not the case, then write an error message to the log file,
+                // and then terminate the execution of this method.
+                if (!CacheKeyValidator.IsValid(cacheKey))
                 {
-                    // The method parameter, 'cacheKey', is required and is not supposed to have a
-                    // null reference for a value.  There is nothing more to be done.
+                    // The specified cache key does NOT appear to have valid setting(s).  This is
+                    // not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.TryGet: *** ERROR *** A null reference was passed for the method parameter, 'cacheKey'.  Nothing to do..."
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLoggerCache.TryGet: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'cacheKey'.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLoggerCache.TryGet: Checking whether the property, 'cacheKey.Repository', has a null reference for a value..."
-                );
-
-                // Check to see if the required property, 'cacheKey.Repository', has a null
-                // reference for a value.  If that is the case, then we will write an error message
-                // to the Debug output, and then terminate the execution of this method, while
-                // returning the default return value.
-                if (cacheKey.Repository == null)
-                {
-                    // The property, 'cacheKey.Repository', has a null reference for a value.  This
-                    // is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.TryGet: *** ERROR *** The property, 'cacheKey.Repository', has a null reference for a value.  Stopping..."
+                        "LoggingClientLoggerCache.TryGet: *** ERROR *** The specified cache key does NOT appear to have valid setting(s).  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -512,28 +480,77 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "LoggingClientLoggerCache.TryGet: *** SUCCESS *** The property, 'cacheKey.Repository', has a valid object reference for its value.  Proceeding..."
+                    "LoggingClientLoggerCache.TryGet: *** SUCCESS *** The specified cache key has valid setting(s).  Proceeding..."
                 );
 
-                if (string.IsNullOrWhiteSpace(cacheKey.LoggerName))
-                    return result;
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryGet: Checking whether the field, '_loggerMap', has a null reference for a value..."
+                );
 
+                // Check to see if the required field, '_loggerMap', is null.  If it is, then send
+                // an error to the log file and then quit, returning the default value of the result
+                // variable.
                 if (_loggerMap == null)
-                    return result;
+                {
+                    // The field, '_loggerMap' is required to be set to a valid object reference,
+                    // but it's not.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryGet: *** ERROR *** The field, '_loggerMap', has a null reference.  Stopping..."
+                    );
 
-                if (SyncRoot == null)
+                    // stop.
                     return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryGet: *** SUCCESS *** The field, '_loggerMap', has a valid object reference for its value.  Proceeding..."
+                );
 
                 lock (SyncRoot)
                 {
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** FYI *** Getting the logger from the cache with the corresponding cache key..."
+                    );
+
                     result = _loggerMap.TryGetValue(cacheKey, out logger);
 
-                    // The cache entry contains a null logger reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryGet: Checking whether the variable, 'logger', has a null reference for a value..."
+                    );
+
+                    // Check to see if the variable, 'logger', has a null reference for a value.
+                    // If it does, then emit an error to the Debug output, and terminate the
+                    // execution
+                    // of this method, returning the default return value.
                     if (logger == null)
                     {
-                        result = false;
+                        // The variable, 'logger', has a null reference for a value.  This is not
+                        // desirable.
+                        System.Diagnostics.Debug.WriteLine(
+                            "LoggingClientLoggerCache.TryGet: *** ERROR ***  The variable, 'logger', has a null reference for a value.  Stopping..."
+                        );
+
                         logger = default;
+
+                        System.Diagnostics.Debug.WriteLine(
+                            $"*** LoggingClientLoggerCache.TryGet: Result = {false}"
+                        );
+
+                        // stop.
+                        return false;
                     }
+
+                    // We can use the variable, 'logger', because it's not set to a null reference.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryGet: *** SUCCESS *** The variable, 'logger', has a valid object reference for its value.  Proceeding..."
+                    );
+
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then
+                     * assume that the operation(s) succeeded.
+                     */
+
+                    return true;
                 }
             }
             catch (Exception ex)
