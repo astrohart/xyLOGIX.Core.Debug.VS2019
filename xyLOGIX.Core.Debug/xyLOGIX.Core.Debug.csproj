@@ -247,6 +247,7 @@
     <Compile Include="LoggingInfrastructureTypeValidator.cs" />
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
+    <Compile Include="MakeNewLoggingClientLoggerCacheKey.cs" />
     <Compile Include="MakeNewLoggingClientSession.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
