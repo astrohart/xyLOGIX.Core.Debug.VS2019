@@ -192,7 +192,7 @@ namespace xyLOGIX.Core.Debug
                         "*** FYI *** Attempting to call XmlConfigurator.Configure() with no Logger Repository..."
                     );
 
-                    XmlConfigurator.Configure(configurationFileInfo);
+                    _ = XmlConfigurator.Configure(configurationFileInfo);
                 }
                 else
                 {
