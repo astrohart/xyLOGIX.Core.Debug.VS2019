@@ -46,8 +46,7 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private FetchLegacyLoggerSessionLoggerFetcher()
-        { }
+        private FetchLegacyLoggerSessionLoggerFetcher() { }
 
         /// <summary>
         /// Gets the
@@ -106,7 +105,166 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="T:log4net.ILog" /> interface; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
-        public override ILog FetchLogger(Type sourceType, string repositoryName = "")
-            => null;
+        [return: NotLogged]
+        [Log(AttributeExclude = true), DebuggerStepThrough]
+        public override ILog FetchLogger(
+            [NotLogged] Type sourceType,
+            [NotLogged] string repositoryName = ""
+        )
+        {
+            ILog result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: *** FYI *** Attempting to fetch the legacy logger for the source type, '{sourceType?.FullName ?? "<null>"}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then write an error message to the Debug output and then terminate the execution of this method, returning the default return value.
+                if (sourceType == null)
+                {
+                    // The method parameter, 'sourceType', is required and is not supposed to have a NULL value.  There is nothing more to be done.
+                    System.Diagnostics.Debug.WriteLine(
+                        "FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
+                );
+
+                // Check to see if the required property, 'sourceType.FullName', appears to have a null 
+                // or blank value. If it does, then send an error to the log file and quit,
+                // returning the default value of the result variable.
+                if (string.IsNullOrWhiteSpace(sourceType.FullName))
+                {
+                    // The property, 'sourceType.FullName', appears to have a null or blank value.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Stopping..."
+                    );
+
+                    // Emit the result to the Debug output.
+                    System.Diagnostics.Debug.WriteLine($"FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: Result = {result}");
+
+                    // Stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The property, 'sourceType.FullName', seems to have a non-blank value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    string.IsNullOrWhiteSpace(repositoryName)
+                        ? "FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: *** FYI *** No repository name was supplied.  The legacy logger-fetching approach does not require one."
+                        : $"FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: *** FYI *** The repository name, '{repositoryName}', was supplied but is intentionally ignored by the legacy logger-fetching approach."
+                );
+
+                result = TryGetLegacyLogger(sourceType);
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+                    ? "*** SUCCESS *** The legacy logger was fetched successfully.  Proceeding..."
+                    : "*** ERROR *** The legacy logger could not be fetched.  Stopping..."
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:log4net.ILog" /> interface from the ordinary log4net repository.
+        /// </summary>
+        /// <param name="sourceType">
+        /// (Required.) Reference to an instance of
+        /// <see cref="T:System.Type" /> that identifies the source of the logging
+        /// record(s).
+        /// </param>
+        /// <returns>
+        /// Reference to an instance of an object that implements the
+        /// <see cref="T:log4net.ILog" /> interface; otherwise, <see langword="null" />.
+        /// </returns>
+        /// <remarks>
+        /// If <paramref name="sourceType" /> is <see langword="null" />, or
+        /// log4net cannot supply the logger, then this method returns
+        /// <see langword="null" />.
+        /// </remarks>
+        [return: NotLogged]
+        [Log(AttributeExclude = true), DebuggerStepThrough]
+        private static ILog TryGetLegacyLogger([NotLogged] Type sourceType)
+        {
+            ILog result = default;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"FetchLegacyLoggerSessionLoggerFetcher.TryGetLegacyLogger: *** FYI *** Attempting to get a reference to an instance of the legacy logger that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "FetchLegacyLoggerSessionLoggerFetcher.TryGetLegacyLogger: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
+                );
+
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
+                if (sourceType == null)
+                {
+                    // The method parameter, 'sourceType', is required and is not supposed to have a
+                    // NULL value.  There is nothing more to be done.
+                    System.Diagnostics.Debug.WriteLine(
+                        "FetchLegacyLoggerSessionLoggerFetcher.TryGetLegacyLogger: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "FetchLegacyLoggerSessionLoggerFetcher.TryGetLegacyLogger: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Getting the legacy logger for the source type, '{sourceType.FullName}'..."
+                );
+
+                result = LogManager.GetLogger(sourceType);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = default;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                result != null
+
+                    // ReSharper disable once ConstantConditionalAccessQualifier
+                    ? $"*** SUCCESS *** Obtained a reference to an instance of the legacy logger that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}'.  Proceeding..."
+                    : $"*** ERROR *** FAILED to obtain a reference to an instance of the legacy logger that corresponds to the source type, '{sourceType?.FullName ?? "<null>"}'.  Stopping..."
+            );
+
+            return result;
+        }
     }
 }
