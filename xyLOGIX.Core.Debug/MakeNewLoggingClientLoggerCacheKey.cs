@@ -8,6 +8,5 @@ namespace xyLOGIX.Core.Debug
 {
     internal static class MakeNewLoggingClientLoggerCacheKey
     {
-        internal static class For
     }
 }
