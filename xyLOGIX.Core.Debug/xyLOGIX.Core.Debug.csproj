@@ -240,6 +240,7 @@
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
     <Compile Include="LoggingClientLoggerCache.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerType.cs" />
+    <Compile Include="LoggingClientLoggerCacheAddOutcome.cs" />
     <Compile Include="LoggingClientLoggerCacheKey.cs" />
     <Compile Include="LoggingClientLoggerCacheKeyBuilder.cs" />
     <Compile Include="LoggingClientLoggerCacheKeyValidator.cs" />
