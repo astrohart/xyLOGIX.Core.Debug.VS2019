@@ -184,6 +184,7 @@
     <Compile Include="GetLoggingClientAssemblyRegistry.cs" />
     <Compile Include="GetLoggingClientLoggerCache.cs" />
     <Compile Include="GetLoggingClientLoggerCacheAddHandlerTypeValidator.cs" />
+    <Compile Include="GetLoggingClientLoggerCacheAddOutcomeValidator.cs" />
     <Compile Include="GetLoggingClientLoggerCacheKeyValidator.cs" />
     <Compile Include="GetLoggingClientLogProvider.cs" />
     <Compile Include="GetLoggingClientSessionRegistry.cs" />
