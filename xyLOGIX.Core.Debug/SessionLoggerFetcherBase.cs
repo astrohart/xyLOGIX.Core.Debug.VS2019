@@ -148,19 +148,23 @@ namespace xyLOGIX.Core.Debug
                 /* Obviously, if the internal cache already has zero element(s), then there is
                  nothing else that needs to be done. */
 
+                // Determine the current count of element(s) in the internal logging-client session
+                // logger cache, atomically.
+                TryDetermineInternalCacheCount(out var originalCacheElementCount);
+
                 System.Diagnostics.Debug.WriteLine(
-                    "*** SessionLoggerFetcherBase.ClearInternalCache: Checking whether the '_sourceTypeFQNToLogMap' collection contains greater than zero elements..."
+                    "SessionLoggerFetcherBase.ClearInternalCache: Checking whether the count of internal cache element(s) is greater than zero..."
                 );
 
-                // Check to see whether the '_sourceTypeFQNToLogMap' collection contains greater
-                // than zero elements.  Otherwise, write an error message to the Debug output,
-                // return the default return value, and then terminate the execution of this method.
-                if (_sourceTypeFQNToLogMap.Count <= 0)
+                // Check whether the count of internal cache element(s) is greater than zero.  If it
+                // is not, then write an error message to the log file, and then terminate the
+                // execution of this method.
+                if (originalCacheElementCount <= 0)
                 {
-                    // The '_sourceTypeFQNToLogMap' collection contains zero elements.  This is not
-                    // desirable.
+                    // The count of internal cache element(s) is less than, or equal to, zero.  This
+                    // is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The '_sourceTypeFQNToLogMap' collection contains zero elements.  Stopping..."
+                        "*** ERROR *** The count of internal cache element(s) is zero.  Stopping..."
                     );
 
                     // stop.
@@ -168,219 +172,44 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"SessionLoggerFetcherBase.ClearInternalCache: *** SUCCESS *** {_sourceTypeFQNToLogMap.Count} element(s) were found in the '_sourceTypeFQNToLogMap' collection.  Proceeding..."
+                    $"SessionLoggerFetcherBase.ClearInternalCache: *** SUCCESS *** {originalCacheElementCount} internal cache element(s) were found.  Proceeding..."
                 );
+
+                // Attempt to atomically clear the internal cache.
+                TryClearInternalCacheAtomically();
+
+                // Determine the current count of element(s) in the internal logging-client session
+                // logger cache, atomically.
+                TryDetermineInternalCacheCount(out var remainingElementCount);
 
                 System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.ClearInternalCache: *** FYI *** Clearing the internal cache..."
+                    "*** SessionLoggerFetcherBase.ClearInternalCache: Checking whether the internal cache still contains one or more element(s)..."
                 );
 
-                _sourceTypeFQNToLogMap.Clear();
+                // Check to see whether the internal cache does NOT still contain one or more
+                // element(s).  Otherwise, write an error message to the log file, and then
+                // terminate the execution of this method.
+                if (remainingElementCount > 0)
+                {
+                    // The internal cache appears to still contain one or more element(s).  This is
+                    // not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The internal cache appears to still contain one or more element(s).  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "SessionLoggerFetcherBase.ClearInternalCache: *** SUCCESS *** The internal cache was cleared successfully.  Proceeding..."
+                );
             }
             catch (Exception ex)
             {
                 // dump all the exception info to the Debug output.
                 System.Diagnostics.Debug.WriteLine(ex);
             }
-        }
-
-        /// <summary>
-        /// Ascertains whether a reference to an instance of an object that
-        /// implements the <see cref="T:log4net.ILog" /> interface is available for the
-        /// specified <paramref name="sourceType" /> in the internal cache.
-        /// </summary>
-        /// <param name="sourceType">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Type" /> that reflects the type for which to obtain the
-        /// logger.
-        /// </param>
-        /// <remarks>
-        /// This method searches the internal cache for a key that matches the value of the
-        /// <see cref="P:System.Type.FullName" /> property of the specified
-        /// <paramref name="sourceType" />.
-        /// <para />
-        /// If such a match is found, then this method returns <see langword="true" />;
-        /// otherwise, it returns <see langword="false" />.
-        /// <para />
-        /// If the <paramref name="sourceType" /> parameter is passed a
-        /// <see langword="null" /> reference, then this method returns
-        /// <see langword="false" />.
-        /// <para />
-        /// This method also returns <see langword="false" /> if the
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.SessionLoggerFetcherBase._sourceTypeFQNToLogMap" />
-        /// collection is set to a <see langword="null" /> reference, or if it contains
-        /// zero element(s).
-        /// </remarks>
-        /// <returns>
-        /// <see langword="true" /> if a key exists in the internal cache that
-        /// matches the value of the <see cref="P:System.Type.FullName" /> property;
-        /// <see langword="false" /> otherwise.
-        /// </returns>
-        [Log(AttributeExclude = true), DebuggerStepThrough]
-        protected bool IsLogAvailableForType([NotLogged] Type sourceType)
-        {
-            var result = false;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    $"SessionLoggerFetcherBase.IsLogAvailableForType: *** FYI *** Determining whether a logger is available for the source type, '{sourceType?.FullName ?? "<null>"}'..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
-                );
-
-                // Check to see if the required parameter, 'sourceType', is null. If it is, then
-                // write an error message to the Debug output and then terminate the execution of
-                // this method, returning the default return value.
-                if (sourceType == null)
-                {
-                    // The method parameter, 'sourceType', is required and is not supposed to have a
-                    // NULL value.  There is nothing more to be done.
-                    System.Diagnostics.Debug.WriteLine(
-                        "SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
-                );
-
-                // Check to see if the required property, 'sourceType.FullName', appears to have a
-                // null 
-                // or blank value. If it does, then send an error to the log file and quit,
-                // returning the default value of the result variable.
-                if (string.IsNullOrWhiteSpace(sourceType.FullName))
-                {
-                    // The property, 'sourceType.FullName', appears to have a null or blank value.
-                    // This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Stopping..."
-                    );
-
-                    // Emit the result to the Debug output.
-                    System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: Result = {result}"
-                    );
-
-                    // Stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The property, 'sourceType.FullName', seems to have a non-blank value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
-                );
-
-                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
-                // then send an error to the log file and then quit, returning the default value of
-                // the result variable.
-                if (_sourceTypeFQNToLogMap == null)
-                {
-                    // The field, '_sourceTypeFQNToLogMap', is required to be set to a valid object
-                    // reference, but it's not.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
-                );
-
-                lock (SyncRoot)
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the '_sourceTypeFQNToLogMap' dictionary contains greater than zero elements..."
-                    );
-
-                    // Check to see whether the '_sourceTypeFQNToLogMap' dictionary contains greater
-                    // than zero elements.  Otherwise, write an error message to the log file,
-                    // return the default return value, and then terminate the execution of this
-                    // method.
-                    if (_sourceTypeFQNToLogMap.Count <= 0)
-                    {
-                        // The '_sourceTypeFQNToLogMap' dictionary contains zero elements.  This is
-                        // not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            "*** ERROR *** The '_sourceTypeFQNToLogMap' dictionary contains zero elements.  Stopping..."
-                        );
-
-                        System.Diagnostics.Debug.WriteLine(
-                            $"SessionLoggerFetcherBase.IsLogAvailableForType: Result = {result}"
-                        );
-
-                        // stop.
-                        return result;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** {_sourceTypeFQNToLogMap.Count} element(s) were found in the '_sourceTypeFQNToLogMap' dictionary.  Proceeding..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the internal cache contains the specified source type, '{sourceType.FullName}'..."
-                    );
-
-                    // Check to see whether the internal cache contains the specified source type.
-                    // If this is not the case, then write an error message to the log file,
-                    // and then terminate the execution of this method.
-                    if (!_sourceTypeFQNToLogMap.ContainsKey(sourceType.FullName))
-                    {
-                        // The internal cache does NOT appear to contain the specified source type.
-                        // This is not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            $"SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** The internal cache does NOT appear to contain the specified source type, '{sourceType.FullName}'.  Stopping..."
-                        );
-
-                        System.Diagnostics.Debug.WriteLine(
-                            $"*** SessionLoggerFetcherBase.IsLogAvailableForType: Result = {result}"
-                        );
-
-                        // stop.
-                        return result;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** The internal cache contains the specified source type, '{sourceType.FullName}'.  Proceeding..."
-                    );
-
-                    /*
-                     * If we made it this far with no Exception(s) getting caught, then
-                     * assume that the operation(s) succeeded.
-                     */
-
-                    result = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = false;
-            }
-
-            System.Diagnostics.Debug.WriteLine(
-                $"SessionLoggerFetcherBase.IsLogAvailableForType: Result = {result}"
-            );
-
-            return result;
         }
 
         /// <summary>
@@ -473,8 +302,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'sourceType.FullName', appears to have a
-                // null 
-                // or blank value. If it does, then send an error to the log file and quit,
+                // null  or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
@@ -524,10 +352,8 @@ namespace xyLOGIX.Core.Debug
                 {
                     _sourceTypeFQNToLogMap[sourceType.FullName] = logger;
 
-                    /*
-                     * If we made it this far with no Exception(s) getting caught, then
-                     * assume that the operation(s) succeeded.
-                     */
+                    /* If we made it this far with no Exception(s) getting caught, then assume that
+                     the operation(s) succeeded. */
 
                     result = true;
                 }
@@ -545,6 +371,60 @@ namespace xyLOGIX.Core.Debug
             );
 
             return result;
+        }
+
+        /// <summary>Attempts to atomically clear the contents of the internal cache.</summary>
+        /// <remarks>
+        /// If the value of the
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.SessionLoggerFetcherBase._sourceTypeFQNToLogMap" />
+        /// is set to a <see langword="null" /> reference, then this method does nothing.
+        /// </remarks>
+        private void TryClearInternalCacheAtomically()
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "SessionLoggerFetcherBase.TryClearInternalCacheAtomically: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
+                );
+
+                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
+                // then send an error to the log file and then terminate the execution of this
+                // method.
+                if (_sourceTypeFQNToLogMap == null)
+                {
+                    // The field, '_sourceTypeFQNToLogMap' is required to be set to a valid object
+                    // reference, but it's not.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "SessionLoggerFetcherBase.TryClearInternalCacheAtomically: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "SessionLoggerFetcherBase.TryClearInternalCacheAtomically: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to clear the contents of the '_sourceTypeFQNToLogMap' collection..."
+                );
+
+                lock (SyncRoot)
+                {
+                    _sourceTypeFQNToLogMap.Clear();
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** SUCCESS *** The contents of the '_sourceTypeFQNToLogMap' collection have been cleared."
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -706,6 +586,63 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Determines the current count of element(s) in the internal
+        /// logging-client session logger cache.
+        /// </summary>
+        /// <param name="internalCacheElementCount">
+        /// (Output.) If the operation(s) succeed,
+        /// receives the current count of element(s) in the internal logging-client session
+        /// logger cache; otherwise, receives a value of
+        /// <see cref="F:System.Int32.MinValue" />.
+        /// </param>
+        private void TryDetermineInternalCacheCount(out int internalCacheElementCount)
+        {
+            internalCacheElementCount = int.MinValue;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
+                );
+
+                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
+                // then send an error to the log file and then terminate the execution of this
+                // method.
+                if (_sourceTypeFQNToLogMap == null)
+                {
+                    // The field, '_sourceTypeFQNToLogMap' is required to be set to a valid object
+                    // reference, but it's not.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
+                    );
+
+                    // stop.
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: *** FYI *** Ascertaining the count of element(s) that are currently in the '_sourceTypeFQNToLogMap' collection..."
+                );
+
+                lock (SyncRoot)
+                {
+                    internalCacheElementCount = _sourceTypeFQNToLogMap.Count;
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                internalCacheElementCount = int.MinValue;
+            }
+        }
+
+        /// <summary>
         /// Looks up the specified <paramref name="sourceType" /> in the internal
         /// cache; if found, returns a reference to an instance of an object that
         /// implements the <see cref="T:log4net.ILog" /> interface that can be utilized for
@@ -721,6 +658,7 @@ namespace xyLOGIX.Core.Debug
         /// the <see cref="T:log4net.ILog" /> interface; otherwise, a
         /// <see langword="null" /> reference is returned.
         /// </returns>
+        [return: NotLogged]
         [Log(AttributeExclude = true), DebuggerStepThrough]
         protected ILog TryGetLoggerFromInternalCache([NotLogged] Type sourceType)
         {
@@ -765,9 +703,9 @@ namespace xyLOGIX.Core.Debug
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
                     // The property, 'sourceType.FullName', appears to have a null or blank value.
-                    // There is nothing to do.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Nothing to do..."
+                        "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Stopping..."
                     );
 
                     // Emit the result to the Debug output.
@@ -784,18 +722,18 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: Checking whether the specified source type, '{sourceType.FullName}', has a logger available..."
+                    "SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
                 );
 
-                // Check to see whether the specified source type has a logger available. If this is
-                // not the case, then write an error message to the log file, and then terminate the
-                // execution of this method.
-                if (!IsLogAvailableForType(sourceType))
+                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
+                // then send an error to the log file and then quit, returning the default value of
+                // the result variable.
+                if (_sourceTypeFQNToLogMap == null)
                 {
-                    // The specified source type does NOT appear to have a logger available.  This
-                    // is not desirable.
+                    // The field, '_sourceTypeFQNToLogMap' is required to be set to a valid object
+                    // reference, but it's not.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** ERROR *** The specified source type, '{sourceType.FullName}', does NOT appear to have a logger available.  Stopping..."
+                        "SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
                     );
 
                     // stop.
@@ -803,14 +741,48 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** SUCCESS *** The specified source type has a logger available.  Proceeding..."
+                    "SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
                 );
+
+                /* Determine whether the current source is mapped to a logger, AND retrieve the
+                 logger as well, all under the same lock. */
+
+                bool loggerWasFound;
+
+                lock (SyncRoot)
+                {
+                    loggerWasFound = _sourceTypeFQNToLogMap.TryGetValue(
+                        sourceType.FullName, out result
+                    );
+                }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"*** FYI *** Attempting to get a reference to an instance of the logger that corresponds to the source type, '{sourceType.FullName}', from the internal cache..."
+                    $"SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: Checking whether a logger corresponding to the source type, '{sourceType.FullName}', was found in the internal cache..."
                 );
 
-                result = _sourceTypeFQNToLogMap[sourceType.FullName];
+                // Check to see whether a logger corresponding to the source type,
+                // '{sourceType.FullName}', was found in the internal cache.  If this is not the
+                // case, then write an error message to the log file, and then terminate the
+                // execution of this method.
+                if (!loggerWasFound)
+                {
+                    // The logger corresponding to the specified source type was NOT found in the
+                    // internal cache.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** ERROR *** A logger corresponding to the source type, '{sourceType.FullName}', was NOT found in the internal cache.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** SUCCESS *** A logger corresponding to the source type, '{sourceType.FullName}', was found in the internal cache.  Proceeding..."
+                );
             }
             catch (Exception ex)
             {
@@ -824,8 +796,8 @@ namespace xyLOGIX.Core.Debug
                 result != null
 
                     // ReSharper disable once ConstantConditionalAccessQualifier
-                    ? $"*** SUCCESS *** Obtained a reference to a logger that corresponds to the specified source type, '{sourceType?.FullName ?? "<null>"}'.  Proceeding..."
-                    : $"*** ERROR *** FAILED to obtain a reference to a logger that corresponds to the specified source type, '{sourceType?.FullName ?? "<null>"}'.  Stopping..."
+                    ? $"*** SUCCESS *** A logger corresponding to the source type, '{sourceType?.FullName ?? "<null>"}', was fetched successfully from the internal cache.  Proceeding..."
+                    : $"*** ERROR *** A logger corresponding to the source type, '{sourceType?.FullName ?? "<null>"} could not be fetched from the internal cache.  Stopping..."
             );
 
             return result;
