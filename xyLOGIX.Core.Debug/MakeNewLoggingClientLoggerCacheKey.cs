@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace xyLOGIX.Core.Debug
 {
-    internal class MakeNewLoggingClientLoggerCacheKey
+    internal static class MakeNewLoggingClientLoggerCacheKey
     {
+        internal static class For
     }
 }
