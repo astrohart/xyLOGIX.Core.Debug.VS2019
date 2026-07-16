@@ -1,4 +1,5 @@
 ﻿using log4net.Repository;
+using System;
 using System.Diagnostics;
 
 namespace xyLOGIX.Core.Debug
@@ -12,10 +13,10 @@ namespace xyLOGIX.Core.Debug
     /// Implementers identify a logger by combining the object identity of its
     /// repository with its ordinal logger name.
     /// <para />
-    /// Two key object(s) that refer to the same repository instance and contain the
-    /// same logger name represent the same logical cache entry.
+    /// Two cache-key object(s) that refer to the same repository instance and contain
+    /// the same logger name represent the same logical cache entry.
     /// </remarks>
-    internal interface ILoggingClientLoggerCacheKey
+    internal interface ILoggingClientLoggerCacheKey : IEquatable<ILoggingClientLoggerCacheKey>
     {
         /// <summary>
         /// Gets a <see cref="T:System.String" /> containing the name of the
