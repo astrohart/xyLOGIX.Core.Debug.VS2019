@@ -13,19 +13,18 @@ namespace xyLOGIX.Core.Debug
     /// </summary>
     /// <remarks>
     /// A logger is uniquely identified by the object identity of its log4net
-    /// repository and its logger name.
+    /// repository and its ordinal logger name.
     /// <para />
-    /// Repository object identity is utilized instead of merely comparing repository
-    /// name(s), so a logger associated with one repository instance can never be
-    /// confused with a logger associated with another repository instance.
+    /// Repository object identity is utilized instead of repository-name equality so
+    /// that separate repository instance(s) having the same name remain distinct.
     /// </remarks>
     [Log(AttributeExclude = true), ExplicitlySynchronized]
-    internal sealed class LoggingClientLoggerCacheKey : IEquatable<LoggingClientLoggerCacheKey>
+    internal sealed class LoggingClientLoggerCacheKey : ILoggingClientLoggerCacheKey
     {
         /// <summary>
-        /// An <see cref="T:System.Int32" /> value by which the repository
-        /// identity hash code is multiplied when computing the combined hash code for this
-        /// key.
+        /// An <see cref="T:System.Int32" /> value by which the
+        /// repository-identity hash code is multiplied when computing the combined hash
+        /// code for this key.
         /// </summary>
         private const int HashCodeMultiplier = 397;
 
@@ -87,9 +86,7 @@ namespace xyLOGIX.Core.Debug
         )
         {
             if (string.IsNullOrWhiteSpace(loggerName))
-                throw new ArgumentException(
-                    "Value cannot be null or whitespace.", nameof(loggerName)
-                );
+                throw new ArgumentException("The logger name cannot be blank.", nameof(loggerName));
 
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
             LoggerName = loggerName;
@@ -101,7 +98,7 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.Repository" />
         /// property.
         /// </summary>
-        internal string LoggerName { [DebuggerStepThrough] get; }
+        public string LoggerName { [DebuggerStepThrough] get; }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -110,35 +107,39 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.LoggerName" />
         /// property.
         /// </summary>
-        internal ILoggerRepository Repository { [DebuggerStepThrough] get; }
+        public ILoggerRepository Repository { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Determines whether this key and the specified
-        /// <paramref name="other" /> key identify the same logger.
+        /// Determines whether this cache key and the specified
+        /// <paramref name="other" /> cache key identify the same logger.
         /// </summary>
         /// <param name="other">
-        /// (Required.) Reference to an instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey" /> to compare with
-        /// this key.
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheKey" />
+        /// interface to compare with this cache key.
         /// </param>
         /// <remarks>
-        /// This method returns <see langword="false" /> if a
-        /// <see langword="null" /> reference is passed for the <paramref name="other" />
-        /// parameter, the repositories are not the same object instance, or the logger
-        /// name(s) are not ordinally equal.
+        /// If a <see langword="null" /> reference is passed for the
+        /// <paramref name="other" /> parameter, then this method returns
+        /// <see langword="false" />.
+        /// <para />
+        /// This method returns <see langword="false" /> if the repository properties do
+        /// not refer to the same object instance or the logger name(s) are not ordinally
+        /// equal.
         /// </remarks>
         /// <returns>
-        /// <see langword="true" /> if both key(s) identify the same logger;
+        /// <see langword="true" /> if both cache key(s) identify the same logger;
         /// otherwise, <see langword="false" />.
         /// </returns>
         [Log(AttributeExclude = true), DebuggerStepThrough]
-        public bool Equals([NotLogged] LoggingClientLoggerCacheKey other)
+        public bool Equals([NotLogged] ILoggingClientLoggerCacheKey other)
         {
             var result = false;
 
             try
             {
-                if (other == null) return result;
+                if (other == null)
+                    return result;
 
                 if (!ReferenceEquals(Repository, other.Repository))
                     return result;
@@ -163,18 +164,18 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// Determines whether this key and the specified <paramref name="obj" />
-        /// identify the same logger.
+        /// Determines whether this cache key and the specified
+        /// <paramref name="obj" /> identify the same logger.
         /// </summary>
         /// <param name="obj">
         /// (Required.) Reference to an instance of
-        /// <see cref="T:System.Object" /> to compare with this key.
+        /// <see cref="T:System.Object" /> to compare with this cache key.
         /// </param>
         /// <remarks>
-        /// This method returns <see langword="false" /> if a
-        /// <see langword="null" /> reference is passed for the <paramref name="obj" />
-        /// parameter or if the supplied object is not an instance of
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey" />.
+        /// If a <see langword="null" /> reference is passed for the
+        /// <paramref name="obj" /> parameter, or the supplied object does not implement
+        /// the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheKey" /> interface,
+        /// then this method returns <see langword="false" />.
         /// </remarks>
         /// <returns>
         /// <see langword="true" /> if the supplied object identifies the same
@@ -187,10 +188,16 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (!(obj is LoggingClientLoggerCacheKey other))
+                if (!(obj is ILoggingClientLoggerCacheKey other))
                     return result;
 
-                result = Equals(other);
+                if (!Equals(other))
+                    return result;
+
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
+
+                result = true;
             }
             catch (Exception ex)
             {
@@ -222,8 +229,11 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                if (Repository == null) return result;
-                if (string.IsNullOrWhiteSpace(LoggerName)) return result;
+                if (Repository == null)
+                    return result;
+
+                if (string.IsNullOrWhiteSpace(LoggerName))
+                    return result;
 
                 var repositoryHashCode = RuntimeHelpers.GetHashCode(Repository);
                 var loggerNameHashCode = StringComparer.Ordinal.GetHashCode(LoggerName);
