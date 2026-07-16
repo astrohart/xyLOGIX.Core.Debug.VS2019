@@ -54,7 +54,7 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:log4net.ILog" /> interface that is a logger of that
         /// type.
         /// </summary>
-        protected static IDictionary<string, ILog> _sourceTypeFQNToLogMap
+        private static IDictionary<string, ILog> _sourceTypeFQNToLogMap
         {
             [DebuggerStepThrough] get;
         } = new AdvisableDictionary<string, ILog>();
@@ -72,7 +72,7 @@ namespace xyLOGIX.Core.Debug
         /// Gets a reference to an instance of an object that is to be used for
         /// thread synchronization purposes.
         /// </summary>
-        protected static object SyncRoot { [DebuggerStepThrough] get; } = new object();
+        private static object SyncRoot { [DebuggerStepThrough] get; } = new object();
 
         /// <summary>
         /// Attempts to fetch a logger for a client session by using specified
@@ -148,9 +148,23 @@ namespace xyLOGIX.Core.Debug
                 /* Obviously, if the internal cache already has zero element(s), then there is
                  nothing else that needs to be done. */
 
-                // Determine the current count of element(s) in the internal logging-client session
-                // logger cache, atomically.
-                TryDetermineInternalCacheCount(out var originalCacheElementCount);
+                var originalCacheElementCount = int.MinValue;
+                var remainingElementCount = int.MinValue;
+
+                /*
+                 * Determine the original element count, conditionally clear the cache, and
+                 * determine the remaining element count under one uninterrupted lock.
+                 */
+
+                lock (SyncRoot)
+                {
+                    originalCacheElementCount = _sourceTypeFQNToLogMap.Count;
+
+                    if (originalCacheElementCount > 0)
+                        _sourceTypeFQNToLogMap.Clear();
+
+                    remainingElementCount = _sourceTypeFQNToLogMap.Count;
+                }
 
                 System.Diagnostics.Debug.WriteLine(
                     "SessionLoggerFetcherBase.ClearInternalCache: Checking whether the count of internal cache element(s) is greater than zero..."
@@ -175,15 +189,8 @@ namespace xyLOGIX.Core.Debug
                     $"SessionLoggerFetcherBase.ClearInternalCache: *** SUCCESS *** {originalCacheElementCount} internal cache element(s) were found.  Proceeding..."
                 );
 
-                // Attempt to atomically clear the internal cache.
-                TryClearInternalCacheAtomically();
-
-                // Determine the current count of element(s) in the internal logging-client session
-                // logger cache, atomically.
-                TryDetermineInternalCacheCount(out var remainingElementCount);
-
                 System.Diagnostics.Debug.WriteLine(
-                    "*** SessionLoggerFetcherBase.ClearInternalCache: Checking whether the internal cache still contains one or more element(s)..."
+                    "*** SessionLoggerFetcherBase.ClearInternalCache: Checking whether the internal cache does NOT still one or more element(s)..."
                 );
 
                 // Check to see whether the internal cache does NOT still contain one or more
