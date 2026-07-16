@@ -380,60 +380,6 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Attempts to atomically clear the contents of the internal cache.</summary>
-        /// <remarks>
-        /// If the value of the
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.SessionLoggerFetcherBase._sourceTypeFQNToLogMap" />
-        /// is set to a <see langword="null" /> reference, then this method does nothing.
-        /// </remarks>
-        private void TryClearInternalCacheAtomically()
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.TryClearInternalCacheAtomically: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
-                );
-
-                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
-                // then send an error to the log file and then terminate the execution of this
-                // method.
-                if (_sourceTypeFQNToLogMap == null)
-                {
-                    // The field, '_sourceTypeFQNToLogMap' is required to be set to a valid object
-                    // reference, but it's not.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "SessionLoggerFetcherBase.TryClearInternalCacheAtomically: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.TryClearInternalCacheAtomically: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to clear the contents of the '_sourceTypeFQNToLogMap' collection..."
-                );
-
-                lock (SyncRoot)
-                {
-                    _sourceTypeFQNToLogMap.Clear();
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** SUCCESS *** The contents of the '_sourceTypeFQNToLogMap' collection have been cleared."
-                );
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-            }
-        }
-
         /// <summary>
         /// Given a specified <paramref name="sourceType" /> and
         /// <paramref name="repositoryName" />, attempts to create a reference to an
@@ -590,63 +536,6 @@ namespace xyLOGIX.Core.Debug
             );
 
             return result;
-        }
-
-        /// <summary>
-        /// Determines the current count of element(s) in the internal
-        /// logging-client session logger cache.
-        /// </summary>
-        /// <param name="internalCacheElementCount">
-        /// (Output.) If the operation(s) succeed,
-        /// receives the current count of element(s) in the internal logging-client session
-        /// logger cache; otherwise, receives a value of
-        /// <see cref="F:System.Int32.MinValue" />.
-        /// </param>
-        private void TryDetermineInternalCacheCount(out int internalCacheElementCount)
-        {
-            internalCacheElementCount = int.MinValue;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
-                );
-
-                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
-                // then send an error to the log file and then terminate the execution of this
-                // method.
-                if (_sourceTypeFQNToLogMap == null)
-                {
-                    // The field, '_sourceTypeFQNToLogMap' is required to be set to a valid object
-                    // reference, but it's not.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
-                    );
-
-                    // stop.
-                    return;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.TryDetermineInternalCacheCount: *** FYI *** Ascertaining the count of element(s) that are currently in the '_sourceTypeFQNToLogMap' collection..."
-                );
-
-                lock (SyncRoot)
-                {
-                    internalCacheElementCount = _sourceTypeFQNToLogMap.Count;
-                }
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the log
-                DebugUtils.LogException(ex);
-
-                internalCacheElementCount = int.MinValue;
-            }
         }
 
         /// <summary>
