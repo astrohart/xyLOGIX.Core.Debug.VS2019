@@ -177,6 +177,7 @@
     <Compile Include="GetLoggingBackendTypeValidator.cs" />
     <Compile Include="GetLoggingClientAssemblyContext.cs" />
     <Compile Include="GetLoggingClientAssemblyRegistry.cs" />
+    <Compile Include="GetLoggingClientLoggerCache.cs" />
     <Compile Include="GetLoggingClientLogProvider.cs" />
     <Compile Include="GetLoggingClientSessionRegistry.cs" />
     <Compile Include="GetLoggingConfigurator.cs" />
