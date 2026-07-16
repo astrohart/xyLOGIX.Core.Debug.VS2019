@@ -44,8 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        protected SessionLoggerFetcherBase()
-        { }
+        protected SessionLoggerFetcherBase() { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -55,8 +54,10 @@ namespace xyLOGIX.Core.Debug
         /// implements the <see cref="T:log4net.ILog" /> interface that is a logger of that
         /// type.
         /// </summary>
-        protected IDictionary<string, ILog> _sourceTypeFQNToLogMap { [DebuggerStepThrough] get; } =
-            new AdvisableDictionary<string, ILog>();
+        protected static IDictionary<string, ILog> _sourceTypeFQNToLogMap
+        {
+            [DebuggerStepThrough] get;
+        } = new AdvisableDictionary<string, ILog>();
 
         /// <summary>
         /// Gets the
@@ -232,18 +233,14 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required parameter, 'sourceType', is null. If it is, then
-                // write an error message to the log file and then terminate the execution of this
-                // method, returning the default return value.
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
                 if (sourceType == null)
                 {
                     // The method parameter, 'sourceType', is required and is not supposed to have a
-                    // NULL value.  It does, and this is not desirable.
+                    // NULL value.  There is nothing more to be done.
                     System.Diagnostics.Debug.WriteLine(
-                        "SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** SessionLoggerFetcherBase.IsLogAvailableForType: Result = {result}"
+                        "SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
                     );
 
                     // stop.
@@ -254,17 +251,13 @@ namespace xyLOGIX.Core.Debug
                     "SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'sourceType'.  Proceeding..."
                 );
 
-                // Dump the value of the property, sourceType.FullName, to the Debug output
-                System.Diagnostics.Debug.WriteLine(
-                    $"sourceType.FullName = '{sourceType.FullName}'"
-                );
-
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
                 );
 
                 // Check to see if the required property, 'sourceType.FullName', appears to have a
-                // null  or blank value. If it does, then send an error to the log file and quit,
+                // null 
+                // or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
@@ -288,25 +281,18 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the field, '_sourceTypeFQNToLogMap', does NOT have a null reference for a value..."
+                    "SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the field, '_sourceTypeFQNToLogMap', has a null reference for a value..."
                 );
 
-                // Check to see if the field, _sourceTypeFQNToLogMap, is NOT null.  If this is the
-                // case,  then write an FYI message to the Debug output and then terminate the
-                // execution of this method, and then return the default value of the 'result'
-                // variable.  We need the field to currently be set to a NULL reference in order to
-                // be able to proceed.
-                if (_sourceTypeFQNToLogMap != null)
+                // Check to see if the required field, '_sourceTypeFQNToLogMap', is null.  If it is,
+                // then send an error to the log file and then quit, returning the default value of
+                // the result variable.
+                if (_sourceTypeFQNToLogMap == null)
                 {
-                    // The field, _sourceTypeFQNToLogMap, must be set to a NULL reference for this
-                    // method to work. Since this is not the case, then we can't do anything more
-                    // here.
+                    // The field, '_sourceTypeFQNToLogMap', is required to be set to a valid object
+                    // reference, but it's not.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "SessionLoggerFetcherBase.IsLogAvailableForType: *** FYI *** The field, '_sourceTypeFQNToLogMap', does NOT have a null reference.  Nothing to do."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** SessionLoggerFetcherBase.IsLogAvailableForType: Result = {result}"
+                        "SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
                     );
 
                     // stop.
@@ -314,25 +300,25 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    "SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a NULL reference for its current value, which is what we are looking for.  Proceeding..."
+                    "SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
                 );
 
                 lock (SyncRoot)
                 {
                     System.Diagnostics.Debug.WriteLine(
-                        "*** SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the '_sourceTypeFQNToLogMap' collection contains greater than zero elements..."
+                        "*** SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the '_sourceTypeFQNToLogMap' dictionary contains greater than zero elements..."
                     );
 
-                    // Check to see whether the '_sourceTypeFQNToLogMap' collection contains greater
-                    // than zero elements.  Otherwise, write an error message to the Debug output,
+                    // Check to see whether the '_sourceTypeFQNToLogMap' dictionary contains greater
+                    // than zero elements.  Otherwise, write an error message to the log file,
                     // return the default return value, and then terminate the execution of this
                     // method.
                     if (_sourceTypeFQNToLogMap.Count <= 0)
                     {
-                        // The '_sourceTypeFQNToLogMap' collection contains zero elements.  This is
+                        // The '_sourceTypeFQNToLogMap' dictionary contains zero elements.  This is
                         // not desirable.
                         System.Diagnostics.Debug.WriteLine(
-                            "*** ERROR *** The '_sourceTypeFQNToLogMap' collection contains zero elements.  Stopping..."
+                            "*** ERROR *** The '_sourceTypeFQNToLogMap' dictionary contains zero elements.  Stopping..."
                         );
 
                         System.Diagnostics.Debug.WriteLine(
@@ -344,22 +330,22 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** {_sourceTypeFQNToLogMap.Count} element(s) were found in the '_sourceTypeFQNToLogMap' collection.  Proceeding..."
+                        $"SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** {_sourceTypeFQNToLogMap.Count} element(s) were found in the '_sourceTypeFQNToLogMap' dictionary.  Proceeding..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the internal cache contains the key, '{sourceType.FullName}'..."
+                        $"SessionLoggerFetcherBase.IsLogAvailableForType: Checking whether the internal cache contains the specified source type, '{sourceType.FullName}'..."
                     );
 
-                    // Check to see whether the internal cache contains the key,
-                    // '{sourceType.FullName}'. If this is not the case, then write an error message
-                    // to the log file, and then terminate the execution of this method.
+                    // Check to see whether the internal cache contains the specified source type.
+                    // If this is not the case, then write an error message to the log file,
+                    // and then terminate the execution of this method.
                     if (!_sourceTypeFQNToLogMap.ContainsKey(sourceType.FullName))
                     {
-                        // The internal cache does NOT appear to contain the desired key.  This is
-                        // not desirable.
+                        // The internal cache does NOT appear to contain the specified source type.
+                        // This is not desirable.
                         System.Diagnostics.Debug.WriteLine(
-                            $"SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** The internal cache does NOT appear to contain the key, '{sourceType.FullName}'.  Stopping..."
+                            $"SessionLoggerFetcherBase.IsLogAvailableForType: *** ERROR *** The internal cache does NOT appear to contain the specified source type, '{sourceType.FullName}'.  Stopping..."
                         );
 
                         System.Diagnostics.Debug.WriteLine(
@@ -371,11 +357,13 @@ namespace xyLOGIX.Core.Debug
                     }
 
                     System.Diagnostics.Debug.WriteLine(
-                        $"SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** The internal cache contains the key, '{sourceType.FullName}'.  Proceeding..."
+                        $"SessionLoggerFetcherBase.IsLogAvailableForType: *** SUCCESS *** The internal cache contains the specified source type, '{sourceType.FullName}'.  Proceeding..."
                     );
 
-                    /* If we made it this far with no Exception(s) getting caught, then assume that
-                     the operation(s) succeeded. */
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then
+                     * assume that the operation(s) succeeded.
+                     */
 
                     result = true;
                 }
