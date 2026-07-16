@@ -57,6 +57,16 @@ namespace xyLOGIX.Core.Debug
         private LoggingClientLoggerCache() { }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheKeyValidator" />
+        /// interface that validates logging-client logger-cache key object(s).
+        /// </summary>
+        private ILoggingClientLoggerCacheKeyValidator CacheKeyValidator
+        {
+            [DebuggerStepThrough] get;
+        } = GetLoggingClientLoggerCacheKeyValidator.SoleInstance();
+
+        /// <summary>
         /// Gets an <see cref="T:System.Int32" /> value that indicates the number
         /// of logger object(s) currently stored in the cache.
         /// </summary>
@@ -305,6 +315,33 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAdd: Checking whether the specified cache key has valid setting(s)..."
+                );
+
+                // Check to see whether the specified cache key has valid setting(s). If this is not
+                // the case, then write an error message to the log file, and then terminate the
+                // execution of this method.
+                if (!CacheKeyValidator.IsValid(cacheKey))
+                {
+                    // The specified cache key does NOT appear to have valid setting(s).  This is
+                    // not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryAdd: *** ERROR *** The specified cache key does NOT appear to have valid setting(s).  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** LoggingClientLoggerCache.TryAdd: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAdd: *** SUCCESS *** The specified cache key has valid setting(s).  Proceeding..."
+                );
+
                 System.Diagnostics.Debug.WriteLine(
                     "LoggingClientLoggerCache.TryAdd: Checking whether the method parameter, 'cacheKey', has a null reference for a value..."
                 );
