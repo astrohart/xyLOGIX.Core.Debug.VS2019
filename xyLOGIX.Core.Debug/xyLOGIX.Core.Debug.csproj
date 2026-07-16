@@ -238,6 +238,7 @@
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
     <Compile Include="LoggingClientLoggerCache.cs" />
     <Compile Include="LoggingClientLoggerCacheKey.cs" />
+    <Compile Include="LoggingClientLoggerCacheKeyBuilder.cs" />
     <Compile Include="LoggingClientLogProvider.cs" />
     <Compile Include="LoggingClientRoutingAppender.cs" />
     <Compile Include="LoggingClientSession.cs" />
