@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\PostSharp.2024.1.6\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.2024.1.6\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -6,10 +6,39 @@
     <ApplicationIcon>1382_cogs.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-    <ProjectGuid>{C445C052-26B6-4884-9A7B-25DC7ABC0DED}</ProjectGuid>
+    <ProjectGuid>{89473237-3313-4D8C-92AB-AB19A4B25476}</ProjectGuid>
     <Deterministic>false</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <NuGetPackageImportStamp />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <SkipPostSharp>false</SkipPostSharp>
+    <DocumentationFile>bin\x64\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS1591;CS1587</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <SkipPostSharp>true</SkipPostSharp>
+    <DocumentationFile>bin\x64\Release\xyLOGIX.Core.Debug.xml</DocumentationFile>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS1591;CS1587</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -20,11 +49,11 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <SkipPostSharp>False</SkipPostSharp>
+    <Prefer32Bit>true</Prefer32Bit>
+    <SkipPostSharp>false</SkipPostSharp>
     <DocumentationFile>bin\x86\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>1591, 1587, 1580, 1584</NoWarn>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS1591;CS1587</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -35,11 +64,11 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <SkipPostSharp>False</SkipPostSharp>
+    <Prefer32Bit>true</Prefer32Bit>
+    <SkipPostSharp>true</SkipPostSharp>
     <DocumentationFile>bin\x86\Release\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>1591, 1587, 1580, 1584</NoWarn>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>CS1591;CS1587</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -59,32 +88,6 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\x64\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>1591, 1587, 1580, 1584</NoWarn>
-    <WarningLevel>0</WarningLevel>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\x64\Release\xyLOGIX.Core.Debug.xml</DocumentationFile>
-    <NoWarn>1591, 1587, 1580, 1584</NoWarn>
-    <Optimize>true</Optimize>
-    <WarningLevel>0</WarningLevel>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlphaFS, Version=2.2.0.0, Culture=neutral, PublicKeyToken=4d31a58f7d7ad5c9, processorArchitecture=MSIL">
       <HintPath>..\packages\AlphaFS.2.2.6\lib\net452\AlphaFS.dll</HintPath>
@@ -92,7 +95,9 @@
     <Reference Include="log4net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.3.0.3\lib\net462\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=2024.1.6.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\packages\PostSharp.Redist.2024.1.6\lib\net45\PostSharp.dll</HintPath>
     </Reference>
@@ -116,8 +121,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Activate.cs" />
     <Compile Include="AppDomainFriendlyNames.cs" />
@@ -202,7 +207,7 @@
     <Compile Include="GetTraceOutputLocation.cs" />
     <Compile Include="GetXmlLoggingConfigurator.cs" />
     <Compile Include="GetXmlLoggingConfiguratorTypeValidator.cs" />
-    <Compile Include="GlobalAspects.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Has.cs" />
     <Compile Include="IAppenderManager.cs" />
     <Compile Include="IDebugLevelValidator.cs" />
@@ -222,8 +227,14 @@
     <Compile Include="ILoggingClientLogProvider.cs" />
     <Compile Include="ILoggingClientSession.cs" />
     <Compile Include="ILoggingClientSessionRegistry.cs" />
+    <Compile Include="ILoggingConfigurator.cs" />
+    <Compile Include="ILoggingConfiguratorTypeValidator.cs" />
+    <Compile Include="ILoggingInfrastructure.cs" />
     <Compile Include="ILoggingInfrastructureTypeValidator.cs" />
+    <Compile Include="Initialize.cs" />
     <Compile Include="InvalidClientAssemblyNames.cs" />
+    <Compile Include="IOutputLocation.cs" />
+    <Compile Include="IOutputLocationProvider.cs" />
     <Compile Include="IOutputLocationTypeValidator.cs" />
     <Compile Include="IPostSharpLoggingBackendRouter.cs" />
     <Compile Include="IRollingFileAppenderConfiguration.cs" />
@@ -232,12 +243,12 @@
     <Compile Include="IRootLoggerProvisioningStrategyValidator.cs" />
     <Compile Include="ISessionLoggerFetchApproachValidator.cs" />
     <Compile Include="ISessionLoggerFetcher.cs" />
-    <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
-    <Compile Include="ILoggingConfigurator.cs" />
-    <Compile Include="ILoggingConfiguratorTypeValidator.cs" />
-    <Compile Include="IOutputLocation.cs" />
-    <Compile Include="IOutputLocationProvider.cs" />
+    <Compile Include="IsLog.cs" />
     <Compile Include="IXmlLoggingConfigurator.cs" />
+    <Compile Include="IXmlLoggingConfiguratorTypeValidator.cs" />
+    <Compile Include="LoggerManager.cs" />
+    <Compile Include="LoggerRepositoryManager.cs" />
+    <Compile Include="LoggingBackendType.cs" />
     <Compile Include="LoggingBackendTypeValidator.cs" />
     <Compile Include="LoggingClientAssemblyContext.cs" />
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
@@ -256,22 +267,34 @@
     <Compile Include="LoggingConfiguratorBase.cs" />
     <Compile Include="LoggingConfiguratorType.cs" />
     <Compile Include="LoggingConfiguratorTypeValidator.cs" />
+    <Compile Include="LoggingInfrastructureType.cs" />
     <Compile Include="LoggingInfrastructureTypeValidator.cs" />
+    <Compile Include="LoggingSubsystemManager.cs" />
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
     <Compile Include="MakeNewLoggingClientLoggerCacheKey.cs" />
     <Compile Include="MakeNewLoggingClientSession.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
+    <Compile Include="MakeNewRollingFileAppender.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
+    <Compile Include="ObjectDumper.cs" />
     <Compile Include="OutputLocationBase.cs" />
     <Compile Include="OutputLocationProvider.cs" />
     <Compile Include="OutputLocationType.cs" />
     <Compile Include="OutputLocationTypeValidator.cs" />
     <Compile Include="OutputMultiplexer.cs" />
     <Compile Include="PostSharpLoggingBackendRouter.cs" />
+    <Compile Include="PostSharpLoggingInfrastructure.cs" />
+    <Compile Include="ProgramFlowHelper.cs" />
     <Compile Include="ProgrammaticLoggingConfigurator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RollingModeValidator.cs" />
     <Compile Include="RootLoggerProvisionerBase.cs" />
     <Compile Include="RootLoggerProvisioningStrategy.cs" />
@@ -283,6 +306,7 @@
     <Compile Include="SessionLoggerFetcherBase.cs" />
     <Compile Include="SetLog.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="SpecialVisualStudioProcessNames.cs" />
     <Compile Include="Split.cs" />
     <Compile Include="TextEmittedEventArgs.cs" />
     <Compile Include="TextEmittedEventHandler.cs" />
@@ -293,7 +317,6 @@
     <Compile Include="Validate.cs" />
     <Compile Include="VerbosityChangedEventArgs.cs" />
     <Compile Include="VerbosityChangedEventHandler.cs" />
-    <Compile Include="SpecialVisualStudioProcessNames.cs" />
     <Compile Include="VsixHosting.cs" />
     <Compile Include="Write.cs" />
     <Compile Include="XmlLoggingConfiguratorBase.cs" />
@@ -301,41 +324,20 @@
     <Compile Include="XmlLoggingConfiguratorTypeValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="ILoggingInfrastructure.cs" />
-    <Compile Include="Initialize.cs" />
-    <Compile Include="IsLog.cs" />
-    <Compile Include="LoggingSubsystemManager.cs" />
-    <Compile Include="LoggerManager.cs" />
-    <Compile Include="LoggerRepositoryManager.cs" />
-    <Compile Include="LoggingBackendType.cs" />
-    <Compile Include="LoggingInfrastructureType.cs" />
-    <Compile Include="MakeNewRollingFileAppender.cs" />
-    <Compile Include="ObjectDumper.cs" />
-    <Compile Include="PostSharpLoggingInfrastructure.cs" />
-    <Compile Include="ProgramFlowHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="1382_cogs.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
+    <Compile Include="GlobalAspects.cs" />
     <None Include="key.snk" />
     <None Include="packages.config" />
-    <None Include="PostSharp.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1382_cogs.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -390,16 +392,15 @@ GOTO FINALIZATION
 ECHO *** DONE *** with post-build script.
 SET ERRORLEVEL=0</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\PostSharp.2024.1.6\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.2024.1.6\build\PostSharp.props'))" />
     <Error Condition="!Exists('..\packages\PostSharp.2024.1.6\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.2024.1.6\build\PostSharp.targets'))" />
     <Error Condition="!Exists('..\packages\StrongNamer.0.2.5\build\StrongNamer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StrongNamer.0.2.5\build\StrongNamer.targets'))" />
-    <Error Condition="!Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Vsxmd.1.4.5\build\Vsxmd.targets'))" />
   </Target>
   <Import Project="..\packages\PostSharp.2024.1.6\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.2024.1.6\build\PostSharp.targets')" />
   <Import Project="..\packages\StrongNamer.0.2.5\build\StrongNamer.targets" Condition="Exists('..\packages\StrongNamer.0.2.5\build\StrongNamer.targets')" />
-  <Import Project="..\packages\Vsxmd.1.4.5\build\Vsxmd.targets" Condition="Exists('..\packages\Vsxmd.1.4.5\build\Vsxmd.targets')" />
 </Project>
