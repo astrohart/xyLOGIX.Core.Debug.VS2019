@@ -213,6 +213,7 @@
     <Compile Include="ILoggingClientAssemblyRegistry.cs" />
     <Compile Include="ILoggingClientLoggerCache.cs" />
     <Compile Include="ILoggingClientLoggerCacheKey.cs" />
+    <Compile Include="ILoggingClientLoggerCacheKeyBuilder.cs" />
     <Compile Include="ILoggingClientLogProvider.cs" />
     <Compile Include="ILoggingClientSession.cs" />
     <Compile Include="ILoggingClientSessionRegistry.cs" />
