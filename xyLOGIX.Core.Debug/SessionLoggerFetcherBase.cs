@@ -427,7 +427,7 @@ namespace xyLOGIX.Core.Debug
                 // the result variable.
                 if (_sourceTypeFQNToLogMap == null)
                 {
-                    // The field, '_sourceTypeFQNToLogMap' is required to be set to a valid object
+                    // The field, '_sourceTypeFQNToLogMap', is required to be set to a valid object
                     // reference, but it's not.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "SessionLoggerFetcherBase.TryAddLoggerToInternalCache: *** ERROR *** The field, '_sourceTypeFQNToLogMap', has a null reference.  Stopping..."
@@ -473,7 +473,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'sourceType.FullName', appears to have a
-                // null  or blank value. If it does, then send an error to the log file and quit,
+                // null 
+                // or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
@@ -519,7 +520,17 @@ namespace xyLOGIX.Core.Debug
                     "SessionLoggerFetcherBase.TryAddLoggerToInternalCache: *** SUCCESS *** We have been passed a valid object reference for the method parameter, 'logger'.  Proceeding..."
                 );
 
-                _sourceTypeFQNToLogMap[sourceType.FullName] = logger;
+                lock (SyncRoot)
+                {
+                    _sourceTypeFQNToLogMap[sourceType.FullName] = logger;
+
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then
+                     * assume that the operation(s) succeeded.
+                     */
+
+                    result = true;
+                }
             }
             catch (Exception ex)
             {
@@ -530,7 +541,6 @@ namespace xyLOGIX.Core.Debug
             }
 
             System.Diagnostics.Debug.WriteLine(
-                DebugLevel.Debug,
                 $"SessionLoggerFetcherBase.TryAddLoggerToInternalCache: Result = {result}"
             );
 
