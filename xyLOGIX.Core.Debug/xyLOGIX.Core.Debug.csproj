@@ -228,7 +228,6 @@
     <Compile Include="ILoggingClientLoggerCacheAddOutcomeValidator.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddResult.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddResultBuilder.cs" />
-    <Compile Include="ILoggingClientLoggerCacheAddTarget.cs" />
     <Compile Include="ILoggingClientLoggerCacheKey.cs" />
     <Compile Include="ILoggingClientLoggerCacheKeyBuilder.cs" />
     <Compile Include="ILoggingClientLoggerCacheKeyValidator.cs" />
@@ -261,6 +260,7 @@
     <Compile Include="LoggingClientAssemblyContext.cs" />
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
     <Compile Include="LoggingClientLoggerCache.cs" />
+    <Compile Include="LoggingClientLoggerCacheAddAction.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerBase.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerType.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerTypeValidator.cs" />
