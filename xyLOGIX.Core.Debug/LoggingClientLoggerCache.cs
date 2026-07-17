@@ -54,8 +54,7 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCache()
-        { }
+        private LoggingClientLoggerCache() { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -64,8 +63,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private ILoggingClientLoggerCacheKeyValidator CacheKeyValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientLoggerCacheKeyValidator.SoleInstance();
 
         /// <summary>
@@ -166,8 +164,7 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingClientLoggerCacheAddActionValidator
-            LoggingClientLoggerCacheAddActionValidator
-        { [DebuggerStepThrough] get; } =
+            LoggingClientLoggerCacheAddActionValidator { [DebuggerStepThrough] get; } =
             GetLoggingClientLoggerCacheAddActionValidator.SoleInstance();
 
         /// <summary>
@@ -990,8 +987,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCache.SyncRoot" /> property
         /// before invoking this method.
         /// <para />
-        /// This method dispatches the requested action to a focused helper method while
-        /// the caller continues to own the same synchronization lock.
+        /// The synchronization lock remains held while the action-specific helper method
+        /// is executing.
         /// </remarks>
         /// <returns>
         /// <see langword="true" /> if the specified action is applied
@@ -1009,19 +1006,19 @@ namespace xyLOGIX.Core.Debug
             try
             {
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCache.TryApplyCacheAddAction: *** FYI *** Applying the logging-client logger-cache Add action, '{action}', to the cache entry identified by the specified cache key..."
+                    $"LoggingClientLoggerCache.TryApplyCacheAddAction: *** FYI *** Applying the logging-client logger-cache Add action, '{action}', to the cache entry identified by the specified cache key, '{cacheKey}'..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
                     "LoggingClientLoggerCache.TryApplyCacheAddAction: Checking whether the field, '_loggerMap', has a null reference for a value..."
                 );
 
-                // Check to see if the required field, '_loggerMap', is null. If it is, then write
-                // an error message to the Debug output and terminate the execution of this method.
+                // Check to see if the required field, '_loggerMap', is null. If it is, then send an
+                // error to the Debug output and terminate the execution of this method.
                 if (_loggerMap == null)
                 {
-                    // The field, '_loggerMap', is required to have a valid object reference for a
-                    // value. This is not desirable.
+                    // The field, '_loggerMap', is required to be set to a valid object reference,
+                    // but it is not. This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The field, '_loggerMap', has a null reference for a value.  Stopping..."
                     );
@@ -1056,7 +1053,7 @@ namespace xyLOGIX.Core.Debug
 
                     case LoggingClientLoggerCacheAddAction.Unknown:
                         System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.RejectUnknownCacheAddAction: *** ERROR *** The 'Unknown' logging-client logger-cache Add action was specified.  Stopping..."
+                            "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The 'Unknown' logging-client logger-cache Add action was specified.  Stopping..."
                         );
                         break;
 
