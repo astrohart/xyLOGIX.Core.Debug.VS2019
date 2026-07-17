@@ -142,6 +142,7 @@
     <Compile Include="DebugUtils.cs" />
     <Compile Include="DefaultLoggingInfrastructure.cs" />
     <Compile Include="Delete.cs" />
+    <Compile Include="Derive.cs" />
     <Compile Include="Determine.cs" />
     <Compile Include="DirectoryWriteabilityStatus.cs" />
     <Compile Include="DirectoryWriteabilityStatusValidator.cs" />
