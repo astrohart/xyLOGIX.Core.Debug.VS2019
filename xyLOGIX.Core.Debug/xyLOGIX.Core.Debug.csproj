@@ -262,6 +262,7 @@
     <Compile Include="LoggingClientAssemblyRegistry.cs" />
     <Compile Include="LoggingClientLoggerCache.cs" />
     <Compile Include="LoggingClientLoggerCacheAddAction.cs" />
+    <Compile Include="LoggingClientLoggerCacheAddActionValidator.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerBase.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerType.cs" />
     <Compile Include="LoggingClientLoggerCacheAddHandlerTypeValidator.cs" />
