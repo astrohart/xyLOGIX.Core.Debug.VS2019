@@ -198,7 +198,9 @@
     <Compile Include="GetLoggingConfiguratorTypeValidator.cs" />
     <Compile Include="GetLoggingInfrastructure.cs" />
     <Compile Include="GetLoggingInfrastructureTypeValidator.cs" />
+    <Compile Include="GetMissingLoggerLoggingClientLoggerCacheAddHandler.cs" />
     <Compile Include="GetNoFileXmlLoggingConfigurator.cs" />
+    <Compile Include="GetNullLoggerLoggingClientLoggerCacheAddHandler.cs" />
     <Compile Include="GetOutputLocation.cs" />
     <Compile Include="GetOutputLocationProvider.cs" />
     <Compile Include="GetOutputLocationTypeValidator.cs" />
