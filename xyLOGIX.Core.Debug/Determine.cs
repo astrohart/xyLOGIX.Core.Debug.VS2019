@@ -43,7 +43,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientAssemblyContext.SoleInstance();
 
         /// <summary>
@@ -52,7 +53,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -213,8 +215,8 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="sourceType" />.
         /// </summary>
         /// <param name="sourceType">
-        /// (Required.) A <see cref="T:System.Type" /> that contains the type of the object
-        /// for which a logger is to be fetched.
+        /// (Required.) A <see cref="T:System.Type" /> that
+        /// contains the type of the object for which a logger is to be fetched.
         /// </param>
         /// <returns>
         /// If successful, returns one of the
@@ -270,8 +272,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'sourceType.FullName', appears to have a
-                // null
-                // or blank value. If it does, then send an error to the log file and quit,
+                // null or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
@@ -311,10 +312,8 @@ namespace xyLOGIX.Core.Debug
                         "Determine.TheCorrectSessionLoggerFetchApproachToUse: *** WARNING *** The property, 'CurrentClientSession', has a null reference for a value.  Using the legacy logging infrastructure..."
                     );
 
-                    /*
-                     * When there is no active client session, the default behavior of this library
-                     * must prevail; therefore, get the legacy logger.
-                     */
+                    /* When there is no active client session, the default behavior of this library
+                     must prevail; therefore, get the legacy logger. */
 
                     result = SessionLoggerFetchApproach.FetchLegacyLogger;
 
@@ -334,9 +333,9 @@ namespace xyLOGIX.Core.Debug
                     "Determine.TheCorrectSessionLoggerFetchApproachToUse: Checking whether the current logging-client session has valid setting(s)..."
                 );
 
-                // Check to see whether the current logging-client session has valid setting(s).
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the current logging-client session has valid setting(s). If
+                // this is not the case, then write an error message to the log file, and then
+                // terminate the execution of this method.
                 if (!CurrentClientSession.IsValid())
                 {
                     // The current logging-client session does NOT appear to have valid setting(s).
@@ -364,9 +363,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'CurrentClientSession.RepositoryName',
-                // appears to have a null
-                // or blank value. If it does, then send an error to the log file and quit,
-                // returning the default value of the result variable.
+                // appears to have a null or blank value. If it does, then send an error to the log
+                // file and quit, returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(CurrentClientSession.RepositoryName))
                 {
                     // The property, 'CurrentClientSession.RepositoryName', appears to have a null
@@ -510,6 +508,61 @@ namespace xyLOGIX.Core.Debug
             System.Diagnostics.Debug.WriteLine(
                 $"Determine.TheRootLoggerProvisioningStrategyToUse: Result = '{result}'"
             );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether the particular combination of
+        /// <paramref name="handlerType" /> and <paramref name="outcome" /> is valid, given
+        /// the current state of the logging-client session and the logging-client logger
+        /// cache.
+        /// </summary>
+        /// <param name="handlerType">
+        /// (Required.) One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// value(s) that indicates the type of handler that was used to add a logger to
+        /// the logging-client logger cache.
+        /// </param>
+        /// <param name="outcome">
+        /// (Required.) One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome" /> value(s)
+        /// that indicates the outcome of the attempt to add a logger to the logging-client
+        /// logger cache.
+        /// </param>
+        /// <returns>
+        /// <see langword="true" /> if the combination of
+        /// <paramref name="handlerType" /> and <paramref name="outcome" /> is valid;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        public static bool WhetherAddHandlerTypeAndOutcomeCombIsValid(
+            LoggingClientLoggerCacheAddHandlerType handlerType,
+            LoggingClientLoggerCacheAddOutcome outcome
+        )
+        {
+            bool result;
+
+            try
+            {
+                result =
+                    (LoggingClientLoggerCacheAddHandlerType.ExistingLogger.Equals(handlerType) &&
+                     LoggingClientLoggerCacheAddOutcome.ExistingLoggerPreserved.Equals(outcome)) ||
+                    (LoggingClientLoggerCacheAddHandlerType.MissingLogger.Equals(handlerType) &&
+                     LoggingClientLoggerCacheAddOutcome.LoggerAdded.Equals(outcome)) ||
+                    (LoggingClientLoggerCacheAddHandlerType.MissingLogger.Equals(handlerType) &&
+                     LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed.Equals(outcome)) ||
+                    (LoggingClientLoggerCacheAddHandlerType.NullLogger.Equals(handlerType) &&
+                     LoggingClientLoggerCacheAddOutcome.NullLoggerReplaced.Equals(outcome)) ||
+                    (LoggingClientLoggerCacheAddHandlerType.NullLogger.Equals(handlerType) &&
+                     LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed.Equals(outcome));
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the log
+                DebugUtils.LogException(ex);
+
+                result = false;
+            }
 
             return result;
         }
