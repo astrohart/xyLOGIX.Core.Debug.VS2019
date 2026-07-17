@@ -226,6 +226,7 @@
     <Compile Include="ILoggingClientLoggerCacheAddHandlerTypeValidator.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddOutcomeValidator.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddResult.cs" />
+    <Compile Include="ILoggingClientLoggerCacheAddResultBuilder.cs" />
     <Compile Include="ILoggingClientLoggerCacheKey.cs" />
     <Compile Include="ILoggingClientLoggerCacheKeyBuilder.cs" />
     <Compile Include="ILoggingClientLoggerCacheKeyValidator.cs" />
