@@ -86,53 +86,10 @@ namespace xyLOGIX.Core.Debug
 
                 try
                 {
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.Count: Checking whether the field, '_loggerMap', has a null reference for a value..."
-                    );
+                    if (_loggerMap == null) return result;
+                    if (SyncRoot == null) return result;
 
-                    // Check to see if the required field, '_loggerMap', is null. If it is, then
-                    // write an error message to the Debug output and return the default property
-                    // value.
-                    if (_loggerMap == null)
-                    {
-                        // The field, '_loggerMap', is required to be set to a valid object
-                        // reference, but it is not.  This is not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.Count: *** ERROR *** The field, '_loggerMap', has a null reference for a value.  Stopping..."
-                        );
-
-                        return result;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.Count: *** SUCCESS *** The field, '_loggerMap', has a valid object reference for its value.  Proceeding..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.Count: Checking whether the field, 'SyncRoot', has a null reference for a value..."
-                    );
-
-                    // Check to see if the required field, 'SyncRoot', is null. If it is, then write
-                    // an error message to the Debug output and return the default property value.
-                    if (SyncRoot == null)
-                    {
-                        // The field, 'SyncRoot', is required to be set to a valid object reference,
-                        // but it is not.  This is not desirable.
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.Count: *** ERROR *** The field, 'SyncRoot', has a null reference for a value.  Stopping..."
-                        );
-
-                        return result;
-                    }
-
-                    System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.Count: *** SUCCESS *** The field, 'SyncRoot', has a valid object reference for its value.  Proceeding..."
-                    );
-
-                    lock (SyncRoot)
-                    {
-                        result = _loggerMap.Count;
-                    }
+                    lock (SyncRoot) result = _loggerMap.Count;
                 }
                 catch (Exception ex)
                 {
@@ -141,10 +98,6 @@ namespace xyLOGIX.Core.Debug
 
                     result = 0;
                 }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCache.Count: Result = {result}"
-                );
 
                 return result;
             }
