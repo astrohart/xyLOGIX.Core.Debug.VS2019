@@ -131,6 +131,8 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The property, 'ActionValidator', has a null reference for a value.  Stopping..."
                     );
 
+                    System.Diagnostics.Debug.WriteLine($"LoggingClientLoggerCacheAddHandlerBase.Handle: Result = '{result}'");
+
                     // stop.
                     return result;
                 }
@@ -154,6 +156,8 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The property, 'HandlerTypeValidator', has a null reference for a value.  Stopping..."
                     );
 
+                    System.Diagnostics.Debug.WriteLine($"LoggingClientLoggerCacheAddHandlerBase.Handle: Result = '{result}'");
+
                     // stop.
                     return result;
                 }
@@ -162,66 +166,66 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The property, 'HandlerTypeValidator', has a valid object reference for its value.  Proceeding..."
                 );
 
-                var action = Action;
-                var handlerType = HandlerType;
-
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the handler strategy type, '{handlerType}', is valid..."
+                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the handler strategy type, '{HandlerType}', is within the defined value set..."
                 );
 
-                // Check whether the handler strategy type is valid. If this is not the
-                // case, then write an error message to the Debug output and terminate the
-                // execution of this method.
-                if (!HandlerTypeValidator.IsValid(handlerType))
+                // Check whether the handler strategy type, 'HandlerType', is within the defined value set.  If this is not the case, then write an error message to the Debug output, and then terminate the execution of this method, while returning the default return value.
+                if (!HandlerTypeValidator.IsValid(HandlerType))
                 {
-                    // The handler strategy type is not valid. This is not desirable.
+                    // The handler strategy type, 'HandlerType', is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The handler strategy type, '{handlerType}', is not valid.  Stopping..."
+                        $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The handler strategy type, '{HandlerType}', is NOT within the defined value set.  Stopping..."
                     );
+
+                    System.Diagnostics.Debug.WriteLine($"LoggingClientLoggerCacheAddHandlerBase.Handle: Result = '{result}'");
 
                     // stop.
                     return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The handler strategy type, '{handlerType}', is valid.  Proceeding..."
+                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The handler strategy type, '{HandlerType}', is within the defined value set.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the cache-add action, '{action}', is valid..."
+                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the cache-add action, '{Action}', is within the defined value set..."
                 );
 
-                // Check whether the cache-add action is valid. If this is not the case,
-                // then write an error message to the Debug output and terminate the
-                // execution of this method.
-                if (!ActionValidator.IsValid(action))
+                // Check whether the cache-add action, 'Action', is within the defined
+                // value set.  If this is not the case, then write an error message
+                // to the log file, and then terminate the execution of this method,
+                // while returning the default return value.
+                if (!ActionValidator.IsValid(Action))
                 {
-                    // The cache-add action is not valid. This is not desirable.
+                    // The cache-add action, 'Action', is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The cache-add action, '{action}', is not valid.  Stopping..."
+                        $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The cache-add action, '{Action}', is NOT within the defined value set.  Stopping..."
                     );
+
+                    System.Diagnostics.Debug.WriteLine($"LoggingClientLoggerCacheAddHandlerBase.Handle: Result = '{result}'");
 
                     // stop.
                     return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The cache-add action, '{action}', is valid.  Proceeding..."
+                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The cache-add action, '{Action}', is within the defined value set.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the handler strategy type, '{handlerType}', and action, '{action}', form a valid combination..."
+                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the handler strategy type, '{HandlerType}', and action, '{Action}', form a valid combination..."
                 );
 
                 // Check whether the handler strategy type and action form a valid
                 // combination. If this is not the case, then write an error message to the
                 // Debug output and terminate the execution of this method.
-                if (!Determine.WhetherAddHandlerTypeAndActionComboIsValid(handlerType, action))
+                if (!Determine.WhetherAddHandlerTypeAndActionComboIsValid(HandlerType, Action))
                 {
                     // The handler strategy type and action do not form a valid
                     // combination. This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The handler strategy type, '{handlerType}', and action, '{action}', do not form a valid combination.  Stopping..."
+                        $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** ERROR *** The handler strategy type, '{HandlerType}', and action, '{Action}', do not form a valid combination.  Stopping..."
                     );
 
                     // stop.
@@ -229,10 +233,10 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The handler strategy type, '{handlerType}', and action, '{action}', form a valid combination.  Proceeding..."
+                    $"LoggingClientLoggerCacheAddHandlerBase.Handle: *** SUCCESS *** The handler strategy type, '{HandlerType}', and action, '{Action}', form a valid combination.  Proceeding..."
                 );
 
-                result = action;
+                result = Action;
             }
             catch (Exception ex)
             {
