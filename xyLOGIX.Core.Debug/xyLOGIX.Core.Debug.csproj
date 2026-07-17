@@ -293,6 +293,7 @@
     <Compile Include="MakeNewLoggingClientSession.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
     <Compile Include="MakeNewRollingFileAppender.cs" />
+    <Compile Include="MissingLoggerLoggingClientLoggerCacheAddHandler.cs" />
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
