@@ -910,32 +910,6 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCache.TryApplyCacheAddAction: *** SUCCESS *** The field, '_loggerMap', has a valid object reference for its value.  Proceeding..."
                 );
 
-                System.Diagnostics.Debug.WriteLine(
-                    "*** LoggingClientLoggerCache.TryApplyCacheAddAction: Checking whether the '_loggerMap' dictionary contains greater than zero elements..."
-                );
-
-                // Check to see whether the '_loggerMap' dictionary contains greater than zero 
-                // elements.  Otherwise, write an error message to the log file, return the default 
-                // return value, and then terminate the execution of this method.
-                if (_loggerMap.Count <= 0)
-                {
-                    // The '_loggerMap' dictionary contains zero elements.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The '_loggerMap' dictionary contains zero elements.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"LoggingClientLoggerCache.TryApplyCacheAddAction: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCache.TryApplyCacheAddAction: *** SUCCESS *** {_loggerMap.Count} element(s) were found in the '_loggerMap' dictionary.  Proceeding..."
-                );
-
                 // Dump the argument of the parameter, 'action', to the Debug output.
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingClientLoggerCache.TryApplyCacheAddAction: action = '{action}'"
