@@ -29,9 +29,8 @@ namespace xyLOGIX.Core.Debug
         /// This constructor is called automatically prior to the first instance
         /// being created or before any <see langword="static" /> member(s) are referenced.
         /// <para />
-        /// We've decorated this constructor with the
-        /// <c>[Log(AttributeExclude = true)]</c> attribute in order to simplify the
-        /// logging output.
+        /// We've decorated this constructor with the <c>[Log(AttributeExclude = true)]</c>
+        /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
         static LoggingClientLoggerCacheAddResultBuilder() { }
@@ -75,7 +74,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientLoggerCacheAddOutcomeValidator OutcomeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientLoggerCacheAddOutcomeValidator.SoleInstance();
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheAddResultBuilder.AndOutcome: Checking whether the property, 'OutcomeValidator', has a null reference for a value..."
                 );
 
-                // Check to see if the required property, 'OutcomeValidator', is null. If it
-                // is, then write an error message to the Debug output and terminate the
-                // execution of this method.
+                // Check to see if the required property, 'OutcomeValidator', is null. If it is,
+                // then write an error message to the Debug output and terminate the execution of
+                // this method.
                 if (OutcomeValidator == null)
                 {
                     // The property, 'OutcomeValidator', is required to have a valid object
@@ -162,55 +162,13 @@ namespace xyLOGIX.Core.Debug
                     $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: Checking whether the Handler Chain link type, '{HandlerType}', is compatible with the cache-add outcome, '{outcome}'..."
                 );
 
-                var combinationIsValid = false;
-
-                switch (HandlerType)
+                // Check whether the retained Handler Chain link type and specified cache-add
+                // outcome form a permitted combination. If this is not the case, then write an
+                // error message to the Debug output and terminate the execution of this method.
+                if (!Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid(HandlerType, outcome))
                 {
-                    case LoggingClientLoggerCacheAddHandlerType.ExistingLogger:
-                        if (!LoggingClientLoggerCacheAddOutcome.ExistingLoggerPreserved.Equals(
-                                outcome
-                            ))
-                            break;
-
-                        combinationIsValid = true;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.MissingLogger:
-                        if (LoggingClientLoggerCacheAddOutcome.LoggerAdded.Equals(outcome))
-                            combinationIsValid = true;
-
-                        if (LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed.Equals(outcome))
-                            combinationIsValid = true;
-
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.NullLogger:
-                        if (LoggingClientLoggerCacheAddOutcome.NullLoggerReplaced.Equals(outcome))
-                            combinationIsValid = true;
-
-                        if (LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed.Equals(outcome))
-                            combinationIsValid = true;
-
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.Unknown:
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(HandlerType), HandlerType,
-                            $"The Handler Chain link type, '{HandlerType}', is not supported."
-                        );
-                }
-
-                // Check whether the retained Handler Chain link type and specified
-                // cache-add outcome form a permitted combination. If this is not the
-                // case, then write an error message to the Debug output and terminate
-                // the execution of this method.
-                if (!combinationIsValid)
-                {
-                    // The retained Handler Chain link type and specified cache-add outcome
-                    // do not form a permitted combination.  This is not desirable.
+                    // The retained Handler Chain link type and specified cache-add outcome do not
+                    // form a permitted combination.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: *** ERROR *** The Handler Chain link type, '{HandlerType}', is not compatible with the cache-add outcome, '{outcome}'.  Stopping..."
                     );
