@@ -126,6 +126,25 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheAddActionValidator" />
+        /// interface.
+        /// </summary>
+        private static ILoggingClientLoggerCacheAddActionValidator
+            LoggingClientLoggerCacheAddActionValidator { [DebuggerStepThrough] get; } =
+            GetLoggingClientLoggerCacheAddActionValidator.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see
+        ///     cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheAddHandlerTypeValidator" />
+        /// interface.
+        /// </summary>
+        private static ILoggingClientLoggerCacheAddHandlerTypeValidator
+            LoggingClientLoggerCacheAddHandlerTypeValidator { [DebuggerStepThrough] get; } =
+            GetLoggingClientLoggerCacheAddHandlerTypeValidator.SoleInstance();
+
+        /// <summary>
         /// Determines whether the application is to use a programmatic logging
         /// configurator or configure logging from either the <c>app.config</c> or
         /// <c>web.config</c> file(s).
@@ -647,6 +666,107 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// For a given logging-client logger cache <c>Add</c> handler type,
+        /// <paramref name="handlerType" />, attempts to determine the corresponding
+        /// logging-client logger cache <c>Add</c> action, which is represented as one of
+        /// the value(s) of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction" />
+        /// enumeration.
+        /// </summary>
+        /// <param name="handlerType">
+        /// (Required.) One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// value(s) that identifies the logging-client logger cache <c>Add</c> handler
+        /// type whose corresponding action is to be determined.
+        /// </param>
+        /// <returns>
+        /// If successful, returns one of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction" /> value(s)
+        /// that indicates the corresponding logging-client logger cache <c>Add</c> action
+        /// that we expect; otherwise, the
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.Unknown" />
+        /// value is returned.
+        /// </returns>
+        private static LoggingClientLoggerCacheAddAction TryMapLoggingClientLoggerCacheAddAction(
+            LoggingClientLoggerCacheAddHandlerType handlerType
+        )
+        {
+            var result = LoggingClientLoggerCacheAddAction.Unknown;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TryMapLoggingClientLoggerCacheAddAction: *** FYI *** Getting the expected logging-client logger cache 'Add' action for the specified handler type, '{handlerType}'..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TryMapLoggingClientLoggerCacheAddAction: Checking whether the specified logging-client logger cache 'Add' operation handler type, '{handlerType}', is within the defined value set..."
+                );
+
+                // Check whether the specified logging-client logger cache 'Add' operation handler
+                // type, 'handlerType', is within the defined value set.  If this is not the case,
+                // then write an error message to the log file, and then terminate the execution of
+                // this method, while returning the default return value.
+                if (!LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid(handlerType))
+                {
+                    // The specified logging-client logger cache 'Add' operation handler type,
+                    // 'handlerType', is NOT within the defined value set.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TryMapLoggingClientLoggerCacheAddAction: *** ERROR *** The specified logging-client logger cache 'Add' operation handler type, '{handlerType}', is NOT within the defined value set.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TryMapLoggingClientLoggerCacheAddAction: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TryMapLoggingClientLoggerCacheAddAction: *** SUCCESS *** The specified logging-client logger cache 'Add' operation handler type, '{handlerType}', is within the defined value set.  Proceeding..."
+                );
+
+                switch (handlerType)
+                {
+                    case LoggingClientLoggerCacheAddHandlerType.ExistingLogger:
+                        result = LoggingClientLoggerCacheAddAction.PreserveExistingLogger;
+                        break;
+
+                    case LoggingClientLoggerCacheAddHandlerType.MissingLogger:
+                        result = LoggingClientLoggerCacheAddAction.AddLogger;
+                        break;
+
+                    case LoggingClientLoggerCacheAddHandlerType.NullLogger:
+                        result = LoggingClientLoggerCacheAddAction.ReplaceNullLogger;
+                        break;
+
+                    case LoggingClientLoggerCacheAddHandlerType.Unknown:
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(handlerType), handlerType,
+                            $"The logging-client logger-cache Add handler type, '{handlerType}', is not supported."
+                        );
+                }
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = LoggingClientLoggerCacheAddAction.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TryMapLoggingClientLoggerCacheAddAction: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
         /// Determines whether the particular combination of
         /// <paramref name="handlerType" /> and <paramref name="action" /> is valid for a
         /// logging-client logger-cache <c>Add</c> handler strategy.
@@ -709,44 +829,22 @@ namespace xyLOGIX.Core.Debug
                     $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: action = '{action}'"
                 );
 
-                var expectedAction = LoggingClientLoggerCacheAddAction.Unknown;
-
-                switch (handlerType)
-                {
-                    case LoggingClientLoggerCacheAddHandlerType.ExistingLogger:
-                        expectedAction = LoggingClientLoggerCacheAddAction.PreserveExistingLogger;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.MissingLogger:
-                        expectedAction = LoggingClientLoggerCacheAddAction.AddLogger;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.NullLogger:
-                        expectedAction = LoggingClientLoggerCacheAddAction.ReplaceNullLogger;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.Unknown:
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(handlerType), handlerType,
-                            $"The logging-client logger-cache Add handler type, '{handlerType}', is not supported."
-                        );
-                }
+                var expectedAction = TryMapLoggingClientLoggerCacheAddAction(handlerType);
 
                 System.Diagnostics.Debug.WriteLine(
-                    "Determine.WhetherAddHandlerTypeAndActionComboIsValid: Checking whether a valid expected action was determined..."
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: Checking whether the logging-client logger cache 'Add' action, '{expectedAction}', is within the defined value set..."
                 );
 
-                // Check whether a valid expected action was determined. If this is not the case,
-                // then write an error message to the Debug output and terminate the execution of
-                // this method.
-                if (LoggingClientLoggerCacheAddAction.Unknown.Equals(expectedAction))
+                // Check whether the logging-client logger cache 'Add' action, 'expectedAction', is
+                // within the defined value set.  If this is not the case, then write an error
+                // message to the Debug output, and then terminate the execution of this method,
+                // while returning the default return value.
+                if (!LoggingClientLoggerCacheAddActionValidator.IsValid(expectedAction))
                 {
-                    // A valid expected action could not be determined. This is not desirable.
+                    // The logging-client logger cache 'Add' action, 'expectedAction', is NOT within
+                    // the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** ERROR *** No valid cache-add action corresponds to the handler type, '{handlerType}'.  Stopping..."
+                        $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** ERROR *** The logging-client logger cache 'Add' action, '{expectedAction}', is NOT within the defined value set.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
@@ -758,7 +856,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** SUCCESS *** The expected action for the handler type, '{handlerType}', is '{expectedAction}'.  Proceeding..."
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** SUCCESS *** The logging-client logger cache 'Add' action, '{expectedAction}', is within the defined value set.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
@@ -788,10 +886,8 @@ namespace xyLOGIX.Core.Debug
                     $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** SUCCESS *** The handler type, '{handlerType}', and action, '{action}', form a valid combination.  Proceeding..."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
