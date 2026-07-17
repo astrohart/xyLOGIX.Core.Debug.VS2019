@@ -3,14 +3,14 @@
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Value(s) for the name(s) of assembly(ies) that are not valid for use as a
-    /// client of this library (except to wrap it).
+    /// Value(s) for the name(s) of assembly(ies) that are not valid for use
+    /// as a client of this library (except to wrap it).
     /// </summary>
     internal static class InvalidClientAssemblyNames
     {
         /// <summary>
-        /// Contains all the name(s) of those assembly(ies) that are not valid for use as a
-        /// client of this library (except to wrap it).
+        /// Contains all the name(s) of those assembly(ies) that are not valid for
+        /// use as a client of this library (except to wrap it).
         /// </summary>
         internal static readonly string[] All = { CoreTemplateLoggingWizards };
 

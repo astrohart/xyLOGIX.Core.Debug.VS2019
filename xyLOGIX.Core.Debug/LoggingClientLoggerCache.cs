@@ -54,7 +54,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCache() { }
+        private LoggingClientLoggerCache()
+        { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -63,7 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private ILoggingClientLoggerCacheKeyValidator CacheKeyValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientLoggerCacheKeyValidator.SoleInstance();
 
         /// <summary>
@@ -396,10 +398,8 @@ namespace xyLOGIX.Core.Debug
                     _loggerMap[cacheKey] = logger;
                 }
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the operation(s) succeeded.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
 
                 result = true;
             }
@@ -460,9 +460,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCache.TryGet: Checking whether the specified cache key has valid setting(s)..."
                 );
 
-                // Check to see whether the specified cache key has valid setting(s).
-                // If this is not the case, then write an error message to the log file,
-                // and then terminate the execution of this method.
+                // Check to see whether the specified cache key has valid setting(s). If this is not
+                // the case, then write an error message to the log file, and then terminate the
+                // execution of this method.
                 if (!CacheKeyValidator.IsValid(cacheKey))
                 {
                     // The specified cache key does NOT appear to have valid setting(s).  This is
@@ -518,9 +518,8 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCache.TryGet: Checking whether the variable, 'logger', has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, 'logger', has a null reference for a value.
-                    // If it does, then emit an error to the Debug output, and terminate the
-                    // execution
+                    // Check to see if the variable, 'logger', has a null reference for a value. If
+                    // it does, then emit an error to the Debug output, and terminate the execution
                     // of this method, returning the default return value.
                     if (logger == null)
                     {
@@ -545,10 +544,8 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCache.TryGet: *** SUCCESS *** The variable, 'logger', has a valid object reference for its value.  Proceeding..."
                     );
 
-                    /*
-                     * If we made it this far with no Exception(s) getting caught, then
-                     * assume that the operation(s) succeeded.
-                     */
+                    /* If we made it this far with no Exception(s) getting caught, then assume that
+                     the operation(s) succeeded. */
 
                     return true;
                 }

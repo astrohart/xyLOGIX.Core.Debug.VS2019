@@ -56,7 +56,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientAssemblyContext() { }
+        private LoggingClientAssemblyContext()
+        { }
 
         /// <summary>
         /// Gets the ticket that identifies the logging-client assembly associated

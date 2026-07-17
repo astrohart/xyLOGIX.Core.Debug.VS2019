@@ -93,8 +93,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal ILoggerRepository FallbackRepository
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -103,8 +105,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private ILoggerRepository RoutingRepository
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -128,11 +132,9 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /*
-                 * We will refrain from any diagnostics here, as it is expected that this method
-                 * will be called quite frequently, and we don't want to flood the Debug output with
-                 * messages.
-                 */
+                /* We will refrain from any diagnostics here, as it is expected that this method
+                 will be called quite frequently, and we don't want to flood the Debug output with
+                 messages. */
 
                 if (loggingEvent == null) return;
                 if (_isRouting) return;

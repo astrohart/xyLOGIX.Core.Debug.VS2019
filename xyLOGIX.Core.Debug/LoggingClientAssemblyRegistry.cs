@@ -56,13 +56,15 @@ namespace xyLOGIX.Core.Debug
         /// reference to it.
         /// </summary>
         /// <remarks>
-        /// This is an empty, <see langword="private" /> constructor to prohibit direct
-        /// allocation of this class, as it is a <c>Singleton</c> object accessible via the
+        /// This is an empty, <see langword="private" /> constructor to prohibit
+        /// direct allocation of this class, as it is a <c>Singleton</c> object accessible
+        /// via the
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientAssemblyRegistry.Instance" />
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientAssemblyRegistry() { }
+        private LoggingClientAssemblyRegistry()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -137,9 +139,8 @@ namespace xyLOGIX.Core.Debug
                         );
 
                         // Check to see whether the current entry in the registry corresponds to the
-                        // specified ticket.
-                        // If this is not the case, then write an error message to the Debug output,
-                        // and then skip to the next loop iteration.
+                        // specified ticket. If this is not the case, then write an error message to
+                        // the Debug output, and then skip to the next loop iteration.
                         if (!ticket.Equals(entry.Value))
                         {
                             // The current entry in the registry does NOT appear to correspond to
@@ -196,13 +197,13 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientAssemblyRegistry.GetTicket: Checking whether the method parameter, 'assembly', has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, 'assembly', is null. If it is,
-                // then write an error message to the log file and then terminate the
-                // execution of this method, returning the default return value.
+                // Check to see if the required parameter, 'assembly', is null. If it is, then write
+                // an error message to the log file and then terminate the execution of this method,
+                // returning the default return value.
                 if (assembly == null)
                 {
-                    // The method parameter, 'assembly', is required and is not supposed
-                    // to have a NULL value.  It does, and this is not desirable.
+                    // The method parameter, 'assembly', is required and is not supposed to have a
+                    // NULL value.  It does, and this is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingClientAssemblyRegistry.GetTicket: *** ERROR *** A null reference was passed for the method parameter, 'assembly'.  Stopping..."
                     );
@@ -271,13 +272,13 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientAssemblyRegistry.Register: Checking whether the method parameter, 'assembly', has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, 'assembly', is null. If it is,
-                // then write an error message to the log file and then terminate the
-                // execution of this method, returning the default return value.
+                // Check to see if the required parameter, 'assembly', is null. If it is, then write
+                // an error message to the log file and then terminate the execution of this method,
+                // returning the default return value.
                 if (assembly == null)
                 {
-                    // The method parameter, 'assembly', is required and is not supposed
-                    // to have a NULL value.  It does, and this is not desirable.
+                    // The method parameter, 'assembly', is required and is not supposed to have a
+                    // NULL value.  It does, and this is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingClientAssemblyRegistry.Register: *** ERROR *** A null reference was passed for the method parameter, 'assembly'.  Stopping..."
                     );
@@ -301,8 +302,8 @@ namespace xyLOGIX.Core.Debug
                     );
 
                     // Check to see whether the specified .NET assembly is NOT already registered.
-                    // If this is the case, then write a FYI message to the Debug output, and
-                    // then return its ticket.
+                    // If this is the case, then write a FYI message to the Debug output, and then
+                    // return its ticket.
                     if (_ticketsByAssembly.TryGetValue(assembly, out result))
                     {
                         // The specified .NET assembly is already registered.  Just return its

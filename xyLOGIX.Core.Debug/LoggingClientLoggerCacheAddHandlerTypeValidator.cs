@@ -6,12 +6,11 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Validates whether certain value(s) are within the defined value set of the
-    /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+    /// Validates whether certain value(s) are within the defined value set of
+    /// the <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
     /// enumeration.
     /// </summary>
     [ExplicitlySynchronized, Log(AttributeExclude = true)]
-    
     internal class LoggingClientLoggerCacheAddHandlerTypeValidator
         : ILoggingClientLoggerCacheAddHandlerTypeValidator
     {
@@ -46,7 +45,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCacheAddHandlerTypeValidator() { }
+        private LoggingClientLoggerCacheAddHandlerTypeValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that implements the
@@ -56,7 +56,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static ILoggingClientLoggerCacheAddHandlerTypeValidator Instance
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = new LoggingClientLoggerCacheAddHandlerTypeValidator();
 
         /// <summary>
@@ -87,30 +88,22 @@ namespace xyLOGIX.Core.Debug
                     $"LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: type = '{type}'"
                 );
 
-                /*
-                 * For cybersecurity reasons, and to defeat reverse-engineering,
-                 * check the value of the 'type' parameter to ensure that it
-                 * is not set to a value outside the set of valid values defined
-                 * by the xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType
-                 * enumeration.
-                 *
-                 * In principle, since all C# enums devolve to integer values, a
-                 * hacker could insert a different value into the CPU register that the
-                 * 'type' parameter is read from and thereby make this application
-                 * do something it's not intended to do.
-                 */
+                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 the 'type' parameter to ensure that it is not set to a value outside the set of
+                 valid values defined by the
+                 xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType enumeration. In
+                 principle, since all C# enums devolve to integer values, a hacker could insert a
+                 different value into the CPU register that the 'type' parameter is read from and
+                 thereby make this application do something it's not intended to do. */
 
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: Checking whether the value of the 'type' parameter, i.e., '{type}', is within the defined value set of its enumerated data type..."
                 );
 
                 // Check whether the value of the 'type' parameter is within the defined value set
-                // of its 
-                // enumeration data type.  If this is not the case, then write an error message to
-                // the log
-                // file, and then terminate the execution of this method while returning the default
-                // return
-                // value.
+                // of its  enumeration data type.  If this is not the case, then write an error
+                // message to the log file, and then terminate the execution of this method while
+                // returning the default return value.
                 if (!Enum.IsDefined(typeof(LoggingClientLoggerCacheAddHandlerType), type))
                 {
                     // The value of the 'type' parameter is NOT within the defined value set for its
@@ -135,11 +128,10 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: Checking whether the 'Unknown' value has NOT been specified for the 'type' parameter..."
                 );
 
-                // Check whether the 'Unknown' value has been specified for the 'type' parameter.
-                // If this is the case, then
-                // write an error message to the log file, and then terminate the execution of this
-                // method, returning the default
-                // return value in order to indicate that this method failed.
+                // Check whether the 'Unknown' value has been specified for the 'type' parameter. If
+                // this is the case, then write an error message to the log file, and then terminate
+                // the execution of this method, returning the default return value in order to
+                // indicate that this method failed.
                 if (LoggingClientLoggerCacheAddHandlerType.Unknown.Equals(type))
                 {
                     // The 'Unknown' value has been specified for the 'type' parameter.  This is not
@@ -160,9 +152,7 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'type' parameter.  Proceeding..."
                 );
 
-                /*
-                 * If we made it here, then assume that the input data is valid.
-                 */
+                /* If we made it here, then assume that the input data is valid. */
 
                 result = true;
             }

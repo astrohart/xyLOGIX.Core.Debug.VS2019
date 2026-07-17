@@ -46,7 +46,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private FetchLegacyLoggerSessionLoggerFetcher() { }
+        private FetchLegacyLoggerSessionLoggerFetcher()
+        { }
 
         /// <summary>
         /// Gets the
@@ -124,10 +125,13 @@ namespace xyLOGIX.Core.Debug
                     "FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: Checking whether the method parameter, 'sourceType', has a null reference for a value..."
                 );
 
-                // Check to see if the required parameter, 'sourceType', is null. If it is, then write an error message to the Debug output and then terminate the execution of this method, returning the default return value.
+                // Check to see if the required parameter, 'sourceType', is null. If it is, then
+                // write an error message to the Debug output and then terminate the execution of
+                // this method, returning the default return value.
                 if (sourceType == null)
                 {
-                    // The method parameter, 'sourceType', is required and is not supposed to have a NULL value.  There is nothing more to be done.
+                    // The method parameter, 'sourceType', is required and is not supposed to have a
+                    // NULL value.  There is nothing more to be done.
                     System.Diagnostics.Debug.WriteLine(
                         "FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: *** ERROR *** A null reference was passed for the method parameter, 'sourceType'.  Nothing to do..."
                     );
@@ -144,18 +148,21 @@ namespace xyLOGIX.Core.Debug
                     "*** INFO: Checking whether the property, 'sourceType.FullName', appears to have a null or blank value..."
                 );
 
-                // Check to see if the required property, 'sourceType.FullName', appears to have a null 
-                // or blank value. If it does, then send an error to the log file and quit,
+                // Check to see if the required property, 'sourceType.FullName', appears to have a
+                // null  or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
-                    // The property, 'sourceType.FullName', appears to have a null or blank value.  This is not desirable.
+                    // The property, 'sourceType.FullName', appears to have a null or blank value.
+                    // This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "*** ERROR: The property, 'sourceType.FullName', appears to have a null or blank value.  Stopping..."
                     );
 
                     // Emit the result to the Debug output.
-                    System.Diagnostics.Debug.WriteLine($"FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: Result = {result}");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"FetchLegacyLoggerSessionLoggerFetcher.FetchLogger: Result = {result}"
+                    );
 
                     // Stop.
                     return result;

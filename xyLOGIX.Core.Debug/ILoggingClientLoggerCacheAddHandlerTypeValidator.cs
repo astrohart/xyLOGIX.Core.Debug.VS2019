@@ -1,7 +1,8 @@
 ﻿namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Defines the internally-exposed events, methods and properties of a validator of
+    /// Defines the internally-exposed events, methods and properties of a
+    /// validator of
     /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
     /// enumeration values.
     /// </summary>

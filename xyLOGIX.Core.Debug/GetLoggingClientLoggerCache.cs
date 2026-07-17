@@ -5,8 +5,9 @@ using System.Diagnostics;
 namespace xyLOGIX.Core.Debug
 {
     /// <summary>
-    /// Provides access to the one and only instance of the object that implements the
-    /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCache" /> interface.
+    /// Provides access to the one and only instance of the object that
+    /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCache" />
+    /// interface.
     /// </summary>
     [Log(AttributeExclude = true)]
     internal static class GetLoggingClientLoggerCache
@@ -32,8 +33,8 @@ namespace xyLOGIX.Core.Debug
         /// returns a reference to it.
         /// </summary>
         /// <returns>
-        /// Reference to the one, and only, instance of the object that implements the
-        /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCache" /> interface.
+        /// Reference to the one, and only, instance of the object that implements
+        /// the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCache" /> interface.
         /// </returns>
         [DebuggerStepThrough, Log(AttributeExclude = true)]
         [return: NotLogged]

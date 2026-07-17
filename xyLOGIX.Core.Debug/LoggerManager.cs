@@ -24,10 +24,7 @@ namespace xyLOGIX.Core.Debug
         /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        static LoggerManager()
-        {
-
-        }
+        static LoggerManager() { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the

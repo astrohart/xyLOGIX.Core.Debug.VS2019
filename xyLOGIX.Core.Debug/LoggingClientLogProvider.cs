@@ -49,7 +49,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLogProvider() { }
+        private LoggingClientLogProvider()
+        { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -68,7 +69,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientAssemblyContext.SoleInstance();
 
         /// <summary>
@@ -77,7 +79,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -164,7 +167,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ISessionLoggerFetchApproachValidator SessionLoggerFetchApproachValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetSessionLoggerFetchApproachValidator.SoleInstance();
 
         /// <summary>
@@ -242,9 +246,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLogProvider.GetLogForType: Checking whether the variable, 'fetcher', has a null reference for a value..."
                 );
 
-                // Check to see if the variable, 'fetcher', has a null reference for a value.
-                // If it does, then emit an error to the Debug output, and terminate the execution
-                // of this method, returning the default return value.
+                // Check to see if the variable, 'fetcher', has a null reference for a value. If it
+                // does, then emit an error to the Debug output, and terminate the execution of this
+                // method, returning the default return value.
                 if (fetcher == null)
                 {
                     // The variable, 'fetcher', has a null reference for a value.  This is not

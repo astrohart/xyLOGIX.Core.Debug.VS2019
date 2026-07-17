@@ -50,9 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// </exception>
         [Log(AttributeExclude = true)]
         internal LoggingClientLoggerCacheKeyBuilder([NotLogged] ILoggerRepository repository)
-        {
-            Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
+            => Repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the

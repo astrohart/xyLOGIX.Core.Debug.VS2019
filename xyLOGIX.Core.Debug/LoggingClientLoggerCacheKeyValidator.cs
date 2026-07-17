@@ -42,7 +42,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCacheKeyValidator() { }
+        private LoggingClientLoggerCacheKeyValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -52,7 +53,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static ILoggingClientLoggerCacheKeyValidator Instance
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = new LoggingClientLoggerCacheKeyValidator();
 
         /// <summary>
@@ -155,10 +157,8 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheKeyValidator.IsValid: *** SUCCESS *** The value of the property, 'cacheKey.LoggerName', is not blank.  Proceeding..."
                 );
 
-                /*
-                 * If we made it this far with no Exception(s) getting caught, then
-                 * assume that the data has been validated successfully.
-                 */
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 data has been validated successfully. */
 
                 result = true;
             }

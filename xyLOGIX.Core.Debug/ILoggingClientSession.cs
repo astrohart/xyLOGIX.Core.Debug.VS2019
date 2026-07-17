@@ -50,6 +50,9 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         Guid Ticket { [DebuggerStepThrough] get; }
 
+        /// <summary>Resets the property(ies) of this session to their default value(s).</summary>
+        void Clear();
+
         /// <summary>
         /// Determines whether this logging-client session contains all required
         /// information and service reference(s).
@@ -65,10 +68,5 @@ namespace xyLOGIX.Core.Debug
         /// <see langword="null" />, or the repository name is blank.
         /// </remarks>
         bool IsValid();
-
-        /// <summary>
-        /// Resets the property(ies) of this session to their default value(s).
-        /// </summary>
-        void Clear();
     }
 }

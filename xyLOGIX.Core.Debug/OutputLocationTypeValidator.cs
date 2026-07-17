@@ -99,10 +99,10 @@ namespace xyLOGIX.Core.Debug
                     "OutputLocationTypeValidator.IsValid: Checking whether the 'Unknown' value has NOT been specified for the 'type' parameter..."
                 );
 
-                // Check whether the 'Unknown' value has been specified for the 'type' parameter.
-                // If this is the case, then write an error message to the log file, and then
-                // terminate the execution of this method, returning the default return value in
-                // order to indicate that this method failed.
+                // Check whether the 'Unknown' value has been specified for the 'type' parameter. If
+                // this is the case, then write an error message to the log file, and then terminate
+                // the execution of this method, returning the default return value in order to
+                // indicate that this method failed.
                 if (OutputLocationType.Unknown.Equals(type))
                 {
                     // The 'Unknown' value has been specified for the 'type' parameter.  This is not

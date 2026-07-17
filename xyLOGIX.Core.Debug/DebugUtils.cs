@@ -50,8 +50,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static string ApplicationName
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -77,8 +79,10 @@ namespace xyLOGIX.Core.Debug
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Global
         public static int ExceptionStackDepth
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -104,8 +108,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>Gets or sets a value that turns logging as a whole on or off.</summary>
@@ -127,8 +133,10 @@ namespace xyLOGIX.Core.Debug
         /// <summary>Gets or sets a value telling us to mute all console output.</summary>
         public static bool MuteConsole
         {
-            [DebuggerStepThrough] get => _muteConsole;
-            [DebuggerStepThrough] set => OutputLocationProvider.MuteConsole = _muteConsole = value;
+            [DebuggerStepThrough]
+            get => _muteConsole;
+            [DebuggerStepThrough]
+            set => OutputLocationProvider.MuteConsole = _muteConsole = value;
         }
 
         /// <summary>
@@ -137,8 +145,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public static bool MuteDebugLevelIfReleaseMode
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            set;
         }
 
         /// <summary>
@@ -153,14 +163,16 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IOutputLocationProvider OutputLocationProvider
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetOutputLocationProvider.SoleInstance();
 
         /// <summary>Gets or sets the verbosity level.</summary>
         /// <remarks>Typically, applications set this to 1.</remarks>
         public static int Verbosity
         {
-            [DebuggerStepThrough] get => _verbosity;
+            [DebuggerStepThrough]
+            get => _verbosity;
             [DebuggerStepThrough]
             set
             {
@@ -1059,8 +1071,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see if the required property, 'sourceType.FullName', appears to have a
-                // null 
-                // or blank value. If it does, then send an error to the log file and quit,
+                // null  or blank value. If it does, then send an error to the log file and quit,
                 // returning the default value of the result variable.
                 if (string.IsNullOrWhiteSpace(sourceType.FullName))
                 {
@@ -1125,6 +1136,7 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 result != null
+
                     // ReSharper disable once ConstantConditionalAccessQualifier
                     ? $"*** SUCCESS *** Obtained a reference to the logger for the type, '{sourceType?.FullName ?? "<null>"}'.  Proceeding..."
                     : $"*** ERROR *** FAILED to obtain a reference to the logger for the type, '{sourceType?.FullName ?? "<null>"}'.  Stopping..."

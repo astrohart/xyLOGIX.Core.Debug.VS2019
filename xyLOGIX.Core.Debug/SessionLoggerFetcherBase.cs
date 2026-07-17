@@ -44,7 +44,8 @@ namespace xyLOGIX.Core.Debug
         /// attribute in order to simplify the logging output.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        protected SessionLoggerFetcherBase() { }
+        protected SessionLoggerFetcherBase()
+        { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -56,7 +57,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static IDictionary<string, ILog> _sourceTypeFQNToLogMap
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = new AdvisableDictionary<string, ILog>();
 
         /// <summary>
@@ -151,10 +153,8 @@ namespace xyLOGIX.Core.Debug
                 var originalCacheElementCount = int.MinValue;
                 var remainingElementCount = int.MinValue;
 
-                /*
-                 * Determine the original element count, conditionally clear the cache, and
-                 * determine the remaining element count under one uninterrupted lock.
-                 */
+                /* Determine the original element count, conditionally clear the cache, and
+                 determine the remaining element count under one uninterrupted lock. */
 
                 lock (SyncRoot)
                 {
