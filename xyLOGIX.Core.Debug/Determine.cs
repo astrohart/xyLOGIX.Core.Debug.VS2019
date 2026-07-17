@@ -1,4 +1,5 @@
 ﻿using Alphaleonis.Win32.Filesystem;
+using log4net;
 using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
@@ -200,6 +201,141 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"Determine.LoggingConfiguratorTypeToUse: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the correct
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// enumeration value that identifies the handler strategy to be utilized for the
+        /// current state of a logging-client logger-cache entry.
+        /// </summary>
+        /// <param name="loggerWasFound">
+        /// (Required.) A <see cref="T:System.Boolean" />
+        /// value that indicates whether an entry corresponding to the specified cache key
+        /// was found.
+        /// </param>
+        /// <param name="cachedLogger">
+        /// (Optional.) Reference to an instance of an object
+        /// that implements the <see cref="T:log4net.ILog" /> interface that was obtained
+        /// from the cache.
+        /// </param>
+        /// <remarks>
+        /// If <paramref name="loggerWasFound" /> is <see langword="false" />, then this
+        /// method returns
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.MissingLogger" />
+        /// .
+        /// <para />
+        /// If <paramref name="loggerWasFound" /> is <see langword="true" /> and
+        /// <paramref name="cachedLogger" /> has a <see langword="null" /> reference for a
+        /// value, then this method returns
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.NullLogger" />
+        /// .
+        /// <para />
+        /// If <paramref name="loggerWasFound" /> is <see langword="true" /> and
+        /// <paramref name="cachedLogger" /> has a valid object reference for a value, then
+        /// this method returns
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.ExistingLogger" />
+        /// .
+        /// <para />
+        /// If the correct handler strategy cannot be determined, or an error occurs, then
+        /// this method returns
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.Unknown" />
+        /// .
+        /// </remarks>
+        /// <returns>
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// enumeration value(s) that identifies the correct handler strategy to utilize;
+        /// otherwise,
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.Unknown" />
+        /// is returned.
+        /// </returns>
+        [DebuggerStepThrough]
+        internal static LoggingClientLoggerCacheAddHandlerType
+            TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse(
+                bool loggerWasFound,
+                [NotLogged] ILog cachedLogger
+            )
+        {
+            var result = LoggingClientLoggerCacheAddHandlerType.Unknown;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: loggerWasFound = {loggerWasFound}"
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: Checking whether a logger corresponding to the specified cache key was found..."
+                );
+
+                // Check whether a logger corresponding to the specified cache key was found. If
+                // this is not the case, then the MissingLogger handler strategy is the correct
+                // strategy to utilize.
+                if (!loggerWasFound)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: *** INFO *** A logger corresponding to the specified cache key was not found.  Selecting the MissingLogger handler strategy..."
+                    );
+
+                    result = LoggingClientLoggerCacheAddHandlerType.MissingLogger;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: *** SUCCESS *** A cache entry corresponding to the specified cache key was found.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: Checking whether the cached logger has a null reference for a value..."
+                );
+
+                // Check whether the cached logger has a null reference for a value. If this is the
+                // case, then the NullLogger handler strategy is the correct strategy to utilize.
+                if (cachedLogger == null)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: *** WARNING *** The cache entry contains a null logger reference.  Selecting the NullLogger handler strategy..."
+                    );
+
+                    result = LoggingClientLoggerCacheAddHandlerType.NullLogger;
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: *** SUCCESS *** The cached logger has a valid object reference for its value.  Selecting the ExistingLogger handler strategy..."
+                );
+
+                result = LoggingClientLoggerCacheAddHandlerType.ExistingLogger;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = LoggingClientLoggerCacheAddHandlerType.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TheCorrectLoggingClientLoggerCacheAddHandlerTypeToUse: Result = '{result}'"
             );
 
             return result;
