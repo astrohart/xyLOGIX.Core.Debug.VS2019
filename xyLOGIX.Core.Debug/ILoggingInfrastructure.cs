@@ -19,7 +19,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
         /// that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         LoggingInfrastructureType Type { [DebuggerStepThrough] get; }
