@@ -315,9 +315,9 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="logger" />.
         /// </remarks>
         /// <returns>
-        /// <see langword="true" /> if a usable logger is already cached, the supplied
-        /// logger is added successfully, or an existing <see langword="null" /> logger
-        /// reference is replaced successfully; otherwise, <see langword="false" />.
+        /// <see langword="true" /> if a usable logger is already cached, the
+        /// supplied logger is added successfully, or an existing <see langword="null" />
+        /// logger reference is replaced successfully; otherwise, <see langword="false" />.
         /// </returns>
         [Log(AttributeExclude = true), DebuggerStepThrough]
         public bool TryAdd(
@@ -361,8 +361,8 @@ namespace xyLOGIX.Core.Debug
                 // execution of this method.
                 if (!CacheKeyValidator.IsValid(cacheKey))
                 {
-                    // The specified cache key does NOT appear to have valid setting(s). This is
-                    // not desirable.
+                    // The specified cache key does NOT appear to have valid setting(s). This is not
+                    // desirable.
                     System.Diagnostics.Debug.WriteLine(
                         "LoggingClientLoggerCache.TryAdd: *** ERROR *** The specified cache key does NOT appear to have valid setting(s).  Stopping..."
                     );
@@ -449,11 +449,9 @@ namespace xyLOGIX.Core.Debug
                 var action = LoggingClientLoggerCacheAddAction.Unknown;
                 var handlerType = LoggingClientLoggerCacheAddHandlerType.Unknown;
 
-                /*
-                 * Read the current cache state, select the applicable handler strategy,
-                 * obtain its action, apply the action, and verify any cache mutation while
-                 * one uninterrupted synchronization lock is held.
-                 */
+                /* Read the current cache state, select the applicable handler strategy, obtain its
+                 action, apply the action, and verify any cache mutation while one uninterrupted
+                 synchronization lock is held. */
 
                 lock (SyncRoot)
                 {
@@ -482,9 +480,8 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCache.TryAdd: Checking whether the variable, 'handler', has a null reference for a value..."
                     );
 
-                    // Check to see if the variable, 'handler', has a null reference for a value.
-                    // If it does, then emit an error to the Debug output, and terminate the
-                    // execution
+                    // Check to see if the variable, 'handler', has a null reference for a value. If
+                    // it does, then emit an error to the Debug output, and terminate the execution
                     // of this method, returning the default return value.
                     if (handler == null)
                     {
@@ -566,8 +563,8 @@ namespace xyLOGIX.Core.Debug
                         $"LoggingClientLoggerCache.TryAdd: *** ERROR *** A cache-add action was not obtained for the handler strategy type, '{handlerType}'.  Stopping..."
                     );
 
-                    DebugUtils.WriteLine(
-                        DebugLevel.Debug, $"LoggingClientLoggerCache.TryAdd: Result = {result}"
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingClientLoggerCache.TryAdd: Result = {result}"
                     );
 
                     // stop.
@@ -607,12 +604,20 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCache.TryAdd: *** ERROR *** A cache-add result was not produced.  Stopping..."
                     );
 
+                    System.Diagnostics.Debug.WriteLine(
+                        $"LoggingClientLoggerCache.TryAdd: Result = {result}"
+                    );
+
                     // stop.
                     return result;
                 }
 
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingClientLoggerCache.TryAdd: *** SUCCESS *** The handler strategy type, '{addResult.HandlerType}', produced the cache-add outcome, '{addResult.Outcome}'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"*** FYI *** Examining the logging-client logger-cache Add outcome, '{addResult.Outcome}', to determine the result of this method..."
                 );
 
                 switch (addResult.Outcome)
@@ -828,6 +833,137 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
+        /// Attempts to add the specified <paramref name="logger" /> to the
+        /// logging-client logger cache or replace the logger currently associated with the
+        /// specified <paramref name="cacheKey" />.
+        /// </summary>
+        /// <param name="cacheKey">
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheKey" />
+        /// interface that identifies the cache entry to update.
+        /// </param>
+        /// <param name="logger">
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:log4net.ILog" /> interface that is to be stored in
+        /// the cache.
+        /// </param>
+        /// <remarks>
+        /// The caller must own the synchronization lock represented by the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCache.SyncRoot" /> property
+        /// before invoking this method.
+        /// <para />
+        /// After updating the cache, this method verifies that the entry can be retrieved
+        /// and that it contains the same logger object reference that was supplied.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if the cache entry is updated and verified
+        /// successfully; otherwise, <see langword="false" />.
+        /// </returns>
+        [Log(AttributeExclude = true), DebuggerStepThrough]
+        private bool TryAddOrReplaceLoggerInCache(
+            [NotLogged] ILoggingClientLoggerCacheKey cacheKey,
+            [NotLogged] ILog logger
+        )
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** FYI *** Adding or replacing the logger associated with the specified cache key..."
+                );
+
+                _loggerMap[cacheKey] = logger;
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: Checking whether the cache entry can be obtained after the update..."
+                );
+
+                // Check whether the cache entry can be obtained after the update. If this is not
+                // the case, then write an error message to the Debug output and terminate the
+                // execution of this method.
+                if (!_loggerMap.TryGetValue(cacheKey, out var cachedLogger))
+                {
+                    // The cache entry could not be obtained after the update. This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** ERROR *** The cache entry could not be obtained after the update.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** SUCCESS *** The cache entry was obtained after the update.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: Checking whether the cached logger has a null reference for a value..."
+                );
+
+                // Check whether the cached logger has a null reference for a value. If this is the
+                // case, then write an error message to the Debug output and terminate the execution
+                // of this method.
+                if (cachedLogger == null)
+                {
+                    // The cached logger has a null reference for a value. This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** ERROR *** The cached logger has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** SUCCESS *** The cached logger has a valid object reference for its value.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: Checking whether the cached logger is the same object reference as the specified logger..."
+                );
+
+                // Check whether the cached logger is the same object reference as the specified
+                // logger. If this is not the case, then write an error message to the Debug output
+                // and terminate the execution of this method.
+                if (!ReferenceEquals(logger, cachedLogger))
+                {
+                    // The cached logger is not the same object reference as the specified logger.
+                    // This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** ERROR *** The cached logger is not the same object reference as the specified logger.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** SUCCESS *** The cached logger is the same object reference as the specified logger.  Proceeding..."
+                );
+
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
         /// Attempts to apply the specified logging-client logger-cache <c>Add</c>
         /// <paramref name="action" />.
         /// </summary>
@@ -839,7 +975,7 @@ namespace xyLOGIX.Core.Debug
         /// <param name="cacheKey">
         /// (Required.) Reference to an instance of an object that
         /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheKey" />
-        /// interface that identifies the cache entry to be updated.
+        /// interface that identifies the cache entry being processed.
         /// </param>
         /// <param name="logger">
         /// (Required.) Reference to an instance of an object that
@@ -851,18 +987,8 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCache.SyncRoot" /> property
         /// before invoking this method.
         /// <para />
-        /// The
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.PreserveExistingLogger" />
-        /// action performs no cache mutation and is treated as successful.
-        /// <para />
-        /// The
-        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.AddLogger" />
-        /// and
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.ReplaceNullLogger" />
-        /// action(s) update the cache and then verify that it contains the same logger
-        /// object reference that was supplied.
+        /// This method dispatches the requested action to a focused helper method while
+        /// the caller continues to own the same synchronization lock.
         /// </remarks>
         /// <returns>
         /// <see langword="true" /> if the specified action is applied
@@ -887,22 +1013,21 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCache.TryApplyCacheAddAction: Checking whether the field, '_loggerMap', has a null reference for a value..."
                 );
 
-                // Check to see if the required field, '_loggerMap', is null.  If it is, then send
-                // an error to the log file and then quit, returning the default value of the result
-                // variable.
+                // Check to see if the required field, '_loggerMap', is null. If it is, then write
+                // an error message to the Debug output and terminate the execution of this method.
                 if (_loggerMap == null)
                 {
-                    // The field, '_loggerMap' is required to be set to a valid object reference,
-                    // but it's not.  This is not desirable.
+                    // The field, '_loggerMap', is required to have a valid object reference for a
+                    // value. This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The field, '_loggerMap', has a null reference.  Stopping..."
+                        "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The field, '_loggerMap', has a null reference for a value.  Stopping..."
                     );
 
                     System.Diagnostics.Debug.WriteLine(
                         $"LoggingClientLoggerCache.TryApplyCacheAddAction: Result = {result}"
                     );
 
-                    // stop.S
+                    // stop.
                     return result;
                 }
 
@@ -915,106 +1040,20 @@ namespace xyLOGIX.Core.Debug
                     $"LoggingClientLoggerCache.TryApplyCacheAddAction: action = '{action}'"
                 );
 
-                /*
-                 * NOTE: Ordinarily, it is our practice, here at xyLOGIX, to NOT write big, honking
-                 * switch/case blocks, such as the below, that appear to execute several
-                 * strategy(ies) -- when a strategy pattern might otherwise be more applicable;
-                 * however, we need this code to all be called under the same lock, and we need to
-                 * be able to verify that the cache entry was updated successfully, so we are making
-                 * an exception to our usual practice in this case.
-                 */
-
                 switch (action)
                 {
                     case LoggingClientLoggerCacheAddAction.AddLogger:
                     case LoggingClientLoggerCacheAddAction.ReplaceNullLogger:
-                        _loggerMap[cacheKey] = logger;
-
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: Checking whether the cache entry can be obtained after the update..."
-                        );
-
-                        // Check whether the cache entry can be obtained after the update. If this
-                        // is not the case, then write an error message to the Debug output and
-                        // terminate the execution of this method.
-                        if (!_loggerMap.TryGetValue(cacheKey, out var cachedLogger))
-                        {
-                            // The cache entry could not be obtained after the update. This is not
-                            // desirable.
-                            System.Diagnostics.Debug.WriteLine(
-                                "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The cache entry could not be obtained after the update.  Stopping..."
-                            );
-
-                            // stop.
-                            return result;
-                        }
-
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: *** SUCCESS *** The cache entry was obtained after the update.  Proceeding..."
-                        );
-
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: Checking whether the cached logger has a null reference for a value..."
-                        );
-
-                        // Check whether the cached logger has a null reference for a value. If this
-                        // is the case, then write an error message to the Debug output and
-                        // terminate the execution of this method.
-                        if (cachedLogger == null)
-                        {
-                            // The cached logger has a null reference for a value. This is not
-                            // desirable.
-                            System.Diagnostics.Debug.WriteLine(
-                                "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The cached logger has a null reference for a value.  Stopping..."
-                            );
-
-                            // stop.
-                            return result;
-                        }
-
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: *** SUCCESS *** The cached logger has a valid object reference for its value.  Proceeding..."
-                        );
-
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: Checking whether the cached logger is the same object reference as the specified logger..."
-                        );
-
-                        // Check whether the cached logger is the same object reference as the
-                        // specified logger. If this is not the case, then write an error message to
-                        // the Debug output and terminate the execution of this method.
-                        if (!ReferenceEquals(logger, cachedLogger))
-                        {
-                            // The cached logger is not the same object reference as the specified
-                            // logger. This is not desirable.
-                            System.Diagnostics.Debug.WriteLine(
-                                "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The cached logger is not the same object reference as the specified logger.  Stopping..."
-                            );
-
-                            // stop.
-                            return result;
-                        }
-
-                        System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: *** SUCCESS *** The cached logger is the same object reference as the specified logger.  Proceeding..."
-                        );
-
-                        /* If we made it this far with no Exception(s) getting caught, then assume
-                         that the operation(s) succeeded. */
-
-                        result = true;
+                        result = TryAddOrReplaceLoggerInCache(cacheKey, logger);
                         break;
 
                     case LoggingClientLoggerCacheAddAction.PreserveExistingLogger:
-                        /* If we made it this far with no Exception(s) getting caught, then assume
-                         that the operation(s) succeeded. */
-
-                        result = true;
+                        result = TryPreserveExistingLogger(cacheKey);
                         break;
 
                     case LoggingClientLoggerCacheAddAction.Unknown:
                         System.Diagnostics.Debug.WriteLine(
-                            "LoggingClientLoggerCache.TryApplyCacheAddAction: *** ERROR *** The 'Unknown' logging-client logger-cache Add action was specified.  Stopping..."
+                            "LoggingClientLoggerCache.RejectUnknownCacheAddAction: *** ERROR *** The 'Unknown' logging-client logger-cache Add action was specified.  Stopping..."
                         );
                         break;
 
@@ -1035,6 +1074,104 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"LoggingClientLoggerCache.TryApplyCacheAddAction: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Attempts to preserve the existing logger associated with the specified
+        /// <paramref name="cacheKey" />.
+        /// </summary>
+        /// <param name="cacheKey">
+        /// (Required.) Reference to an instance of an object that
+        /// implements the <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheKey" />
+        /// interface that identifies the cache entry whose existing logger is to be
+        /// preserved.
+        /// </param>
+        /// <remarks>
+        /// The caller must own the synchronization lock represented by the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCache.SyncRoot" /> property
+        /// before invoking this method.
+        /// <para />
+        /// This method does not modify the cache. It verifies that the specified entry
+        /// still exists and contains a non-<see langword="null" /> logger reference.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if the cache entry exists and contains a non-
+        /// <see langword="null" /> logger reference; otherwise, <see langword="false" />.
+        /// </returns>
+        [Log(AttributeExclude = true), DebuggerStepThrough]
+        private bool TryPreserveExistingLogger([NotLogged] ILoggingClientLoggerCacheKey cacheKey)
+        {
+            var result = false;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryPreserveExistingLogger: *** FYI *** Preserving the existing logger associated with the specified cache key..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryPreserveExistingLogger: Checking whether the existing cache entry can be obtained..."
+                );
+
+                // Check whether the existing cache entry can be obtained. If this is not the case,
+                // then write an error message to the Debug output and terminate the execution of
+                // this method.
+                if (!_loggerMap.TryGetValue(cacheKey, out var cachedLogger))
+                {
+                    // The existing cache entry could not be obtained. This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryPreserveExistingLogger: *** ERROR *** The existing cache entry could not be obtained.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryPreserveExistingLogger: *** SUCCESS *** The existing cache entry was obtained.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryPreserveExistingLogger: Checking whether the existing cached logger has a null reference for a value..."
+                );
+
+                // Check whether the existing cached logger has a null reference for a value. If
+                // this is the case, then write an error message to the Debug output and terminate
+                // the execution of this method.
+                if (cachedLogger == null)
+                {
+                    // The existing cached logger has a null reference for a value. This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "LoggingClientLoggerCache.TryPreserveExistingLogger: *** ERROR *** The existing cached logger has a null reference for a value.  Stopping..."
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "LoggingClientLoggerCache.TryPreserveExistingLogger: *** SUCCESS *** The existing cached logger has a valid object reference for its value.  Proceeding..."
+                );
+
+                /* If we made it this far with no Exception(s) getting caught, then assume that the
+                 operation(s) succeeded. */
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"LoggingClientLoggerCache.TryPreserveExistingLogger: Result = {result}"
             );
 
             return result;
