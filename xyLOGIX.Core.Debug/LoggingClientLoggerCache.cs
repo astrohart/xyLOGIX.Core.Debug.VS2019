@@ -616,10 +616,23 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                System.Diagnostics.Debug.WriteLine(
+                    $"LoggingClientLoggerCache.TryApplyCacheAddAction: *** FYI *** Applying the logging-client logger-cache Add action, '{action}', to the cache entry identified by the specified cache key..."
+                );
+
                 // Dump the argument of the parameter, 'action', to the Debug output.
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingClientLoggerCache.TryApplyCacheAddAction: action = '{action}'"
                 );
+
+                /*
+                 * NOTE: Ordinarily, it is our practice, here at xyLOGIX, to NOT write big, honking
+                 * switch/case blocks, such as the below, that appear to execute several
+                 * strategy(ies) -- when a strategy pattern might otherwise be more applicable;
+                 * however, we need this code to all be called under the same lock, and we need to
+                 * be able to verify that the cache entry was updated successfully, so we are making
+                 * an exception to our usual practice in this case.
+                 */
 
                 switch (action)
                 {
