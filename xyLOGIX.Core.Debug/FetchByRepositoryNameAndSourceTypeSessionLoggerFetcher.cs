@@ -9,8 +9,9 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Gets a reference to an instance of an object that implements the
     /// <see cref="T:log4net.ILog" /> interface for a client session by using the
-    /// specified <paramref name="sourceType" /> and optional
-    /// <paramref name="repositoryName" />, if specified, per the
+    /// specified source <see cref="T:System.Type" /> and optional
+    /// <see cref="T:System.String" /> that is set to the name of the targeted log4net
+    /// repository, if specified, per the
     /// <see
     ///     cref="F:xyLOGIX.Core.Debug.SessionLoggerFetchApproach.FetchByRepositoryNameAndSourceType" />
     /// approach.
@@ -49,8 +50,7 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private FetchByRepositoryNameAndSourceTypeSessionLoggerFetcher()
-        { }
+        private FetchByRepositoryNameAndSourceTypeSessionLoggerFetcher() { }
 
         /// <summary>
         /// Gets the
