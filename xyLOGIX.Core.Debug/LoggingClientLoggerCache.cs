@@ -54,7 +54,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCache() { }
+        private LoggingClientLoggerCache()
+        { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -63,7 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private ILoggingClientLoggerCacheKeyValidator CacheKeyValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientLoggerCacheKeyValidator.SoleInstance();
 
         /// <summary>
@@ -164,7 +166,8 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingClientLoggerCacheAddActionValidator
-            LoggingClientLoggerCacheAddActionValidator { [DebuggerStepThrough] get; } =
+            LoggingClientLoggerCacheAddActionValidator
+        { [DebuggerStepThrough] get; } =
             GetLoggingClientLoggerCacheAddActionValidator.SoleInstance();
 
         /// <summary>
