@@ -253,5 +253,51 @@ namespace xyLOGIX.Core.Debug
 
             return result;
         }
+
+        /// <summary>
+        /// Returns a <see cref="T:System.String" /> that represents this
+        /// logging-client logger-cache key.
+        /// </summary>
+        /// <remarks>
+        /// The returned string includes the repository name, the repository
+        /// object-identity hash code, and the logger name.
+        /// <para />
+        /// The repository object-identity hash code is included because separate
+        /// repository instance(s) having the same name represent distinct cache-key
+        /// identities.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="T:System.String" /> containing a diagnostic representation
+        /// of this logging-client logger-cache key.
+        /// </returns>
+        [Log(AttributeExclude = true), DebuggerStepThrough]
+        public override string ToString()
+        {
+            var result =
+                "{ Logging Client Logger Cache Key: Repository = { Name = '<null>', IdentityHashCode = 0x00000000 }, LoggerName = '<null>' }";
+
+            try
+            {
+                var repositoryName = Repository != null &&
+                                     !string.IsNullOrWhiteSpace(Repository.Name)
+                    ? Repository.Name
+                    : "<blank>";
+
+                var repositoryIdentityHashCode = Repository != null
+                    ? RuntimeHelpers.GetHashCode(Repository)
+                    : 0;
+
+                var loggerName = !string.IsNullOrWhiteSpace(LoggerName) ? LoggerName : "<blank>";
+
+                result =
+                    $"{{ Logging Client Logger Cache Key: Repository = {{ Name = '{repositoryName}', IdentityHashCode = 0x{repositoryIdentityHashCode:X8} }}, LoggerName = '{loggerName}' }}";
+            }
+            catch 
+            {
+                result = "<unable to determine string representation>";
+            }
+
+            return result;
+        }
     }
 }
