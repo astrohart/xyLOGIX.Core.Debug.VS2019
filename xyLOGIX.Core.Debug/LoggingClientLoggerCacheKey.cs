@@ -267,8 +267,8 @@ namespace xyLOGIX.Core.Debug
         /// identities.
         /// </remarks>
         /// <returns>
-        /// A <see cref="T:System.String" /> containing a diagnostic representation
-        /// of this logging-client logger-cache key.
+        /// A <see cref="T:System.String" /> containing a diagnostic
+        /// representation of this logging-client logger-cache key.
         /// </returns>
         [Log(AttributeExclude = true), DebuggerStepThrough]
         public override string ToString()
@@ -278,23 +278,115 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                var repositoryName = Repository != null &&
-                                     !string.IsNullOrWhiteSpace(Repository.Name)
-                    ? Repository.Name
-                    : "<blank>";
-
-                var repositoryIdentityHashCode = Repository != null
-                    ? RuntimeHelpers.GetHashCode(Repository)
-                    : 0;
-
-                var loggerName = !string.IsNullOrWhiteSpace(LoggerName) ? LoggerName : "<blank>";
-
                 result =
-                    $"{{ Logging Client Logger Cache Key: Repository = {{ Name = '{repositoryName}', IdentityHashCode = 0x{repositoryIdentityHashCode:X8} }}, LoggerName = '{loggerName}' }}";
+                    $"{{ Logging Client Logger Cache Key: Repository = {{ Name = '{TryFormulateRepositoryStringRepresentation()}', IdentityHashCode = 0x{TryGetRepositoryHashCode():X8} }}, LoggerName = '{TryFormulateLoggerNameStringRepresentation()}' }}";
             }
-            catch 
+            catch
             {
                 result = "<unable to determine string representation>";
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the correct <see cref="T:System.String" /> representation
+        /// of the value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.LoggerName" />
+        /// property for the current cache key.
+        /// </summary>
+        /// <returns>
+        /// If successful, a <see cref="T:System.String" /> containing the string
+        /// representation of the current value of the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.LoggerName" />
+        /// property; otherwise, the method returns the value, <c>&lt;blank&gt;</c>.
+        /// </returns>
+        [DebuggerStepThrough, Log(AttributeExclude = true)]
+        [return: NotLogged]
+        private string TryFormulateLoggerNameStringRepresentation()
+        {
+            var result = "<blank>";
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(LoggerName)) return result;
+
+                result = LoggerName;
+            }
+            catch
+            {
+                result = "<blank>";
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the correct <see cref="T:System.String" /> representation
+        /// of the value of the <see cref="P:log4net.Repository.ILoggerRepository.Name" />
+        /// property for the current cache key.
+        /// </summary>
+        /// <remarks>
+        /// If the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.Repository" />
+        /// property is currently set to a <see langword="null" /> reference, then this
+        /// method returns the text, <c>&lt;null&gt;</c>.
+        /// </remarks>
+        /// <returns>
+        /// If successful, a <see cref="T:System.String" /> containing the string
+        /// representation of the current value of the
+        /// <see cref="P:log4net.Repository.ILoggerRepository.Name" /> property; otherwise,
+        /// the method returns the value, <c>&lt;blank&gt;</c>.
+        /// </returns>
+        [DebuggerStepThrough, Log(AttributeExclude = true)]
+        [return: NotLogged]
+        private string TryFormulateRepositoryStringRepresentation()
+        {
+            var result = "<blank>";
+
+            try
+            {
+                if (Repository == null) return "<null>";
+
+                if (string.IsNullOrWhiteSpace(Repository.Name)) return result;
+
+                result = Repository.Name;
+            }
+            catch
+            {
+                result = "<blank>";
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves, if possible, the object-identity hash code of the
+        /// repository instance that is referenced by the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.Repository" />
+        /// property.
+        /// </summary>
+        /// <returns>
+        /// If successful, a <see cref="T:System.Int32" /> value that is set to
+        /// the hash code of the repository instance that is referenced by the
+        /// <see cref="P:xyLOGIX.Core.Debug.LoggingClientLoggerCacheKey.Repository" />
+        /// property; otherwise, this method returns zero.
+        /// </returns>
+        [DebuggerStepThrough, Log(AttributeExclude = true)]
+        [return: NotLogged]
+        private int TryGetRepositoryHashCode()
+        {
+            var result = 0;
+
+            try
+            {
+                if (Repository == null) return result;
+
+                result = RuntimeHelpers.GetHashCode(Repository);
+            }
+            catch
+            {
+                result = 0;
             }
 
             return result;
