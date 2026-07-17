@@ -44,13 +44,12 @@ namespace xyLOGIX.Core.Debug
         /// <see cref="F:xyLOGIX.Core.Debug.LoggingInfrastructureType.PostSharp" /> logging
         /// infrastructure type value.
         /// </summary>
-        internal static ILoggingInfrastructure Instance { [DebuggerStepThrough] get; } =
+        internal new static ILoggingInfrastructure Instance { [DebuggerStepThrough] get; } =
             new PostSharpLoggingInfrastructure();
 
         /// <summary>
-        /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
-        /// that corresponds to the type of infrastructure that is being utilized.
+        /// Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        /// value that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         public override LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
             LoggingInfrastructureType.PostSharp;
