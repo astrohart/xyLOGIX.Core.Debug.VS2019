@@ -223,6 +223,7 @@
     <Compile Include="ILoggingClientAssemblyContext.cs" />
     <Compile Include="ILoggingClientAssemblyRegistry.cs" />
     <Compile Include="ILoggingClientLoggerCache.cs" />
+    <Compile Include="ILoggingClientLoggerCacheAddHandler.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddHandlerTypeValidator.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddOutcomeValidator.cs" />
     <Compile Include="ILoggingClientLoggerCacheAddResult.cs" />
