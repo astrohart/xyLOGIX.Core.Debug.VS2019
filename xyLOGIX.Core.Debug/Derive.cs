@@ -8,6 +8,11 @@ namespace xyLOGIX.Core.Debug
     /// Exposes <see langword="static" /> method(s) that derive a value from
     /// one or more related input value(s).
     /// </summary>
+    /// <remarks>
+    /// It is imperative that the methods of this class only be called from
+    /// the code of either the <see cref="T:xyLOGIX.Core.Debug.Determine" /> or
+    /// <see cref="T:xyLOGIX.Core.Debug.Ascertain" /> classes.
+    /// </remarks>
     [Log(AttributeExclude = true)]
     internal static class Derive
     {
