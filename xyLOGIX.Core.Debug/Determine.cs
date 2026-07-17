@@ -44,8 +44,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientAssemblyContext.SoleInstance();
 
         /// <summary>
@@ -54,8 +53,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -650,6 +648,170 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Determines whether the particular combination of
+        /// <paramref name="handlerType" /> and <paramref name="action" /> is valid for a
+        /// logging-client logger-cache <c>Add</c> handler strategy.
+        /// </summary>
+        /// <param name="handlerType">
+        /// (Required.) One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// value(s) that identifies the handler strategy whose action is being examined.
+        /// </param>
+        /// <param name="action">
+        /// (Required.) One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction" /> value(s)
+        /// that identifies the action selected by the handler strategy.
+        /// </param>
+        /// <remarks>
+        /// The
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.ExistingLogger" />
+        /// handler type is compatible only with the
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.PreserveExistingLogger" />
+        /// action.
+        /// <para />
+        /// The
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.MissingLogger" />
+        /// handler type is compatible only with the
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.AddLogger" />
+        /// action.
+        /// <para />
+        /// The
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.NullLogger" />
+        /// handler type is compatible only with the
+        /// <see
+        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction.ReplaceNullLogger" />
+        /// action.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true" /> if the combination of
+        /// <paramref name="handlerType" /> and <paramref name="action" /> is valid;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        public static bool WhetherAddHandlerTypeAndActionComboIsValid(
+            LoggingClientLoggerCacheAddHandlerType handlerType,
+            LoggingClientLoggerCacheAddAction action
+        )
+        {
+            var result = false;
+
+            try
+            {
+                // Dump the argument of the parameter, 'handlerType', to the Debug output.
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: handlerType = '{handlerType}'"
+                );
+
+                // Dump the argument of the parameter, 'action', to the Debug output.
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: action = '{action}'"
+                );
+
+                var expectedAction = LoggingClientLoggerCacheAddAction.Unknown;
+
+                switch (handlerType)
+                {
+                    case LoggingClientLoggerCacheAddHandlerType.ExistingLogger:
+                        expectedAction = LoggingClientLoggerCacheAddAction.PreserveExistingLogger;
+                        break;
+
+                    case LoggingClientLoggerCacheAddHandlerType.MissingLogger:
+                        expectedAction = LoggingClientLoggerCacheAddAction.AddLogger;
+                        break;
+
+                    case LoggingClientLoggerCacheAddHandlerType.NullLogger:
+                        expectedAction = LoggingClientLoggerCacheAddAction.ReplaceNullLogger;
+                        break;
+
+                    case LoggingClientLoggerCacheAddHandlerType.Unknown:
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(handlerType), handlerType,
+                            $"The logging-client logger-cache Add handler type, '{handlerType}', is not supported."
+                        );
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.WhetherAddHandlerTypeAndActionComboIsValid: Checking whether a valid expected action was determined..."
+                );
+
+                // Check whether a valid expected action was determined. If this is not the case,
+                // then write an error message to the Debug output and terminate the execution of
+                // this method.
+                if (LoggingClientLoggerCacheAddAction.Unknown.Equals(expectedAction))
+                {
+                    // A valid expected action could not be determined. This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** ERROR *** No valid cache-add action corresponds to the handler type, '{handlerType}'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** SUCCESS *** The expected action for the handler type, '{handlerType}', is '{expectedAction}'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: Checking whether the specified action, '{action}', matches the expected action, '{expectedAction}'..."
+                );
+
+                // Check whether the specified action matches the expected action. If this is not
+                // the case, then write an error message to the Debug output and terminate the
+                // execution of this method.
+                if (!expectedAction.Equals(action))
+                {
+                    // The specified action does not match the expected action. This is not
+                    // desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** ERROR *** The specified action, '{action}', does not match the expected action, '{expectedAction}', for the handler type, '{handlerType}'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: Result = {result}"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: *** SUCCESS *** The handler type, '{handlerType}', and action, '{action}', form a valid combination.  Proceeding..."
+                );
+
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then
+                 * assume that the operation(s) succeeded.
+                 */
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.WhetherAddHandlerTypeAndActionComboIsValid: Result = {result}"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether the particular combination of
         /// <paramref name="handlerType" /> and <paramref name="outcome" /> is valid, given
         /// the current state of the logging-client session and the logging-client logger
         /// cache.
@@ -671,7 +833,7 @@ namespace xyLOGIX.Core.Debug
         /// <paramref name="handlerType" /> and <paramref name="outcome" /> is valid;
         /// otherwise, <see langword="false" />.
         /// </returns>
-        public static bool WhetherAddHandlerTypeAndOutcomeCombIsValid(
+        public static bool WhetherAddHandlerTypeAndOutcomeComboIsValid(
             LoggingClientLoggerCacheAddHandlerType handlerType,
             LoggingClientLoggerCacheAddOutcome outcome
         )
@@ -682,12 +844,12 @@ namespace xyLOGIX.Core.Debug
             {
                 // Dump the argument of the parameter, handlerType, to the Debug output
                 System.Diagnostics.Debug.WriteLine(
-                    $"Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid: handlerType = '{handlerType}'"
+                    $"Determine.WhetherAddHandlerTypeAndOutcomeComboIsValid: handlerType = '{handlerType}'"
                 );
 
                 // Dump the argument of the parameter, outcome, to the Debug output
                 System.Diagnostics.Debug.WriteLine(
-                    $"Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid: outcome = '{outcome}'"
+                    $"Determine.WhetherAddHandlerTypeAndOutcomeComboIsValid: outcome = '{outcome}'"
                 );
 
                 result =
@@ -711,7 +873,7 @@ namespace xyLOGIX.Core.Debug
             }
 
             System.Diagnostics.Debug.WriteLine(
-                $"Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid: Result = {result}"
+                $"Determine.WhetherAddHandlerTypeAndOutcomeComboIsValid: Result = {result}"
             );
 
             return result;
