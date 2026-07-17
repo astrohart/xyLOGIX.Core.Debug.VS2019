@@ -280,6 +280,7 @@
     <Compile Include="LoggingSubsystemManager.cs" />
     <Compile Include="MakeNewConsoleLoggingBackend.cs" />
     <Compile Include="MakeNewLog4NetLoggingBackend.cs" />
+    <Compile Include="MakeNewLoggingClientLoggerCacheAddResult.cs" />
     <Compile Include="MakeNewLoggingClientLoggerCacheKey.cs" />
     <Compile Include="MakeNewLoggingClientSession.cs" />
     <Compile Include="MakeNewPatternLayout.cs" />
