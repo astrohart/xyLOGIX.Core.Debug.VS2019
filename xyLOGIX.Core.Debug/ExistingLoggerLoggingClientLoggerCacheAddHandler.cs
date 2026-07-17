@@ -45,7 +45,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private ExistingLoggerLoggingClientLoggerCacheAddHandler() { }
+        private ExistingLoggerLoggingClientLoggerCacheAddHandler()
+        { }
 
         /// <summary>
         /// Gets the
@@ -65,12 +66,12 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public override LoggingClientLoggerCacheAddHandlerType HandlerType
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = LoggingClientLoggerCacheAddHandlerType.ExistingLogger;
 
         /// <summary>
-        /// Gets a reference to the one and only instance of the object that
-        /// implements the
+        /// Gets a reference to the one and only instance of the object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheAddHandler" />
         /// interface for an existing, usable logger for the
         /// <see
@@ -78,7 +79,8 @@ namespace xyLOGIX.Core.Debug
         /// logging-client logger cache add handler strategy.
         /// </summary>
         internal static ILoggingClientLoggerCacheAddHandler
-            Instance { [DebuggerStepThrough] get; } =
+            Instance
+        { [DebuggerStepThrough] get; } =
             new ExistingLoggerLoggingClientLoggerCacheAddHandler();
     }
 }
