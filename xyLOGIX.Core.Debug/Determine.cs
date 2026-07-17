@@ -43,8 +43,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientAssemblyContext.SoleInstance();
 
         /// <summary>
@@ -53,8 +52,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -544,6 +542,16 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
+                // Dump the argument of the parameter, handlerType, to the Debug output
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid: handlerType = '{handlerType}'"
+                );
+
+                // Dump the argument of the parameter, outcome, to the Debug output
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid: outcome = '{outcome}'"
+                );
+
                 result =
                     (LoggingClientLoggerCacheAddHandlerType.ExistingLogger.Equals(handlerType) &&
                      LoggingClientLoggerCacheAddOutcome.ExistingLoggerPreserved.Equals(outcome)) ||
@@ -563,6 +571,10 @@ namespace xyLOGIX.Core.Debug
 
                 result = false;
             }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid: Result = {result}"
+            );
 
             return result;
         }
