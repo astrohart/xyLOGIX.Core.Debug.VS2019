@@ -44,7 +44,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientAssemblyContext.SoleInstance();
 
         /// <summary>
@@ -53,7 +54,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -343,6 +345,174 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Determines the correct
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome" />
+        /// enumeration value that corresponds to the specified logging-client logger-cache
+        /// <c>Add</c> handler type and operation-success state.
+        /// </summary>
+        /// <param name="handlerType">
+        /// (Required.) One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
+        /// value(s) that identifies the handler strategy utilized for the logging-client
+        /// logger-cache <c>Add</c> operation.
+        /// </param>
+        /// <param name="addOperationSucceeded">
+        /// (Required.) A
+        /// <see cref="T:System.Boolean" /> value that indicates whether the logging-client
+        /// logger-cache <c>Add</c> operation succeeded.
+        /// </param>
+        /// <remarks>
+        /// This method delegates the derivation of the corresponding outcome to
+        /// the <see cref="T:xyLOGIX.Core.Debug.Derive" /> action class.
+        /// <para />
+        /// If the correct outcome cannot be determined, then this method returns
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome.Unknown" />.
+        /// </remarks>
+        /// <returns>
+        /// If successful, one of the
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome" />
+        /// enumeration value(s) that corresponds to the specified handler type and
+        /// operation-success state; otherwise,
+        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome.Unknown" />
+        /// is returned.
+        /// </returns>
+        [DebuggerStepThrough]
+        internal static LoggingClientLoggerCacheAddOutcome
+            TheCorrectLoggingClientLoggerCacheAddOutcomeToUse(
+                LoggingClientLoggerCacheAddHandlerType handlerType,
+                bool addOperationSucceeded
+            )
+        {
+            var result = LoggingClientLoggerCacheAddOutcome.Unknown;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Determine.TheCorrectLoggingClientLoggerCacheAddOutcomeToUse: *** FYI *** Determining the correct logging-client logger cache 'Add' outcome for the specified handler type, '{handlerType}', with addOperationSucceeded = {addOperationSucceeded}..."
+                );
+
+                result = Derive.LoggingClientLoggerCacheAddOutcomeFrom(
+                    handlerType, addOperationSucceeded
+                );
+            }
+            catch (Exception ex)
+            {
+                // dump all the exception info to the Debug output.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = LoggingClientLoggerCacheAddOutcome.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TheCorrectLoggingClientLoggerCacheAddOutcomeToUse: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Attempts to determine which of the
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
+        /// value(s) most likely pertain to the situation at hand.
+        /// </summary>
+        /// <param name="loggerRepository">
+        /// (Optional.) Reference to an instance of an
+        /// object that implements the
+        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
+        /// <para />
+        /// Can be set to a <see langword="null" /> reference.
+        /// <para />
+        /// The default value of this parameter is a <see langword="null" /> reference.
+        /// </param>
+        /// <returns>
+        /// One of the
+        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
+        /// value(s) that most likely pertains to the situation at hand, or the
+        /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.Unknown" /> if
+        /// such a value cannot be ascertained.
+        /// </returns>
+        internal static RootLoggerProvisioningStrategy
+            TheCorrectRootLoggerProvisioningStrategyToUse(ILoggerRepository loggerRepository = null)
+        {
+            var result = RootLoggerProvisioningStrategy.FromLogManager;
+
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "*** FYI *** Attempting to determine which Root Logger Provisioning Strategy to use..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Checking whether the required method parameter, 'loggerRepository', has a null reference for a value..."
+                );
+
+                // Check to see if the required method parameter, loggerRepository, is null. If it
+                // is, send an error to the log file and quit, returning the default return value of
+                // this method.
+                if (loggerRepository == null)
+                {
+                    // The parameter, 'loggerRepository', is required and is not supposed to have a
+                    // NULL value.
+                    System.Diagnostics.Debug.WriteLine(
+                        "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: *** ERROR *** A null reference was passed for the required method parameter, 'loggerRepository'.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: *** SUCCESS *** We have been passed a valid object reference for the required method parameter, 'loggerRepository'.  Proceeding..."
+                );
+
+                System.Diagnostics.Debug.WriteLine(
+                    "*** Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Checking whether the provided Logger Repository is a Hierarchy..."
+                );
+
+                // Check to see whether the provided Logger Repository is a Hierarchy. If this is
+                // not the case, then write an error message to the log file, and then terminate the
+                // execution of this method.
+                if (!(loggerRepository is Hierarchy))
+                {
+                    // The provided Logger Repository is NOT a Hierarchy.  This is not desirable.
+                    System.Diagnostics.Debug.WriteLine(
+                        "*** ERROR *** The provided Logger Repository is NOT a Hierarchy.  Stopping..."
+                    );
+
+                    System.Diagnostics.Debug.WriteLine(
+                        $"*** Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Result = '{result}'"
+                    );
+
+                    // stop.
+                    return result;
+                }
+
+                System.Diagnostics.Debug.WriteLine(
+                    "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: *** SUCCESS *** The provided Logger Repository is a Hierarchy.  Proceeding..."
+                );
+
+                result = RootLoggerProvisioningStrategy.FromProvidedLoggingRepository;
+            }
+            catch (Exception ex)
+            {
+                // dump all exception info to the log.
+                System.Diagnostics.Debug.WriteLine(ex);
+
+                result = RootLoggerProvisioningStrategy.Unknown;
+            }
+
+            System.Diagnostics.Debug.WriteLine(
+                $"Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Result = '{result}'"
+            );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines the correct
         /// <see cref="T:xyLOGIX.Core.Debug.SessionLoggerFetchApproach" /> enumeration
         /// value that is to be returned, that corresponds to the correct approach that is
         /// to be utilized in getting a logger for the specified
@@ -622,109 +792,6 @@ namespace xyLOGIX.Core.Debug
 
             System.Diagnostics.Debug.WriteLine(
                 $"Determine.TheCorrectXmlLoggingConfiguratorTypeToUse: Result = '{result}'"
-            );
-
-            return result;
-        }
-
-        /// <summary>
-        /// Attempts to determine which of the
-        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
-        /// value(s) most likely pertain to the situation at hand.
-        /// </summary>
-        /// <param name="loggerRepository">
-        /// (Optional.) Reference to an instance of an
-        /// object that implements the
-        /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
-        /// <para />
-        /// Can be set to a <see langword="null" /> reference.
-        /// <para />
-        /// The default value of this parameter is a <see langword="null" /> reference.
-        /// </param>
-        /// <returns>
-        /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy" /> enumeration
-        /// value(s) that most likely pertains to the situation at hand, or the
-        /// <see cref="F:xyLOGIX.Core.Debug.RootLoggerProvisioningStrategy.Unknown" /> if
-        /// such a value cannot be ascertained.
-        /// </returns>
-        internal static RootLoggerProvisioningStrategy TheCorrectRootLoggerProvisioningStrategyToUse(
-            ILoggerRepository loggerRepository = null
-        )
-        {
-            var result = RootLoggerProvisioningStrategy.FromLogManager;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    "*** FYI *** Attempting to determine which Root Logger Provisioning Strategy to use..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Checking whether the required method parameter, 'loggerRepository', has a null reference for a value..."
-                );
-
-                // Check to see if the required method parameter, loggerRepository, is null. If it
-                // is, send an error to the log file and quit, returning the default return value of
-                // this method.
-                if (loggerRepository == null)
-                {
-                    // The parameter, 'loggerRepository', is required and is not supposed to have a
-                    // NULL value.
-                    System.Diagnostics.Debug.WriteLine(
-                        "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: *** ERROR *** A null reference was passed for the required method parameter, 'loggerRepository'.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: *** SUCCESS *** We have been passed a valid object reference for the required method parameter, 'loggerRepository'.  Proceeding..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    "*** Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Checking whether the provided Logger Repository is a Hierarchy..."
-                );
-
-                // Check to see whether the provided Logger Repository is a Hierarchy. If this is
-                // not the case, then write an error message to the log file, and then terminate the
-                // execution of this method.
-                if (!(loggerRepository is Hierarchy))
-                {
-                    // The provided Logger Repository is NOT a Hierarchy.  This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        "*** ERROR *** The provided Logger Repository is NOT a Hierarchy.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"*** Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    "Determine.TheCorrectRootLoggerProvisioningStrategyToUse: *** SUCCESS *** The provided Logger Repository is a Hierarchy.  Proceeding..."
-                );
-
-                result = RootLoggerProvisioningStrategy.FromProvidedLoggingRepository;
-            }
-            catch (Exception ex)
-            {
-                // dump all exception info to the log.
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = RootLoggerProvisioningStrategy.Unknown;
-            }
-
-            System.Diagnostics.Debug.WriteLine(
-                $"Determine.TheCorrectRootLoggerProvisioningStrategyToUse: Result = '{result}'"
             );
 
             return result;
