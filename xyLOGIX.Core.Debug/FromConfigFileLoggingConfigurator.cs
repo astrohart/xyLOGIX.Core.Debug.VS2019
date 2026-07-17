@@ -134,7 +134,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 var xmlLoggingConfiguratorType =
-                    Determine.XmlLoggingConfiguratorTypeToUse(configurationFileName);
+                    Determine.TheCorrectXmlLoggingConfiguratorTypeToUse(configurationFileName);
 
                 System.Diagnostics.Debug.WriteLine(
                     $"*** FromConfigFileLoggingConfigurator.Configure: Checking whether the particular XML Logging Configurator Type value, '{xmlLoggingConfiguratorType}', is within the defined value set..."
