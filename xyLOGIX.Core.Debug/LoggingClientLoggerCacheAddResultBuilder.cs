@@ -165,7 +165,7 @@ namespace xyLOGIX.Core.Debug
                 // Check whether the retained Handler Chain link type and specified cache-add
                 // outcome form a permitted combination. If this is not the case, then write an
                 // error message to the Debug output and terminate the execution of this method.
-                if (!Determine.WhetherAddHandlerTypeAndOutcomeCombIsValid(HandlerType, outcome))
+                if (!Determine.WhetherAddHandlerTypeAndOutcomeComboIsValid(HandlerType, outcome))
                 {
                     // The retained Handler Chain link type and specified cache-add outcome do not
                     // form a permitted combination.  This is not desirable.
