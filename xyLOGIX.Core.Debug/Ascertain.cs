@@ -158,134 +158,6 @@ namespace xyLOGIX.Core.Debug
         }
 
         /// <summary>
-        /// For a given logging-client logger-cache <c>Add</c> handler type and
-        /// operation-success state, attempts to determine the corresponding logging-client
-        /// logger-cache <c>Add</c> outcome.
-        /// </summary>
-        /// <param name="handlerType">
-        /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType" />
-        /// value(s) that identifies the handler strategy whose corresponding outcome is to
-        /// be determined.
-        /// </param>
-        /// <param name="addOperationSucceeded">
-        /// (Required.) A
-        /// <see cref="T:System.Boolean" /> value indicating whether the logging-client
-        /// logger-cache <c>Add</c> operation succeeded.
-        /// </param>
-        /// <remarks>
-        /// The
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.ExistingLogger" />
-        /// handler type has no failure outcome because it preserves an existing logger and
-        /// performs no cache mutation.
-        /// <para />
-        /// The
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.MissingLogger" />
-        /// and
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType.NullLogger" />
-        /// handler types map to
-        /// <see
-        ///     cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed" />
-        /// when <paramref name="addOperationSucceeded" /> is <see langword="false" />.
-        /// </remarks>
-        /// <returns>
-        /// If successful, one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome" /> value(s)
-        /// corresponding to the specified handler type and operation-success state;
-        /// otherwise,
-        /// <see cref="F:xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddOutcome.Unknown" />
-        /// is returned.
-        /// </returns>
-        [DebuggerStepThrough]
-        private static LoggingClientLoggerCacheAddOutcome TryMapLoggingClientLoggerCacheAddOutcome(
-            LoggingClientLoggerCacheAddHandlerType handlerType,
-            bool addOperationSucceeded
-        )
-        {
-            var result = LoggingClientLoggerCacheAddOutcome.Unknown;
-
-            try
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    $"Ascertain.TryMapLoggingClientLoggerCacheAddOutcome: *** FYI *** Getting the expected logging-client logger cache 'Add' outcome for the specified handler type, '{handlerType}', with addOperationSucceeded = {addOperationSucceeded}..."
-                );
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"Ascertain.TryMapLoggingClientLoggerCacheAddOutcome: Checking whether the specified logging-client logger cache 'Add' operation handler type, '{handlerType}', is within the defined value set..."
-                );
-
-                // Check whether the specified logging-client logger cache Add operation handler
-                // type is within the defined value set. If this is not the case, then write an
-                // error message to the Debug output and terminate the execution of this method.
-                if (!LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid(handlerType))
-                {
-                    // The specified logging-client logger cache Add operation handler type is not
-                    // within the defined value set. This is not desirable.
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Ascertain.TryMapLoggingClientLoggerCacheAddOutcome: *** ERROR *** The specified logging-client logger cache 'Add' operation handler type, '{handlerType}', is NOT within the defined value set.  Stopping..."
-                    );
-
-                    System.Diagnostics.Debug.WriteLine(
-                        $"Ascertain.TryMapLoggingClientLoggerCacheAddOutcome: Result = '{result}'"
-                    );
-
-                    // stop.
-                    return result;
-                }
-
-                System.Diagnostics.Debug.WriteLine(
-                    $"Ascertain.TryMapLoggingClientLoggerCacheAddOutcome: *** SUCCESS *** The specified logging-client logger cache 'Add' operation handler type, '{handlerType}', is within the defined value set.  Proceeding..."
-                );
-
-                switch (handlerType)
-                {
-                    case LoggingClientLoggerCacheAddHandlerType.ExistingLogger:
-                        result = addOperationSucceeded
-                            ? LoggingClientLoggerCacheAddOutcome.ExistingLoggerPreserved
-                            : LoggingClientLoggerCacheAddOutcome.Unknown;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.MissingLogger:
-                        result = addOperationSucceeded
-                            ? LoggingClientLoggerCacheAddOutcome.LoggerAdded
-                            : LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.NullLogger:
-                        result = addOperationSucceeded
-                            ? LoggingClientLoggerCacheAddOutcome.NullLoggerReplaced
-                            : LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed;
-                        break;
-
-                    case LoggingClientLoggerCacheAddHandlerType.Unknown:
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            nameof(handlerType), handlerType,
-                            $"The logging-client logger-cache Add handler type, '{handlerType}', is not supported."
-                        );
-                }
-            }
-            catch (Exception ex)
-            {
-                // dump all the exception info to the Debug output.
-                System.Diagnostics.Debug.WriteLine(ex);
-
-                result = LoggingClientLoggerCacheAddOutcome.Unknown;
-            }
-
-            System.Diagnostics.Debug.WriteLine(
-                $"Ascertain.TryMapLoggingClientLoggerCacheAddOutcome: Result = '{result}'"
-            );
-
-            return result;
-        }
-
-        /// <summary>
         /// Determines whether the particular combination of
         /// <paramref name="handlerType" /> and <paramref name="action" /> is valid for a
         /// logging-client logger-cache <c>Add</c> handler strategy.
@@ -518,7 +390,7 @@ namespace xyLOGIX.Core.Debug
                     $"Ascertain.WhetherAddHandlerTypeAndOutcomeComboIsValid: *** SUCCESS *** The specified logging-client logger cache 'Add' outcome, '{outcome}', is within the defined value set.  Proceeding..."
                 );
 
-                var expectedOutcome = TryMapLoggingClientLoggerCacheAddOutcome(
+                var expectedOutcome = Derive.LoggingClientLoggerCacheAddOutcomeFrom(
                     handlerType,
                     !LoggingClientLoggerCacheAddOutcome.LoggerUpdateFailed.Equals(outcome)
                 );
