@@ -53,7 +53,7 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                var strategy = Determine.TheRootLoggerProvisioningStrategyToUse(loggerRepository);
+                var strategy = Determine.TheCorrectRootLoggerProvisioningStrategyToUse(loggerRepository);
 
                 System.Diagnostics.Debug.WriteLine(
                     $"*** LoggerManager.GetRootLogger: Checking whether the Root Logger Provisioning Strategy, '{strategy}', is within the defined value set..."
