@@ -173,6 +173,7 @@
     <Compile Include="GetEvent.cs" />
     <Compile Include="GetEventLogManager.cs" />
     <Compile Include="GetEventLogTypeValidator.cs" />
+    <Compile Include="GetExistingLoggerLoggingClientLoggerCacheAddHandler.cs" />
     <Compile Include="GetFetchByRepositoryNameAndSourceTypeSessionLoggerFetcher.cs" />
     <Compile Include="GetFetchFromCacheSessionLoggerFetcher.cs" />
     <Compile Include="GetFetchLegacyLoggerSessionLoggerFetcher.cs" />
