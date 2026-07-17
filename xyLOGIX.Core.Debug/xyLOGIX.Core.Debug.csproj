@@ -264,6 +264,7 @@
     <Compile Include="LoggingClientLoggerCacheAddOutcome.cs" />
     <Compile Include="LoggingClientLoggerCacheAddOutcomeValidator.cs" />
     <Compile Include="LoggingClientLoggerCacheAddResult.cs" />
+    <Compile Include="LoggingClientLoggerCacheAddResultBuilder.cs" />
     <Compile Include="LoggingClientLoggerCacheKey.cs" />
     <Compile Include="LoggingClientLoggerCacheKeyBuilder.cs" />
     <Compile Include="LoggingClientLoggerCacheKeyValidator.cs" />
