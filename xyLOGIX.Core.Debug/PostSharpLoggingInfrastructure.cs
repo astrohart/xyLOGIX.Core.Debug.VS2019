@@ -552,6 +552,10 @@ namespace xyLOGIX.Core.Debug
         ///     cref="E:xyLOGIX.Core.Debug.DefaultLoggingInfrastructure.LoggingInitializationFinished" />
         /// event.
         /// </summary>
+        /// <param name="overwrite">
+        /// Overwrites any existing logs for the application with
+        /// the latest logging sent out by this instance.
+        /// </param>
         /// <param name="repository">
         /// (Optional.) Reference to an instance of an object that
         /// implements the <see cref="T:log4net.Repository.ILoggerRepository" /> interface.
