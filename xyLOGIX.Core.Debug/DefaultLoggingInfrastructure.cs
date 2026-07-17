@@ -157,7 +157,7 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
         /// that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         public virtual LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
@@ -524,7 +524,7 @@ namespace xyLOGIX.Core.Debug
         /// <param name="muteDebugLevelIfReleaseMode">
         /// If set to true, does not echo any
         /// logging statements that are set to the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> level.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> level.
         /// </param>
         /// <param name="isLogging">
         /// True to activate the functionality of writing to a log
