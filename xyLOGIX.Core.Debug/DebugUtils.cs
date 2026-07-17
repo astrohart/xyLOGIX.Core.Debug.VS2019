@@ -103,7 +103,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <summary>
         /// Gets or sets a
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.LoggingInfrastructureType" /> value
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
         /// indicating which type of logging infrastructure is in use.
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
@@ -827,7 +827,7 @@ namespace xyLOGIX.Core.Debug
         /// is to be executed for each line of content.
         /// </param>
         /// <param name="level">
-        /// A <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" />
+        /// A <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
         /// specifying the debugLevel of logging to utilize.
         /// </param>
         [DebuggerStepThrough]
@@ -1158,7 +1158,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
         /// indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
         /// written.
         /// </param>
@@ -1177,7 +1177,7 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
+        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then
         /// this method does nothing. This method does not add a newline character after
         /// writing its content to the log.
         /// </remarks>
@@ -1219,7 +1219,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
         /// indicates which log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>)
         /// where the content should be written.
         /// </param>
@@ -1261,7 +1261,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
         /// determine what logging debugLevel to utilize.
         /// </param>
         /// <param name="content">
@@ -1275,7 +1275,7 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
+        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then
         /// this method does nothing. This method adds a newline character after writing
         /// its content to the log.
         /// <para />
@@ -1360,7 +1360,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
         /// indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
         /// written.
         /// </param>
@@ -1379,7 +1379,7 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> , then
+        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then
         /// this method does nothing. This method adds a newline character after writing
         /// its content to the log.
         /// </remarks>
@@ -1419,10 +1419,10 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Works the same as the overload which takes a
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> as its first argument,
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> as its first argument,
         /// but if the formatted content consists of several lines of content, then the
         /// lines are split and logged separately, all under the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> debugLevel.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> debugLevel.
         /// </summary>
         /// <param name="format">
         /// (Required.) String containing an optional format specifier
@@ -1439,7 +1439,7 @@ namespace xyLOGIX.Core.Debug
         /// then this method does nothing.
         /// <para />
         /// This overload specifies that the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel.Debug" /> logging
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> logging
         /// debugLevel is to be utilized for each line.
         /// </remarks>
         public static void WriteLine([NotLogged] string format, params object[] args)
@@ -1469,7 +1469,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
         /// indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
         /// written.
         /// </param>
@@ -1512,7 +1512,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.Constants.DebugLevel" /> value(s) that
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
         /// determine what logging debugLevel to utilize.
         /// </param>
         /// <param name="content">
