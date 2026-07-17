@@ -297,6 +297,7 @@
     <Compile Include="MuteConsoleChangedEventArgs.cs" />
     <Compile Include="MuteConsoleChangedEventHandler.cs" />
     <Compile Include="NoFileXmlLoggingConfigurator.cs" />
+    <Compile Include="NullLoggerLoggingClientLoggerCacheAddHandler.cs" />
     <Compile Include="ObjectDumper.cs" />
     <Compile Include="OutputLocationBase.cs" />
     <Compile Include="OutputLocationProvider.cs" />
