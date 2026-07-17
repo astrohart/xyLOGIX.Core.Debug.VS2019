@@ -135,18 +135,19 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: Checking whether the specified cache-add outcome, '{outcome}', is valid..."
+                    $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: Checking whether the specified logging-client logger cache Add operation outcome, '{outcome}', is within the defined value set..."
                 );
 
-                // Check whether the specified cache-add outcome is valid. If this is not
-                // the case, then write an error message to the Debug output and terminate
-                // the execution of this method.
+                // Check whether the specified logging-client logger cache Add operation outcome,
+                // 'outcome', is within the defined value set.  If this is not the case, then write
+                // an error message to the Debug output, and then terminate the execution of this
+                // method, while returning the default return value.
                 if (!OutcomeValidator.IsValid(outcome))
                 {
-                    // The specified cache-add outcome is not valid.  This is not
-                    // desirable.
+                    // The specified logging-client logger cache Add operation outcome, 'outcome',
+                    // is NOT within the defined value set.  This is not desirable.
                     System.Diagnostics.Debug.WriteLine(
-                        $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: *** ERROR *** The specified cache-add outcome, '{outcome}', is not valid.  Stopping..."
+                        $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: *** ERROR *** The specified logging-client logger cache Add operation outcome, '{outcome}', is NOT within the defined value set.  Stopping..."
                     );
 
                     // stop.
@@ -154,7 +155,7 @@ namespace xyLOGIX.Core.Debug
                 }
 
                 System.Diagnostics.Debug.WriteLine(
-                    $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: *** SUCCESS *** The specified cache-add outcome, '{outcome}', is valid.  Proceeding..."
+                    $"LoggingClientLoggerCacheAddResultBuilder.AndOutcome: *** SUCCESS *** The specified logging-client logger cache Add operation outcome, '{outcome}', is within the defined value set.  Proceeding..."
                 );
 
                 System.Diagnostics.Debug.WriteLine(
