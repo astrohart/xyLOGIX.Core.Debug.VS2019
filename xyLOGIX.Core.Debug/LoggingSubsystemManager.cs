@@ -840,7 +840,7 @@ namespace xyLOGIX.Core.Debug
         /// Overwrites any existing logs for the application with
         /// the latest logging sent out by this instance.
         /// </param>
-        /// <param name="configurationFileNamename">
+        /// <param name="configurationFileName">
         /// Specifies the path to the configuration
         /// file to be utilized for initializing log4net. If blank, the system attempts to
         /// utilize the default App.config file.

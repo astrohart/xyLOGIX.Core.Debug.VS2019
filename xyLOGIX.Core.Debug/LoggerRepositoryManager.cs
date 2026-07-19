@@ -152,7 +152,7 @@ namespace xyLOGIX.Core.Debug
             return result;
         }
 
-        /// <summary>Wraps the <see cref="log4net.LogManager.GetRepository" /> method.</summary>
+        /// <summary>Wraps the <see cref="M:log4net.LogManager.GetRepository()" /> method.</summary>
         /// <returns>
         /// Reference to an instance of an object that implements the
         /// <see cref="T:log4net.Repository.ILoggerRepository" /> interface, or null if

@@ -409,7 +409,7 @@ namespace xyLOGIX.Core.Debug
         /// returns <see langword="false" />
         /// <para />
         /// This method also returns <see langword="false" /> if a
-        /// <see langword="null" /, blank, or the <see cref="F:System.String.Empty" />
+        /// <see langword="null" />, blank, or the <see cref="F:System.String.Empty" />
         /// value is passed for the value of the <paramref name="repositoryName" />
         /// parameter; and the value of the <paramref name="log" /> parameter is also
         /// assigned a <see langword="null" /> reference.

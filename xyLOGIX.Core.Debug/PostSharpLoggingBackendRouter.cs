@@ -4,6 +4,7 @@ using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using PostSharp.Patterns.Diagnostics;
 using PostSharp.Patterns.Diagnostics.Backends.Log4Net;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -21,7 +22,7 @@ namespace xyLOGIX.Core.Debug
     /// <see cref="T:xyLOGIX.Core.Debug.LoggingSubsystemManager" /> retain the existing
     /// PostSharp backend behavior.
     /// </remarks>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal sealed class PostSharpLoggingBackendRouter : IPostSharpLoggingBackendRouter
     {
         /// <summary>

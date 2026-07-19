@@ -47,7 +47,7 @@ namespace xyLOGIX.Core.Debug
         ///     for more information.
         ///     </para>
         /// </remarks>
-        /// <seealso cref="RequiresLayout" />
+        /// <seealso cref="P:log4net.Appender.AppenderSkeleton.RequiresLayout" />
         ILayout Layout { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>

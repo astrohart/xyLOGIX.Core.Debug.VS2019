@@ -2,6 +2,7 @@
 using log4net.Core;
 using log4net.Repository;
 using PostSharp.Patterns.Diagnostics;
+using PostSharp.Patterns.Threading;
 using System;
 using System.Diagnostics;
 
@@ -20,7 +21,7 @@ namespace xyLOGIX.Core.Debug
     /// <para />
     /// This appender is installed only in the dedicated PostSharp routing repository.
     /// </remarks>
-    [Log(AttributeExclude = true)]
+    [Log(AttributeExclude = true), ExplicitlySynchronized]
     internal sealed class LoggingClientRoutingAppender : AppenderSkeleton
     {
         /// <summary>
@@ -132,9 +133,11 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* We will refrain from any diagnostics here, as it is expected that this method
-                 will be called quite frequently, and we don't want to flood the Debug output with
-                 messages. */
+                /*
+                 * We will refrain from any diagnostics here, as it is expected that this method
+                 * will be called quite frequently, and we don't want to flood the Debug output with
+                 * messages.
+                 */
 
                 if (loggingEvent == null) return;
                 if (_isRouting) return;
@@ -284,8 +287,10 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                /* Do not call DebugUtils.LogException here. Doing so could recursively re-enter
-                 this appender. */
+                /*
+                 * Do not call DebugUtils.LogException here. Doing so could recursively re-enter
+                 * this appender.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(ex);
 
