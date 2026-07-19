@@ -115,8 +115,10 @@ namespace xyLOGIX.Core.Debug
 
                 File.Delete(pathname);
 
-                /* Base whether this method succeeded or failed on whether the file was successfully
-                 deleted. */
+                /*
+                 * Base whether this method succeeded or failed on whether the file was successfully
+                 * deleted.
+                 */
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,
@@ -243,8 +245,10 @@ namespace xyLOGIX.Core.Debug
 
                 File.Delete(pathname);
 
-                /* Base whether this method succeeded or failed on whether the file was successfully
-                 deleted. */
+                /*
+                 * Base whether this method succeeded or failed on whether the file was successfully
+                 * deleted.
+                 */
 
                 result = !File.Exists(pathname);
             }
@@ -293,8 +297,10 @@ namespace xyLOGIX.Core.Debug
 
                 File.Delete(pathname);
 
-                /* Base whether this method succeeded or failed on whether the file was successfully
-                 deleted. */
+                /*
+                 * Base whether this method succeeded or failed on whether the file was successfully
+                 * deleted.
+                 */
 
                 result = !File.Exists(pathname);
             }

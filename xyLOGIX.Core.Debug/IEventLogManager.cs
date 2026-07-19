@@ -64,8 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="logType">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> value(s) that
-        /// specifies the type of log to send events to.
+        /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> value(s) that specifies the
+        /// type of log to send events to.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation(s) completed successfully;

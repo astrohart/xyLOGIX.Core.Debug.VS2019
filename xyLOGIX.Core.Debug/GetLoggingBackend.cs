@@ -8,9 +8,8 @@ namespace xyLOGIX.Core.Debug
     /// <summary>
     /// Obtains a reference to a new instance of the
     /// <see cref="T:PostSharp.Patterns.Diagnostics.LoggingBackend" /> that corresponds
-    /// to the specified
-    /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration
-    /// value.
+    /// to the specified <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" />
+    /// enumeration value.
     /// </summary>
     public static class GetLoggingBackend
     {
@@ -43,8 +42,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) The
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration
-        /// value that explains which type of backend to get.
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingBackendType" /> enumeration value that
+        /// explains which type of backend to get.
         /// </param>
         /// <param name="relay">
         /// (Optional.) Reference to an instance of an object that
@@ -88,7 +87,9 @@ namespace xyLOGIX.Core.Debug
                     "GetLoggingBackend.For: *** SUCCESS *** The type of logging backend requested is within the defined value set.  Proceeding..."
                 );
 
-                /* If log4net is the requested backend, the 'relay' parameter must be non-NULL. */
+                /*
+                 * If log4net is the requested backend, the 'relay' parameter must be non-NULL.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "GetLoggingBackend.For: Checking whether the log4net backend is requested, but a null reference has been passed for the 'relay' parameter..."

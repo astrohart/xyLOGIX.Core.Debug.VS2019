@@ -63,8 +63,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientLoggerCacheAddActionValidator ActionValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientLoggerCacheAddActionValidator.SoleInstance();
 
         /// <summary>
@@ -75,8 +74,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public abstract LoggingClientLoggerCacheAddHandlerType HandlerType
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         }
 
         /// <summary>
@@ -87,8 +85,7 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientLoggerCacheAddHandlerTypeValidator HandlerTypeValidator
         {
-            [DebuggerStepThrough]
-            get;
+            [DebuggerStepThrough] get;
         } = GetLoggingClientLoggerCacheAddHandlerTypeValidator.SoleInstance();
 
         /// <summary>
@@ -205,8 +202,8 @@ namespace xyLOGIX.Core.Debug
                     $"LoggingClientLoggerCacheAddHandlerBase.Handle: Checking whether the cache-add action, '{Action}', is within the defined value set..."
                 );
 
-                // Check whether the cache-add action, 'Action', is within the defined value set.
-                // If this is not the case, then write an error message to the log file, and then
+                // Check whether the cache-add action, 'Action', is within the defined value set. If
+                // this is not the case, then write an error message to the log file, and then
                 // terminate the execution of this method, while returning the default return value.
                 if (!ActionValidator.IsValid(Action))
                 {

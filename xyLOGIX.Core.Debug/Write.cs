@@ -19,10 +19,12 @@ namespace xyLOGIX.Core.Debug
                     "Write.LogFileTimestamp: *** FYI *** Writing the timestamp to the log file..."
                 );
 
-                /* NOTE: For the vast majority of this file, we are using
-                 System.Diagnostics.Debug.WriteLine to send logging messages. However, this method
-                 is supposed to touch the log file (except for when an exception is caught), so we
-                 are supposed to call DebugUtils.WriteLine here. */
+                /*
+                 * NOTE: For the vast majority of this file, we are using
+                 * System.Diagnostics.Debug.WriteLine to send logging messages. However, this method
+                 * is supposed to touch the log file (except for when an exception is caught), so we
+                 * are supposed to call DebugUtils.WriteLine here.
+                 */
 
                 DebugUtils.WriteLine(
                     DebugLevel.Info,

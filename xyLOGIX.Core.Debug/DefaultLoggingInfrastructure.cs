@@ -156,9 +156,8 @@ namespace xyLOGIX.Core.Debug
         } = GetLoggingConfiguratorTypeValidator.SoleInstance();
 
         /// <summary>
-        /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
-        /// that corresponds to the type of infrastructure that is being utilized.
+        /// Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        /// value that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         public virtual LoggingInfrastructureType Type { [DebuggerStepThrough] get; } =
             LoggingInfrastructureType.Default;
@@ -481,11 +480,15 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.InitializeLogging: *** SUCCESS *** The debug utilities object was properly configured.  Proceeding..."
                 );
 
-                /* NOTE: DO NOT call OnLoggingInitializationFinished from here. ALWAYS call such a
-                 method in the OVERRIDES of this method, ONLY. */
+                /*
+                 * NOTE: DO NOT call OnLoggingInitializationFinished from here. ALWAYS call such a
+                 * method in the OVERRIDES of this method, ONLY.
+                 */
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -623,8 +626,10 @@ namespace xyLOGIX.Core.Debug
                     $"DefaultLoggingInfrastructure.SetUpDebugUtils: DebugUtils.Verbosity = {DebugUtils.Verbosity}"
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -783,8 +788,10 @@ namespace xyLOGIX.Core.Debug
                     return result;
                 }
 
-                /* If we are here, then we've detected that PostSharp is being used. Override(s) of
-                 this method should take it from here. */
+                /*
+                 * If we are here, then we've detected that PostSharp is being used. Override(s) of
+                 * this method should take it from here.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** We're using PostSharp.  Proceeding..."
@@ -796,8 +803,10 @@ namespace xyLOGIX.Core.Debug
 
                 LoggingInitializationFinished?.Invoke(this, EventArgs.Empty);
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -841,10 +850,12 @@ namespace xyLOGIX.Core.Debug
                     "DefaultLoggingInfrastructure.PrepareLogFile: *** FYI *** Preparing to write the log file to the file system..."
                 );
 
-                /* This method is primarily concerned with deleting the previous log file and then
-                 starting a new one (for a subsequent execution, or user interaction session, with
-                 the same app. Therefore, if we are logging to the console only, then there is
-                 nothing for us to do here -- but return TRUE all the same, to indicate success. */
+                /*
+                 * This method is primarily concerned with deleting the previous log file and then
+                 * starting a new one (for a subsequent execution, or user interaction session, with
+                 * the same app. Therefore, if we are logging to the console only, then there is
+                 * nothing for us to do here -- but return TRUE all the same, to indicate success.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "DefaultLoggingInfrastructure.PrepareLogFile: Checking whether the logging backend is NOT the console..."
@@ -1272,12 +1283,14 @@ namespace xyLOGIX.Core.Debug
                 result = !string.IsNullOrWhiteSpace(effectiveConfigurationFileName) &&
                          File.Exists(effectiveConfigurationFileName);
 
-                /* If the value of 'false' is set for the 'result' variable, then the file whose
-                 fully-qualified pathname is stored in the value of the
-                 'effectiveConfigurationFileName' parameter does not exist on the file system. In
-                 this case, we will set the value of the 'effectiveConfigurationFileName' parameter
-                 to the empty string, and then return 'false' to indicate that we could not locate a
-                 VSIX-specific log4net configuration file. */
+                /*
+                 * If the value of 'false' is set for the 'result' variable, then the file whose
+                 * fully-qualified pathname is stored in the value of the
+                 * 'effectiveConfigurationFileName' parameter does not exist on the file system. In
+                 * this case, we will set the value of the 'effectiveConfigurationFileName'
+                 * parameter to the empty string, and then return 'false' to indicate that we could
+                 * not locate a VSIX-specific log4net configuration file.
+                 */
 
                 if (!result)
                 {

@@ -38,10 +38,9 @@ namespace xyLOGIX.Core.Debug
             new DebugOutputLocation();
 
         /// <summary>
-        /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration
-        /// values that indicates the final base of text strings that are fed to this
-        /// location.
+        /// Gets one of the <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" />
+        /// enumeration values that indicates the final base of text strings that are fed
+        /// to this location.
         /// </summary>
         public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Debug;
@@ -65,7 +64,9 @@ namespace xyLOGIX.Core.Debug
                 if (!Debugger.IsAttached) return;
                 if (!Debugger.IsLogging()) return;
 
-                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 System.Diagnostics.Debug.Write(value);
             }
@@ -126,7 +127,9 @@ namespace xyLOGIX.Core.Debug
                 if (!Debugger.IsAttached) return;
                 if (!Debugger.IsLogging()) return;
 
-                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(value);
             }

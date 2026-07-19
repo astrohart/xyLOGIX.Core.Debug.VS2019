@@ -37,10 +37,9 @@ namespace xyLOGIX.Core.Debug
             new ConsoleOutputLocation();
 
         /// <summary>
-        /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration
-        /// values that indicates the final base of text strings that are fed to this
-        /// location.
+        /// Gets one of the <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" />
+        /// enumeration values that indicates the final base of text strings that are fed
+        /// to this location.
         /// </summary>
         public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Console;

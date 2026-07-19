@@ -38,10 +38,9 @@ namespace xyLOGIX.Core.Debug
             new TraceOutputLocation();
 
         /// <summary>
-        /// Gets one of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration
-        /// values that indicates the final base of text strings that are fed to this
-        /// location.
+        /// Gets one of the <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" />
+        /// enumeration values that indicates the final base of text strings that are fed
+        /// to this location.
         /// </summary>
         public override OutputLocationType Type { [DebuggerStepThrough] get; } =
             OutputLocationType.Trace;
@@ -61,13 +60,17 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* This particular Output Listener is designed to output messages only in Release
-                 mode. */
+                /*
+                 * This particular Output Listener is designed to output messages only in Release
+                 * mode.
+                 */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
 
-                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 Trace.Write(value);
             }
@@ -98,8 +101,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* This particular Output Listener is designed to output messages only in Release
-                 mode. */
+                /*
+                 * This particular Output Listener is designed to output messages only in Release
+                 * mode.
+                 */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
@@ -130,13 +135,17 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* This particular Output Listener is designed to output messages only in Release
-                 mode. */
+                /*
+                 * This particular Output Listener is designed to output messages only in Release
+                 * mode.
+                 */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
 
-                /* The 'value' parameter is allowed to be set to a null reference, FYI. */
+                /*
+                 * The 'value' parameter is allowed to be set to a null reference, FYI.
+                 */
 
                 Trace.WriteLine(value);
             }
@@ -168,8 +177,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* This particular Output Listener is designed to output messages only in Release
-                 mode. */
+                /*
+                 * This particular Output Listener is designed to output messages only in Release
+                 * mode.
+                 */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;
@@ -191,8 +202,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* This particular Output Listener is designed to output messages only in Release
-                 mode. */
+                /*
+                 * This particular Output Listener is designed to output messages only in Release
+                 * mode.
+                 */
 
                 if (Debugger.IsAttached) return;
                 if (Debugger.IsLogging()) return;

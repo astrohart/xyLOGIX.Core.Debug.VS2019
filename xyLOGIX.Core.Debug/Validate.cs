@@ -69,8 +69,10 @@ namespace xyLOGIX.Core.Debug
                     $"Validate.LoggingInfrastructureType: *** SUCCESS *** The specified Logging Infrastructure Type value, '{type}', is within the defined value set.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

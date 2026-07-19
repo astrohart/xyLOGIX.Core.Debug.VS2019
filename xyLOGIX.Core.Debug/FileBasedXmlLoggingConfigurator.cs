@@ -89,9 +89,11 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /* This method should only execute if: (a) the value of the 'configurationFileName'
-                 parameter is non-blank, AND, (b) it contains the fully-qualified pathname of a file
-                 that exists AND (c) has an extension of .config. */
+                /*
+                 * This method should only execute if: (a) the value of the 'configurationFileName'
+                 * parameter is non-blank, AND, (b) it contains the fully-qualified pathname of a
+                 * file that exists AND (c) has an extension of .config.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "FileBasedXmlLoggingConfigurator.Configure: Checking whether the value of the required method parameter, 'configurationFileName' parameter is null or consists solely of whitespace..."
@@ -176,8 +178,10 @@ namespace xyLOGIX.Core.Debug
                     "*** INFO: Not only is the 'configurationFileName' parameter's argument not the blank string, but the file that it references has been found on the filesystem."
                 );
 
-                /* Initialize log4net and use both the configuration file pathname passed, and, if
-                 it's not null, the ILoggerRepository reference that was passed to this method, too.
+                /*
+                 * Initialize log4net and use both the configuration file pathname passed, and, if
+                 * it's not null, the ILoggerRepository reference that was passed to this method,
+                 * too.
                  */
 
                 System.Diagnostics.Debug.WriteLine(
@@ -203,8 +207,10 @@ namespace xyLOGIX.Core.Debug
                     XmlConfigurator.Configure(repository, configurationFileInfo);
                 }
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

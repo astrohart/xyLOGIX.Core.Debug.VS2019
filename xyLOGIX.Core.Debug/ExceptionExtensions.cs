@@ -83,7 +83,9 @@ namespace xyLOGIX.Core.Debug
         /// </remarks>
         public static void LogAllExceptions(this IEnumerable<Exception> exceptions)
         {
-            /* Nothing to do if there are no exceptions to be logged. */
+            /*
+             * Nothing to do if there are no exceptions to be logged.
+             */
 
             if (exceptions == null) return;
 
@@ -91,9 +93,11 @@ namespace xyLOGIX.Core.Debug
 
             if (exceptionArray.Length <= 0) return;
 
-            /* Iterate through the collection of Exception objects passed, skipping over any
-             elements which are null. If the InnerException property of a particular member of the
-             collection is itself non-null, log that exception first. */
+            /*
+             * Iterate through the collection of Exception objects passed, skipping over any
+             * elements which are null. If the InnerException property of a particular member of the
+             * collection is itself non-null, log that exception first.
+             */
 
             foreach (var exception in exceptionArray)
             {

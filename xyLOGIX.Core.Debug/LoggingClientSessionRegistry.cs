@@ -46,8 +46,7 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientSessionRegistry()
-        { }
+        private LoggingClientSessionRegistry() { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -263,10 +262,12 @@ namespace xyLOGIX.Core.Debug
                         return result;
                     }
 
-                    /* If we are here, then there was no corresponding logging-client session found
-                     that corresponds to the specified 'ticket'. Therefore, attempt to create a new
-                     logging-client session and add it to the collection of registered
-                     logging-client sessions. */
+                    /*
+                     * If we are here, then there was no corresponding logging-client session found
+                     * that corresponds to the specified 'ticket'. Therefore, attempt to create a
+                     * new logging-client session and add it to the collection of registered
+                     * logging-client sessions.
+                     */
 
                     System.Diagnostics.Debug.WriteLine(
                         $"*** FYI *** Making a new logging-client session for the specified ticket, '{ticket}', and assembly, '{clientAssembly.FullName}'..."
@@ -323,7 +324,9 @@ namespace xyLOGIX.Core.Debug
 
                     _sessions.Add(ticket, result);
 
-                    /* If we made it here with no Exception getting caught, then declare success. */
+                    /*
+                     * If we made it here with no Exception getting caught, then declare success.
+                     */
 
                     System.Diagnostics.Debug.WriteLine(
                         $"LoggingClientSessionRegistry.GetOrCreate: *** SUCCESS *** Successfully created a new logging-client session for the specified ticket, '{ticket}', and assembly, '{clientAssembly.FullName}'.  Returning it to the caller..."

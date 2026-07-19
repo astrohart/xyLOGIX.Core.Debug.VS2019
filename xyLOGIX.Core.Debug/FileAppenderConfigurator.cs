@@ -89,8 +89,10 @@ namespace xyLOGIX.Core.Debug
                     $"FileAppenderConfigurator.SetMinimalLock: *** SUCCESS *** The appender corresponding to the file, '{appender.File}', has been configured to use the minimal-lock option."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

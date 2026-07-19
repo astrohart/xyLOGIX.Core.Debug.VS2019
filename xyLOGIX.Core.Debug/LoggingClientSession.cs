@@ -89,10 +89,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public LoggingBackend Backend
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            private set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] private set;
         }
 
         /// <summary>
@@ -101,10 +99,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public Assembly ClientAssembly
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            private set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] private set;
         }
 
         /// <summary>
@@ -114,10 +110,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public ILoggerRepository Repository
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            private set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] private set;
         }
 
         /// <summary>
@@ -126,10 +120,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public string RepositoryName
         {
-            [DebuggerStepThrough]
-            get;
-            [DebuggerStepThrough]
-            private set;
+            [DebuggerStepThrough] get;
+            [DebuggerStepThrough] private set;
         }
 
         /// <summary>
@@ -308,8 +300,10 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientSession.IsValid: *** SUCCESS *** The property, 'Backend', has a valid object reference for its value.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 data has been validated successfully. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * data has been validated successfully.
+                 */
 
                 result = true;
             }

@@ -147,14 +147,18 @@ namespace xyLOGIX.Core.Debug
                     "SessionLoggerFetcherBase.ClearInternalCache: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
                 );
 
-                /* Obviously, if the internal cache already has zero element(s), then there is
-                 nothing else that needs to be done. */
+                /*
+                 * Obviously, if the internal cache already has zero element(s), then there is
+                 * nothing else that needs to be done.
+                 */
 
                 var originalCacheElementCount = int.MinValue;
                 var remainingElementCount = int.MinValue;
 
-                /* Determine the original element count, conditionally clear the cache, and
-                 determine the remaining element count under one uninterrupted lock. */
+                /*
+                 * Determine the original element count, conditionally clear the cache, and
+                 * determine the remaining element count under one uninterrupted lock.
+                 */
 
                 lock (SyncRoot)
                 {
@@ -359,8 +363,10 @@ namespace xyLOGIX.Core.Debug
                 {
                     _sourceTypeFQNToLogMap[sourceType.FullName] = logger;
 
-                    /* If we made it this far with no Exception(s) getting caught, then assume that
-                     the operation(s) succeeded. */
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then assume that
+                     * the operation(s) succeeded.
+                     */
 
                     result = true;
                 }
@@ -408,11 +414,11 @@ namespace xyLOGIX.Core.Debug
         /// parameter is set to a <see langword="null" /> reference, and this method
         /// returns <see langword="false" />
         /// <para />
-        /// This method also returns <see langword="false" /> if a
-        /// <see langword="null" />, blank, or the <see cref="F:System.String.Empty" />
-        /// value is passed for the value of the <paramref name="repositoryName" />
-        /// parameter; and the value of the <paramref name="log" /> parameter is also
-        /// assigned a <see langword="null" /> reference.
+        /// This method also returns <see langword="false" /> if a <see langword="null" />,
+        /// blank, or the <see cref="F:System.String.Empty" /> value is passed for the
+        /// value of the <paramref name="repositoryName" /> parameter; and the value of the
+        /// <paramref name="log" /> parameter is also assigned a <see langword="null" />
+        /// reference.
         /// <para />
         /// The method also returns <see langword="false" /> if the logger could not be
         /// created for any reason, and the value of the <paramref name="log" /> parameter
@@ -516,8 +522,10 @@ namespace xyLOGIX.Core.Debug
 
                 log = LogManager.GetLogger(repositoryName, sourceType);
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = log != null && repositoryName.Equals(log.Logger.Repository.Name);
             }
@@ -640,8 +648,10 @@ namespace xyLOGIX.Core.Debug
                     "SessionLoggerFetcherBase.TryGetLoggerFromInternalCache: *** SUCCESS *** The field, '_sourceTypeFQNToLogMap', has a valid object reference for its value.  Proceeding..."
                 );
 
-                /* Determine whether the current source is mapped to a logger, AND retrieve the
-                 logger as well, all under the same lock. */
+                /*
+                 * Determine whether the current source is mapped to a logger, AND retrieve the
+                 * logger as well, all under the same lock.
+                 */
 
                 bool loggerWasFound;
 

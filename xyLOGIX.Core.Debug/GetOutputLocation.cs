@@ -39,8 +39,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration
-        /// values that describes the type of output location to be created.
+        /// <see cref="T:xyLOGIX.Core.Debug.OutputLocationType" /> enumeration values that
+        /// describes the type of output location to be created.
         /// </param>
         /// <returns>
         /// Reference to the instance of the object that implements the

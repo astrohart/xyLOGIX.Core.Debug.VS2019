@@ -103,9 +103,11 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: Since it is expected that the implementation of this method is fairly
-                 straightforward, we will not be using the logging infrastructure to log the
-                 progress of this method. */
+                /*
+                 * NOTE: Since it is expected that the implementation of this method is fairly
+                 * straightforward, we will not be using the logging infrastructure to log the
+                 * progress of this method.
+                 */
 
                 if (string.IsNullOrWhiteSpace(content)) return;
                 if (!IsInitialized) return;
@@ -134,9 +136,11 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: Since it is expected that the implementation of this method is fairly
-                 straightforward, we will not be using the logging infrastructure to log the
-                 progress of this method. */
+                /*
+                 * NOTE: Since it is expected that the implementation of this method is fairly
+                 * straightforward, we will not be using the logging infrastructure to log the
+                 * progress of this method.
+                 */
 
                 if (string.IsNullOrWhiteSpace(content)) return;
                 if (!IsInitialized) return;
@@ -157,8 +161,8 @@ namespace xyLOGIX.Core.Debug
         /// </param>
         /// <param name="logType">
         /// (Required.) One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> value(s) that
-        /// specifies the type of log to send events to.
+        /// <see cref="T:xyLOGIX.Core.Debug.EventLogType" /> value(s) that specifies the
+        /// type of log to send events to.
         /// </param>
         /// <returns>
         /// <see langword="true" /> if the operation(s) completed successfully;
@@ -272,8 +276,10 @@ namespace xyLOGIX.Core.Debug
                 Source = eventSourceName;
                 Type = logType;
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -307,9 +313,11 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: Since it is expected that the implementation of this method is fairly
-                 straightforward, we will not be using the logging infrastructure to log the
-                 progress of this method. */
+                /*
+                 * NOTE: Since it is expected that the implementation of this method is fairly
+                 * straightforward, we will not be using the logging infrastructure to log the
+                 * progress of this method.
+                 */
 
                 if (string.IsNullOrWhiteSpace(content)) return;
                 if (!IsInitialized) return;

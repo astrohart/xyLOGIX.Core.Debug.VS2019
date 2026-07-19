@@ -212,8 +212,10 @@ namespace xyLOGIX.Core.Debug
                     $"Setup.EventLogging: *** SUCCESS *** The Event Log has been initialized with the name '{DebugUtils.ApplicationName}'."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

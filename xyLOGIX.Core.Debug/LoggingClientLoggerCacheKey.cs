@@ -147,8 +147,10 @@ namespace xyLOGIX.Core.Debug
                 if (!StringComparer.Ordinal.Equals(LoggerName, other.LoggerName))
                     return result;
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -194,8 +196,10 @@ namespace xyLOGIX.Core.Debug
                 if (!Equals(other))
                     return result;
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

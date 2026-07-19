@@ -37,7 +37,8 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingClientLoggerCacheAddHandlerTypeValidator
-            LoggingClientLoggerCacheAddHandlerTypeValidator { [DebuggerStepThrough] get; } =
+            LoggingClientLoggerCacheAddHandlerTypeValidator
+        { [DebuggerStepThrough] get; } =
             GetLoggingClientLoggerCacheAddHandlerTypeValidator.SoleInstance();
 
         /// <summary>

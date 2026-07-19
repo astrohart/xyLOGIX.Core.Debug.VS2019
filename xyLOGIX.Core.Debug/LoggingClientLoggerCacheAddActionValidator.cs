@@ -43,7 +43,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCacheAddActionValidator() { }
+        private LoggingClientLoggerCacheAddActionValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
@@ -53,7 +54,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         internal static ILoggingClientLoggerCacheAddActionValidator Instance
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = new LoggingClientLoggerCacheAddActionValidator();
 
         /// <summary>
@@ -91,12 +93,14 @@ namespace xyLOGIX.Core.Debug
                     $"LoggingClientLoggerCacheAddActionValidator.IsValid: action = '{action}'"
                 );
 
-                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
-                 the 'action' parameter to ensure that it is not set to a value outside the set of
-                 valid values defined by the xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction
-                 enumeration. In principle, since all C# enums devolve to integer values, a hacker
-                 could insert a different value into the CPU register that the 'action' parameter is
-                 read from and thereby make this application do something it is not intended to do.
+                /*
+                 * For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 * the 'action' parameter to ensure that it is not set to a value outside the set of
+                 * valid values defined by the xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddAction
+                 * enumeration. In principle, since all C# enums devolve to integer values, a hacker
+                 * could insert a different value into the CPU register that the 'action' parameter
+                 * is read from and thereby make this application do something it is not intended to
+                 * do.
                  */
 
                 System.Diagnostics.Debug.WriteLine(
@@ -154,8 +158,10 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheAddActionValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'action' parameter.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

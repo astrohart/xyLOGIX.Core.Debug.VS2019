@@ -103,8 +103,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <summary>
         /// Gets or sets a
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
-        /// indicating which type of logging infrastructure is in use.
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value indicating
+        /// which type of logging infrastructure is in use.
         /// </summary>
         public static LoggingInfrastructureType InfrastructureType
         {
@@ -263,14 +263,16 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /* Only launch the debugger if the application is already running in Debug mode.
-                 NOTE: A program can be forced to disregard the fact of whether there is a debugger
-                 attached, and still cause an abort, if the user passes the '--hoe' command-line
-                 flag to the executable. This is useful for debugging purposes, as it allows the
-                 user to see the exception message and stack trace in the console window, and then
-                 decide whether to launch the debugger or not. NOTE: If the '--soe' command-line
-                 flag is present, then we will NOT launch the debugger, and will simply return
-                 false. */
+                /*
+                 * Only launch the debugger if the application is already running in Debug mode.
+                 * NOTE: A program can be forced to disregard the fact of whether there is a
+                 * debugger attached, and still cause an abort, if the user passes the '--hoe'
+                 * command-line flag to the executable. This is useful for debugging purposes, as it
+                 * allows the user to see the exception message and stack trace in the console
+                 * window, and then decide whether to launch the debugger or not. NOTE: If the
+                 * '--soe' command-line flag is present, then we will NOT launch the debugger, and
+                 * will simply return false.
+                 */
 
                 if (Environment.CommandLine.Contains(CommandLineParameter.SuppressOnException))
                     return result;
@@ -278,7 +280,9 @@ namespace xyLOGIX.Core.Debug
                 if (!Environment.CommandLine.Contains(CommandLineParameter.HaltOnException) &
                     !Debugger.IsAttached) return result;
 
-                /* ALWAYS stop for Assertion Exceptions. */
+                /*
+                 * ALWAYS stop for Assertion Exceptions.
+                 */
 
                 if (exception.IsAnyOf(typeof(AssertionFailedException)))
                     return true;
@@ -677,8 +681,10 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /* It is NOT desirable to do logging of any kind during the execution of this
-                 particular method. */
+                /*
+                 * It is NOT desirable to do logging of any kind during the execution of this
+                 * particular method.
+                 */
 
                 if (string.IsNullOrWhiteSpace(format)) return string.Empty;
                 if (args == null) return result;
@@ -827,8 +833,8 @@ namespace xyLOGIX.Core.Debug
         /// is to be executed for each line of content.
         /// </param>
         /// <param name="level">
-        /// A <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
-        /// specifying the debugLevel of logging to utilize.
+        /// A <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> specifying
+        /// the debugLevel of logging to utilize.
         /// </param>
         [DebuggerStepThrough]
         private static void LogEachLineIfMultiline(
@@ -839,7 +845,9 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* It is NOT desirable to do any kind of logging while running this method. */
+                /*
+                 * It is NOT desirable to do any kind of logging while running this method.
+                 */
 
                 // first, format the text with string.Format.  If the supplied content is blank,
                 // then stop, since we have nothing to work with.
@@ -918,8 +926,10 @@ namespace xyLOGIX.Core.Debug
 
                 OnExceptionLogged(exception);
 
-                /* Only launch the debugger if the required condition(s) are met and only after
-                 having written the detailed exception info to the log file. */
+                /*
+                 * Only launch the debugger if the required condition(s) are met and only after
+                 * having written the detailed exception info to the log file.
+                 */
 
                 if (CanLaunchDebugger(exception, launchDebugger))
                     ProgramFlowHelper.StartDebugger();
@@ -1126,8 +1136,10 @@ namespace xyLOGIX.Core.Debug
             }
             catch (Exception ex)
             {
-                /* Do not call DebugUtils.LogException here because this method is itself part of
-                 the DebugUtils logger-resolution path. */
+                /*
+                 * Do not call DebugUtils.LogException here because this method is itself part of
+                 * the DebugUtils logger-resolution path.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(ex);
 
@@ -1158,9 +1170,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
-        /// indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
-        /// written.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="format">
         /// (Required.) String containing an optional format specifier
@@ -1177,9 +1188,9 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then
-        /// this method does nothing. This method does not add a newline character after
-        /// writing its content to the log.
+        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then this method
+        /// does nothing. This method does not add a newline character after writing its
+        /// content to the log.
         /// </remarks>
         public static void Write(DebugLevel debugLevel, string format, params object[] args)
         {
@@ -1192,10 +1203,12 @@ namespace xyLOGIX.Core.Debug
                 if (string.IsNullOrWhiteSpace(format)) return;
 
 #if !DEBUG
-                /* If this software is currently running in Release mode, then do not output ANY
-                 lines of text that are meant to be debugging logging statements! So, that is, if we
-                 detect that the debugLevel parameter is set to DebugLevel.Debug, simply stop
-                 executing this method. */
+                /*
+                 * If this software is currently running in Release mode, then do not output ANY
+                 * lines of text that are meant to be debugging logging statements! So, that is, if
+                 * we detect that the debugLevel parameter is set to DebugLevel.Debug, simply stop
+                 * executing this method.
+                 */
 
                 if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
                     return;
@@ -1219,9 +1232,9 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
-        /// indicates which log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>)
-        /// where the content should be written.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that indicates which
+        /// log (<c>DEBUG</c>, <c>ERROR</c>, <c>INFO</c>, <c>WARN</c>) where the content
+        /// should be written.
         /// </param>
         /// <param name="content">(Required.) string containing the content to be written.</param>
         /// <remarks>
@@ -1261,8 +1274,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
-        /// determine what logging debugLevel to utilize.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that determine what
+        /// logging debugLevel to utilize.
         /// </param>
         /// <param name="content">
         /// (Required.) String containing the content to be written
@@ -1275,9 +1288,9 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then
-        /// this method does nothing. This method adds a newline character after writing
-        /// its content to the log.
+        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then this method
+        /// does nothing. This method adds a newline character after writing its content to
+        /// the log.
         /// <para />
         /// If the value of the <paramref name="debugLevel" /> parameter is not within the
         /// defined value set of the <see cref="T:xyLOGIX.Core.Debug.DebugLevel" />
@@ -1360,9 +1373,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
-        /// indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
-        /// written.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="format">
         /// (Required.) String containing an optional format specifier
@@ -1379,9 +1391,9 @@ namespace xyLOGIX.Core.Debug
         /// mode. If this is so, then the method checks the value of the
         /// <see cref="P:Core.Debug.DebugUtils.MuteDebugLevelIfReleaseMode" /> property. If
         /// the property is set to true AND the <paramref name="debugLevel" /> parameter is
-        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then
-        /// this method does nothing. This method adds a newline character after writing
-        /// its content to the log.
+        /// set to <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> , then this method
+        /// does nothing. This method adds a newline character after writing its content to
+        /// the log.
         /// </remarks>
         public static void WriteLine(DebugLevel debugLevel, string format, params object[] args)
         {
@@ -1394,10 +1406,12 @@ namespace xyLOGIX.Core.Debug
                     return;
 
 #if !DEBUG
-                /* If this software is currently running in Release mode, then do not output ANY
-                 lines of text that are meant to be debugging logging statements! So, that is, if we
-                 detect that the debugLevel parameter is set to DebugLevel.Debug, simply stop
-                 executing this method. */
+                /*
+                 * If this software is currently running in Release mode, then do not output ANY
+                 * lines of text that are meant to be debugging logging statements! So, that is, if
+                 * we detect that the debugLevel parameter is set to DebugLevel.Debug, simply stop
+                 * executing this method.
+                 */
 
                 if (MuteDebugLevelIfReleaseMode && debugLevel == DebugLevel.Debug)
                     return;
@@ -1419,9 +1433,9 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Works the same as the overload which takes a
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> as its first argument,
-        /// but if the formatted content consists of several lines of content, then the
-        /// lines are split and logged separately, all under the
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> as its first argument, but if
+        /// the formatted content consists of several lines of content, then the lines are
+        /// split and logged separately, all under the
         /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> debugLevel.
         /// </summary>
         /// <param name="format">
@@ -1439,8 +1453,8 @@ namespace xyLOGIX.Core.Debug
         /// then this method does nothing.
         /// <para />
         /// This overload specifies that the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> logging
-        /// debugLevel is to be utilized for each line.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel.Debug" /> logging debugLevel is to
+        /// be utilized for each line.
         /// </remarks>
         public static void WriteLine([NotLogged] string format, params object[] args)
         {
@@ -1469,9 +1483,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
-        /// indicates which log (DEBUG, ERROR, INFO, WARN) where the content should be
-        /// written.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that indicates which
+        /// log (DEBUG, ERROR, INFO, WARN) where the content should be written.
         /// </param>
         /// <param name="content">(Required.) string containing the content to be written.</param>
         /// <remarks>
@@ -1512,8 +1525,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="debugLevel">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that
-        /// determine what logging debugLevel to utilize.
+        /// <see cref="T:xyLOGIX.Core.Debug.DebugLevel" /> value(s) that determine what
+        /// logging debugLevel to utilize.
         /// </param>
         /// <param name="content">
         /// (Required.) String containing the content to be written
@@ -1543,10 +1556,12 @@ namespace xyLOGIX.Core.Debug
                 // Do nothing if the content is blank or the empty string.
                 if (string.IsNullOrWhiteSpace(content)) return;
 
-                /* Do not proceed any further if PostSharp logging infrastructure is being utilized
-                 and the content to be logged contains the word In or Done. These logging lines are
-                 typically made during method entry or exit, which is something that PostSharp
-                 handles for us. */
+                /*
+                 * Do not proceed any further if PostSharp logging infrastructure is being utilized
+                 * and the content to be logged contains the word In or Done. These logging lines
+                 * are typically made during method entry or exit, which is something that PostSharp
+                 * handles for us.
+                 */
                 if ((IsPostSharp && content.Contains("In ")) || content.Contains("Done.")) return;
 
                 if (Verbosity == 0) return;

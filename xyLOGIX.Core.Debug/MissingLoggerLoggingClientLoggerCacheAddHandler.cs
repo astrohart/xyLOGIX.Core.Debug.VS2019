@@ -45,7 +45,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private MissingLoggerLoggingClientLoggerCacheAddHandler() { }
+        private MissingLoggerLoggingClientLoggerCacheAddHandler()
+        { }
 
         /// <summary>
         /// Gets the
@@ -64,7 +65,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public override LoggingClientLoggerCacheAddHandlerType HandlerType
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = LoggingClientLoggerCacheAddHandlerType.MissingLogger;
 
         /// <summary>
@@ -76,7 +78,8 @@ namespace xyLOGIX.Core.Debug
         /// logging-client logger-cache <c>Add</c> handler strategy.
         /// </summary>
         internal static ILoggingClientLoggerCacheAddHandler
-            Instance { [DebuggerStepThrough] get; } =
+            Instance
+        { [DebuggerStepThrough] get; } =
             new MissingLoggerLoggingClientLoggerCacheAddHandler();
     }
 }

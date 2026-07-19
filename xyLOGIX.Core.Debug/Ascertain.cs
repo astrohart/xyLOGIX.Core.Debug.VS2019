@@ -277,8 +277,10 @@ namespace xyLOGIX.Core.Debug
                     $"Ascertain.WhetherAddHandlerTypeAndActionComboIsValid: *** SUCCESS *** The handler type, '{handlerType}', and action, '{action}', form a valid combination.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -449,8 +451,10 @@ namespace xyLOGIX.Core.Debug
                     $"Ascertain.WhetherAddHandlerTypeAndOutcomeComboIsValid: *** SUCCESS *** The handler type, '{handlerType}', and outcome, '{outcome}', form a valid combination.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

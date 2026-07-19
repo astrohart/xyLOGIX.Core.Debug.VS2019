@@ -115,9 +115,11 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /* In principle, the logFileName may be marked, syntactically, as optional, but for
-                 this particular approach to work, it must have a value; we're simply following
-                 convention(s) used elsewhere in this software system. */
+                /*
+                 * In principle, the logFileName may be marked, syntactically, as optional, but for
+                 * this particular approach to work, it must have a value; we're simply following
+                 * convention(s) used elsewhere in this software system.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "ProgrammaticLoggingConfigurator.Configure *** INFO: Checking whether the value of the parameter, 'logFileName', is blank..."
@@ -146,8 +148,10 @@ namespace xyLOGIX.Core.Debug
                     "*** SUCCESS *** The parameter, 'logFileName', is not blank.  Proceeding..."
                 );
 
-                /* Likewise, the value of the parameter, 'repository', is marked as optional; but,
-                 in reality, it's required to have a non-NULL value by THIS method. */
+                /*
+                 * Likewise, the value of the parameter, 'repository', is marked as optional; but,
+                 * in reality, it's required to have a non-NULL value by THIS method.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "ProgrammaticLoggingConfigurator.Configure: Checking whether the 'repository' method parameter has a null reference for a value..."
@@ -175,8 +179,10 @@ namespace xyLOGIX.Core.Debug
                     "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** We have been passed a valid object reference for the 'repository' method parameter."
                 );
 
-                /* If we are here, then the caller of this method told us what pathname to utilize
-                 for the logfile. */
+                /*
+                 * If we are here, then the caller of this method told us what pathname to utilize
+                 * for the logfile.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "*** INFO: The 'logFileName' parameter was initialized."
@@ -209,8 +215,10 @@ namespace xyLOGIX.Core.Debug
                     "ProgrammaticLoggingConfigurator.Configure: *** SUCCESS *** The logging subsystem has been configured programmatically."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

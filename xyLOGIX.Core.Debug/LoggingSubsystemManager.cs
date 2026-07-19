@@ -1007,10 +1007,12 @@ namespace xyLOGIX.Core.Debug
 
                 InfrastructureType = infrastructureType;
 
-                /* We now 'outsource' the functionality of this method (and all the other methods of
-                 this class) to an 'infrastructure' object that follows (loosely) the Abstract
-                 Factory pattern. Either we use the Default way of initializing logging or we do
-                 things the way PostSharp needs us to. */
+                /*
+                 * We now 'outsource' the functionality of this method (and all the other methods of
+                 * this class) to an 'infrastructure' object that follows (loosely) the Abstract
+                 * Factory pattern. Either we use the Default way of initializing logging or we do
+                 * things the way PostSharp needs us to.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "LoggingSubsystemManager.InitializeLogging: Checking whether the property, 'LoggingInfrastructure', has a null reference for a value..."
@@ -1393,7 +1395,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggingSubsystemManager.RegisterClientAssembly: *** SUCCESS *** The method parameter, 'assembly', refers to a valid object.  Proceeding..."
                 );
 
-                /* Reject assembly(ies) whose names are 'xyLOGIX.Core.TemplateWizard.Logging'. */
+                /*
+                 * Reject assembly(ies) whose names are 'xyLOGIX.Core.TemplateWizard.Logging'.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "LoggingSubsystemManager.RegisterClientAssembly: Checking whether the name of the assembly that is to be registered is in the list of invalid value(s)..."

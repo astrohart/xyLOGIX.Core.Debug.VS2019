@@ -44,7 +44,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientAssemblyContext.SoleInstance();
 
         /// <summary>
@@ -53,7 +54,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientSessionRegistry ClientSessionRegistry
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientSessionRegistry.SoleInstance();
 
         /// <summary>
@@ -602,13 +604,15 @@ namespace xyLOGIX.Core.Debug
                     "Determine.TheCorrectSessionLoggerFetchApproachToUse: Checking whether the variable, 'currentClientSession', has a null reference for a value..."
                 );
 
-                /* We retrieve, here, the value of the current client session property into a
-                 variable, so that we can check whether it has a null reference for a value, and
-                 then use it in the subsequent code. This is done to avoid having to call the
-                 property getter multiple times, which could have side effects or performance
-                 implications due to their potentially being a different client session each time
-                 the property is accessed. By storing the value in a local variable, we ensure that
-                 we are working with a consistent reference throughout the method. */
+                /*
+                 * We retrieve, here, the value of the current client session property into a
+                 * variable, so that we can check whether it has a null reference for a value, and
+                 * then use it in the subsequent code. This is done to avoid having to call the
+                 * property getter multiple times, which could have side effects or performance
+                 * implications due to their potentially being a different client session each time
+                 * the property is accessed. By storing the value in a local variable, we ensure
+                 * that we are working with a consistent reference throughout the method.
+                 */
 
                 // Check whether a current logging-client session is available. If this is not the
                 // case, then use the legacy logger-fetching approach.
@@ -640,9 +644,11 @@ namespace xyLOGIX.Core.Debug
                     "Determine.TheCorrectSessionLoggerFetchApproachToUse: Checking whether the property, 'currentClientSession.RepositoryName', appears to have a null or blank value..."
                 );
 
-                /* Check the repository name before calling IsValid(). The IsValid() method rejects
-                 a blank repository name, whereas a blank repository name is the condition that
-                 selects the cache-fetching approach. */
+                /*
+                 * Check the repository name before calling IsValid(). The IsValid() method rejects
+                 * a blank repository name, whereas a blank repository name is the condition that
+                 * selects the cache-fetching approach.
+                 */
 
                 if (string.IsNullOrWhiteSpace(currentClientSession.RepositoryName))
                 {

@@ -157,8 +157,10 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheKeyValidator.IsValid: *** SUCCESS *** The value of the property, 'cacheKey.LoggerName', is not blank.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 data has been validated successfully. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * data has been validated successfully.
+                 */
 
                 result = true;
             }

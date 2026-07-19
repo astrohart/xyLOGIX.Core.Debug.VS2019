@@ -350,8 +350,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: We should refrain from doing any logging during the execution of this
-                 method. */
+                /*
+                 * NOTE: We should refrain from doing any logging during the execution of this
+                 * method.
+                 */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
@@ -394,8 +396,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: We should refrain from doing any logging during the execution of this
-                 method. */
+                /*
+                 * NOTE: We should refrain from doing any logging during the execution of this
+                 * method.
+                 */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
@@ -429,8 +433,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: We should refrain from doing any logging during the execution of this
-                 method. */
+                /*
+                 * NOTE: We should refrain from doing any logging during the execution of this
+                 * method.
+                 */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
@@ -474,8 +480,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: We should refrain from doing any logging during the execution of this
-                 method. */
+                /*
+                 * NOTE: We should refrain from doing any logging during the execution of this
+                 * method.
+                 */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;
@@ -505,8 +513,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* NOTE: We should refrain from doing any logging during the execution of this
-                 method. */
+                /*
+                 * NOTE: We should refrain from doing any logging during the execution of this
+                 * method.
+                 */
 
                 if (InternalOutputLocationList == null) return;
                 if (!HasLocations) return;

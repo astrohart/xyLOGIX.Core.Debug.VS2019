@@ -30,8 +30,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         /// <param name="type">
         /// One of the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
-        /// value(s) that describes what type of object you want.
+        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value(s) that
+        /// describes what type of object you want.
         /// </param>
         /// <returns>
         /// A reference to the instance of the object that implements the

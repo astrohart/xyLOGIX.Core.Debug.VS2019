@@ -52,9 +52,11 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /* The value of the SetLog.ApplicationName property should be whatever is passed to
-                 the applicationName parameter of this method, without a company name and without
-                 spaces. */
+                /*
+                 * The value of the SetLog.ApplicationName property should be whatever is passed to
+                 * the applicationName parameter of this method, without a company name and without
+                 * spaces.
+                 */
 
                 SetLog.ApplicationName = Regex.Replace(applicationName, @"\s+", "");
 

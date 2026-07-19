@@ -18,9 +18,8 @@ namespace xyLOGIX.Core.Debug
         string LogFileName { [DebuggerStepThrough] get; }
 
         /// <summary>
-        /// Gets the
-        /// <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" /> value
-        /// that corresponds to the type of infrastructure that is being utilized.
+        /// Gets the <see cref="T:xyLOGIX.Core.Debug.LoggingInfrastructureType" />
+        /// value that corresponds to the type of infrastructure that is being utilized.
         /// </summary>
         LoggingInfrastructureType Type { [DebuggerStepThrough] get; }
 

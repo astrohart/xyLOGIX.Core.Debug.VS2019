@@ -50,7 +50,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private FetchByRepositoryNameAndSourceTypeSessionLoggerFetcher() { }
+        private FetchByRepositoryNameAndSourceTypeSessionLoggerFetcher()
+        { }
 
         /// <summary>
         /// Gets the

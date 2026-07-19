@@ -71,8 +71,10 @@ namespace xyLOGIX.Core.Debug
         [DebuggerStepThrough]
         public static void StartDebugger()
         {
-            /* Detect whether the software is launched interactively by the user. If so, then the
-             ProgramFlowHelper class' version of this method should be called instead. */
+            /*
+             * Detect whether the software is launched interactively by the user. If so, then the
+             * ProgramFlowHelper class' version of this method should be called instead.
+             */
 
             System.Diagnostics.Debug.WriteLine(
                 "*** ServiceFlowHelper.StartDebugger: Checking whether the 'Environment.UserInteractive' Boolean expression evaluates to FALSE..."

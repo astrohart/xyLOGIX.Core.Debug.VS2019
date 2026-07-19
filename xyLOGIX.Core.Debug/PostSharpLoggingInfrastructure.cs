@@ -120,8 +120,10 @@ namespace xyLOGIX.Core.Debug
                     "PostSharpLoggingInfrastructure.FetchRelay: *** SUCCESS *** Retrieved the relay from PostSharp.  Analyzing it..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded, PROVIDED the '_relay' field is NOT set to a NULL reference.
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded, PROVIDED the '_relay' field is NOT set to a NULL
+                 * reference.
                  */
 
                 result = _relay != null;
@@ -648,7 +650,9 @@ namespace xyLOGIX.Core.Debug
 
                     Delete.LogFile(LogFileName);
 
-                    /* Be sure to write the timestamp to a new log file before we finish. */
+                    /*
+                     * Be sure to write the timestamp to a new log file before we finish.
+                     */
 
                     Write.LogFileTimestamp();
 
@@ -660,15 +664,19 @@ namespace xyLOGIX.Core.Debug
                     return true;
                 }
 
-                /* If we are still here, then the caller wishes us to append to an existing log
-                 file, not delete the existing one and start anew. */
+                /*
+                 * If we are still here, then the caller wishes us to append to an existing log
+                 * file, not delete the existing one and start anew.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "PostSharpLoggingInfrastructure.OnLoggingInitializationFinished: *** FYI *** The existing log file is to be appended.  Proceeding..."
                 );
 
-                /* Write a line with the current date and time, to the log file. This will begin a
-                 new section. */
+                /*
+                 * Write a line with the current date and time, to the log file. This will begin a
+                 * new section.
+                 */
 
                 Write.LogFileTimestamp();
             }

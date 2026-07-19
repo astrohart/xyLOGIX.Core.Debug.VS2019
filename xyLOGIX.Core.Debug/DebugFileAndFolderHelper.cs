@@ -747,8 +747,10 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.InsistPathExists *** SUCCESS *** The file having pathname, '{fileName}', was found on the file system.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -1985,14 +1987,18 @@ namespace xyLOGIX.Core.Debug
                     "*** SUCCESS *** The parameter, 'fullyQualifiedPath', is not blank.  Proceeding..."
                 );
 
-                /* Attempt to call the Path.GetFullPath method on the input. If no Exception(s) are
-                 caught, then we can return TRUE (for success) meaning that the path provided is a
-                 valid one. */
+                /*
+                 * Attempt to call the Path.GetFullPath method on the input. If no Exception(s) are
+                 * caught, then we can return TRUE (for success) meaning that the path provided is a
+                 * valid one.
+                 */
 
                 _ = Path.GetFullPath(fullyQualifiedPath);
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -2096,8 +2102,10 @@ namespace xyLOGIX.Core.Debug
                     $"DebugFileAndFolderHelper.RulesFoundForUser: *** SUCCESS *** {rules.Count} element(s) were found in the 'rules' collection.  Proceeding..."
                 );
 
-                /* This method is to return TRUE if at least ONE ACL rule for a given file applies
-                 to the currently-logged-in user. */
+                /*
+                 * This method is to return TRUE if at least ONE ACL rule for a given file applies
+                 * to the currently-logged-in user.
+                 */
 
                 foreach (var rule in rules)
                 {

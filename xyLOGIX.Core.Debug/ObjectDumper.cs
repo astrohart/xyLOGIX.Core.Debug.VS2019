@@ -102,8 +102,10 @@ namespace xyLOGIX.Core.Debug
         {
             try
             {
-                /* Because these methods are, themselves, called to write logging, do not add
-                 logging and/or trace statement(s) here. */
+                /*
+                 * Because these methods are, themselves, called to write logging, do not add
+                 * logging and/or trace statement(s) here.
+                 */
 
                 if (element == null) return;
                 if (depth < 0) return;

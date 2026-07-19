@@ -88,13 +88,15 @@ namespace xyLOGIX.Core.Debug
                     $"LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: type = '{type}'"
                 );
 
-                /* For cybersecurity reasons, and to defeat reverse-engineering, check the value of
-                 the 'type' parameter to ensure that it is not set to a value outside the set of
-                 valid values defined by the
-                 xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType enumeration. In
-                 principle, since all C# enums devolve to integer values, a hacker could insert a
-                 different value into the CPU register that the 'type' parameter is read from and
-                 thereby make this application do something it's not intended to do. */
+                /*
+                 * For cybersecurity reasons, and to defeat reverse-engineering, check the value of
+                 * the 'type' parameter to ensure that it is not set to a value outside the set of
+                 * valid values defined by the
+                 * xyLOGIX.Core.Debug.LoggingClientLoggerCacheAddHandlerType enumeration. In
+                 * principle, since all C# enums devolve to integer values, a hacker could insert a
+                 * different value into the CPU register that the 'type' parameter is read from and
+                 * thereby make this application do something it's not intended to do.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     $"LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: Checking whether the value of the 'type' parameter, i.e., '{type}', is within the defined value set of its enumerated data type..."
@@ -152,7 +154,9 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCacheAddHandlerTypeValidator.IsValid: *** SUCCESS *** The 'Unknown' value has NOT been specified for the 'type' parameter.  Proceeding..."
                 );
 
-                /* If we made it here, then assume that the input data is valid. */
+                /*
+                 * If we made it here, then assume that the input data is valid.
+                 */
 
                 result = true;
             }

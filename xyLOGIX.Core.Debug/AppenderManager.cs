@@ -465,8 +465,10 @@ namespace xyLOGIX.Core.Debug
                     "AppenderManager.HasAppenderWithFilePath: *** SUCCESS *** The Appender Manager has greater than zero entry(ies) in its internal collection.  Proceeding..."
                 );
 
-                /* We are not actually interested in obtaining the value corresponding to the
-                 specified filePath, we simply want to know if such a key exists. */
+                /*
+                 * We are not actually interested in obtaining the value corresponding to the
+                 * specified filePath, we simply want to know if such a key exists.
+                 */
 
                 result = _appenders.ContainsKey(filePath);
             }

@@ -116,13 +116,17 @@ namespace xyLOGIX.Core.Debug
 
                 foreach (var item in list)
                 {
-                    /* special case: if the current item is null or blank, and so is the value, then
-                     return true immediately */
+                    /*
+                     * special case: if the current item is null or blank, and so is the value, then
+                     * return true immediately
+                     */
                     if (string.IsNullOrWhiteSpace(item) && string.IsNullOrWhiteSpace(value))
                         return true;
 
-                    /* otherwise, skip the current item if it isn't equal to the value, regardless
-                     of case. */
+                    /*
+                     * otherwise, skip the current item if it isn't equal to the value, regardless
+                     * of case.
+                     */
                     if (!item.Equals(value, StringComparison.OrdinalIgnoreCase)) continue;
 
                     result = true;

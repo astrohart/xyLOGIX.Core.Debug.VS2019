@@ -54,7 +54,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientLoggerCache() { }
+        private LoggingClientLoggerCache()
+        { }
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
@@ -63,7 +64,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private ILoggingClientLoggerCacheKeyValidator CacheKeyValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientLoggerCacheKeyValidator.SoleInstance();
 
         /// <summary>
@@ -89,7 +91,10 @@ namespace xyLOGIX.Core.Debug
                     if (_loggerMap == null) return result;
                     if (SyncRoot == null) return result;
 
-                    lock (SyncRoot) result = _loggerMap.Count;
+                    lock (SyncRoot)
+                    {
+                        result = _loggerMap.Count;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -117,7 +122,8 @@ namespace xyLOGIX.Core.Debug
         /// interface.
         /// </summary>
         private static ILoggingClientLoggerCacheAddActionValidator
-            LoggingClientLoggerCacheAddActionValidator { [DebuggerStepThrough] get; } =
+            LoggingClientLoggerCacheAddActionValidator
+        { [DebuggerStepThrough] get; } =
             GetLoggingClientLoggerCacheAddActionValidator.SoleInstance();
 
         /// <summary>
@@ -194,8 +200,10 @@ namespace xyLOGIX.Core.Debug
                 var originalCacheElementCount = 0;
                 var remainingCacheElementCount = 0;
 
-                /* Determine the original cache-element count, clear the cache if necessary, and
-                 verify the remaining count under one uninterrupted synchronization lock. */
+                /*
+                 * Determine the original cache-element count, clear the cache if necessary, and
+                 * verify the remaining count under one uninterrupted synchronization lock.
+                 */
 
                 lock (SyncRoot)
                 {
@@ -210,8 +218,10 @@ namespace xyLOGIX.Core.Debug
                     if (remainingCacheElementCount > 0)
                         return result;
 
-                    /* If we made it this far with no Exception(s) getting caught, then assume that
-                     the operation(s) succeeded. */
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then assume that
+                     * the operation(s) succeeded.
+                     */
 
                     result = true;
                 }
@@ -402,9 +412,11 @@ namespace xyLOGIX.Core.Debug
                 var action = LoggingClientLoggerCacheAddAction.Unknown;
                 var handlerType = LoggingClientLoggerCacheAddHandlerType.Unknown;
 
-                /* Read the current cache state, select the applicable handler strategy, obtain its
-                 action, apply the action, and verify any cache mutation while one uninterrupted
-                 synchronization lock is held. */
+                /*
+                 * Read the current cache state, select the applicable handler strategy, obtain its
+                 * action, apply the action, and verify any cache mutation while one uninterrupted
+                 * synchronization lock is held.
+                 */
 
                 lock (SyncRoot)
                 {
@@ -763,8 +775,10 @@ namespace xyLOGIX.Core.Debug
                         "LoggingClientLoggerCache.TryGet: *** SUCCESS *** The variable, 'logger', has a valid object reference for its value.  Proceeding..."
                     );
 
-                    /* If we made it this far with no Exception(s) getting caught, then assume that
-                     the operation(s) succeeded. */
+                    /*
+                     * If we made it this far with no Exception(s) getting caught, then assume that
+                     * the operation(s) succeeded.
+                     */
 
                     return true;
                 }
@@ -896,8 +910,10 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCache.TryAddOrReplaceLoggerInCache: *** SUCCESS *** The cached logger is the same object reference as the specified logger.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }
@@ -1110,8 +1126,10 @@ namespace xyLOGIX.Core.Debug
                     "LoggingClientLoggerCache.TryPreserveExistingLogger: *** SUCCESS *** The existing cached logger has a valid object reference for its value.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

@@ -83,8 +83,10 @@ namespace xyLOGIX.Core.Debug
 
             try
             {
-                /* If we are here, then it has been determined that the specified value of the
-                 loggerRepository parameter is castable to Hierarchy. */
+                /*
+                 * If we are here, then it has been determined that the specified value of the
+                 * loggerRepository parameter is castable to Hierarchy.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "FromProvidedLoggingRepositoryRootLoggerProvisioner.Provision: Checking whether the 'loggerRepository' method parameter has a null reference for a value..."

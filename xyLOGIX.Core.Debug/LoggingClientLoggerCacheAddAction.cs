@@ -9,8 +9,7 @@
     /// of these value(s) after being selected for the current cache-entry state.
     /// <para />
     /// The logging-client logger cache is responsible for applying the selected
-    /// action,
-    /// verifying its result, and constructing the corresponding
+    /// action, verifying its result, and constructing the corresponding
     /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientLoggerCacheAddResult" /> object.
     /// </remarks>
     internal enum LoggingClientLoggerCacheAddAction
@@ -22,8 +21,8 @@
         AddLogger,
 
         /// <summary>
-        /// Indicates that the usable logger already contained in the cache is
-        /// to be preserved without modification.
+        /// Indicates that the usable logger already contained in the cache is to
+        /// be preserved without modification.
         /// </summary>
         PreserveExistingLogger,
 

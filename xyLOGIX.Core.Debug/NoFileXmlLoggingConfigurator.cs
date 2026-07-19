@@ -140,8 +140,10 @@ namespace xyLOGIX.Core.Debug
                         : "*** FYI *** The Logger Repository parameter has NOT been passed a valid object reference for its value.  Proceeding..."
                 );
 
-                /* If we have no configuration file to work with, try to set up logging with the
-                 passed ILoggerRepository. */
+                /*
+                 * If we have no configuration file to work with, try to set up logging with the
+                 * passed ILoggerRepository.
+                 */
 
                 ICollection loggers = default;
 
@@ -224,8 +226,10 @@ namespace xyLOGIX.Core.Debug
                     $"NoFileXmlLoggingConfigurator.Configure: *** SUCCESS *** {loggers.Count} element(s) were found in the 'loggers' collection.  Proceeding..."
                 );
 
-                /* If we made it this far with no Exception(s) getting caught, then assume that the
-                 operation(s) succeeded. */
+                /*
+                 * If we made it this far with no Exception(s) getting caught, then assume that the
+                 * operation(s) succeeded.
+                 */
 
                 result = true;
             }

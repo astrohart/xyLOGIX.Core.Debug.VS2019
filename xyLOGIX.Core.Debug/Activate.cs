@@ -165,10 +165,12 @@ namespace xyLOGIX.Core.Debug
                     "Activate.LoggingForLogFileName: *** SUCCESS *** The variable, 'hierarchy', has a valid object reference for its value.  Proceeding..."
                 );
 
-                /* If we are here, and the Configured property of the hierarchy variable is already
-                 set to true, then it is not necessary to run the rest of this method; we can simply
-                 return control to the caller with a result of true, in this event. It is an error
-                 to call the configuration code below, if the logger is already set up. */
+                /*
+                 * If we are here, and the Configured property of the hierarchy variable is already
+                 * set to true, then it is not necessary to run the rest of this method; we can
+                 * simply return control to the caller with a result of true, in this event. It is
+                 * an error to call the configuration code below, if the logger is already set up.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "Activate.LoggingForLogFileName: Checking whether the logger is already configured..."
@@ -202,8 +204,10 @@ namespace xyLOGIX.Core.Debug
                     "*** WARNING: The logger is not configured yet, or we have been instructed to override its existing configuration.  Doing so..."
                 );
 
-                /* If we are here, then the logging infrastructure has not yet been configured, so
-                 we do so now. */
+                /*
+                 * If we are here, then the logging infrastructure has not yet been configured, so
+                 * we do so now.
+                 */
 
                 System.Diagnostics.Debug.WriteLine(
                     "Activate.LoggingForLogFileName: Configuring the logging infrastructure..."
