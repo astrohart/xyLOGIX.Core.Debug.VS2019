@@ -67,7 +67,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check whether a file having pathname, 'pathname', exists on the file system. If
-                // it does not, then write an FYI message to the log file, and then terminate the
+                // it does not, then write a FYI message to the log file, and then terminate the
                 // execution of this method, returning true.
                 if (!File.Exists(pathname))
                 {

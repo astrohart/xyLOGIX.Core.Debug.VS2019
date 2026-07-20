@@ -43,7 +43,7 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see whether the code is being hosted inside a VSIX. If this is not the
-                // case, then write an FYI message to the log file and then terminate the execution
+                // case, then write a FYI message to the log file and then terminate the execution
                 // of this method.
                 if (!VsixHosting.IsVsixHost())
                 {
