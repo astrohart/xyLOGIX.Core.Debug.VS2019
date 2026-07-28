@@ -759,10 +759,18 @@ namespace xyLOGIX.Core.Debug
                     $"VsixHosting.TryDisposeProcess: *** FYI *** Attempting to dispose of the handle for the process, '{process.ProcessName}'..."
                 );
 
+                var procName = process.ProcessName;
+
                 process.Dispose();
 
+                /*
+                 * Cannot call the `process.ProcessName' property after the `process.Dispose()'
+                 * method has been called, because the `process' object is now disposed, and
+                 * accessing its properties will throw an `ObjectDisposedException'.
+                 */
+
                 System.Diagnostics.Debug.WriteLine(
-                    $"VsixHosting.TryDisposeProcess: *** SUCCESS *** The handle for the process, '{process.ProcessName}', has been released."
+                    $"VsixHosting.TryDisposeProcess: *** SUCCESS *** The handle for the process, '{procName}', has been released."
                 );
             }
             catch (Exception ex)
