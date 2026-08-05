@@ -54,17 +54,6 @@ namespace xyLOGIX.Core.Debug
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the
-        /// <see cref="T:System.Collections.Generic.IDictionary`2" /> that maps
-        /// <see cref="T:System.String" /> value(s), consisting of the fully-qualified
-        /// name(s) of source type(s), to reference(s) to an instance of an object that
-        /// implements the <see cref="T:log4net.ILog" /> interface that is a logger of that
-        /// type.
-        /// </summary>
-        private IDictionary<string, ILog> _sourceTypeFQNToLogMap { [DebuggerStepThrough] get; } =
-            new AdvisableDictionary<string, ILog>();
-
-        /// <summary>
-        /// Gets a reference to an instance of an object that implements the
         /// <see cref="T:xyLOGIX.Core.Debug.ILoggingClientAssemblyContext" /> interface.
         /// </summary>
         private static ILoggingClientAssemblyContext ClientAssemblyContext
@@ -170,6 +159,17 @@ namespace xyLOGIX.Core.Debug
             [DebuggerStepThrough]
             get;
         } = GetSessionLoggerFetchApproachValidator.SoleInstance();
+
+        /// <summary>
+        /// Gets a reference to an instance of an object that implements the
+        /// <see cref="T:System.Collections.Generic.IDictionary`2" /> that maps
+        /// <see cref="T:System.String" /> value(s), consisting of the fully-qualified
+        /// name(s) of source type(s), to reference(s) to an instance of an object that
+        /// implements the <see cref="T:log4net.ILog" /> interface that is a logger of that
+        /// type.
+        /// </summary>
+        private IDictionary<string, ILog> _sourceTypeFQNToLogMap { [DebuggerStepThrough] get; } =
+            new AdvisableDictionary<string, ILog>();
 
         /// <summary>
         /// Gets a reference to an instance of an object that implements the

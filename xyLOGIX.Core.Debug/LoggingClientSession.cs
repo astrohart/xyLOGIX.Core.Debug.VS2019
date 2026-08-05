@@ -89,8 +89,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public LoggingBackend Backend
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
@@ -99,8 +101,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public Assembly ClientAssembly
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
@@ -110,8 +114,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public ILoggerRepository Repository
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>
@@ -120,8 +126,10 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public string RepositoryName
         {
-            [DebuggerStepThrough] get;
-            [DebuggerStepThrough] private set;
+            [DebuggerStepThrough]
+            get;
+            [DebuggerStepThrough]
+            private set;
         }
 
         /// <summary>

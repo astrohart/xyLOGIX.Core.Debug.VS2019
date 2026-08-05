@@ -51,25 +51,6 @@ namespace xyLOGIX.Core.Debug
         ILayout Layout { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>
-        /// Gets or sets the maximum size that the output file is allowed to reach
-        /// before being rolled over to back-up files.
-        /// </summary>
-        /// <value>
-        /// The maximum size that the output file is allowed to reach before being
-        /// rolled over to back-up files.
-        /// </value>
-        /// <remarks>
-        ///     <para>
-        ///     This property allows you to specify the maximum size with the
-        ///     suffixes "KB", "MB" or "GB" so that the size is interpreted being expressed
-        ///     respectively in kilobytes, megabytes or gigabytes.
-        ///     </para>
-        ///     <para>For example, the value "10KB" will be interpreted as 10240 bytes.</para>
-        ///     <para>The default maximum file size is 10MB.</para>
-        /// </remarks>
-        string MaximumFileSize { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
-
-        /// <summary>
         /// Gets or sets the maximum number of backup files that are kept before
         /// the oldest is erased.
         /// </summary>
@@ -96,6 +77,25 @@ namespace xyLOGIX.Core.Debug
         ///     </para>
         /// </remarks>
         int MaxSizeRollBackups { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
+
+        /// <summary>
+        /// Gets or sets the maximum size that the output file is allowed to reach
+        /// before being rolled over to back-up files.
+        /// </summary>
+        /// <value>
+        /// The maximum size that the output file is allowed to reach before being
+        /// rolled over to back-up files.
+        /// </value>
+        /// <remarks>
+        ///     <para>
+        ///     This property allows you to specify the maximum size with the
+        ///     suffixes "KB", "MB" or "GB" so that the size is interpreted being expressed
+        ///     respectively in kilobytes, megabytes or gigabytes.
+        ///     </para>
+        ///     <para>For example, the value "10KB" will be interpreted as 10240 bytes.</para>
+        ///     <para>The default maximum file size is 10MB.</para>
+        /// </remarks>
+        string MaximumFileSize { [DebuggerStepThrough] get; [DebuggerStepThrough] set; }
 
         /// <summary>Gets or sets the rolling style.</summary>
         /// <value>The rolling style.</value>

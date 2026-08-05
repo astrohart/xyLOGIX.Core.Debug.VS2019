@@ -22,7 +22,8 @@ namespace xyLOGIX.Core.Debug
         /// allocation of this class.
         /// </summary>
         [Log(AttributeExclude = true)]
-        protected OutputLocationTypeValidator() { }
+        protected OutputLocationTypeValidator()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that

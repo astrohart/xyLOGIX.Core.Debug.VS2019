@@ -82,8 +82,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check to see whether the relay is NULL currently. If this is not the case, then
-                // write a FYI message to the Debug output, and then terminate the execution of
-                // this method.
+                // write a FYI message to the Debug output, and then terminate the execution of this
+                // method.
                 if (_relay != null)
                 {
                     // The relay is NOT already NULL.  Just use it.

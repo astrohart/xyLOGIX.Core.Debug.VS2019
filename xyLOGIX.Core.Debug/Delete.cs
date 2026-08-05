@@ -91,8 +91,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check whether a file having pathname, 'pathname', exists on the file system. If
-                // it does not, then write a FYI message to the Debug output, and then terminate
-                // the execution of this method, but return TRUE.
+                // it does not, then write a FYI message to the Debug output, and then terminate the
+                // execution of this method, but return TRUE.
                 if (!File.Exists(pathname))
                 {
                     DebugUtils.WriteLine(
@@ -225,8 +225,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check whether a file having pathname, 'pathname', exists on the file system. If
-                // it does not, then write a FYI message to the Debug output, and then terminate
-                // the execution of this method, but return TRUE.
+                // it does not, then write a FYI message to the Debug output, and then terminate the
+                // execution of this method, but return TRUE.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(
@@ -354,8 +354,8 @@ namespace xyLOGIX.Core.Debug
                 );
 
                 // Check whether a file having pathname, 'pathname', exists on the file system. If
-                // it does not, then write a FYI message to the Debug output, and then terminate
-                // the execution of this method.
+                // it does not, then write a FYI message to the Debug output, and then terminate the
+                // execution of this method.
                 if (!File.Exists(pathname))
                 {
                     System.Diagnostics.Debug.WriteLine(

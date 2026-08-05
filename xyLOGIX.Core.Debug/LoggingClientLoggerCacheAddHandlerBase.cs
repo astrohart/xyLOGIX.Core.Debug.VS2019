@@ -63,7 +63,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientLoggerCacheAddActionValidator ActionValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientLoggerCacheAddActionValidator.SoleInstance();
 
         /// <summary>
@@ -74,7 +75,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         public abstract LoggingClientLoggerCacheAddHandlerType HandlerType
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         }
 
         /// <summary>
@@ -85,7 +87,8 @@ namespace xyLOGIX.Core.Debug
         /// </summary>
         private static ILoggingClientLoggerCacheAddHandlerTypeValidator HandlerTypeValidator
         {
-            [DebuggerStepThrough] get;
+            [DebuggerStepThrough]
+            get;
         } = GetLoggingClientLoggerCacheAddHandlerTypeValidator.SoleInstance();
 
         /// <summary>

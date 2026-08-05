@@ -63,7 +63,8 @@ namespace xyLOGIX.Core.Debug
         /// property.
         /// </remarks>
         [Log(AttributeExclude = true)]
-        private LoggingClientAssemblyRegistry() { }
+        private LoggingClientAssemblyRegistry()
+        { }
 
         /// <summary>
         /// Gets a reference to the one and only instance of the object that
