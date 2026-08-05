@@ -24,7 +24,7 @@
     <SkipPostSharp>false</SkipPostSharp>
     <DocumentationFile>bin\x64\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>CS1591;CS1587</NoWarn>
+    <NoWarn>CS1591;CS1587;CS1574;CS1580;CS1584</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -39,7 +39,7 @@
     <SkipPostSharp>true</SkipPostSharp>
     <DocumentationFile>bin\x64\Release\xyLOGIX.Core.Debug.xml</DocumentationFile>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>CS1591;CS1587</NoWarn>
+    <NoWarn>CS1591;CS1587;CS1574;CS1580;CS1584</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +54,7 @@
     <SkipPostSharp>false</SkipPostSharp>
     <DocumentationFile>bin\x86\Debug\xyLOGIX.Core.Debug.xml</DocumentationFile>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>CS1591;CS1587</NoWarn>
+    <NoWarn>CS1591;CS1587;CS1574;CS1580;CS1584</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -69,7 +69,7 @@
     <SkipPostSharp>true</SkipPostSharp>
     <DocumentationFile>bin\x86\Release\xyLOGIX.Core.Debug.xml</DocumentationFile>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>CS1591;CS1587</NoWarn>
+    <NoWarn>CS1591;CS1587;CS1574;CS1580;CS1584</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
